@@ -39,7 +39,7 @@
 
 #### Descripción
 
-ERPG es un JRPG ubicado en Galicia, donde en una de las grandes plazas de Santiago de Compostela se encuentra el *Dinoseto* vandalizado, podado y destrozado. Nuestro protagonista, ***Manín***, que es el jardinero encargado del seto, se verá envuelto en una aventura por todo Santiago para recuperar los diferentes trozos del *Dinoseto*. Durante esta aventura atravesará diversas zonas como: _La Plaza, El Cementerio, La Catedral, El Parque y Las Catacumbas_, haciendo amigos (icónicos personajes de España) para reclutar en su _Party_, luchando contra diversos enemigos y Jefes.
+ERPG es un JRPG ubicado en Galicia, donde en una de las grandes plazas de Vigo se encuentra el *Dinoseto* vandalizado, podado y destrozado. Nuestro protagonista, ***Manín***, que es el jardinero encargado del seto, se verá envuelto en una aventura por toda Galicia para recuperar los diferentes trozos del *Dinoseto*. Durante esta aventura atravesará diversas zonas como: _La Plaza, El Cementerio, La Catedral de Santiago, El Parque, El Puerto y Las Catacumbas_, haciendo amigos (icónicos personajes de España) para reclutar en su _Party_, luchando contra diversos enemigos y Jefes.
 
 #### Jugabilidad
 
@@ -51,4 +51,4 @@ ERPG es un JRPG ubicado en Galicia, donde en una de las grandes plazas de Santia
 
 ##### Historia
 
-
+Después de haber sido limpiador de piscinas en verano y haberse adentrado en una _Dungeon_ para recuperar su Patito perdido en la primera entrega de su historia: ***Chill Out***, Manín se muda a Vigo para comenzar su carrera como jardinero. Pasadas unas cuantas semanas se descubre que varias estatuas han sido robadas, todas con un mismo patrón, hasta que el *Dinoseto*, una de las obras más preciadas de la ciudad, ha sido podada y vandalizada de la misma forma que las demás obras de arte. Manín, tan valiente como es, trata de resolver el misterio a causa de la inutilidad de las autoridades locales. 
