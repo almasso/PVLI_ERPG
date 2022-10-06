@@ -24,3 +24,6 @@ body {
 .socialslinks:hover {
     color:red;
 }
+#copy {
+    font-size:20px;
+}
