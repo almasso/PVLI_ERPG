@@ -1,0 +1,26 @@
+body {
+    font-family: 'Silkscreen', cursive;
+    background-color: rgba(30,150,255,1);
+    text-align: center;
+}
+.rojo {
+    color:rgba(255,0,0,1);
+}
+.amarillo {
+    color:rgba(255, 255, 0, 1);
+}
+.azul {
+    color: rgba(30,194,247,1);
+}
+.blanco {
+    color:rgba(255,255,255, 1);
+}
+.socials {
+    font-size: 40px;
+}
+.socialslinks {
+    color:black;
+}
+.socialslinks:hover {
+    color:red;
+}
