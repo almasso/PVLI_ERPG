@@ -3,6 +3,23 @@ body {
     background-color: rgba(30,150,255,1);
     text-align: center;
 }
+#navegacion {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.enlacesNAV {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+}
+#titulo:link, :visited {
+    text-decoration: none;
+    color:white;
+}
 .rojo {
     color:rgba(255,0,0,1);
 }
