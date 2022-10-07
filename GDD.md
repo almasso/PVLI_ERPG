@@ -24,6 +24,7 @@
     2. Niveles
     3. Bocetos
     4. Objetos
+        1. Consumibles
 9. Referencias
 
 
@@ -43,6 +44,24 @@ ERPG es un JRPG ubicado en Galicia, donde en una de las grandes plazas de Vigo s
 
 #### Jugabilidad
 
+
+#### Diseño de Nivel
+
+
+##### Tipos de Zonas
+
+###### Plaza
+La Plaza es la zona principal del mapa. Es la zona que conecta todas y en donde empiezas. En el centro de la plaza se encuentra el Dinoseto, la estatua principal del juego. En la parte superior derecha hay una "zona residencial" donde se encuentra la casa de Manin y otras en las que puedes explorar y encontrarte con algunos NPCs (Non Playable Characters), y una "zona comercial" en la parte superior izquierda, donde hay un bar en el que puedes curarte y revivir a los integrantes de la party, una farmacia donde puedes comprar medicamentos (ver 8.4.1) y un bazar que te vende el resto de objetos consumibles, y que también tiene una puerta que da a una armería, que estará bloqueada hasta que se una un personaje a tu party.
+
+###### Parque
+
+###### Puerto
+
+###### Catedral
+
+###### Cementerio
+
+###### Catacumbas
 
 
 #### Contenido
