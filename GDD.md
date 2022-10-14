@@ -32,11 +32,10 @@
 
 **Título:** España: Rondando por Galicia
 **Género:** J-RPG
-**Target:** Adolescente o Joven Adulto. _blankspace_
+**Target:** Adolescente o Joven Adulto con gusto por la estrategia en el combate, pequeños gags y por una historia simple.
 **Rating:** +16 años
 **Plataforma:** Web
-**Modo de Juego:** Un jugador, historia cuasilineal
-
+**Modo de Juego:** Un jugador, historia cuasilineal // cambiar esto xd
 
 ### Descripción
 
@@ -63,11 +62,55 @@ A la hora de viajar por el mundo nuestro personaje va a moverse en 4 direcciones
 
 Manín pasará a la fase de combate cuando esté explorando algún suelo hostil (definir cuáles son hostiles y cuáles no) de forma aleatoria. Cada paso que dé en una de estas zonas aumentará la probabilidad de combate hasta que este se produzca.
 
-Ver HUD de combate
+Ver HUD de combate (meter aquí referencia)
+
+##### Puntos de Vida (PV):
+
+##### Flujo de Combate:
+
+Al empezar un combate se calcula un orden de turnos en función de la velocidad de cada participante. Esto entra en juego una vez se hayan decidido las acciones de los personajes. Todas las acciones de los aliados se definen antes de que estas se empiecen a ejecutar: Primero se muestra el menú de combate de cada personaje y una vez se haya escogido su acción, se hace lo mismo para el siguiente. Cuando todos los personajes tengan una acción asignada, se resuelven. 
+
+##### Ataques:
+1. Tipos de Ataque
+2. Daño
+3. Estado Alterado (Precisión)
+4. Puntos de Maná
+5. Objetivo(s)
+
+Los ataques tienen 4 estadísticas. Daño, Efectos de Estado y Puntos de Maná. Los ataques también se diferencian en 3 tipos: Normal, Especial y Ulti.
+**Tipos de Ataque:** Cada personaje tiene 1 ataque Normal: no gasta Puntos de Maná; 2 Especiales: gastan Puntos de Maná; y 1 Ulti: Tarda X turnos en poder usarse, solo puede usarse una vez y gasta al menos la mitad de los PM de cada personaje. Los del primer tipo son los ataques más débiles, pues no consumen nada al personaje que los usa, los del segundo tipo son más fuertes y pueden tener daño elemental y efectos de estado, mientras que la Ulti es el más fuerte de todos y también puede provocar estados alterados con mayor probabilidad.
+
+**Daño:** El daño es la cantidad de Puntos de Vida que un ataque quitaría a un objetivo si tuviera 0 Resistencia al Tipo de Daño que el ataque haga. Los Tipos de Daño son los siguientes: Meleé, Rango, Fuego, Eléctrico, Tóxico y Apoyo. Los ataques de tipo 'Apoyo' no hacen daño, sino al contrario: pueden curar al objetivo, subir su precisión, ataque, resistencias, etc.
+
+**Estados Alterados:** Son efectos que puede sufrir un personaje de forma pasiva por haber consumido un objeto o haber recibido un ataque. Duran X turnos en función de cada estado. Se conservan entre combates: se mantienen los turnos que se han pasado sufriendo el estado concreto. También se pueden acumular varios estados a la vez. un ataque que pueda causar un Estado Alterado tiene una probabilidad de que este entre en efecto.
+
+Listado:
+1. **Borracho:** La precisión del personaje baja y su velocidad de turno es menor (implementación de movimiento de HUD?).
+2. **Quemado:** Los PVs bajan gradualmente y las resistencias a daño Físico, Rango y a Fuego, siendo esta última la más afectada.
+3. **Paralizado:** El personaje pierde su turno mientras esté paralizado. También baja la resistencia a daño Eléctrico.
+4. **Envenenado:** Bajan los PVs gradualmente. Baja resistencia al Tóxico.
+5. **Confuso:** Hay un 60% de probabildades de que el personaje confuso sea objetivo de sus propios ataques. Los objetos están desordenados y aparecen con interrogaciones.
+
+**Puntos de maná:** Los ataques Especiales y de Ulti consumen X PM dependiendo de cada ataque. Si no se tiene suficiente PM para realizarlos, no se pueden hacer.
+**Objetivo(s):** Un ataque puede hacer objetivo a una o varios personajes dependiendo del ataque.
+
+
+##### Aliado
+
+Tipos de PJs:
+    Manin: DPS (mixed)
+    Melendi: DPS-Support (ranged)
+    Jarfaiter: DPS (Physic)
+    Pedro Sánchez & cmpy: Tank (Ranged)
+    Abel Caballero: Tank (Physic)
+    Niño Fumón: Full-Support
+
+##### Puntos de Experiencia y qué significa subir de nivel
 
 
 
 ### Diseño de Nivel
+
 
 
 #### Tipos de Zonas
@@ -96,6 +139,7 @@ El Parque es la zona más accesible. Accedemos al Parque desde la parte norte de
 ###### Puerto
 
 
+
 ###### Muelle
 
 **Tipos de enemigos:**
@@ -108,7 +152,11 @@ El Parque es la zona más accesible. Accedemos al Parque desde la parte norte de
 
 ###### Catedral
 
+
+
 ###### Cementerio
+
+
 
 ###### Catacumbas
 
@@ -123,14 +171,16 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 
 #### Menús y Flujo de Juego
 
+
+
 ##### HUD
 
 **Exploración:** En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
 **Combate:** Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
 Arriba en el centro se muestra el estado de la _party_: X recuadros (siendo X el número de combatientes aliados) donde se ve el sprite de nuestro aliado y (si tuviera alguno) los iconos de estados alterados que sufra al lado de la cabeza. En la parte inferior se muestra su **barra de vida** y de **maná** con números dentro de las mismas indicando el valor actual y el máximo. Si alguno de los aliados llega a 0 PV su sprite se enrojece y una 'x' lo tapa parcialmente. 
 Cuando toque escoger la acción de un aliado, su sprite se anima y gana un borde blanquecino. A la hora de escoger un ataque de uno de los aliados, se despliega una ventana desde la parte de abajo de su recuadro. Este desplegable muestra los ataques y sus estadísticas: Tipo de daño, Usos restantes, Usos totales y Daño. 
-Cuando un aliado ataque, se hará una pequeña animación sobre el personaje objetivo.
-
+Cuando un aliado ataque, se hará una pequeña animación sobre el personaje objetivo. 
+En la esquina inferior izquierda se muestran 3 botones: 'Ataque', para que el desplegable mencionado anteriormente aparezca en pantalla y se pueda escoger un ataque; 'Objeto', para acceder al menú de objetos usables en combate a través de un menú desplegado desde la esquina inferior derecha (también accesible desde un icono de una mochila en la misma esquina); y 'Huir', que despliega un mensaje que dice: "Manín nunca huye.".
 
 
 ##### Objetos
