@@ -16,6 +16,12 @@ body {
     padding: 10px;
     text-decoration: none;
 }
+li.enlacesNAV:hover {
+    background-color: rgba(239, 10, 10, 0.4);
+}
+.currentLink {
+    background-color: rgba(169,169,169,0.5);
+}
 #titulo:link, :visited {
     text-decoration: none;
     color:white;
@@ -43,4 +49,48 @@ body {
 }
 #copy {
     font-size:20px;
+}
+/*SOLO PÁG MANIN*/
+ul.desarrolladores{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#david {
+    text-align:left;
+}
+#pablo {
+    text-align:right;
+}
+#raul {
+    text-align:left;
+}
+#roi {
+    text-align:right;
+}
+#alex {
+    text-align:left;
+}
+ul.desarrolladores img {
+    border-radius: 20%;
+    width:10%;
+    height:10%;
+    float:center;
+}
+blockquote {
+    margin: 0;
+    float:right;
+}
+blockquote p {
+    padding: 15px;
+    background: #eee;
+    border-radius: 5px;
+}
+blockquote p::before {
+    content: '\201C';
+}
+
+blockquote p::after {
+    content: '\201D';
 }
