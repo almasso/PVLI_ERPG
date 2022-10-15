@@ -22,6 +22,7 @@ let config = {
 
 new Phaser.Game(config);
 
+// Cargamos los recursos
 function preload (){
 		//Cargamos assets de una URL de otra web
         //this.load.setBaseURL('http://labs.phaser.io');
@@ -35,6 +36,7 @@ function preload (){
         this.load.image('red', 'assets/red.png');
 }
 
+// Añadimos sus efectos
 function create ()
 {
 		//Las imagenes tienen como origen el centro por defecto
