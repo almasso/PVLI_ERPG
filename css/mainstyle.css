@@ -50,6 +50,17 @@ li.enlacesNAV:hover {
 #copy {
     font-size:20px;
 }
+/*SOLO PÁG PRINCIPAL*/
+#game{
+    display:block;
+    border-style:solid;
+    border-width: 15px;
+    /*Por dios cambiar esta bazofia por una imagen decente*/
+    border-top-color:red;
+    border-bottom-color:red;
+    border-left-color:yellow;
+    border-right-color:yellow;
+}
 /*SOLO PÁG MANIN*/
 ul.desarrolladores{
     list-style-type: none;
@@ -57,33 +68,29 @@ ul.desarrolladores{
     padding: 0;
     overflow: hidden;
 }
-ul.desarrolladores h2 {
-    margin:px;
+ul.desarrolladores div {
+    width:85%;
+    display:inline-block;
 }
 #david {
-    margin-top:auto;
-    margin-bottom:auto;
-    text-align:left;
+    text-align: left;
+    align-items:left;
 }
 #pablo {
-    margin-top:auto;
-    margin-bottom:auto;
     text-align:right;
+    align-items:right;
 }
 #raul {
-    margin-top:auto;
-    margin-bottom:auto;
-    text-align:left;
+    text-align: left;
+    align-items:left;
 }
 #roi {
-    margin-top:auto;
-    margin-bottom:auto;
     text-align:right;
+    align-items:right;
 }
 #alex {
-    margin-top:auto;
-    margin-bottom:auto;
-    text-align:left;
+    text-align: left;
+    align-items:left;
 }
 ul.desarrolladores div#david img, ul.desarrolladores div#raul img, ul.desarrolladores div#alex img {
     border-radius: 20%;
@@ -98,17 +105,17 @@ ul.desarrolladores div#pablo img, ul.desarrolladores div#roi img {
     float:right;
 }
 ul.desarrolladores div#david blockquote, ul.desarrolladores div#raul blockquote, ul.desarrolladores div#alex blockquote {
-    margin: 0;
+    width:20%;
     float:left;
 }
 ul.desarrolladores div#pablo blockquote, ul.desarrolladores div#roi blockquote {
-    margin: 0;
+    width:20%;
     float:right;
 }
 blockquote p {
     padding: 15px;
-    background: #eee;
-    border-radius: 5px;
+    background: rgba(238, 238, 238, 0.8);
+    border-radius: 6px;
 }
 blockquote p::before {
     content: '\201C';
