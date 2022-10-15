@@ -1,5 +1,5 @@
 import MovementExample from './scenes/exampleMovement.js'
-import FightScene from './scenes/FightScene.js'
+import {FightScene, UI_Manager} from './scenes/FightScene.js'
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -26,7 +26,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [MovementExample],
+    scene: [MovementExample, FightScene, UI_Manager],
     physics: { 
         default: 'arcade', 
         arcade: { 

@@ -10,6 +10,6 @@ class Place{
 
 
 export var EnviromentInfo = [
-	new 
+	
     
 ];

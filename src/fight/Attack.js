@@ -19,8 +19,6 @@ export class Attack{
 	}
 }
 
-
-
 class Ultimate extends Attack{
 	constructor(type, dmg, requiredMps, targets, turnsToActivate){
 		super(type, dmg, requiredMps, targets);
@@ -55,30 +53,23 @@ class Ultimate extends Attack{
 	}
 }
 
-
-
-
 const typeOfAttack = {
 	Physical: 0,
 	Ranged: 1,
 	Fire: 2,
 	Electrical: 3,
-	Toxic: 4
+	Toxic: 4,
 	Support: 5
-}
+};
 
-
-
-
-export maninAttacks = [
+export let maninAttacks = [
 	new Attack(),
 	new Attack(),
 	new Attack(),
 	new Ultimate()
 ];
 
-
-export Attacks = [
+export let Attacks = [
 	new Attack(),
 	new Attack(),
 	new Attack(),

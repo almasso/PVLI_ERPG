@@ -11,6 +11,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(0.2,0.2);
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
+        this.stepsWalked = 0;
         
         // Creamos las animaciones de nuestro caballero
 		/*this.scene.anims.create({
@@ -81,6 +82,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(false, false)
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-this.speed);
+            this.stepsWalked++;
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
@@ -88,6 +90,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(true, false)
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(this.speed);
+            this.stepsWalked++;
 		}
 
 		// Phaser.Input.Keyboard.JustUp y Phaser.Input.Keyboard.JustDown nos aseguran detectar la tecla una sola vez (evitamos repeticiones)
@@ -97,11 +100,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
 		if(this.sKey.isDown){
             this.body.setVelocityY(this.speed);
+            this.stepsWalked++;
 		}
         
 		// Mientras pulsemos la tecla 'W' movemos el personaje en -Y
 		if(this.wKey.isDown){
             this.body.setVelocityY(-this.speed);
+            this.stepsWalked++;
 		}
 
         if(Phaser.Input.Keyboard.JustUp(this.wKey) || Phaser.Input.Keyboard.JustUp(this.sKey)){
@@ -112,5 +117,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
 			this.interact();
 		}
+
+        console.log(this.stepsWalked);
+        if(this.stepsWalked > 500){
+            this.stepsWalked = 0;
+            this.body.setVelocityX(0);
+            this.body.setVelocityY(0);
+            this.scene.Fight()
+        }
 	}
 }
