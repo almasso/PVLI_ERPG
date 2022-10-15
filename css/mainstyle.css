@@ -57,28 +57,51 @@ ul.desarrolladores{
     padding: 0;
     overflow: hidden;
 }
+ul.desarrolladores h2 {
+    margin:px;
+}
 #david {
+    margin-top:auto;
+    margin-bottom:auto;
     text-align:left;
 }
 #pablo {
+    margin-top:auto;
+    margin-bottom:auto;
     text-align:right;
 }
 #raul {
+    margin-top:auto;
+    margin-bottom:auto;
     text-align:left;
 }
 #roi {
+    margin-top:auto;
+    margin-bottom:auto;
     text-align:right;
 }
 #alex {
+    margin-top:auto;
+    margin-bottom:auto;
     text-align:left;
 }
-ul.desarrolladores img {
+ul.desarrolladores div#david img, ul.desarrolladores div#raul img, ul.desarrolladores div#alex img {
     border-radius: 20%;
     width:10%;
     height:10%;
-    float:center;
+    float:left;
 }
-blockquote {
+ul.desarrolladores div#pablo img, ul.desarrolladores div#roi img {
+    border-radius: 20%;
+    width:10%;
+    height:10%;
+    float:right;
+}
+ul.desarrolladores div#david blockquote, ul.desarrolladores div#raul blockquote, ul.desarrolladores div#alex blockquote {
+    margin: 0;
+    float:left;
+}
+ul.desarrolladores div#pablo blockquote, ul.desarrolladores div#roi blockquote {
     margin: 0;
     float:right;
 }
