@@ -1,4 +1,5 @@
 import MovementExample from './scenes/exampleMovement.js'
+import FightScene from './scenes/FightScene.js'
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
