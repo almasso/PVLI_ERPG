@@ -1,10 +1,10 @@
 export class Attack{
-	constructor(type, dmg, requiredMps, targets){
+	constructor(name, type, dmg, requiredMps, targets){
 		this.type = type;
 		this.dmg = dmg;
 		this.requiredMps = requiredMps; 
 		this.targets = targets;
-
+		this.name = name;
 		// Estados Alterados
 	}
 
@@ -19,9 +19,7 @@ export class Attack{
 	}
 }
 
-
-
-class Ultimate extends Attack{
+export class Ultimate extends Attack{
 	constructor(type, dmg, requiredMps, targets, turnsToActivate){
 		super(type, dmg, requiredMps, targets);
 		this.turnsToActivate = turnsToActivate;
@@ -55,30 +53,23 @@ class Ultimate extends Attack{
 	}
 }
 
-
-
-
 const typeOfAttack = {
 	Physical: 0,
 	Ranged: 1,
 	Fire: 2,
 	Electrical: 3,
-	Toxic: 4
+	Toxic: 4,
 	Support: 5
-}
+};
 
-
-
-
-export maninAttacks = [
-	new Attack(),
-	new Attack(),
-	new Attack(),
-	new Ultimate()
+export let maninAttacks = [
+	new Attack(typeOfAttack.Physical,50,0,1),
+	new Attack(typeOfAttack.Physical,50,0,1),
+	new Attack(typeOfAttack.Physical,50,0,1),
+	new Ultimate(typeOfAttack.Physical,50,0,1)
 ];
 
-
-export Attacks = [
+export let Attacks = [
 	new Attack(),
 	new Attack(),
 	new Attack(),

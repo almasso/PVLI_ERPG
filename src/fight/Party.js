@@ -4,11 +4,10 @@ import Character from './Character.js'
 export default class Party{
 	constructor()
 	{
-		new Character();
+		this.party = [];
 	}
 
-
-
-
-
+	Add(character){
+		this.party.push(character);
+	}
 }

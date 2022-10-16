@@ -21,16 +21,16 @@ export default class MovementExample extends Phaser.Scene {
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
-	
+	z
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
     
 	create() {
 
+        this.scene.sleep('uimanager');
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
-        
 
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
@@ -42,7 +42,7 @@ export default class MovementExample extends Phaser.Scene {
 		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
         this.cameras.main.startFollow(manin);
         let house = new enviromentObj(this,400,300, 'house');
-
+        
 		let scene = this; // Nos guardamos una referencia a la escena para usarla en la función anidada que viene a continuación
 		
 		manin.body.onCollide = true; // Activamos onCollide para poder detectar la colisión del caballero con el suelo
@@ -60,7 +60,11 @@ export default class MovementExample extends Phaser.Scene {
 		 * El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		 * También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		 */
-
 	}
 
+    Fight(){
+        this.scene.launch('fightscene');
+        this.scene.get('fightscene').Reset();
+        this.scene.sleep('movement');
+    }
 }
