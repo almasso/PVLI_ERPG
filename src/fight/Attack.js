@@ -1,10 +1,10 @@
 export class Attack{
-	constructor(type, dmg, requiredMps, targets){
+	constructor(name, type, dmg, requiredMps, targets){
 		this.type = type;
 		this.dmg = dmg;
 		this.requiredMps = requiredMps; 
 		this.targets = targets;
-
+		this.name = name;
 		// Estados Alterados
 	}
 

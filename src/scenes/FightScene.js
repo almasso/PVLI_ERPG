@@ -53,7 +53,7 @@ export class UI_Manager extends Phaser.Scene {
 		this.load.image('attackButtonHover','assets/attackButtonHover.png');
 		this.load.image('objectButton','assets/objectButton.png');
 		this.load.image('objectButtonHover','assets/objectButtonHover.png');
-		this.load.image('fleeButton','assets/fleeButton.png');
+		//this.load.image('fleeButton','assets/fleeButton.png');
 		this.load.image('AllyBlock','assets/AllyBlock.png');
 		this.load.image('attackBlock','assets/AllyAttack.png');
 	}
@@ -134,65 +134,108 @@ export class UI_Manager extends Phaser.Scene {
 }
 class HealthBar {
 
-	constructor (scene, x, y)
+	constructor (scene, x, y, width, type, maxValue)
 	{
 		this.bar = new Phaser.GameObjects.Graphics(scene);
 
 		this.x = x;
 		this.y = y;
 		this.value = 100;
-		this.p = 76 / 100;
-
-		this.draw();
-
+		this.width = width;
+		this.type = type;
+		this.maxValue = maxValue;
+		this.height = 10;
 		scene.add.existing(this.bar);
+		this.texto = scene.add.text(x + this.width/2.4, y + this.height/1.5, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+		this.draw();
+	}
+
+	updateValue(newValue){
+		this.value = newValue;
 	}
 
 	draw ()
 	{
 		this.bar.clear();
 
+		this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type)
+
 		//  BG
 		this.bar.fillStyle(0x000000);
-		this.bar.fillRect(this.x, this.y, 80, 16);
+		this.bar.fillRect(this.x, this.y, this.width, 10);
 
 		//  Health
-
-		this.bar.fillStyle(0xffffff);
-		this.bar.fillRect(this.x + 2, this.y + 2, 76, 12);
-
-		if (this.value < 30)
+		if (this.value < 30 && this.type == 'HP')
 		{
 			this.bar.fillStyle(0xff0000);
 		}
 		else
 		{
-			this.bar.fillStyle(0x00ff00);
+			if(this.type == 'HP') this.bar.fillStyle(0x00ff00);
+			else this.bar.fillStyle(0x0000ff);
 		}
 
 		var d = Math.floor(this.p * this.value);
 
-		this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
+		this.bar.fillRect(this.x + 2, this.y + 2, this.value - 2, 6);
 	}
 }
+var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
 
 class AllyHUD{
 	constructor(scene, character, imgID, attackBlockID){
 		this.block = scene.add.image(scene.sys.game.canvas.width/2, 0, imgID);
 		this.block.y = this.block.displayHeight/2;
+		
 		this.character = character;
-		this.attackBlock = scene.add.image(this.block.x - this.block.displayWidth/2, this.block.y*2, attackBlockID).setOrigin(0,0);
+		
+		this.attackBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*2, attackBlockID).setOrigin(0,0);
+		this.attackBlock.setScale(1.5,1);
 		this.attackBlock.visible = false;
-		this.attacks = [character.GetAttack(0),character.GetAttack(1),character.GetAttack(2),character.GetAttack(3)];
+
+		this.attacks = [character.GetAttack(0), character.GetAttack(1), character.GetAttack(2), character.GetAttack(3)];
+		this.CreateAttacks(this.attacks, scene);
+		
 		this.charImg = scene.add.image(this.block.x, this.block.y - this.block.displayHeight / 5, character.imageId);
 		this.charImg.setScale(0.13);
-		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6);
+		
+		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.maxHp);
+		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.maxMp);
+	}
+
+	CreateAttacks(attacks, scene){
+		this.attackText = [];
+		let self = this;
+		this.attacks.forEach(function (attack, index) {
+			self.attackText[index] = {
+				text: scene.add.text(self.attackBlock.x + self.attackBlock.displayWidth / 14, self.attackBlock.y + index * self.attackBlock.displayHeight / 4 + self.attackBlock.displayHeight/16, attack.name, 
+				{
+				font: '12px "Press Start 2P"',
+				color: '#ffffff',
+				align: 'left',}), 
+
+				mp: scene.add.text(self.attackBlock.x + 7.5*self.attackBlock.displayWidth/10, self.attackBlock.y + index * self.attackBlock.displayHeight / 4 + self.attackBlock.displayHeight/16, attack.requiredMps + " MP", 
+				{
+				font: '12px "Press Start 2P"',
+				fontStyle: 'bold',
+				color: colors[attack.type],
+				align: 'left',
+				 }) } 
+			
+			
+			self.attackText[index].text.visible = false;
+			self.attackText[index].mp.visible = false;
+			
+		});
 	}
 
 	DisplayAttacks(){
 		this.attackBlock.visible = !this.attackBlock.visible;
+		this.attackText.forEach(function (attack){
+			attack.text.visible = !attack.text.visible;
+			attack.mp.visible = !attack.mp.visible;
+		});
 	}
-
 }
 
 class InputMan extends Phaser.GameObjects.Sprite{
