@@ -119,7 +119,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 
         console.log(this.stepsWalked);
-        if(this.stepsWalked > 500){
+        if(this.stepsWalked > 20){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
