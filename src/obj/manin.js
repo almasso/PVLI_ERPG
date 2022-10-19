@@ -84,7 +84,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		if(this.aKey.isDown){
 			this.setFlip(false, false)
 			//this.x -= this.speed*dt / 1000;
-			this.body.setVelocityX(-this.speed);
+			this.body.setVelocityX(-100*dt*this.speed/1000);
             this.stepsWalked++;
 		}
 
@@ -92,7 +92,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		if(this.dKey.isDown){
 			this.setFlip(true, false)
 			//this.x += this.speed*dt / 1000;
-			this.body.setVelocityX(this.speed);
+			this.body.setVelocityX(100*dt*this.speed/1000);
             this.stepsWalked++;
 		}
 
@@ -102,13 +102,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
 		if(this.sKey.isDown){
-            this.body.setVelocityY(this.speed);
+            this.body.setVelocityY(100*dt*this.speed/1000);
             this.stepsWalked++;
 		}
         
 		// Mientras pulsemos la tecla 'W' movemos el personaje en -Y
 		if(this.wKey.isDown){
-            this.body.setVelocityY(-this.speed);
+            this.body.setVelocityY(-100*dt*this.speed/1000);
             this.stepsWalked++;
 		}
 
