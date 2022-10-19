@@ -68,7 +68,7 @@ Ver HUD de combate (meter aquí referencia)
 
 ##### Flujo de Combate:
 
-Al empezar un combate se calcula un orden de turnos en función de la velocidad de cada participante. Esto entra en juego una vez se hayan decidido las acciones de los personajes. Todas las acciones de los aliados se definen antes de que estas se empiecen a ejecutar: Primero se muestra el menú de combate de cada personaje y una vez se haya escogido su acción, se hace lo mismo para el siguiente. Cuando todos los personajes tengan una acción asignada, se resuelven. 
+Al empezar un combate se calcula un orden de turnos en función de la velocidad de cada participante. Esto entra en juego una vez se hayan decidido las acciones de los personajes. Todas las acciones de los aliados se definen antes de que estas se empiecen a ejecutar: Primero se muestra el menú de combate de cada personaje y una vez se haya escogido su acción, se hace lo mismo para el siguiente. Cuando todos los personajes tengan una acción asignada, se resuelven siguiendo el orden comentado anteriormente. 
 
 ##### Ataques:
 1. Tipos de Ataque
@@ -107,6 +107,7 @@ Tipos de PJs:
 
 ##### Puntos de Experiencia y qué significa subir de nivel
 
+El sistema de niveles es el típico que podemos encontrar el cualquier RPG: al acabar un combate toda la party consigue X puntos de experiencia dependiendo del tipo de enemigo que haya derrotado; cuando se consiga acumular suficiente experiencia, el nivel de la party sube automáticamente haciendo que se aumenten las estadísticas de: Daño, HP, MP y Velocidad. La cantidad que se mejora en cada uno de estos depende completamente del personaje. A pesar de seguir este esquema clásico, en ERPG el nivel se comparte entre toda la party, de tal fomrma que no existe nivel de personaje, o si queremos considerar que existe, este sería el mismo para todos. De esta forma, al unirse un personaje a la party, este entra con el nivel de la party.
 
 
 ### Diseño de Nivel
@@ -123,12 +124,10 @@ Es la zona principal del mapa. Conecta con todos los caminos hacia las demás zo
 
 ##### Parque
 
-El Parque es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza, que conduce a un camino de tierra donde, al final, nos esperará Guillermo para avisarnos del nivel de dificultad de la zona. Se ve un camino de tierra que lleva a un parque vallado (como el parque Retiro de Madrid). Al entrar se ve un camino que lleva a una pequeña plaza en el que se encuentra el primer personaje aliado: ***Jarfaiter***. A la izquierda de la plaza se encuentra pequeño bosque junto a un bar. Al norte de la plaza hay un parque infantil y al este un gran lago.
+Es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza, que conduce a un camino de tierra donde, al final, nos esperará Guillermo para avisarnos del nivel de dificultad de la zona. Se ve un camino de tierra que lleva a un parque vallado (como el parque del Buen Retiro de Madrid). Al entrar se ve un camino que lleva a una pequeña plaza en el que se encuentra el primer personaje aliado: ***Jarfaiter***. A la izquierda de la plaza se encuentra un pequeño bosque junto a un bar. Al norte de la plaza hay un parque infantil y al este un gran lago.
 
-###### Bosque
-
-**Tipos de enemigos:** 
-**Misión:**
+**Tipos de enemigos:** Artistas y Cultiristas.
+**Misión:** Nuestra misión en este gran parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. (ALGÚN NPC O ALGO???). Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece (NOS DA ALGO???) y se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua de la Bicha de Bazalote, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
 
 ###### Gran Lago
 
@@ -176,6 +175,7 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 ##### HUD
 
 **Exploración:** En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
+
 **Combate:** Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
 Arriba en el centro se muestra el estado de la _party_: X recuadros (siendo X el número de combatientes aliados) donde se ve el sprite de nuestro aliado y (si tuviera alguno) los iconos de estados alterados que sufra al lado de la cabeza. En la parte inferior se muestra su **barra de vida** y de **maná** con números dentro de las mismas indicando el valor actual y el máximo. Si alguno de los aliados llega a 0 PV su sprite se enrojece y una 'x' lo tapa parcialmente. 
 Cuando toque escoger la acción de un aliado, su sprite se anima y gana un borde blanquecino. A la hora de escoger un ataque de uno de los aliados, se despliega una ventana desde la parte de abajo de su recuadro. Este desplegable muestra los ataques y sus estadísticas: Tipo de daño, Usos restantes, Usos totales y Daño. 
