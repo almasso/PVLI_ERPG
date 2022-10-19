@@ -39,7 +39,9 @@ let config = {
             left: true,
             right: true
         }
-    }
+    },
+    title: "ÑRPG: Rondando Por Galicia",
+    version: "0.0.1"
 };
 
 new Phaser.Game(config);
