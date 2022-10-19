@@ -25,6 +25,5 @@ el parque, que es la primera zona que se ve.
 
 
 ERRORES: 
-	- la barra de maná no baja
 	- no sé
 

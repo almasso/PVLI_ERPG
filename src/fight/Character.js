@@ -15,7 +15,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		
 		this.hp = initialHP;
 		this.maxHp = initialHP;
-		this.mp = 0;
+		this.mp = initialMP;
 		this.maxMp = initialMP;
 		this.lvl = 1;
 		this.resistances = [0, 0, 0, 0, 0, 0]; 
