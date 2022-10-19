@@ -14,6 +14,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('manin', 'assets/Manín.png');
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('melendi','assets/Melendi.png')
+		this.load.image('attackPointer','assets/attackPointer.png');
 
 		// cargar los botones
 		this.load.image('fightBg','assets/bgFight.png')
@@ -24,7 +25,6 @@ export class FightScene extends Phaser.Scene {
 		//this.load.image('fleeButton','assets/fleeButton.png');
 		this.load.image('AllyBlock','assets/AllyBlock.png');
 		this.load.image('attackBlock','assets/AllyAttack.png');
-		this.load.image('melendi','assets/Melendi.png')
 	}
 
 	CreateButtons(){
@@ -81,6 +81,24 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 	}
 
+	SelectTarget(attack){
+		this.enemy.Damage(attack);
+		this.enemyHud.Update();
+		this.CheckEnemies();
+	}
+
+	CheckEnemies(){
+		// Esto tiene que ver el estado de los enemigos cada vez que les pegan. 
+		if(this.enemy.Dead){
+			this.EndCombat();
+		}
+	}
+
+	EndCombat(){
+		this.scene.wake('movement');
+		this.scene.sleep('fightscene');
+	}
+
 	create(){
 		/*
 		Esto de aquí lo usaremos cuando le pasemos la party a esta escena, aunque no sé muy bien cómo
@@ -105,17 +123,24 @@ export class FightScene extends Phaser.Scene {
 		this.allyHud = new AllyHUD(this, this.character, 'AllyBlock', 'attackBlock');
 		this.enemyHud = new EnemyHUD(this,this.enemy);
 
+		this.pointer = this.add.image(0,0,'attackPointer');
+		this.pointer.visible = false;
+
 		this.CreateButtons();
 	}
 	update(t,dt){
-		if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
+	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
 		}
 		if(Phaser.Input.Keyboard.JustDown(this.aux.dKey)){
 			this.enemy.Damage(this.character.GetAttack(0));
 			this.enemyHud.Update();
-		}
+			if(this.enemy.Dead){
+				this.scene.wake('movement');
+				this.scene.sleep('fightscene');
+			}
+		}*/
 	}
 }
 
@@ -197,7 +222,7 @@ class AllyHUD{
 		this.attackBlock.visible = false;
 
 		this.attacks = [character.GetAttack(0), character.GetAttack(1), character.GetAttack(2), character.GetAttack(3)];
-		this.CreateAttacks(this.attacks, scene);
+		this.CreateAttacks(scene);
 		
 		// cambiar esto por el propio character :)
 		this.charImg = scene.add.image(this.block.x, this.block.y - this.block.displayHeight / 5, character.imageId);
@@ -205,9 +230,10 @@ class AllyHUD{
 		
 		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.maxHp);
 		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.maxMp);
+		this.scene = scene;
 	}
 
-	CreateAttacks(attacks, scene){
+	CreateAttacks(scene){
 		this.attackText = [];
 		let self = this;
 		this.attacks.forEach(function (attack, index) {
@@ -224,13 +250,33 @@ class AllyHUD{
 				fontStyle: 'bold',
 				color: colors[attack.type],
 				align: 'left',
-				 }) } 
+				}), srcAttack: attack } 
 			
 			
 			self.attackText[index].text.visible = false;
 			self.attackText[index].mp.visible = false;
-			
+
+			self.attackText[index].text.setInteractive();
+			self.CreateAttackButton(self.attackText[index]);
 		});
+	}
+
+	CreateAttackButton(attackText){
+		attackText.text.on('pointerover', () => {
+			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
+			console.log("AA SUSTO");
+			this.scene.pointer.visible = true;
+			this.scene.pointer.x = attackText.text.x-15;
+			this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
+
+		});
+		attackText.text.on('pointerup', () => {
+			this.scene.SelectTarget(attackText.srcAttack);
+		})
+		attackText.text.on('pointerout', () =>{
+			attackText.color = "#ffffff";
+			this.scene.pointer.visible = false;
+		})
 	}
 
 	DisplayAttacks(){
