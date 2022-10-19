@@ -1,0 +1,23 @@
+Cosas que faltan en PVLI
+
+objeto EnviromentInfo:
+	capaz de coger una party de jugadores
+	capaz de generar una party de enemigos según el entorno en el que está
+
+Dónde vamos a tener los enemigos? creados en un fichero de texto? en un .js con 
+diferentes variables?
+
+	/\
+    /  \
+    ====
+	||
+	||
+lo mismo para los PJs
+
+no sería muy difícil en realidad hacerlo en un .js y exportar variables
+
+Qué queremos para la DEMO?
+
+yo había pensado en una zona donde poder pegarte con enemigos aleatorios (por ejemplo, 
+el parque, que es la primera zona que se ve.
+
