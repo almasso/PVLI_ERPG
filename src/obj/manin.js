@@ -13,6 +13,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
         
+		//#region  animations
         // Creamos las animaciones de nuestro caballero
 		/*this.scene.anims.create({
 			key: 'idle',
@@ -42,7 +43,9 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 
 		// La animación a ejecutar según se genere el personaje será 'idle'
 		this.play('idle');
-*/
+		*/
+		//#endregion
+		
 		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
 		this.aKey = this.scene.input.keyboard.addKey('A'); // move left

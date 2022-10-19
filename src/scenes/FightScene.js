@@ -1,45 +1,8 @@
 import Character from '../fight/Character.js'
 
 export class FightScene extends Phaser.Scene {
-	
-	constructor() {
-		super({ key: 'fightscene' });
-	}
-	
-	preload(){
-		// Cargar imagenes de todos los enemigos y jugadores
-		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('fightBg','assets/bgFight.png')
-		this.load.image('melendi','assets/Melendi.png')
-	}
-	
-	/**
-	 * Creación de los elementos de la escena principal de juego
-	 */ 
-	create() {
-		this.aux = new InputMan(this);
-		//Imagen de fondo
-		this.scene.wake('uimanager');
-		this.scene.get('uimanager');
-		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de 
-	}
-	
-	update(t,dt){
-		if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
-			this.scene.wake('movement');
-			this.scene.sleep('uimanager');
-			this.scene.sleep('fightscene');
-		}
-	}
-
-	Reset(){
-		this.create();
-	}
-}
-
-export class UI_Manager extends Phaser.Scene {
 	constructor(party) {
-		super({ key: 'uimanager', active: true });
+		super({ key: 'fightscene'});
 		this.bg;
 		this.fleeButton;
 		this.party = party;
@@ -47,6 +10,11 @@ export class UI_Manager extends Phaser.Scene {
 	}
 	
 	preload(){
+		// cargar personajes
+		this.load.image('manin', 'assets/Manín.png');
+		this.load.image('fightBg','assets/bgFight.png')
+		this.load.image('melendi','assets/Melendi.png')
+
 		// cargar los botones
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('attackButton','assets/attackButton.png');
@@ -56,6 +24,7 @@ export class UI_Manager extends Phaser.Scene {
 		//this.load.image('fleeButton','assets/fleeButton.png');
 		this.load.image('AllyBlock','assets/AllyBlock.png');
 		this.load.image('attackBlock','assets/AllyAttack.png');
+		this.load.image('melendi','assets/Melendi.png')
 	}
 
 	CreateButtons(){
@@ -118,7 +87,7 @@ export class UI_Manager extends Phaser.Scene {
 		this.party.foreach(function (character){
 			this.charBlocks[0] = new AllyHUD(this,character, 'AllyBlock', 'attackBlock');
 		});*/
-		
+		this.aux = new InputMan(this);
 		this.bg = this.add.image(-150, 0, 'fightBg').setOrigin(0, 0);
 		this.bg.setScale(0.8);
 
@@ -126,12 +95,30 @@ export class UI_Manager extends Phaser.Scene {
 		this.character = new Character(this,this.sys.game.canvas.width/2 - 50, 0, 'manin', 100, 100).setOrigin(0,0);
 		this.character.visible = false;
 		this.character.SetAttacks(0,0,0,0);
+		this.character.SetStats(5,0,0,0,0,0,100);
+
+		this.enemy = new Character(this,this.sys.game.canvas.width/2, this.sys.game.canvas.height/2,'melendi',100,100);
+		this.enemy.visible = false;
+		this.enemy.SetAttacks(0,0,0,0);
+		this.enemy.SetStats(5,0,0,0,0,0,100);
 
 		this.allyHud = new AllyHUD(this, this.character, 'AllyBlock', 'attackBlock');
-		
+		this.enemyHud = new EnemyHUD(this,this.enemy);
+
 		this.CreateButtons();
 	}
+	update(t,dt){
+		if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
+			this.scene.wake('movement');
+			this.scene.sleep('fightscene');
+		}
+		if(Phaser.Input.Keyboard.JustDown(this.aux.dKey)){
+			this.enemy.Damage(this.character.GetAttack(0));
+			this.enemyHud.Update();
+		}
+	}
 }
+
 class HealthBar {
 
 	constructor (scene, x, y, width, type, maxValue)
@@ -163,7 +150,6 @@ class HealthBar {
 		//  BG
 		this.bar.fillStyle(0x000000);
 		this.bar.fillRect(this.x, this.y, this.width, 10);
-
 		//  Health
 		if (this.value < 30 && this.type == 'HP')
 		{
@@ -175,15 +161,32 @@ class HealthBar {
 			else this.bar.fillStyle(0x0000ff);
 		}
 
-		var d = Math.floor(this.p * this.value);
+		let barWidth = (this.value*this.width) / this.maxValue;
 
-		this.bar.fillRect(this.x + 2, this.y + 2, this.value - 2, 6);
+		this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, 6);
 	}
 }
 var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
 
+class EnemyHUD{
+	constructor(scene, character)
+	{
+		// cambiar esto por el propio character :)
+		this.character = character;
+		this.enemyImg = scene.add.image(scene.sys.game.canvas.width/2,scene.sys.game.canvas.height/2, character.imageId);
+		this.enemyImg.setScale(0.13);
+		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP',character.maxHp);
+	}
+	
+	Update(){
+		this.healthBar.updateValue(this.character.hp);
+		this.healthBar.draw();
+	}
+}
+
 class AllyHUD{
 	constructor(scene, character, imgID, attackBlockID){
+		// hacer offsets en función de la posición del Ally dado. Su posición será en función del número de integrantes de la party
 		this.block = scene.add.image(scene.sys.game.canvas.width/2, 0, imgID);
 		this.block.y = this.block.displayHeight/2;
 		
@@ -196,6 +199,7 @@ class AllyHUD{
 		this.attacks = [character.GetAttack(0), character.GetAttack(1), character.GetAttack(2), character.GetAttack(3)];
 		this.CreateAttacks(this.attacks, scene);
 		
+		// cambiar esto por el propio character :)
 		this.charImg = scene.add.image(this.block.x, this.block.y - this.block.displayHeight / 5, character.imageId);
 		this.charImg.setScale(0.13);
 		
@@ -235,6 +239,10 @@ class AllyHUD{
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
+	}
+
+	Update(){
+		this.healthBar.draw();
 	}
 }
 

@@ -64,7 +64,6 @@ export default class MovementExample extends Phaser.Scene {
 
     Fight(){
         this.scene.launch('fightscene');
-        this.scene.get('fightscene').Reset();
         this.scene.sleep('movement');
     }
 }

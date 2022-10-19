@@ -13,7 +13,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.imageId = imageId;
 		this.scene.add.existing(this);
 		
-		this.hp = 0;
+		this.hp = initialHP;
 		this.maxHp = initialHP;
 		this.mp = 0;
 		this.maxMp = initialMP;
@@ -55,11 +55,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Damage(attack)
 	{
 		// Hacer que reciba daño
-		hp -= attack.GetDmg() * (10 - resistances[attack.GetType()]) / 10;
+		this.hp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
 
-		if(this.HP <= 0) 
+		if(this.hp <= 0) 
 		{
-			this.HP = 0;
+			this.hp = 0;
 			this.Die();
 		}
 	}
