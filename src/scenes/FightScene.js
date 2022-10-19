@@ -13,7 +13,8 @@ export class FightScene extends Phaser.Scene {
 		// cargar personajes
 		this.load.image('manin', 'assets/Manín.png');
 		this.load.image('fightBg','assets/bgFight.png')
-		this.load.image('melendi','assets/Melendi.png')
+		//this.load.image('melendi','assets/Melendi.png')
+		this.load.image('dinoseto','assets/DinosetoFinal.png')
 		this.load.image('attackPointer','assets/attackPointer.png');
 
 		// cargar los botones
@@ -115,7 +116,7 @@ export class FightScene extends Phaser.Scene {
 		this.character.SetAttacks(0,0,0,0);
 		this.character.SetStats(5,0,0,0,0,0,100);
 
-		this.enemy = new Character(this,this.sys.game.canvas.width/2, this.sys.game.canvas.height/2,'melendi',100,100);
+		this.enemy = new Character(this,this.sys.game.canvas.width/2, this.sys.game.canvas.height/2,'dinoseto',100,100);
 		this.enemy.visible = false;
 		this.enemy.SetAttacks(0,0,0,0);
 		this.enemy.SetStats(5,0,0,0,0,0,100);
@@ -199,7 +200,7 @@ class EnemyHUD{
 		// cambiar esto por el propio character :)
 		this.character = character;
 		this.enemyImg = scene.add.image(scene.sys.game.canvas.width/2,scene.sys.game.canvas.height/2, character.imageId);
-		this.enemyImg.setScale(0.13);
+		this.enemyImg.setScale(3);
 		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP',character.maxHp);
 	}
 	
