@@ -96,7 +96,7 @@ export class FightScene extends Phaser.Scene {
 
 	EndCombat(){
 		this.scene.wake('movement');
-		this.scene.sleep('fightscene');
+		this.scene.stop('fightscene');
 	}
 
 	create(){

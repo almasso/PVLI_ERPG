@@ -26,6 +26,5 @@ el parque, que es la primera zona que se ve.
 
 ERRORES: 
 	- la barra de maná no baja
-	- los ataques funcionan a pesar de ser invisibles
 	- no sé
 
