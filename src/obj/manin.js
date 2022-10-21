@@ -126,7 +126,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
-            this.scene.Fight()
+            //this.scene.Fight()
         }
 	}
 }

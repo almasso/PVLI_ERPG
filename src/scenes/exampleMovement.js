@@ -1,6 +1,7 @@
 import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
+import NPC from '../obj/npc.js';
 
 /**
  * Escena principal.
@@ -13,10 +14,13 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	preload(){
-		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('bg', 'assets/bg.png');
-		this.load.image('house', 'assets/house.png');
-		this.load.image('pixel', 'assets/pixel1x1.png');
+		this.load.image('manin', 'assets/textures/Manín.png');
+		this.load.image('bg', 'assets/textures/bg.png');
+		this.load.image('house', 'assets/textures/house.png');
+		this.load.image('pixel', 'assets/textures/pixel1x1.png');
+		
+		//TEST DE NPCS
+		this.load.image('melendi','assets/textures/Melendi.png'); 
 		
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
@@ -36,6 +40,7 @@ export default class MovementExample extends Phaser.Scene {
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
 		let manin = new Manin(this, 100, 50);
+		let npc1 = new NPC(this, 400, 400, 'melendi', 0);
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
@@ -47,6 +52,7 @@ export default class MovementExample extends Phaser.Scene {
 		
 		manin.body.onCollide = true; // Activamos onCollide para poder detectar la colisión del caballero con el suelo
 
+		this.physics.add.collider(manin, npc1);
 		this.physics.add.collider(manin, house);
 		this.physics.add.collider(manin, bg);
 		this.physics.add.collider(manin, bLeft);
