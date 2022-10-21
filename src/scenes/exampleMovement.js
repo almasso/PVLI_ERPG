@@ -47,6 +47,7 @@ export default class MovementExample extends Phaser.Scene {
 		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
         this.cameras.main.startFollow(manin);
         let house = new enviromentObj(this,400,300, 'house');
+		npc1.readDialogues();
         
 		let scene = this; // Nos guardamos una referencia a la escena para usarla en la función anidada que viene a continuación
 		
