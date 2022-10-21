@@ -81,10 +81,20 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 	}
 
-	SelectTarget(attack){
-		this.enemy.Damage(attack);
-		this.enemyHud.Update();
-		this.CheckEnemies();
+	SelectTarget(attack){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+		if(this.character.mp >= attack.requiredMps)  // Condicion para no dejar hacer el ataque si no hay mps
+		{
+			this.character.mp -= attack.requiredMps;  
+			this.enemy.Damage(attack);
+			this.enemyHud.Update();
+			this.allyHud.ManaBar.updateValue(this.character.mp);
+			this.allyHud.ManaBar.draw();
+			this.CheckEnemies();	
+		}
+		else
+		{
+			// Feedback de que no tienes mps
+		}
 	}
 
 	CheckEnemies(){
@@ -96,7 +106,7 @@ export class FightScene extends Phaser.Scene {
 
 	EndCombat(){
 		this.scene.wake('movement');
-		this.scene.sleep('fightscene');
+		this.scene.stop('fightscene');
 	}
 
 	create(){
@@ -232,6 +242,7 @@ class AllyHUD{
 		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.maxMp);
 		this.scene = scene;
 	}
+
 
 	CreateAttacks(scene){
 		this.attackText = [];
