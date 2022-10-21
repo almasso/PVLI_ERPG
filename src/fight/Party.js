@@ -9,5 +9,10 @@ export default class Party{
 
 	Add(character){
 		this.party.push(character);
+
+
 	}
-}
+};
+
+
+// exportar instancia de Party! YAY FIESTA :)

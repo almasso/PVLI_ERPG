@@ -28,12 +28,9 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		// Estados Alterados
 	}
 
-	SetAttacks(attack1, attack2, attack3, attack4)
+	SetAttacks(attack)
 	{
-		this.attacks[0] = new Attack("PUM te pego", typeOfAttack.Physical,50,0,1);
-		this.attacks[1] = new Attack("PUM te flecheo",typeOfAttack.Ranged,50,20,1);
-		this.attacks[2] = new Attack("PUM te apoyo",typeOfAttack.Support,50,40,1);
-		this.attacks[3] = new Ultimate("PUM ulti", typeOfAttack.Electrical,50,this.maxMp/2 + 10,1);
+		this.attacks.push(new Attack(attack.name, attack.type,attack.dmg,attack.requiredMps,attack.targets))
 	}
 
 	GetAttack(index){

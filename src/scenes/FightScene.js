@@ -1,4 +1,6 @@
 import Character from '../fight/Character.js'
+import Party from '../fight/Party.js'
+import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 
 export class FightScene extends Phaser.Scene {
 	constructor(party) {
@@ -7,6 +9,7 @@ export class FightScene extends Phaser.Scene {
 		this.fleeButton;
 		this.party = party;
 		this.charBlocks = [];
+		this.enemiesInfo = EnemiesInfo;
 	}
 	
 	preload(){
@@ -107,6 +110,18 @@ export class FightScene extends Phaser.Scene {
 	EndCombat(){
 		this.scene.wake('movement');
 		this.scene.stop('fightscene');
+	}
+
+	GenerateRandomEncounter(){
+		this.enemies = [];
+		let enemiesNumber = Math.floor(Math.random()*4 + 1);
+		for(let i = 0; i < enemiesNumber; i++){
+			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
+			this.enemies[i] = new Character(this.enemiesInfo[enemyType].name, 0, 0, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+			for(let o = 0; o < this.enemiesInfo.attack.length; o++){
+				this.enemies[i].SetAttacks(this.enemiesInfo[enemyType].attack[o]);
+			}
+		}
 	}
 
 	create(){
