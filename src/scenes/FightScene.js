@@ -166,8 +166,7 @@ export class FightScene extends Phaser.Scene {
 					
 					this.scene.wake('movement');				
 					this.scene.sleep('fightscene');
-					this.allyHud.DisplayAttacks();
-					
+					this.allyHud.DisplayAttacks();					
 					
 				}
 	
@@ -336,10 +335,7 @@ class AllyHUD{
 		attackText.text.on('pointerup', () => {
 			this.scene.SelectTarget(attackText.srcAttack);
 		})
-		// attackText.text.on('pointerout', () =>{
-		// 	attackText.color = "#ffffff";
-		// 	this.scene.pointer.visible = false;
-		// })
+		
 	}
 
 	DisplayAttacks(){
