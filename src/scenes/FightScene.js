@@ -1,5 +1,5 @@
 import Character from '../fight/Character.js'
-import Party from '../fight/Party.js'
+import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 
 export class FightScene extends Phaser.Scene {
@@ -102,9 +102,9 @@ export class FightScene extends Phaser.Scene {
 
 	CheckEnemies(){
 		// Esto tiene que ver el estado de los enemigos cada vez que les pegan. 
-		if(this.enemy.Dead){
+		/*if(this.enemy.Dead){
 			this.EndCombat();
-		}
+		}*/
 	}
 
 	EndCombat(){
@@ -112,15 +112,24 @@ export class FightScene extends Phaser.Scene {
 		this.scene.stop('fightscene');
 	}
 
+	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let enemiesNumber = Math.floor(Math.random()*4 + 1);
+		console.log(enemiesNumber);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
-			this.enemies[i] = new Character(this.enemiesInfo[enemyType].name, 0, 0, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
-			for(let o = 0; o < this.enemiesInfo.attack.length; o++){
+			this.enemies[i] = new Character(this,this.sys.game.canvas.width/2 + Math.pow(-1,i)*(i/2)*100, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
+			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
+			
+			this.enemiesHud.push(new EnemyHUD(this,this.enemies[i]));
+			
+			for(let o = 0; o < this.enemiesInfo[enemyType].attack.length; o++)
+			{
 				this.enemies[i].SetAttacks(this.enemiesInfo[enemyType].attack[o]);
 			}
+			this.enemies[i].visible = false;
 		}
 	}
 
@@ -130,9 +139,17 @@ export class FightScene extends Phaser.Scene {
 		this.party.foreach(function (character){
 			this.charBlocks[0] = new AllyHUD(this,character, 'AllyBlock', 'attackBlock');
 		});*/
+		
+		// INPUT
 		this.aux = new InputMan(this);
+		
+		// FONDO
 		this.bg = this.add.image(-150, 0, 'fightBg').setOrigin(0, 0);
 		this.bg.setScale(0.8);
+
+		// Creación de enemigos
+		this.enemiesHud = [];
+		this.GenerateRandomEncounter(),
 
 		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
 		this.character = new Character(this,this.sys.game.canvas.width/2 - 50, 0, 'manin', 100, 100).setOrigin(0,0);
@@ -141,16 +158,9 @@ export class FightScene extends Phaser.Scene {
 		{
 			this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
 		}
-		this.character.SetAttacks();
 		this.character.SetStats(5,0,0,0,0,0,100);
 
-		this.enemy = new Character(this,this.sys.game.canvas.width/2, this.sys.game.canvas.height/2,'melendi',100,100);
-		this.enemy.visible = false;
-		this.enemy.SetAttacks(0,0,0,0);
-		this.enemy.SetStats(5,0,0,0,0,0,100);
-
 		this.allyHud = new AllyHUD(this, this.character, 'AllyBlock', 'attackBlock');
-		this.enemyHud = new EnemyHUD(this,this.enemy);
 
 		this.pointer = this.add.image(0,0,'attackPointer');
 		this.pointer.visible = false;
@@ -225,9 +235,10 @@ var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
 class EnemyHUD{
 	constructor(scene, character)
 	{
+		console.log(character.imageId);
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.enemyImg = scene.add.image(scene.sys.game.canvas.width/2,scene.sys.game.canvas.height/2, character.imageId);
+		this.enemyImg = scene.add.image(this.character.x,this.character.y, character.imageId);
 		this.enemyImg.setScale(0.13);
 		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP',character.maxHp);
 	}
