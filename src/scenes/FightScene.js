@@ -122,7 +122,6 @@ export class FightScene extends Phaser.Scene {
 			this.enemies[i] = new Character(this,this.sys.game.canvas.width/2 + Math.pow(-1,i)*(i/2)*100, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
-			
 			this.enemiesHud.push(new EnemyHUD(this,this.enemies[i]));
 			
 			for(let o = 0; o < this.enemiesInfo[enemyType].attack.length; o++)
@@ -185,13 +184,13 @@ export class FightScene extends Phaser.Scene {
 
 class HealthBar {
 
-	constructor (scene, x, y, width, type, maxValue)
+	constructor (scene, x, y, width, type, initialValue, maxValue)
 	{
 		this.bar = new Phaser.GameObjects.Graphics(scene);
 
 		this.x = x;
 		this.y = y;
-		this.value = 100;
+		this.value = initialValue;
 		this.width = width;
 		this.type = type;
 		this.maxValue = maxValue;
@@ -240,8 +239,7 @@ class EnemyHUD{
 		this.character = character;
 		this.enemyImg = scene.add.image(this.character.x,this.character.y, character.imageId);
 		this.enemyImg.setScale(0.13);
-		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP',character.maxHp);
-		this.Update();
+		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP', character.hp, character.maxHp);
 	}
 	
 	Update(){
@@ -269,8 +267,8 @@ class AllyHUD{
 		this.charImg = scene.add.image(this.block.x, this.block.y - this.block.displayHeight / 5, character.imageId);
 		this.charImg.setScale(0.13);
 		
-		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.maxHp);
-		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.maxMp);
+		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.hp, this.character.maxHp);
+		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.mp, this.character.maxMp);
 		this.scene = scene;
 	}
 
