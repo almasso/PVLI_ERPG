@@ -151,8 +151,11 @@ export class FightScene extends Phaser.Scene {
 		this.GenerateRandomEncounter();
 
 		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
-		this.character = new Character(this,this.sys.game.canvas.width/2 - 50, 0, 'manin', 100, 100).setOrigin(0,0);
-		this.character.visible = false;
+		this.character = new Character(this,this.sys.game.canvas.width/2, 10, 'manin', 100, 100).setOrigin(0,0);
+		this.character.scale = 0.13;
+		this.character.depth = 1;
+
+		//this.character.visible = false;
 		for(let i = 0; i < 4; i++)
 		{
 			this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
@@ -251,21 +254,19 @@ class EnemyHUD{
 class AllyHUD{
 	constructor(scene, character, imgID, attackBlockID){
 		// hacer offsets en función de la posición del Ally dado. Su posición será en función del número de integrantes de la party
-		this.block = scene.add.image(scene.sys.game.canvas.width/2, 0, imgID);
-		this.block.y = this.block.displayHeight/2;
+		this.block = scene.add.image(character.x + character.displayWidth/2, character.y + character.displayHeight * 0.95, imgID);
+		//this.block.x += this.block.displayWidth/4;
+		//this.block.y += this.block.displayHeight * 3/4;
 		
 		this.character = character;
 		
-		this.attackBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*2, attackBlockID).setOrigin(0,0);
+		this.attackBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*1.94, attackBlockID).setOrigin(0,0);
 		this.attackBlock.setScale(1.5,1);
 		this.attackBlock.visible = false;
 
 		this.attacks = [character.GetAttack(0), character.GetAttack(1), character.GetAttack(2), character.GetAttack(3)];
 		this.CreateAttacks(scene);
 		
-		// cambiar esto por el propio character :)
-		this.charImg = scene.add.image(this.block.x, this.block.y - this.block.displayHeight / 5, character.imageId);
-		this.charImg.setScale(0.13);
 		
 		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.hp, this.character.maxHp);
 		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.mp, this.character.maxMp);
