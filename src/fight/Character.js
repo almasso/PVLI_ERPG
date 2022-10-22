@@ -61,7 +61,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	{
 		// Hacer que reciba daño
 		this.hp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
-
+		this.hp = Math.floor(this.hp);
 		if(this.hp <= 0) 
 		{
 			this.hp = 0;

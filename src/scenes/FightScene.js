@@ -51,7 +51,6 @@ export class FightScene extends Phaser.Scene {
 
 		//#region input de Botones
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"
-
 		
 		this.attackButton.on('pointerover', () => {
 			// Hacer que el botón tenga otra imagen haciendo hover
@@ -60,7 +59,7 @@ export class FightScene extends Phaser.Scene {
 		});
 
 		this.attackButtonHover.on('pointerup',()=>{
-			this.allyHud.DisplayAttacks();
+			this.alliesHud[this.currentAlly].DisplayAttacks();
 		})
 		
 		this.attackButtonHover.on('pointerout', () => {
@@ -93,6 +92,7 @@ export class FightScene extends Phaser.Scene {
 		for(let i = 0; i < this.enemies.length; i++){
 			this.enemies[i].disableInteractive();
 		}
+		this.pointer.visible = false;
 	}
 
 	CheckEnemies(){
@@ -107,11 +107,26 @@ export class FightScene extends Phaser.Scene {
 		this.scene.stop('fightscene');
 	}
 
+	LoadParty(){
+		this.allies = [];
+		let self = this;
+		allyParty.party.forEach(function (ally, index){
+			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.hp, ally.mp)
+			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
+			let scene = self;
+			ally.attack.forEach(function (attack) {
+				scene.allies[index].SetAttacks(attack);
+			})
+			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
+			self.allies[index].scale = 0.08;
+			self.allies[index].depth = 1;
+		})
+	}
+
 	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let enemiesNumber = Math.floor(Math.random()*4 + 1);
-		console.log(enemiesNumber);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
 			if(i === 0) {
@@ -133,6 +148,10 @@ export class FightScene extends Phaser.Scene {
 		}
 	}
 
+	NextAlly(){
+		this.currentAlly = (this.currentAlly + 1) % this.allies.length; 
+	}
+
 	AddEnemySelector(enemy){
 		enemy.on("pointerover",() => {
 			console.log("SELECCIONANDO A " + enemy.imageId);
@@ -146,12 +165,13 @@ export class FightScene extends Phaser.Scene {
 		})
 		enemy.on("pointerup",() => {
 			console.log("ATACANDO A " + enemy.imageId);
-			this.character.Attack(this.selectedAttack,enemy);
-			let i = 0
+			this.allies[this.currentAlly].Attack(this.selectedAttack,enemy);
+			let i = 0;
 			while(this.enemiesHud[i].character != enemy){i++;}
 			this.enemiesHud[i].Update();
 			this.DisableTargetting();
-			this.allyHud.Update();
+			this.alliesHud[this.currentAlly].Update();
+			this.NextAlly();
 		})
 	}
 
@@ -169,14 +189,20 @@ export class FightScene extends Phaser.Scene {
 		this.bg = this.add.image(-150, 0, 'fightBg').setOrigin(0, 0);
 		this.bg.setScale(0.8);
 
+		// Creación de Party
+		this.alliesHud = [];
+		this.LoadParty();
 		// Creación de enemigos
 		this.enemiesHud = [];
 		this.GenerateRandomEncounter();
+
+		this.currentAlly = 0;
 
 		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
 		this.character = new Character(this,this.sys.game.canvas.width/2, 10, 'manin', 100, 100).setOrigin(0,0);
 		this.character.scale = 0.13;
 		this.character.depth = 1;
+		this.character.visible = false;
 
 		//this.character.visible = false;
 		for(let i = 0; i < 4; i++)
@@ -184,8 +210,6 @@ export class FightScene extends Phaser.Scene {
 			this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
 		}
 		this.character.SetStats(5,0,0,0,0,0,100);
-
-		this.allyHud = new AllyHUD(this, this.character, 'AllyBlock', 'attackBlock');
 
 		this.pointer = this.add.image(0,0,'attackPointer');
 		this.pointer.visible = false;
@@ -275,15 +299,14 @@ class EnemyHUD{
 }
 
 class AllyHUD{
-	constructor(scene, character, imgID, attackBlockID){
+	constructor(scene, character){
 		// hacer offsets en función de la posición del Ally dado. Su posición será en función del número de integrantes de la party
-		this.block = scene.add.image(character.x + character.displayWidth/2, character.y + character.displayHeight * 0.95, imgID);
-		//this.block.x += this.block.displayWidth/4;
-		//this.block.y += this.block.displayHeight * 3/4;
+		this.block = scene.add.image(character.x, 0, 'AllyBlock');
+		this.block.y += this.block.displayHeight/2;
 		
 		this.character = character;
 		
-		this.attackBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*1.94, attackBlockID).setOrigin(0,0);
+		this.attackBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*1.94, 'attackBlock').setOrigin(0,0);
 		this.attackBlock.setScale(1.5,1);
 		this.attackBlock.visible = false;
 
@@ -295,7 +318,6 @@ class AllyHUD{
 		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.mp, this.character.maxMp);
 		this.scene = scene;
 	}
-
 
 	CreateAttacks(scene){
 		this.attackText = [];
@@ -337,6 +359,8 @@ class AllyHUD{
 		attackText.text.on('pointerup', () => {
 			this.scene.selectedAttack = attackText.srcAttack;
 			this.scene.EnableTargetting();
+			this.DisplayAttacks();
+			this.scene.pointer.visible = false;
 		})
 		attackText.text.on('pointerout', () =>{
 			this.scene.pointer.visible = false;

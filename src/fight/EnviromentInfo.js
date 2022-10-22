@@ -1,5 +1,5 @@
 export {EnviromentInfo, EnemiesInfo};
-
+import {attackInfo} from "../fight/Attack.js"
 class EnviromentManager{
 
 	constructor(){
@@ -7,12 +7,8 @@ class EnviromentManager{
 	}
 }
 
-function attackInfo(name,type,dmg,requiredMps,targets){
-	return {name:name,type:type,dmg:dmg,requiredMps:requiredMps,targets:targets}
-}
-
 let park = {
-	info: {character: {imageId: "melendi", initialHP: 75, initialMP: 115,
+	info: {character: {name: "Melendi", imgID: "melendi", hp: 75, mp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	attackInfo("Support 1 Target", 5, 20, 25, 1), attackInfo("Camina por la Vida",5,70,60,1)]}},
@@ -26,5 +22,3 @@ let park = {
 
 let EnviromentInfo = park.info;
 let EnemiesInfo = park.enemies;
-
-
