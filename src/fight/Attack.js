@@ -53,6 +53,11 @@ export class Ultimate extends Attack{
 	}
 }
 
+export function attackInfo(name,type,dmg,requiredMps,targets){
+	return {name:name,type:type,dmg:dmg,requiredMps:requiredMps,targets:targets}
+}
+
+
 const typeOfAttack = {
 	Physical: 0,
 	Ranged: 1,
