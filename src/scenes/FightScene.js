@@ -137,7 +137,11 @@ export class FightScene extends Phaser.Scene {
 		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
 		this.character = new Character(this,this.sys.game.canvas.width/2 - 50, 0, 'manin', 100, 100).setOrigin(0,0);
 		this.character.visible = false;
-		this.character.SetAttacks(0,0,0,0);
+		for(let i = 0; i < 4; i++)
+		{
+			this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
+		}
+		this.character.SetAttacks();
 		this.character.SetStats(5,0,0,0,0,0,100);
 
 		this.enemy = new Character(this,this.sys.game.canvas.width/2, this.sys.game.canvas.height/2,'melendi',100,100);

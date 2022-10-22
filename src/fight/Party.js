@@ -1,7 +1,7 @@
 import Character from './Character.js'
 
 //Importa y crea nuevos tipos de enemigo
-export default class Party{
+class Party{
 	constructor()
 	{
 		this.party = [];
@@ -14,5 +14,5 @@ export default class Party{
 	}
 };
 
-
+export let allyParty = new Party();
 // exportar instancia de Party! YAY FIESTA :)
