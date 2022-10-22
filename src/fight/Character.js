@@ -49,6 +49,14 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.maxMp += this.maxMp * 1 / 5;	
 	}
 
+	Attack(attack, enemy){
+		if(this.mp >= attack.requiredMps){
+			this.mp -= attack.requiredMps;
+			enemy.Damage(attack);
+		}
+		else console.log("NO TENGO MANÁ PAPÁ");
+	}
+
 	Damage(attack)
 	{
 		// Hacer que reciba daño
