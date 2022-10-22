@@ -52,7 +52,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
-
+		
 		// Agregamos el caballero a las físicas para que Phaser lo tenga en cuenta
 		scene.physics.add.existing(this);
 
@@ -121,6 +121,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.interact();
 		}
 
+		
         console.log(this.stepsWalked);
         if(this.stepsWalked > 20){
             this.stepsWalked = 0;

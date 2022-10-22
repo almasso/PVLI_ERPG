@@ -139,19 +139,57 @@ export class FightScene extends Phaser.Scene {
 
 		this.CreateButtons();
 	}
+
+	attack=-1;
+	combat=false;
+	cursor=false;
 	update(t,dt){
-	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
-			this.scene.wake('movement');
-			this.scene.sleep('fightscene');
+		// if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
+		// 	this.scene.wake('movement');
+		// 	this.scene.sleep('fightscene');
+		// }
+	
+		
+		if(Phaser.Input.Keyboard.JustDown(this.aux.aKey)){	
+			this.allyHud.DisplayAttacks();
+			//this.attack=0;
 		}
-		if(Phaser.Input.Keyboard.JustDown(this.aux.dKey)){
-			this.enemy.Damage(this.character.GetAttack(0));
-			this.enemyHud.Update();
-			if(this.enemy.Dead){
-				this.scene.wake('movement');
-				this.scene.sleep('fightscene');
+		if(this.combat===true)
+		{
+			
+			if(Phaser.Input.Keyboard.JustDown(this.aux.dKey)){
+			
+		
+				this.SelectTarget(this.allyHud.attackText[this.attack].srcAttack);
+				this.enemyHud.Update();
+				if(this.enemy.Dead){
+					
+					this.scene.wake('movement');				
+					this.scene.sleep('fightscene');
+					this.allyHud.DisplayAttacks();
+					
+					
+				}
+	
 			}
-		}*/
+			if(this.cursor===false){
+				if(Phaser.Input.Keyboard.JustDown(this.aux.sKey)){
+				
+					if(this.attack<3)
+					this.attack++;
+					else this.attack=0;
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.wKey)){
+					if(this.attack>0)
+					this.attack--;
+					else this.attack=3;
+				}
+			}
+			if(this.attack!=-1){
+				this.pointer.x = this.allyHud.attackText[this.attack].text.x-15;
+				this.pointer.y = this.allyHud.attackText[this.attack].text.y+this.allyHud.attackText[this.attack].text.displayHeight/2;
+			}
+		}
 	}
 }
 
@@ -273,22 +311,35 @@ class AllyHUD{
 		});
 	}
 
+	i=0;
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
+			this.scene.cursor=true;
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
 			console.log("AA SUSTO");
-			this.scene.pointer.visible = true;
-			this.scene.pointer.x = attackText.text.x-15;
-			this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
 
+				this.scene.pointer.x = attackText.text.x-15;
+				this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
+				while(this.i<4)
+				{
+					if(this.attackText[this.i]===attackText) this.scene.attack=this.i;
+					this.i++;
+				}
+				
+			
+
+		});
+		attackText.text.on('pointerout', () => {
+			this.scene.cursor=false;
+			this.i=0;
 		});
 		attackText.text.on('pointerup', () => {
 			this.scene.SelectTarget(attackText.srcAttack);
 		})
-		attackText.text.on('pointerout', () =>{
-			attackText.color = "#ffffff";
-			this.scene.pointer.visible = false;
-		})
+		// attackText.text.on('pointerout', () =>{
+		// 	attackText.color = "#ffffff";
+		// 	this.scene.pointer.visible = false;
+		// })
 	}
 
 	DisplayAttacks(){
@@ -297,6 +348,23 @@ class AllyHUD{
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
+		
+		
+		if(this.scene.combat===false)
+		{
+			this.scene.combat=true;
+			this.scene.pointer.visible = true;
+			this.scene.attack=0;
+			
+		}
+		else if(this.scene.combat===true)
+		{
+			this.scene.combat=false;
+			this.scene.pointer.visible = false;
+			this.scene.attack=-1;
+		}
+			
+		
 	}
 
 	Update(){
@@ -310,9 +378,10 @@ class InputMan extends Phaser.GameObjects.Sprite{
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
-		this.aKey = this.scene.input.keyboard.addKey('A'); // move left
+		this.aKey = this.scene.input.keyboard.addKey('A'); // Attack
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		
 	}
 }
