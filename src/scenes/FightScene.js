@@ -149,7 +149,7 @@ export class FightScene extends Phaser.Scene {
 
 		// Creación de enemigos
 		this.enemiesHud = [];
-		this.GenerateRandomEncounter(),
+		this.GenerateRandomEncounter();
 
 		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
 		this.character = new Character(this,this.sys.game.canvas.width/2 - 50, 0, 'manin', 100, 100).setOrigin(0,0);
@@ -241,6 +241,7 @@ class EnemyHUD{
 		this.enemyImg = scene.add.image(this.character.x,this.character.y, character.imageId);
 		this.enemyImg.setScale(0.13);
 		this.healthBar = new HealthBar(scene,this.enemyImg.x - this.enemyImg.displayWidth/2, this.enemyImg.y + 11*this.enemyImg.displayHeight/20,this.enemyImg.displayWidth, 'HP',character.maxHp);
+		this.Update();
 	}
 	
 	Update(){
