@@ -81,11 +81,47 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 	}
 
+
+	ToggleAttackButtons(bool)
+	{
+		if(bool)
+		{
+			this.attackButton.setInteractive();
+			this.attackButtonHover.setInteractive();
+		}
+		else
+		{
+			this.attackButton.disableInteractive();
+			this.attackButtonHover.disableInteractive();
+		}
+	}
+
+	ToggleObjectButtons(bool)
+	{
+		if(bool)
+		{
+			this.objectButton.setInteractive();
+			this.objectButtonHover.setInteractive();
+		}
+		else
+		{
+			this.objectButton.disableInteractive();
+			this.objectButtonHover.disableInteractive();
+		}
+	}
+
+	ToggleButtons(bool){
+		this.ToggleAttackButtons(bool);
+		this.ToggleObjectButtons(bool);
+	}
+
+
 	EnableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
 		for(let i = 0; i < this.enemies.length; i++){
 			this.enemies[i].setInteractive();
 		}
+		this.ToggleButtons(false);
 	}
 	DisableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
@@ -93,6 +129,7 @@ export class FightScene extends Phaser.Scene {
 			this.enemies[i].disableInteractive();
 		}
 		this.pointer.visible = false;
+		this.ToggleButtons(true);
 	}
 
 	CheckState(array){
@@ -104,6 +141,7 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	EndCombat(){
+		this.ReturnParty();
 		this.scene.wake('movement');
 		this.scene.stop('fightscene');
 	}
@@ -112,8 +150,9 @@ export class FightScene extends Phaser.Scene {
 		this.allies = [];
 		let self = this;
 		allyParty.party.forEach(function (ally, index){
-			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.hp, ally.mp)
+			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
 			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
+			self.allies[index].dead = ally.dead;
 			let scene = self;
 			ally.attack.forEach(function (attack) {
 				scene.allies[index].SetAttacks(attack);
@@ -124,17 +163,28 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
+	ReturnParty()
+	{
+		let self = this;
+		allyParty.party.forEach(function (ally, index)
+		{
+			ally.actualHp = self.allies[index].actualHp;
+			ally.actualMp = self.allies[index].actualMp;
+			ally.dead = self.allies[index].dead;
+		})
+	}
+
 	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let enemiesNumber = 2//this.GetRandom(5, false);
 		for(let i = 0; i < enemiesNumber; i++){
-			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
+			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
-				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			else{
-				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
@@ -184,6 +234,7 @@ export class FightScene extends Phaser.Scene {
 				// PUM ataque enemigos
 				this.EnemyAttacks();
 			}
+
 			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
 			if(this.allies[this.currentAlly].dead) this.NextAlly();
 		}
@@ -262,6 +313,8 @@ export class FightScene extends Phaser.Scene {
 		this.pointer.visible = false;
 
 		this.CreateButtons();
+
+		if(this.allies[0].dead) this.NextAlly(); // Si el primer personaje está muerto, que se actualice el turno
 	}
 	update(t,dt){
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
@@ -337,11 +390,11 @@ class EnemyHUD{
 	{
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.healthBar = new HealthBar(scene,this.character.x - this.character.displayWidth/16, this.character.y + this.character.displayHeight/15,this.character.displayWidth/8, 'HP', this.character.hp, this.character.maxHp);
+		this.healthBar = new HealthBar(scene,this.character.x - this.character.displayWidth/16, this.character.y + this.character.displayHeight/15,this.character.displayWidth/8, 'HP', this.character.actualHp, this.character.maxHp);
 	}
 	
 	Update(){
-		this.healthBar.Update(this.character.hp)
+		this.healthBar.Update(this.character.actualHp)
 	}
 }
 
@@ -361,8 +414,8 @@ class AllyHUD{
 		this.CreateAttacks(scene);
 		
 		
-		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.hp, this.character.maxHp);
-		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.mp, this.character.maxMp);
+		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.actualHp, this.character.maxHp);
+		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.actualMp, this.character.maxMp);
 		this.scene = scene;
 	}
 
@@ -420,11 +473,13 @@ class AllyHUD{
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
+
+		this.scene.ToggleObjectButtons(!this.attackBlock.visible);
 	}
 
 	Update(){
-		this.HealthBar.Update(this.character.hp);
-		this.ManaBar.Update(this.character.mp);
+		this.HealthBar.Update(this.character.actualHp);
+		this.ManaBar.Update(this.character.actualMp);
 	}
 }
 
