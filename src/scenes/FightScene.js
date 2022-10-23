@@ -394,13 +394,13 @@ export class FightScene extends Phaser.Scene {
 			this.scene.sleep('fightscene');
 		}*/
 		if(this.choseE===false && this.choseA===false){
-			if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
 				this.alliesHud[this.currentAlly].DisplayAttacks();
 			}
 			if(this.combat===true)
 			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 				{
 					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
 						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
@@ -456,7 +456,7 @@ export class FightScene extends Phaser.Scene {
 		else if(this.choseE===true)
 		{
 			
-			if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 			{					
 				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
@@ -485,7 +485,7 @@ export class FightScene extends Phaser.Scene {
 		}
 		else
 		{
-			if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 			{					
 				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
@@ -728,5 +728,8 @@ class InputMan extends Phaser.GameObjects.Sprite{
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		//···RAUL···
+		this.eKey = this.scene.input.keyboard.addKey('E'); //chose
+		this.qKey = this.scene.input.keyboard.addKey('Q');  //attack
 	}
 }
