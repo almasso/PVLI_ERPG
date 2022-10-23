@@ -23,6 +23,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.dead = false;
 		this.speed = 0;
 		this.attacks = [];
+		this.targets = [];
 
 		// Estados Alterados
 	}
@@ -48,10 +49,12 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.maxMp += this.maxMp * 1 / 5;	
 	}
 
-	Attack(attack, enemy){
+	Attack(attack){
 		if(this.mp >= attack.requiredMps){
+			this.targets.forEach(function (enemy) {
+				enemy.Damage(attack);
+			})
 			this.mp -= attack.requiredMps;
-			enemy.Damage(attack);
 		}
 		else console.log("NO TENGO MANÁ PAPÁ");
 	}

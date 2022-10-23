@@ -158,12 +158,20 @@ export class FightScene extends Phaser.Scene {
 	EnemyAttacks(){
 		for(let i = 0; i < this.enemies.length; i++){
 			console.log("AtacandO!");
-			let selectedTarget = this.GetRandom(this.allies.length, true);
-			let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
-			this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack), this.allies[selectedTarget]);
-			this.alliesHud[selectedTarget].Update();
+			let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
+			let selectedTarget = [];
+			for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
+				selectedTarget.push(this.GetRandom(this.allies.length, true));
+				this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+			}
+			this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+
+			for(let h = 0; h < selectedTarget.length; h++){
+				this.alliesHud[selectedTarget[h]].Update();
+			}
 			console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
 			console.log(selectedTarget);
+			this.enemies[i].targets = [];
 		}
 	}
 
@@ -175,26 +183,36 @@ export class FightScene extends Phaser.Scene {
 		this.currentAlly = (this.currentAlly + 1) % this.allies.length; 
 	}
 
+	AllyAttack(){
+		this.allies[this.currentAlly].Attack(this.selectedAttack);
+		let self = this;
+		this.allies[this.currentAlly].targets.forEach(function (enemy) {
+			let i = 0;
+			while(self.enemiesHud[i].character !== enemy){i++;}
+			self.enemiesHud[i].Update();
+		})
+		this.allies[this.currentAlly].targets = [];
+		this.DisableTargetting();
+		this.alliesHud[this.currentAlly].Update();
+		this.NextAlly();
+	}
+
 	AddEnemySelector(enemy){
 		enemy.on("pointerover",() => {
-			console.log("SELECCIONANDO A " + enemy.imageId);
+			//console.log("SELECCIONANDO A " + enemy.imageId);
 			this.pointer.visible = true;
 			this.pointer.x = enemy.x;
 			this.pointer.y = enemy.y - 75;
 			this.pointer.angle = 90;
 		})
 		enemy.on("pointerout",() => {
-			console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
+			this.pointer.visible = false;
+			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		enemy.on("pointerup",() => {
 			console.log("ATACANDO A " + enemy.imageId);
-			this.allies[this.currentAlly].Attack(this.selectedAttack,enemy);
-			let i = 0;
-			while(this.enemiesHud[i].character != enemy){i++;}
-			this.enemiesHud[i].Update();
-			this.DisableTargetting();
-			this.alliesHud[this.currentAlly].Update();
-			this.NextAlly();
+			this.allies[this.currentAlly].targets.push(enemy);
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
 		})
 	}
 
