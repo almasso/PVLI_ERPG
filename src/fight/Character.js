@@ -73,7 +73,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 	Die()
 	{
-		this.Dead = true;
+		this.dead = true;
 	}
 
 }

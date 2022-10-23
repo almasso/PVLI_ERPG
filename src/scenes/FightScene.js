@@ -95,11 +95,12 @@ export class FightScene extends Phaser.Scene {
 		this.pointer.visible = false;
 	}
 
-	CheckEnemies(){
-		// Esto tiene que ver el estado de los enemigos cada vez que les pegan. 
-		/*if(this.enemy.Dead){
-			this.EndCombat();
-		}*/
+	CheckState(array){
+		let i = 0;
+		while(i < array.length && array[i].dead){
+			i++;
+		}
+		return i === array.length;
 	}
 
 	EndCombat(){
@@ -157,30 +158,35 @@ export class FightScene extends Phaser.Scene {
 
 	EnemyAttacks(){
 		for(let i = 0; i < this.enemies.length; i++){
-			console.log("AtacandO!");
-			let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
-			let selectedTarget = [];
-			for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
-				selectedTarget.push(this.GetRandom(this.allies.length, true));
-				this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+			if(!this.enemies[i].dead){
+				console.log("AtacandO!");
+				let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
+				let selectedTarget = [];
+				for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
+					selectedTarget.push(this.GetRandom(this.allies.length, true));
+					this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+				}
+				this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+				for(let h = 0; h < selectedTarget.length; h++){
+					this.alliesHud[selectedTarget[h]].Update();
+				}
+				console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
+				console.log(selectedTarget);
+				this.enemies[i].targets = [];
 			}
-			this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
-
-			for(let h = 0; h < selectedTarget.length; h++){
-				this.alliesHud[selectedTarget[h]].Update();
-			}
-			console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
-			console.log(selectedTarget);
-			this.enemies[i].targets = [];
 		}
 	}
 
 	NextAlly(){
-		if (this.currentAlly + 1 === this.allies.length){
-			// PUM ataque enemigos
-			this.EnemyAttacks();
+		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat(); }
+		else {
+			if (this.currentAlly + 1 === this.allies.length){
+				// PUM ataque enemigos
+				this.EnemyAttacks();
+			}
+			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
+			if(this.allies[this.currentAlly].dead) this.NextAlly();
 		}
-		this.currentAlly = (this.currentAlly + 1) % this.allies.length; 
 	}
 
 	AllyAttack(){
