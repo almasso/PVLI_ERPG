@@ -413,7 +413,7 @@ export class FightScene extends Phaser.Scene {
 						  console.log(this.allies.length);
 					
 						}
-						else {
+						else{
 						 this.EnableTargetting(this.enemies);
 						 this.choseE=true;
 						 this.enemyselected=0;
@@ -456,7 +456,7 @@ export class FightScene extends Phaser.Scene {
 		else if(this.choseE===true)
 		{
 			
-			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
 			{					
 				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
@@ -496,16 +496,16 @@ export class FightScene extends Phaser.Scene {
 			{
 				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
 				{
-					if(this.enemyselected<this.enemies.length-1) this.enemyselected++;
-					else this.enemyselected=0;
+					if(this.allaySelected<this.allies.length-1) this.allaySelected++;
+					else this.allaySelected=0;
 				}
 				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
 				{
-					if(this.enemyselected>0)this.enemyselected--;
-					else this.enemyselected=this.enemies.length-1;
+					if(this.allaySelected>0)this.allaySelected--;
+					else this.allaySelected=this.allies.length-1;
 				}
 			}
-			if(this.enemyselected!=-1)
+			if(this.allaySelected!=-1)
 			{
 				this.pointer.x = this.allies[this.allaySelected].x-75;
 				this.pointer.y = this.allies[this.allaySelected].y;
