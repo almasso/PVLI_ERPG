@@ -161,17 +161,28 @@ export class FightScene extends Phaser.Scene {
 			self.AddPartySelector(self.allies[index]);
 		})
 	}
-
+	
+    k=0;//···RAUL PRUEBAS···
 	AddPartySelector(ally){
 		ally.on("pointerover",() => {
 			//console.log("SELECCIONANDO A " + enemy.imageId);
 			this.pointer.visible = true;
+			this.cursor=true;//···RAUL PRUEBAS···
 			this.pointer.x = ally.x - 75;
 			this.pointer.y = ally.y;
 			this.pointer.angle = 0;
+			//···RAUL PRUEBAS···
+			while(this.k<this.allies.length)
+			{
+				if(this.allies[this.k]===ally)this.allaySelected=this.k;
+				this.k++;
+			}
 		})
 		ally.on("pointerout",() => {
-			this.pointer.visible = false;
+			//this.pointer.visible = false;
+			//···RAUL PRUEBAS···
+			this.cursor=false;
+			this.k=0;
 			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		ally.on("pointerup",() => {
@@ -260,6 +271,11 @@ export class FightScene extends Phaser.Scene {
 
 			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
 			if(this.allies[this.currentAlly].dead) this.NextAlly();
+
+			//···RAUL PRUEBAS···
+			this.choseA=false;
+			this.choseE=false;
+			this.pointer.visible=false;
 		}
 	}
 
@@ -285,22 +301,36 @@ export class FightScene extends Phaser.Scene {
 		this.NextAlly();
 	}
 
+	i=0;//···RAUL PRUEBAS···
 	AddEnemySelector(enemy){
 		enemy.on("pointerover",() => {
 			//console.log("SELECCIONANDO A " + enemy.imageId);
 			this.pointer.visible = true;
+			this.cursor=true;//···RAUL PRUEBAS···
 			this.pointer.x = enemy.x;
 			this.pointer.y = enemy.y - 75;
 			this.pointer.angle = 90;
+			
+			//···RAUL PRUEBAS···
+			while(this.i<this.enemies.length)
+			{
+				if(this.enemies[this.i]===enemy)this.enemyselected=this.i;
+				this.i++;
+			}
 		})
 		enemy.on("pointerout",() => {
-			this.pointer.visible = false;
+			//this.pointer.visible = false;
+			//···RAUL PRUEBAS···
+			this.cursor=false;
+			this.i=0;
 			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		enemy.on("pointerup",() => {
 			console.log("ATACANDO A " + enemy.imageId);
 			this.allies[this.currentAlly].targets.push(enemy);
 			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+			//this.chose=false;
+			//this.pointer.visible = false;
 		})
 	}
 
@@ -348,19 +378,142 @@ export class FightScene extends Phaser.Scene {
 
 		if(this.allies[0].dead) this.NextAlly(); // Si el primer personaje está muerto, que se actualice el turno
 	}
+
+	//···RAUL PRUEBAS···
+	attack=-1;
+	enemyselected=-1;
+	combat=false;
+	cursor=false;
+	choseE=false;
+	choseA=false;
+	//···RAUL PRUEBAS···
+
 	update(t,dt){
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
-		}
-		if(Phaser.Input.Keyboard.JustDown(this.aux.dKey)){
-			this.enemy.Damage(this.character.GetAttack(0));
-			this.enemyHud.Update();
-			if(this.enemy.Dead){
-				this.scene.wake('movement');
-				this.scene.sleep('fightscene');
-			}
 		}*/
+		if(this.choseE===false && this.choseA===false){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+			{
+				this.alliesHud[this.currentAlly].DisplayAttacks();
+			}
+			if(this.combat===true)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
+						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+						{ 
+						  this.EnableTargetting(this.allies);
+						  this.choseA=true;
+						  this.allaySelected=0;
+						  console.log(this.allaySelected);
+						  console.log(this.allies.length);
+					
+						}
+						else {
+						 this.EnableTargetting(this.enemies);
+						 this.choseE=true;
+						 this.enemyselected=0;
+						 console.log(this.enemyselected);
+						 console.log(this.enemies.length);
+
+						}
+						this.alliesHud[this.currentAlly].DisplayAttacks();
+						this.ToggleButtons(false);
+						this.pointer.visible = true;
+						this.combat=false;
+						
+					} else console.log("No hay maná ;-;");
+
+					
+				}
+
+				if(this.cursor===false)
+				{
+					if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+					{
+						if(this.attack<3) this.attack++;
+						else this.attack=0;
+					}
+					if(Phaser.Input.Keyboard.JustDown(this.aux.wKey))
+					{
+						if(this.attack>0)this.attack--;
+						else this.attack=3;
+					}
+				}
+				if(this.attack!=-1)
+				{
+					this.pointer.x=this.alliesHud[this.currentAlly].attackText[this.attack].text.x-15;
+					this.pointer.angle = 0;
+					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
+				}
+			}
+			
+		}
+		else if(this.choseE===true)
+		{
+			
+			if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+			{					
+				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.enemyselected<this.enemies.length-1) this.enemyselected++;
+					else this.enemyselected=0;
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.enemyselected>0)this.enemyselected--;
+					else this.enemyselected=this.enemies.length-1;
+				}
+			}
+			if(this.enemyselected!=-1)
+			{
+				this.pointer.x = this.enemies[this.enemyselected].x;
+				this.pointer.y = this.enemies[this.enemyselected].y - 75;
+				this.pointer.angle = 90;
+			}
+		}
+		else
+		{
+			if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+			{					
+				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.enemyselected<this.enemies.length-1) this.enemyselected++;
+					else this.enemyselected=0;
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.enemyselected>0)this.enemyselected--;
+					else this.enemyselected=this.enemies.length-1;
+				}
+			}
+			if(this.enemyselected!=-1)
+			{
+				this.pointer.x = this.allies[this.allaySelected].x-75;
+				this.pointer.y = this.allies[this.allaySelected].y;
+				this.pointer.angle = 0;
+
+	
+			}
+		}
 	}
 }
 
@@ -478,30 +631,62 @@ class AllyHUD{
 			self.CreateAttackButton(self.attackText[index]);
 		});
 	}
-
+	//···RAUL PRUEBAS···
+	i=0;
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
+				this.scene.cursor=true; //···RAUL PRUEBAS···
 			this.scene.pointer.visible = true;
 			this.scene.pointer.x = attackText.text.x-15;
 			this.scene.pointer.angle = 0;
 			this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
 			this.scene.pointer.setScale(1);
+			
+			//···RAUL PRUEBAS···
+			while(this.i<4)
+			{
+				if(this.attackText[this.i]===attackText) this.scene.attack=this.i;
+				this.i++;
+			}
 			} else console.log("NO HAY PUNTERO ;-;");
 		});
 		attackText.text.on('pointerup', () => {
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
 				this.scene.selectedAttack = attackText.srcAttack;
-				if(attackText.srcAttack.isSupport()) this.scene.EnableTargetting(this.scene.allies);
-				else {this.scene.EnableTargetting(this.scene.enemies)};
+				if(attackText.srcAttack.isSupport())
+				{
+					 this.scene.EnableTargetting(this.scene.allies);
+
+					 //···RAUL PRUEBAS···
+					 this.scene.choseA=true;
+					this.scene.cursor=false;
+					this.scene.allaySelected=0;
+					console.log(this.scene.allaySelected);
+					console.log(this.scene.allies.length);
+				}
+				else {
+					this.scene.EnableTargetting(this.scene.enemies);
+					//···RAUL PRUEBAS···
+					this.scene.choseE=true;
+					this.scene.cursor=false;
+					this.scene.enemyselected=0;
+					console.log(this.scene.enemyselected);
+					console.log(this.scene.enemies.length);
+				}
 				this.DisplayAttacks();
 				this.scene.ToggleButtons(false);
-				this.scene.pointer.visible = false;
+				this.scene.pointer.visible = true;//···RAUL PRUEBAS···
+				this.scene.combat=false;//···RAUL PRUEBAS···
+				
 			} else console.log("No hay maná ;-;");
 		})
 		attackText.text.on('pointerout', () =>{
-			this.scene.pointer.visible = false;
+			//this.scene.pointer.visible = false;
+			//···RAUL PRUEBAS···
+			this.scene.cursor=false;
+			this.i=0;
 		})
 	}
 
@@ -512,6 +697,19 @@ class AllyHUD{
 			attack.mp.visible = !attack.mp.visible;
 		});
 		this.scene.ToggleObjectButtons(!this.attackBlock.visible);
+			//···RAUL PRUEBAS···
+		if(this.scene.combat===false)
+		{
+			this.scene.combat=true;
+			this.scene.pointer.visible=true;
+			this.scene.attack=0;
+		}
+		else if (this.scene.combat===true)
+		{
+			this.scene.combat=false;
+			this.scene.pointer.visible=false;
+			this.scene.attack=-1;
+		}
 	}
 
 	Update(){
