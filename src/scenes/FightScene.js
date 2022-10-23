@@ -115,11 +115,10 @@ export class FightScene extends Phaser.Scene {
 		this.ToggleObjectButtons(bool);
 	}
 
-
 	EnableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
 		for(let i = 0; i < this.enemies.length; i++){
-			this.enemies[i].setInteractive();
+			if(!this.enemies[i].dead) this.enemies[i].setInteractive();
 		}
 		this.ToggleButtons(false);
 	}
@@ -207,13 +206,16 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	EnemyAttacks(){
-		for(let i = 0; i < this.enemies.length; i++){
+		let i = 0;
+		while(i < this.enemies.length && !this.CheckState(this.allies)){
 			if(!this.enemies[i].dead){
 				console.log("AtacandO!");
 				let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
 				let selectedTarget = [];
 				for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
-					selectedTarget.push(this.GetRandom(this.allies.length, true));
+					let random = this.GetRandom(this.allies.length, true);
+					while(this.allies[random].dead) { random = (random +1) % this.allies.length};
+					selectedTarget.push(random);
 					this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
 				}
 				this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
@@ -224,7 +226,9 @@ export class FightScene extends Phaser.Scene {
 				console.log(selectedTarget);
 				this.enemies[i].targets = [];
 			}
+			i++;
 		}
+		if(i < this.enemies.length) this.EndCombat();
 	}
 
 	NextAlly(){

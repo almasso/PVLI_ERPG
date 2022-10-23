@@ -7,6 +7,7 @@ const typeOfAttack = {
 	Toxic: 4,
 	Support: 5
 };
+
 export default class Character extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, imageId, actualHp, maxHp, actualMp, maxMp){
 		super(scene, x, y, imageId);
@@ -75,5 +76,4 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	{
 		this.dead = true;
 	}
-
 }
