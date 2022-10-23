@@ -8,8 +8,8 @@ class Party{
 	{
 		this.party = [characterInfo("Manín","manin",100,100,5,5,5,5,5,90,50,
 					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
-					  attackInfo("Pistola Agua",1,45,25,1),attackInfo("Asserting Dominance",1,60,60,1)]),
-					EnviromentInfo.character,EnviromentInfo.character,EnviromentInfo.character ];
+					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
+					EnviromentInfo.character];
 		this.level = 1;
 	}
 

@@ -126,7 +126,7 @@ export class FightScene extends Phaser.Scene {
 	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
-		let enemiesNumber = Math.floor(Math.random()*4 + 1);
+		let enemiesNumber = 2//this.GetRandom(5, false);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
 			if(i === 0) {
@@ -148,7 +148,30 @@ export class FightScene extends Phaser.Scene {
 		}
 	}
 
+	// Genera un random de 0 a maxRange (enteros)
+	GetRandom(maxRange, bool){
+		// esto nos sirve para sumar 1 al resultado o no dependiendo si buscamos un índice o qué onda
+		if(bool) return Math.floor(Math.random()*maxRange); 
+		else return Math.floor(Math.random()*maxRange + 1);
+	}
+
+	EnemyAttacks(){
+		for(let i = 0; i < this.enemies.length; i++){
+			console.log("AtacandO!");
+			let selectedTarget = this.GetRandom(this.allies.length, true);
+			let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
+			this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack), this.allies[selectedTarget]);
+			this.alliesHud[selectedTarget].Update();
+			console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
+			console.log(selectedTarget);
+		}
+	}
+
 	NextAlly(){
+		if (this.currentAlly + 1 === this.allies.length){
+			// PUM ataque enemigos
+			this.EnemyAttacks();
+		}
 		this.currentAlly = (this.currentAlly + 1) % this.allies.length; 
 	}
 

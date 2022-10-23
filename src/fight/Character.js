@@ -22,7 +22,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.acurracy = 0;
 		this.dead = false;
 		this.speed = 0;
-
 		this.attacks = [];
 
 		// Estados Alterados
