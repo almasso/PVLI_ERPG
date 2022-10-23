@@ -21,6 +21,9 @@ export default class MovementExample extends Phaser.Scene {
 		
 		//TEST DE NPCS
 		this.load.image('melendi','assets/textures/Melendi.png'); 
+
+		//TEST DE JSON
+		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
 		
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
@@ -39,15 +42,15 @@ export default class MovementExample extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
+		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let manin = new Manin(this, 100, 50);
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0);
+		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
         this.cameras.main.startFollow(manin);
         let house = new enviromentObj(this,400,300, 'house');
-		npc1.readDialogues();
         
 		let scene = this; // Nos guardamos una referencia a la escena para usarla en la función anidada que viene a continuación
 		
@@ -67,6 +70,16 @@ export default class MovementExample extends Phaser.Scene {
 		 * El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		 * También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		 */
+		manin.collider = null;
+
+		scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			console.log("HA HABIDO COLISIÓN")
+			gameObject1.collider = gameObject2;
+		});
+
+		scene.matter.world.on('collisionend', function(event, bodyA, bodyB) {
+			bodyA.collider = null;
+		});
 	}
 
     Fight(){

@@ -26,7 +26,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [MovementExample, FightScene, {preload:preload}],
+    scene: [MovementExample, FightScene],
     physics: { 
         default: 'arcade', 
         arcade: { 
@@ -44,10 +44,8 @@ let config = {
     version: "0.0.1"
 };
 
-export let game = new Phaser.Game(config);
+new Phaser.Game(config);
 
-function preload() {
-    this.load.json('npc_dialogues', '../assets/dialogues/npc_dialog.json'); 
-}
+
 
 
