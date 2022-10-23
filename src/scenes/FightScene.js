@@ -111,6 +111,7 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	ToggleButtons(bool){
+
 		this.ToggleAttackButtons(bool);
 		this.ToggleObjectButtons(bool);
 	}
@@ -120,7 +121,6 @@ export class FightScene extends Phaser.Scene {
 		for(let i = 0; i < array.length; i++){
 			if(!array[i].dead) array[i].setInteractive();
 		}
-		this.ToggleButtons(false);
 	}
 	DisableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
@@ -128,7 +128,6 @@ export class FightScene extends Phaser.Scene {
 			array[i].disableInteractive();
 		}
 		this.pointer.visible = false;
-		this.ToggleButtons(true);
 	}
 
 	CheckState(array){
@@ -281,6 +280,7 @@ export class FightScene extends Phaser.Scene {
 		this.allies[this.currentAlly].targets = [];
 		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
 		this.DisableTargetting(this.enemies);
+		this.ToggleButtons(true);
 		this.alliesHud[this.currentAlly].Update();
 		this.NextAlly();
 	}
@@ -478,7 +478,7 @@ class AllyHUD{
 			self.CreateAttackButton(self.attackText[index]);
 		});
 	}
-EnableTargetting
+
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
@@ -496,6 +496,7 @@ EnableTargetting
 				if(attackText.srcAttack.isSupport()) this.scene.EnableTargetting(this.scene.allies);
 				else {this.scene.EnableTargetting(this.scene.enemies)};
 				this.DisplayAttacks();
+				this.scene.ToggleButtons(false);
 				this.scene.pointer.visible = false;
 			} else console.log("No hay maná ;-;");
 		})
@@ -510,7 +511,6 @@ EnableTargetting
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
-
 		this.scene.ToggleObjectButtons(!this.attackBlock.visible);
 	}
 
