@@ -2,9 +2,9 @@ Cosas que faltan:
 
 Qué queremos para la DEMO?
 - zona con combates aleatorios y dos enemigos genéricos.
--
+- que la zona sea bonita o algo y no atravesemos putas parades :)
  
 
 ERRORES: 
-	- No tienes maná, atacas y pierdes turno (mecánica emergente??)
+	- ...
 
