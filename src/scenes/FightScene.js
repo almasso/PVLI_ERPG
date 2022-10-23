@@ -115,17 +115,17 @@ export class FightScene extends Phaser.Scene {
 		this.ToggleObjectButtons(bool);
 	}
 
-	EnableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+	EnableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
-		for(let i = 0; i < this.enemies.length; i++){
-			if(!this.enemies[i].dead) this.enemies[i].setInteractive();
+		for(let i = 0; i < array.length; i++){
+			if(!array[i].dead) array[i].setInteractive();
 		}
 		this.ToggleButtons(false);
 	}
-	DisableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+	DisableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
-		for(let i = 0; i < this.enemies.length; i++){
-			this.enemies[i].disableInteractive();
+		for(let i = 0; i < array.length; i++){
+			array[i].disableInteractive();
 		}
 		this.pointer.visible = false;
 		this.ToggleButtons(true);
@@ -159,6 +159,26 @@ export class FightScene extends Phaser.Scene {
 			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 			self.allies[index].scale = 0.08;
 			self.allies[index].depth = 1;
+			self.AddPartySelector(self.allies[index]);
+		})
+	}
+
+	AddPartySelector(ally){
+		ally.on("pointerover",() => {
+			//console.log("SELECCIONANDO A " + enemy.imageId);
+			this.pointer.visible = true;
+			this.pointer.x = ally.x - 75;
+			this.pointer.y = ally.y;
+			this.pointer.angle = 0;
+		})
+		ally.on("pointerout",() => {
+			this.pointer.visible = false;
+			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
+		})
+		ally.on("pointerup",() => {
+			console.log("SUPPORTEANDO A " + ally.imageId);
+			this.allies[this.currentAlly].targets.push(ally);
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
 		})
 	}
 
@@ -249,11 +269,18 @@ export class FightScene extends Phaser.Scene {
 		let self = this;
 		this.allies[this.currentAlly].targets.forEach(function (enemy) {
 			let i = 0;
-			while(self.enemiesHud[i].character !== enemy){i++;}
-			self.enemiesHud[i].Update();
+			if(self.selectedAttack.isSupport()){
+				while(self.alliesHud[i].character !== enemy){i++;}
+				self.alliesHud[i].Update();
+			}
+			else{
+				while(self.enemiesHud[i].character !== enemy){i++;}
+				self.enemiesHud[i].Update();
+			}
 		})
 		this.allies[this.currentAlly].targets = [];
-		this.DisableTargetting();
+		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
+		this.DisableTargetting(this.enemies);
 		this.alliesHud[this.currentAlly].Update();
 		this.NextAlly();
 	}
@@ -315,6 +342,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.pointer = this.add.image(0,0,'attackPointer');
 		this.pointer.visible = false;
+		this.pointer.depth = 2;
 
 		this.CreateButtons();
 
@@ -450,7 +478,7 @@ class AllyHUD{
 			self.CreateAttackButton(self.attackText[index]);
 		});
 	}
-
+EnableTargetting
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
@@ -465,7 +493,8 @@ class AllyHUD{
 		attackText.text.on('pointerup', () => {
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
 				this.scene.selectedAttack = attackText.srcAttack;
-				this.scene.EnableTargetting();
+				if(attackText.srcAttack.isSupport()) this.scene.EnableTargetting(this.scene.allies);
+				else {this.scene.EnableTargetting(this.scene.enemies)};
 				this.DisplayAttacks();
 				this.scene.pointer.visible = false;
 			} else console.log("No hay maná ;-;");

@@ -71,6 +71,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			this.actualHp = 0;
 			this.Die();
 		}
+		else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 	}
 
 	Die()
