@@ -1,24 +1,10 @@
-Cosas que faltan en PVLI
-
-objeto EnviromentInfo tiene:
-	información del NPC aliado
-	información de los enemigos
-
-también debería tener:	
-	información del background de la imagen
-	y objetos que haya por escena: (posición, y tal)
-	
-este objeto se conecta con las escenas y estas se actualizan en función de 
-la información de este objeto. (y)
-
-
+Cosas que faltan:
 
 Qué queremos para la DEMO?
-
-yo había pensado en una zona donde poder pegarte con enemigos aleatorios (por ejemplo, 
-el parque, que es la primera zona que se ve.
-
+- zona con combates aleatorios y dos enemigos genéricos.
+- que la zona sea bonita o algo y no atravesemos putas parades :)
+ 
 
 ERRORES: 
-	- no hemos ejecutado deseadnos suerte ;-;
+	- ...
 

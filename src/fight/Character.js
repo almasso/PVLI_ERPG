@@ -7,23 +7,24 @@ const typeOfAttack = {
 	Toxic: 4,
 	Support: 5
 };
+
 export default class Character extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, imageId, initialHP, initialMP){
+	constructor(scene, x, y, imageId, actualHp, maxHp, actualMp, maxMp){
 		super(scene, x, y, imageId);
 		this.imageId = imageId;
 		this.scene.add.existing(this);
 		
-		this.hp = initialHP;
-		this.maxHp = initialHP;
-		this.mp = initialMP;
-		this.maxMp = initialMP;
+		this.actualHp = actualHp;
+		this.maxHp = maxHp;
+		this.actualMp = actualMp;
+		this.maxMp = maxMp;
 		this.lvl = 1;
 		this.resistances = [0, 0, 0, 0, 0, 0]; 
 		this.acurracy = 0;
 		this.dead = false;
 		this.speed = 0;
-
 		this.attacks = [];
+		this.targets = [];
 
 		// Estados Alterados
 	}
@@ -49,29 +50,32 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.maxMp += this.maxMp * 1 / 5;	
 	}
 
-	Attack(attack, enemy){
-		if(this.mp >= attack.requiredMps){
-			this.mp -= attack.requiredMps;
+	CanAttack(attack){
+		return this.actualMp >= attack.requiredMps;
+	}
+
+	Attack(attack){
+		this.targets.forEach(function (enemy) {
 			enemy.Damage(attack);
-		}
-		else console.log("NO TENGO MANÁ PAPÁ");
+		})
+		this.actualMp -= attack.requiredMps;
 	}
 
 	Damage(attack)
 	{
 		// Hacer que reciba daño
-		this.hp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
-		this.hp = Math.floor(this.hp);
-		if(this.hp <= 0) 
+		this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
+		this.actualHp = Math.floor(this.actualHp);
+		if(this.actualHp <= 0) 
 		{
-			this.hp = 0;
+			this.actualHp = 0;
 			this.Die();
 		}
+		else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 	}
 
 	Die()
 	{
-		this.Dead = true;
+		this.dead = true;
 	}
-
 }

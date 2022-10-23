@@ -17,6 +17,10 @@ export class Attack{
 	{
 		return this.type;
 	}
+
+	isSupport(){
+		return this.type === 5;
+	}
 }
 
 export class Ultimate extends Attack{

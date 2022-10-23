@@ -81,28 +81,65 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 	}
 
-	EnableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
-		
-		for(let i = 0; i < this.enemies.length; i++){
-			this.enemies[i].setInteractive();
+
+	ToggleAttackButtons(bool)
+	{
+		if(bool)
+		{
+			this.attackButton.setInteractive();
+			this.attackButtonHover.setInteractive();
+		}
+		else
+		{
+			this.attackButton.disableInteractive();
+			this.attackButtonHover.disableInteractive();
 		}
 	}
-	DisableTargetting(){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+
+	ToggleObjectButtons(bool)
+	{
+		if(bool)
+		{
+			this.objectButton.setInteractive();
+			this.objectButtonHover.setInteractive();
+		}
+		else
+		{
+			this.objectButton.disableInteractive();
+			this.objectButtonHover.disableInteractive();
+		}
+	}
+
+	ToggleButtons(bool){
+
+		this.ToggleAttackButtons(bool);
+		this.ToggleObjectButtons(bool);
+	}
+
+	EnableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
 		
-		for(let i = 0; i < this.enemies.length; i++){
-			this.enemies[i].disableInteractive();
+		for(let i = 0; i < array.length; i++){
+			if(!array[i].dead) array[i].setInteractive();
+		}
+	}
+	DisableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+		
+		for(let i = 0; i < array.length; i++){
+			array[i].disableInteractive();
 		}
 		this.pointer.visible = false;
 	}
 
-	CheckEnemies(){
-		// Esto tiene que ver el estado de los enemigos cada vez que les pegan. 
-		/*if(this.enemy.Dead){
-			this.EndCombat();
-		}*/
+	CheckState(array){
+		let i = 0;
+		while(i < array.length && array[i].dead){
+			i++;
+		}
+		return i === array.length;
 	}
 
 	EndCombat(){
+		this.ReturnParty();
 		this.scene.wake('movement');
 		this.scene.stop('fightscene');
 	}
@@ -111,8 +148,9 @@ export class FightScene extends Phaser.Scene {
 		this.allies = [];
 		let self = this;
 		allyParty.party.forEach(function (ally, index){
-			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.hp, ally.mp)
+			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
 			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
+			self.allies[index].dead = ally.dead;
 			let scene = self;
 			ally.attack.forEach(function (attack) {
 				scene.allies[index].SetAttacks(attack);
@@ -120,20 +158,51 @@ export class FightScene extends Phaser.Scene {
 			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 			self.allies[index].scale = 0.08;
 			self.allies[index].depth = 1;
+			self.AddPartySelector(self.allies[index]);
+		})
+	}
+
+	AddPartySelector(ally){
+		ally.on("pointerover",() => {
+			//console.log("SELECCIONANDO A " + enemy.imageId);
+			this.pointer.visible = true;
+			this.pointer.x = ally.x - 75;
+			this.pointer.y = ally.y;
+			this.pointer.angle = 0;
+		})
+		ally.on("pointerout",() => {
+			this.pointer.visible = false;
+			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
+		})
+		ally.on("pointerup",() => {
+			console.log("SUPPORTEANDO A " + ally.imageId);
+			this.allies[this.currentAlly].targets.push(ally);
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+		})
+	}
+
+	ReturnParty()
+	{
+		let self = this;
+		allyParty.party.forEach(function (ally, index)
+		{
+			ally.actualHp = self.allies[index].actualHp;
+			ally.actualMp = self.allies[index].actualMp;
+			ally.dead = self.allies[index].dead;
 		})
 	}
 
 	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
-		let enemiesNumber = Math.floor(Math.random()*4 + 1);
+		let enemiesNumber = 2//this.GetRandom(5, false);
 		for(let i = 0; i < enemiesNumber; i++){
-			let enemyType = Math.floor(Math.random() * this.enemiesInfo.length)
+			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
-				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			else{
-				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].hp, this.enemiesInfo[enemyType].mp)
+				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
@@ -148,30 +217,90 @@ export class FightScene extends Phaser.Scene {
 		}
 	}
 
+	// Genera un random de 0 a maxRange (enteros)
+	GetRandom(maxRange, bool){
+		// esto nos sirve para sumar 1 al resultado o no dependiendo si buscamos un índice o qué onda
+		if(bool) return Math.floor(Math.random()*maxRange); 
+		else return Math.floor(Math.random()*maxRange + 1);
+	}
+
+	EnemyAttacks(){
+		let i = 0;
+		while(i < this.enemies.length && !this.CheckState(this.allies)){
+			if(!this.enemies[i].dead){
+				console.log("AtacandO!");
+				let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
+				let selectedTarget = [];
+				for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
+					let random = this.GetRandom(this.allies.length, true);
+					while(this.allies[random].dead) { random = (random +1) % this.allies.length};
+					selectedTarget.push(random);
+					this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+				}
+				this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+				for(let h = 0; h < selectedTarget.length; h++){
+					this.alliesHud[selectedTarget[h]].Update();
+				}
+				console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
+				console.log(selectedTarget);
+				this.enemies[i].targets = [];
+			}
+			i++;
+		}
+		if(i < this.enemies.length) this.EndCombat();
+	}
+
 	NextAlly(){
-		this.currentAlly = (this.currentAlly + 1) % this.allies.length; 
+		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat(); }
+		else {
+			if (this.currentAlly + 1 === this.allies.length){
+				// PUM ataque enemigos
+				this.EnemyAttacks();
+			}
+
+			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
+			if(this.allies[this.currentAlly].dead) this.NextAlly();
+		}
+	}
+
+	AllyAttack(){
+		this.allies[this.currentAlly].Attack(this.selectedAttack);
+		let self = this;
+		this.allies[this.currentAlly].targets.forEach(function (enemy) {
+			let i = 0;
+			if(self.selectedAttack.isSupport()){
+				while(self.alliesHud[i].character !== enemy){i++;}
+				self.alliesHud[i].Update();
+			}
+			else{
+				while(self.enemiesHud[i].character !== enemy){i++;}
+				self.enemiesHud[i].Update();
+			}
+		})
+		this.allies[this.currentAlly].targets = [];
+		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
+		this.DisableTargetting(this.enemies);
+		this.ToggleButtons(true);
+		this.alliesHud[this.currentAlly].Update();
+		this.NextAlly();
 	}
 
 	AddEnemySelector(enemy){
 		enemy.on("pointerover",() => {
-			console.log("SELECCIONANDO A " + enemy.imageId);
+			//console.log("SELECCIONANDO A " + enemy.imageId);
 			this.pointer.visible = true;
 			this.pointer.x = enemy.x;
 			this.pointer.y = enemy.y - 75;
 			this.pointer.angle = 90;
 		})
 		enemy.on("pointerout",() => {
-			console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
+			this.pointer.visible = false;
+			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		enemy.on("pointerup",() => {
 			console.log("ATACANDO A " + enemy.imageId);
-			this.allies[this.currentAlly].Attack(this.selectedAttack,enemy);
-			let i = 0;
-			while(this.enemiesHud[i].character != enemy){i++;}
-			this.enemiesHud[i].Update();
-			this.DisableTargetting();
-			this.alliesHud[this.currentAlly].Update();
-			this.NextAlly();
+			this.allies[this.currentAlly].targets.push(enemy);
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
 		})
 	}
 
@@ -213,8 +342,11 @@ export class FightScene extends Phaser.Scene {
 
 		this.pointer = this.add.image(0,0,'attackPointer');
 		this.pointer.visible = false;
+		this.pointer.depth = 2;
 
 		this.CreateButtons();
+
+		if(this.allies[0].dead) this.NextAlly(); // Si el primer personaje está muerto, que se actualice el turno
 	}
 	update(t,dt){
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
@@ -290,11 +422,11 @@ class EnemyHUD{
 	{
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.healthBar = new HealthBar(scene,this.character.x - this.character.displayWidth/16, this.character.y + this.character.displayHeight/15,this.character.displayWidth/8, 'HP', this.character.hp, this.character.maxHp);
+		this.healthBar = new HealthBar(scene,this.character.x - this.character.displayWidth/16, this.character.y + this.character.displayHeight/15,this.character.displayWidth/8, 'HP', this.character.actualHp, this.character.maxHp);
 	}
 	
 	Update(){
-		this.healthBar.Update(this.character.hp)
+		this.healthBar.Update(this.character.actualHp)
 	}
 }
 
@@ -314,8 +446,8 @@ class AllyHUD{
 		this.CreateAttacks(scene);
 		
 		
-		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.hp, this.character.maxHp);
-		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.mp, this.character.maxMp);
+		this.HealthBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/6, 8*this.block.displayWidth/10, 'HP', this.character.actualHp, this.character.maxHp);
+		this.ManaBar = new HealthBar(scene, this.block.x - this.block.displayWidth/2.5, this.block.y + this.block.displayHeight/3.2, 8*this.block.displayWidth/10, 'MP', this.character.actualMp, this.character.maxMp);
 		this.scene = scene;
 	}
 
@@ -350,17 +482,23 @@ class AllyHUD{
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
+			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
 			this.scene.pointer.visible = true;
 			this.scene.pointer.x = attackText.text.x-15;
 			this.scene.pointer.angle = 0;
 			this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
 			this.scene.pointer.setScale(1);
+			} else console.log("NO HAY PUNTERO ;-;");
 		});
 		attackText.text.on('pointerup', () => {
-			this.scene.selectedAttack = attackText.srcAttack;
-			this.scene.EnableTargetting();
-			this.DisplayAttacks();
-			this.scene.pointer.visible = false;
+			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
+				this.scene.selectedAttack = attackText.srcAttack;
+				if(attackText.srcAttack.isSupport()) this.scene.EnableTargetting(this.scene.allies);
+				else {this.scene.EnableTargetting(this.scene.enemies)};
+				this.DisplayAttacks();
+				this.scene.ToggleButtons(false);
+				this.scene.pointer.visible = false;
+			} else console.log("No hay maná ;-;");
 		})
 		attackText.text.on('pointerout', () =>{
 			this.scene.pointer.visible = false;
@@ -373,11 +511,12 @@ class AllyHUD{
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
+		this.scene.ToggleObjectButtons(!this.attackBlock.visible);
 	}
 
 	Update(){
-		this.HealthBar.Update(this.character.hp);
-		this.ManaBar.Update(this.character.mp);
+		this.HealthBar.Update(this.character.actualHp);
+		this.ManaBar.Update(this.character.actualMp);
 	}
 }
 

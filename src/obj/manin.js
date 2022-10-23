@@ -108,7 +108,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
 		if(this.wKey.isDown){
-            this.body.se1tVelocityY(-100*dt*this.speed/1000);
+            this.body.setVelocityY(-100*dt*this.speed/1000);
             this.stepsWalked++;
 		}
 
