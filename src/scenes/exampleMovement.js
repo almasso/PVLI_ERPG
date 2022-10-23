@@ -1,6 +1,7 @@
 import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
+import {EnviromentInfo} from '../fight/EnviromentInfo.js';
 
 /**
  * Escena principal.
@@ -10,6 +11,7 @@ export default class MovementExample extends Phaser.Scene {
 	
 	constructor() {
 		super({ key: 'movement' });
+		this.enviromentInfo = EnviromentInfo;
 	}
 	
 	preload(){

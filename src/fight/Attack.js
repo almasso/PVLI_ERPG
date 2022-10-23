@@ -17,6 +17,10 @@ export class Attack{
 	{
 		return this.type;
 	}
+
+	isSupport(){
+		return this.type === 5;
+	}
 }
 
 export class Ultimate extends Attack{
@@ -52,6 +56,11 @@ export class Ultimate extends Attack{
 		this.activated = false;
 	}
 }
+
+export function attackInfo(name,type,dmg,requiredMps,targets){
+	return {name:name,type:type,dmg:dmg,requiredMps:requiredMps,targets:targets}
+}
+
 
 const typeOfAttack = {
 	Physical: 0,

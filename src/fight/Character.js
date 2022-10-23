@@ -7,33 +7,31 @@ const typeOfAttack = {
 	Toxic: 4,
 	Support: 5
 };
+
 export default class Character extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, imageId, initialHP, initialMP){
+	constructor(scene, x, y, imageId, actualHp, maxHp, actualMp, maxMp){
 		super(scene, x, y, imageId);
 		this.imageId = imageId;
 		this.scene.add.existing(this);
 		
-		this.hp = initialHP;
-		this.maxHp = initialHP;
-		this.mp = initialMP;
-		this.maxMp = initialMP;
+		this.actualHp = actualHp;
+		this.maxHp = maxHp;
+		this.actualMp = actualMp;
+		this.maxMp = maxMp;
 		this.lvl = 1;
 		this.resistances = [0, 0, 0, 0, 0, 0]; 
 		this.acurracy = 0;
 		this.dead = false;
 		this.speed = 0;
-
 		this.attacks = [];
+		this.targets = [];
 
 		// Estados Alterados
 	}
 
-	SetAttacks(attack1, attack2, attack3, attack4)
+	SetAttacks(attack)
 	{
-		this.attacks[0] = new Attack("PUM te pego", typeOfAttack.Physical,50,0,1);
-		this.attacks[1] = new Attack("PUM te flecheo",typeOfAttack.Ranged,50,20,1);
-		this.attacks[2] = new Attack("PUM te apoyo",typeOfAttack.Support,50,40,1);
-		this.attacks[3] = new Ultimate("PUM ulti", typeOfAttack.Electrical,50,this.maxMp/2 + 10,1);
+		this.attacks.push(new Attack(attack.name, attack.type,attack.dmg,attack.requiredMps,attack.targets))
 	}
 
 	GetAttack(index){
@@ -52,21 +50,32 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.maxMp += this.maxMp * 1 / 5;	
 	}
 
+	CanAttack(attack){
+		return this.actualMp >= attack.requiredMps;
+	}
+
+	Attack(attack){
+		this.targets.forEach(function (enemy) {
+			enemy.Damage(attack);
+		})
+		this.actualMp -= attack.requiredMps;
+	}
+
 	Damage(attack)
 	{
 		// Hacer que reciba daño
-		this.hp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
-
-		if(this.hp <= 0) 
+		this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
+		this.actualHp = Math.floor(this.actualHp);
+		if(this.actualHp <= 0) 
 		{
-			this.hp = 0;
+			this.actualHp = 0;
 			this.Die();
 		}
+		else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 	}
 
 	Die()
 	{
-		this.Dead = true;
+		this.dead = true;
 	}
-
 }
