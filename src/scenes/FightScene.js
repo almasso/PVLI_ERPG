@@ -454,17 +454,21 @@ class AllyHUD{
 	CreateAttackButton(attackText){
 		attackText.text.on('pointerover', () => {
 			// Esto funciona PERO no cambia el color, que era la forma isi. a ver si se puede hacer otra cosa para que se note que se está haciendo hover
+			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
 			this.scene.pointer.visible = true;
 			this.scene.pointer.x = attackText.text.x-15;
 			this.scene.pointer.angle = 0;
 			this.scene.pointer.y = attackText.text.y+attackText.text.displayHeight/2;
 			this.scene.pointer.setScale(1);
+			} else console.log("NO HAY PUNTERO ;-;");
 		});
 		attackText.text.on('pointerup', () => {
-			this.scene.selectedAttack = attackText.srcAttack;
-			this.scene.EnableTargetting();
-			this.DisplayAttacks();
-			this.scene.pointer.visible = false;
+			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
+				this.scene.selectedAttack = attackText.srcAttack;
+				this.scene.EnableTargetting();
+				this.DisplayAttacks();
+				this.scene.pointer.visible = false;
+			} else console.log("No hay maná ;-;");
 		})
 		attackText.text.on('pointerout', () =>{
 			this.scene.pointer.visible = false;
