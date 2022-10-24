@@ -142,8 +142,13 @@ export class FightScene extends Phaser.Scene {
 
 	EndCombat(){
 		this.ReturnParty();
+		this.attack=-1;
+		this.choseA=false;
+		this.choseE=false;
+		this.combat=false;
 		this.scene.wake('movement');
 		this.scene.stop('fightscene');
+		
 	}
 
 	LoadParty(){
@@ -485,7 +490,7 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.angle = 90;
 			}
 		}
-		else
+		else if(this.choseA===true)
 		{
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 			{					
@@ -577,7 +582,7 @@ class EnemyHUD{
 	{
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.healthBar = new HealthBar(scene,this.character.x-this.character.displayWidth, this.character.y + this.character.displayHeight*2,this.character.displayWidth*1.8, 'HP', this.character.actualHp, this.character.maxHp);
+		this.healthBar = new HealthBar(scene,this.character.x-this.character.displayWidth/0.9, this.character.y + this.character.displayHeight*2,this.character.displayWidth*1.8, 'HP', this.character.actualHp, this.character.maxHp);
 	}
 	
 	Update(){
