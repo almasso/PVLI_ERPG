@@ -16,6 +16,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('melendi','assets/Melendi.png')
 		this.load.image('dinoseto','assets/Dinoseto.png')
+		this.load.image('angel','assets/AngelCaido.png')
 		this.load.image('attackPointer','assets/attackPointer.png');
 
 		// cargar los botones
@@ -224,7 +225,7 @@ export class FightScene extends Phaser.Scene {
 			{
 				this.enemies[i].SetAttacks(this.enemiesInfo[enemyType].attack[o]);
 			}
-			this.enemies[i].scale = 2;
+			this.enemies[i].scale = 4;
 			this.AddEnemySelector(this.enemies[i]);
 		}
 	}
@@ -576,7 +577,7 @@ class EnemyHUD{
 	{
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.healthBar = new HealthBar(scene,this.character.x-this.character.displayWidth/1.4, this.character.y + this.character.displayHeight,this.character.displayWidth*1.5, 'HP', this.character.actualHp, this.character.maxHp);
+		this.healthBar = new HealthBar(scene,this.character.x-this.character.displayWidth, this.character.y + this.character.displayHeight*2,this.character.displayWidth*1.8, 'HP', this.character.actualHp, this.character.maxHp);
 	}
 	
 	Update(){
