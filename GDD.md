@@ -154,7 +154,7 @@ El puerto es la segunda zona del juego. Es una zona más larga que ancha. En tod
 
 ##### Catedral
 
-La catedral es la tercera zona del juego. Es un edificio más largo que ancho y que consta de dos plantas. En la primera planta es como una catedral nornal: dos retablos religiosos a cada lado, filas de bancos y una tarima donde está el cura dando misa. Detrás de la tarima hay dos habitaciones que están cerradas al principio. Hay un banco de alimentos en la entrada que sirve para curar a los miembros de tu party. La zona de arriba es solo la zona de palcos, donde solo puedes moverte por los lados debido a que el centro está hueco. En esta zona de palcos se encontrará Pedro Sánchez, a quien puedes reclutar para la party.
+La catedral es la tercera zona del juego. Es un edificio más largo que ancho y que consta de dos plantas. En la primera planta es como una catedral nornal: dos retablos religiosos a cada lado, filas de bancos y una tarima donde está el cura dando misa. Detrás de la tarima hay dos habitaciones que están cerradas al principio. Hay un banco de alimentos en la entrada que sirve para curar a los miembros de tu party. La zona de arriba es solo la zona de palcos, donde solo puedes moverte por los lados debido a que el centro está hueco. En esta zona de palcos se encontrará ***Pedro Sánchez***, a quien puedes reclutar para la party.
 
 **Estatua:** Escultura de Benavente (diseñada como un ángel bíblico)
 **Tipos de enemigos:** Abuelas ultrarreligiosas, curas
