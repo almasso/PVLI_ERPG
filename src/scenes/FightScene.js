@@ -143,6 +143,8 @@ export class FightScene extends Phaser.Scene {
 	EndCombat(){
 		this.ReturnParty();
 		this.attack=-1;
+		this.allaySelected=-1;
+		this.enemyselected=-1;
 		this.choseA=false;
 		this.choseE=false;
 		this.combat=false;
@@ -474,17 +476,35 @@ export class FightScene extends Phaser.Scene {
 			{
 				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
 				{
-					if(this.enemyselected<this.enemies.length-1) this.enemyselected++;
-					else this.enemyselected=0;
+					if(this.enemyselected<this.enemies.length-1) 
+					{
+						this.enemyselected++;
+						if(this.enemies[this.enemyselected].dead && this.enemies!=this.enemies.length-1)
+						{
+							this.enemyselected++;
+						}
+					
+					}	else this.enemyselected=0;
 				}
 				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
 				{
-					if(this.enemyselected>0)this.enemyselected--;
+					if(this.enemyselected>0)
+					{
+						this.enemyselected--;
+						if(this.enemies[this.enemyselected].dead && this.enemies!=0)
+						{
+							this.enemyselected--;
+						}
+					}
 					else this.enemyselected=this.enemies.length-1;
 				}
 			}
 			if(this.enemyselected!=-1)
 			{
+				if(this.enemies[this.enemyselected].dead && this.enemies!=this.enemies.length-1)
+				{
+					this.enemyselected++;
+				}
 				this.pointer.x = this.enemies[this.enemyselected].x;
 				this.pointer.y = this.enemies[this.enemyselected].y - 75;
 				this.pointer.angle = 90;
@@ -512,7 +532,7 @@ export class FightScene extends Phaser.Scene {
 					else this.allaySelected=this.allies.length-1;
 				}
 			}
-			if(this.allaySelected!=-1)
+			if(this.allaySelected!=-1 )
 			{
 				this.pointer.x = this.allies[this.allaySelected].x-75;
 				this.pointer.y = this.allies[this.allaySelected].y;
