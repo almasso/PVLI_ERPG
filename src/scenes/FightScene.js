@@ -15,6 +15,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('manin', 'assets/Manín.png');
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('melendi','assets/Melendi.png')
+		this.load.image('dinoseto','assets/Dinoseto.png')
 		this.load.image('attackPointer','assets/attackPointer.png');
 
 		// cargar los botones
@@ -156,7 +157,7 @@ export class FightScene extends Phaser.Scene {
 				scene.allies[index].SetAttacks(attack);
 			})
 			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
-			self.allies[index].scale = 0.08;
+			self.allies[index].scale = 2;
 			self.allies[index].depth = 1;
 			self.AddPartySelector(self.allies[index]);
 		})
@@ -223,7 +224,7 @@ export class FightScene extends Phaser.Scene {
 			{
 				this.enemies[i].SetAttacks(this.enemiesInfo[enemyType].attack[o]);
 			}
-			this.enemies[i].scale = 0.13;
+			this.enemies[i].scale = 2;
 			this.AddEnemySelector(this.enemies[i]);
 		}
 	}
@@ -575,7 +576,7 @@ class EnemyHUD{
 	{
 		// cambiar esto por el propio character :)
 		this.character = character;
-		this.healthBar = new HealthBar(scene,this.character.x - this.character.displayWidth/16, this.character.y + this.character.displayHeight/15,this.character.displayWidth/8, 'HP', this.character.actualHp, this.character.maxHp);
+		this.healthBar = new HealthBar(scene,this.character.x-this.character.displayWidth/1.4, this.character.y + this.character.displayHeight,this.character.displayWidth*1.5, 'HP', this.character.actualHp, this.character.maxHp);
 	}
 	
 	Update(){

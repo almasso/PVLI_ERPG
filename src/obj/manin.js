@@ -9,7 +9,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y) {
 		super(scene, x, y, 'manin');
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
-        this.setScale(0.2,0.2);
+        this.setScale(3,3);
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
         
