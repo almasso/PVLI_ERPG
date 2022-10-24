@@ -444,17 +444,37 @@ export class FightScene extends Phaser.Scene {
 				{
 					if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
 					{
-						if(this.attack<3) this.attack++;
+						if(this.attack<3)
+						{
+							this.attack++;
+
+							
+						} 
 						else this.attack=0;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack<3)this.attack++;
+							else this.attack=0;
+						}
 					}
 					if(Phaser.Input.Keyboard.JustDown(this.aux.wKey))
 					{
-						if(this.attack>0)this.attack--;
+						if(this.attack>0)
+						{
+							this.attack--;
+							
+						}
 						else this.attack=3;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack>0)this.attack--;
+							else this.attack=3;
+						}
 					}
 				}
 				if(this.attack!=-1)
 				{
+					
 					this.pointer.x=this.alliesHud[this.currentAlly].attackText[this.attack].text.x-15;
 					this.pointer.angle = 0;
 					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
@@ -464,6 +484,11 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.choseE===true)
 		{
+			while(this.enemies[this.enemyselected].dead ){
+								
+				if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+				else this.enemyselected=0;
+			}	
 			
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
 			{					
@@ -478,33 +503,35 @@ export class FightScene extends Phaser.Scene {
 				{
 					if(this.enemyselected<this.enemies.length-1) 
 					{
-						this.enemyselected++;
-						if(this.enemies[this.enemyselected].dead && this.enemies!=this.enemies.length-1)
-						{
-							this.enemyselected++;
-						}
+						this.enemyselected++;					
 					
 					}	else this.enemyselected=0;
+
+					while(this.enemies[this.enemyselected].dead ){
+								
+						if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+						else this.enemyselected=0;
+					}	
 				}
 				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
 				{
 					if(this.enemyselected>0)
 					{
 						this.enemyselected--;
-						if(this.enemies[this.enemyselected].dead && this.enemies!=0)
-						{
-							this.enemyselected--;
-						}
+				
 					}
 					else this.enemyselected=this.enemies.length-1;
+
+					while(this.enemies[this.enemyselected].dead){
+								
+						if(this.enemyselected>0)this.enemyselected--;
+						else this.enemyselected=this.enemies.length-1;
+					}
 				}
 			}
 			if(this.enemyselected!=-1)
 			{
-				if(this.enemies[this.enemyselected].dead && this.enemies!=this.enemies.length-1)
-				{
-					this.enemyselected++;
-				}
+				
 				this.pointer.x = this.enemies[this.enemyselected].x;
 				this.pointer.y = this.enemies[this.enemyselected].y - 75;
 				this.pointer.angle = 90;
