@@ -8,23 +8,29 @@
 3. Jugabilidad
     1. Movimiento
     2. Cámara
-    3. Mecánicas de Jugador
-    4. Mecánicas de Escenario
-    5. Enemigos
+    3. Exploración
+    4. Combate
+        1. Puntos de vida
+        2. Flujo de combate
+        3. Ataques
+        4. Aliados
+        5. Puntos de experiencia y qué significa subir de nivel
 4. Diseño de Nivel
     1. Tipos de Zonas
-    2. Descripción de Partida Típica
+        1. Plaza
+        2. Parque
+        3. Puerto
+        4. Catedral
+        5. Cementerio
+        6. Catacumbas
 5. HUD
-    1. Mockup
-    2. Explicación
-6. Estética
-7. Menús y Flujo de Juego
-8. Contenido
+    1. Exploración
+    2. Combate
+6. Contenido
     1. Historia
-    2. Niveles
-    3. Bocetos
-    4. Objetos
+    2. Objetos
         1. Consumibles
+7. Menús y Flujo de Juego
 9. Referencias
 
 
@@ -105,7 +111,7 @@ Listado:
 **Objetivo(s):** Un ataque puede hacer objetivo a una o varios personajes dependiendo del ataque.
 
 
-##### Aliado
+##### Aliados
 
 Tipos de PJs:
     Manin: DPS (mixed)
@@ -122,8 +128,6 @@ El sistema de niveles es el típico que podemos encontrar el cualquier RPG: al a
 
 ### Diseño de Nivel
 
-
-
 #### Tipos de Zonas
 
 Vas a poder ir a todas las zonas desde el principio (excepto a las Catacumbas), pero las zonas tienen distintas dificultades. Al final de los caminos entre zonas estará Guillermo, un NPC que te avisa de que esa zona a lo mejor no es adecuada a tu dificultad, aunque puedes pasar sin problema.
@@ -134,67 +138,62 @@ Es la zona principal del mapa. Conecta con todos los caminos hacia las demás zo
 
 ##### Parque
 
-Es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza, que conduce a un camino de tierra donde, al final, nos esperará Guillermo para avisarnos del nivel de dificultad de la zona. Se ve un camino de tierra que lleva a un parque vallado (como el parque del Buen Retiro de Madrid). Al entrar se ve un camino que lleva a una pequeña plaza en el que se encuentra el primer personaje aliado: ***Jarfaiter***. A la izquierda de la plaza se encuentra un pequeño bosque junto a un bar. Al norte de la plaza hay un parque infantil y al este un gran lago.
+Es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza, que conduce a un camino de tierra donde, al final, nos esperará Guillermo para avisarnos del nivel de dificultad de la zona. Se ve un camino de tierra que lleva a un parque vallado (como el parque del Buen Retiro de Madrid). Al entrar se ve un camino que lleva a una pequeña plaza en el que se encuentra el primer personaje aliado: ***Jarfaiter***, que se unirá a ti si le das un porro. A la izquierda de la plaza se encuentra un pequeño bosque junto a un bar. Al norte de la plaza hay un parque infantil y al este un gran lago, donde se encontrará ***Melendi***, que se podrá unir a tu aprty si encuentras su guitarra, que estará escondida por el parque.
 
-**Tipos de enemigos:** Artistas y Cultiristas.
-**Misión:** Nuestra misión en este gran parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. (ALGÚN NPC O ALGO???). Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece (NOS DA ALGO???) y se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua de la Bicha de Bazalote, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
+**Estatua:** Cuchillero de Albacete
+**Tipos de enemigos:** Artistas y Culturistas.
+**Misión:** Nuestra misión en este gran parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. (ALGÚN NPC O ALGO???). Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece (NOS DA ALGO???) y se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua del cuchillero de Albacete, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
 
-###### Gran Lago
+##### Puerto
 
-**Tipos de enemigos:**
-**Misión:**
+El puerto es la segunda zona del juego. Es una zona más larga que ancha. En toda la parte izquierda hay almacenes y fábricas donde los pescadores llevan sus capturas, y en la zona derecha habrá un puerto con barcos atracados, los cuales algunos estarán abiertos. En la zona central del nivel habrá un suelo asfaltado con basura, y en el centro ***Abel Caballero***, que te pedirá que recojas la basura que han dejado los fiesteros a cambio de que se pueda unir a tu party. En todo el puerto te puedes encontrar a narcotraficantes que se enfrentarán a ti.
 
+**Estatua:** Bicha de Balazote
+**Tipos de enemigos:** Narcos, británicos
+**Misión:** Te encontarás nada más entrar a una anciana que te dirá que ha visto a unos hombres meter una caja pesada del tamaño de una pequeña estatua en el barco del fondo. Cuando llegas a ese barco se verá que es un barco británico, propiedad del British Museum, y en el que habrá un guardia que no te dejará entrar. Para poder pasar habrá dos opciones: Enfrentarte al guardia y entrar a la fuerza o buscar a un trabajador del barco por el puerto y robarle la llave. Si te enfrentas al guardia saltarán las alarmas del barco y saltarán combates aleatorios mientras estás dentro de él buscando a la estatua. Si por el contrario le has robado la tarjeta al trabajador, tendrás que pasar sin que te detecten por el barco para recuperar la estatua. De cualquiera de las formas que entres la estatua estará al final del todo, y cuando llegues los ingleses revivirán a la Bicha de Balazote para que se enfrente a ti.
 
-###### Puerto
+##### Catedral
 
+La catedral es la tercera zona del juego. Es un edificio más largo que ancho y que consta de dos plantas. En la primera planta es como una catedral nornal: dos retablos religiosos a cada lado, filas de bancos y una tarima donde está el cura dando misa. Detrás de la tarima hay dos habitaciones que están cerradas al principio. Hay un banco de alimentos en la entrada que sirve para curar a los miembros de tu party. La zona de arriba es solo la zona de palcos, donde solo puedes moverte por los lados debido a que el centro está hueco. En esta zona de palcos se encontrará Pedro Sánchez, a quien puedes reclutar para la party.
 
+**Estatua:** Escultura de Benavente (diseñada como un ángel bíblico)
+**Tipos de enemigos:** Abuelas ultrarreligiosas, curas
+**Misión:** Al entrar te encontrarás a una mujer que te pedirá ayuda para buscar a su hijo que no había vuelto de catequesis. El niño estará en la sala que está detrás de la tarima donde el cura está dando misa, pero no podrás entrar debido a la homilía. Para poder entrar tendrás que sabotear la misa de distintos modos: romper algún retablo, tirar la lámpara colgante, etc. Cuando se acabe la misa podrás entrar en la primera sala, donde estará el cura que estaba dando misa y te enfrentarás a él. Cuando le derrotes podrás entrar a la siguiente sala donde estará el niño que buscas y la estatua del Ángel Bíblico, la cual el cura revivirá para que te enfrentes a ella. En esta misma sala estará también la entrada a las catacumbas (ver 4.1.6), pero no se podrá acceder todavía.
 
-###### Muelle
+##### Cementerio
 
-**Tipos de enemigos:**
-**Misión:**
+El cementerio será la cuarta y penúltima zona del juego. Es una zona más ancha que alta. En cuanto entras hay un camino de tierra que lleva al norte, donde hay una especie de plaza con la estatua del Ángel Caído; y a los lados lleva a una fila de tumbas. Encima de la fila de tumbas se encuentra un panteón a cada lado, los cuales estarán vallados y en sus entradas hay un jardín antes de poder entrar a la propia estructura. En el fondo norte del cementerio hay un restaurante donde puedes curar a tu party. En los caminos te encontrarás a la Santa Compaña
 
-###### Barco
+**Estatua:** Ángel caído
+**Tipos de enemigos:** Satánicos y Santa Compaña
+**Misión:** En cuanto llegas a la plaza central del cementerio habrá un grupo de satánicos que querrán hacer un sacrificio contigo para revivir al Ángel Caído. En cuanto los derrotas te dirán que hay tres grupos más haciendo sacrificios: uno en cada panteón y otro en algún sitio de las tumbas. Uno de los que intentan sacrificar será el ***Niño fumón***, que cuando lo rescatas te ofrecerá su ayuda para la party. En cuanto frustras sus sacrificios te dirán que ya es demasiado tarde, y la estatua habrá revivido, por lo que te tendrás que enfrentar al Ángel Caído.
 
-**Tipos de enemigos:**
-**Misión:**
+##### Catacumbas
 
-###### Catedral
+Es la zona final. Nada más entrar en ella por la Catedral habrá un pasillo que desemboque en un laberinto, donde te encontrarás con todos los enemigos principales que estaban en cada zona. Al final de este laberinto habrá una sala donde estará el Dinoseto, al cual te tendrás que enfrentar, y cuando le ganes se acabará el juego
 
+**Estatua:** Dinoseto
+**Tipos de enemigos:** Todos
 
+### HUD
 
-###### Cementerio
+#### Exploración
+En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
 
-
-
-###### Catacumbas
-
-
-#### Contenido
-
-
-
-##### Historia
-
-Después de haber sido limpiador de piscinas en verano y haberse adentrado en una _Dungeon_ para recuperar su Patito perdido en la primera entrega de su historia: ***Chill Out***, Manín se muda a Vigo para comenzar su carrera como jardinero. Pasadas unas cuantas semanas se descubre que varias estatuas han sido robadas, todas con un mismo patrón, hasta que el *Dinoseto*, una de las obras más preciadas de la ciudad, ha sido podada y vandalizada de la misma forma que las demás obras de arte. Manín, tan valiente como es, trata de resolver el misterio a causa de la inutilidad de las autoridades locales. 
-
-#### Menús y Flujo de Juego
-
-
-
-##### HUD
-
-**Exploración:** En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
-
-**Combate:** Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
+#### Combate
+Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
 Arriba en el centro se muestra el estado de la _party_: X recuadros (siendo X el número de combatientes aliados) donde se ve el sprite de nuestro aliado y (si tuviera alguno) los iconos de estados alterados que sufra al lado de la cabeza. En la parte inferior se muestra su **barra de vida** y de **maná** con números dentro de las mismas indicando el valor actual y el máximo. Si alguno de los aliados llega a 0 PV su sprite se enrojece y una 'x' lo tapa parcialmente. 
 Cuando toque escoger la acción de un aliado, su sprite se anima y gana un borde blanquecino. A la hora de escoger un ataque de uno de los aliados, se despliega una ventana desde la parte de abajo de su recuadro. Este desplegable muestra los ataques y sus estadísticas: Tipo de daño, Usos restantes, Usos totales y Daño. 
 Cuando un aliado ataque, se hará una pequeña animación sobre el personaje objetivo. 
 En la esquina inferior izquierda se muestran 3 botones: 'Ataque', para que el desplegable mencionado anteriormente aparezca en pantalla y se pueda escoger un ataque; 'Objeto', para acceder al menú de objetos usables en combate a través de un menú desplegado desde la esquina inferior derecha (también accesible desde un icono de una mochila en la misma esquina); y 'Huir', que despliega un mensaje que dice: "Manín nunca huye.".
 
+### Contenido
+
+##### Historia
+
+Después de haber sido limpiador de piscinas en verano y haberse adentrado en una _Dungeon_ para recuperar su Patito perdido en la primera entrega de su historia: ***Chill Out***, Manín se muda a Vigo para comenzar su carrera como jardinero. Pasadas unas cuantas semanas se descubre que varias estatuas han sido robadas, todas con un mismo patrón, hasta que el *Dinoseto*, una de las obras más preciadas de la ciudad, ha sido podada y vandalizada de la misma forma que las demás obras de arte. Manín, tan valiente como es, trata de resolver el misterio a causa de la inutilidad de las autoridades locales. 
 
 ##### Objetos
-
 
 ###### Consumibles
 - Cigarro: +maná -vida
@@ -213,3 +212,8 @@ En la esquina inferior izquierda se muestran 3 botones: 'Ataque', para que el de
     · 49.5% -vida
     · 1.5% mata
 - Objetos de boss: Trozo de Dinoseto y algo que reviva a todo el grupo (depende de cada boss)
+
+### Menús y Flujo de Juego
+
+### Referencias
+Nos hemos basado en RPGs clásicos como el Dragon Quest, Final Fantasy o Lisa: the Painful
