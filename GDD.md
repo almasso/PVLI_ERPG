@@ -56,7 +56,11 @@ A la hora de viajar por el mundo nuestro personaje va a moverse en 4 direcciones
 
 #### Exploración
 
+Gran parte de la aventura se basa en la exploración de un entorno. Esta consiste en andar por las diferentes zonas del mapa hablando con NPCs, abastecerse el inventario para próximas batallas en las diferentes tiendas y completar la misión de esa zona concreta. 
 
+En las zonas consideradas "_hostiles_", Manín tendrá posibilidades de empezar un combate junto a sus aliados (si el jugador ha decidido incorporar alguno a su equipo) en el estado en el que estos se encuentren. 
+
+Durante este modo también se podrán usar objetos sobre los aliados, como, por ejemplo, las curaciones o reabastecimientos de maná.
 
 #### Combate
 
@@ -65,6 +69,12 @@ Manín pasará a la fase de combate cuando esté explorando algún suelo hostil 
 Ver HUD de combate (meter aquí referencia)
 
 ##### Puntos de Vida (PV):
+
+Son la estadística que mantendrá a un personaje en pie. Cuando este reciba un ataque, perderá X PVs dependiendo de la fuerza y tipo del ataque. Si un personaje llega a 0 PVs, muere: no podrá ser utilizado de ninguna manera hasta que sea curado de las siguientes formas: en un **Bar**, con un objeto que permita a un aliado volver a la vida o con algún '_ataque_' aliado que permita revivir a un objetivo.
+
+En caso de que toda la _party_ muera, se cargará un anterior punto de guardado, manteniendo el estado del inventario y de los aliados iguales a los del momento del guardado.
+
+Al igual que los aliados, los enemigos también '_mueren_', y una vez lo hacen no pueden volver al campo de batalla.
 
 ##### Flujo de Combate:
 
@@ -77,7 +87,7 @@ Al empezar un combate se calcula un orden de turnos en función de la velocidad 
 4. Puntos de Maná
 5. Objetivo(s)
 
-Los ataques tienen 4 estadísticas. Daño, Efectos de Estado y Puntos de Maná. Los ataques también se diferencian en 3 tipos: Normal, Especial y Ulti.
+Los ataques tienen 3 estadísticas. Daño, Efectos de Estado y Puntos de Maná. Los ataques también se diferencian en 3 tipos: Normal, Especial y Ulti.
 **Tipos de Ataque:** Cada personaje tiene 1 ataque Normal: no gasta Puntos de Maná; 2 Especiales: gastan Puntos de Maná; y 1 Ulti: Tarda X turnos en poder usarse, solo puede usarse una vez y gasta al menos la mitad de los PM de cada personaje. Los del primer tipo son los ataques más débiles, pues no consumen nada al personaje que los usa, los del segundo tipo son más fuertes y pueden tener daño elemental y efectos de estado, mientras que la Ulti es el más fuerte de todos y también puede provocar estados alterados con mayor probabilidad.
 
 **Daño:** El daño es la cantidad de Puntos de Vida que un ataque quitaría a un objetivo si tuviera 0 Resistencia al Tipo de Daño que el ataque haga. Los Tipos de Daño son los siguientes: Meleé, Rango, Fuego, Eléctrico, Tóxico y Apoyo. Los ataques de tipo 'Apoyo' no hacen daño, sino al contrario: pueden curar al objetivo, subir su precisión, ataque, resistencias, etc.
