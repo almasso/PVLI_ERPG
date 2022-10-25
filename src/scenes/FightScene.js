@@ -13,7 +13,7 @@ export class FightScene extends Phaser.Scene {
 	preload(){
 		// cargar personajes
 		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('fightBg','assets/bgFight.png')
+		this.load.image('fightBg','assets/parqueLucha.png')
 		this.load.image('melendi','assets/Melendi.png')
 		this.load.image('dinoseto','assets/Dinoseto.png')
 		this.load.image('angel','assets/AngelCaido.png')
@@ -215,14 +215,15 @@ export class FightScene extends Phaser.Scene {
 	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
 	GenerateRandomEncounter(){
 		this.enemies = [];
-		let enemiesNumber = 2//this.GetRandom(5, false);
+		let height = 360;
+		let enemiesNumber = this.GetRandom(5, false);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
-				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
+				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			else{
-				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), 400, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
+				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
@@ -354,8 +355,7 @@ export class FightScene extends Phaser.Scene {
 		this.aux = new InputMan(this);
 		
 		// FONDO
-		this.bg = this.add.image(-150, 0, 'fightBg').setOrigin(0, 0);
-		this.bg.setScale(0.8);
+		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
 
 		// Creación de Party
 		this.alliesHud = [];
