@@ -76,10 +76,6 @@ export default class MovementExample extends Phaser.Scene {
 			console.log("HA HABIDO COLISIÓN")
 			gameObject1.collider = gameObject2;
 		});
-
-		scene.matter.world.on('collisionend', function(event, bodyA, bodyB) {
-			bodyA.collider = null;
-		});
 	}
 
     Fight(){
