@@ -18,7 +18,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('dinoseto','assets/Dinoseto.png')
 		this.load.image('angel','assets/AngelCaido.png')
 		this.load.image('attackPointer','assets/attackPointer.png');
-
+		
 		// cargar los botones
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('attackButton','assets/attackButton.png');
@@ -26,6 +26,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('objectButton','assets/objectButton.png');
 		this.load.image('objectButtonHover','assets/objectButtonHover.png');
 		//this.load.image('fleeButton','assets/fleeButton.png');
+		this.load.image('log','assets/log.png');
 		this.load.image('AllyBlock','assets/AllyBlock.png');
 		this.load.image('attackBlock','assets/AllyAttack.png');
 	}
@@ -201,6 +202,14 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
+	BuildLog(chName,attackInfo, effective,enemy){
+		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		if(effective == 1) {text+="¡Es super efectivo!";}
+		else if (effective == -1) {text+= "No es muy efectivo..."}
+		this.log.push(text);
+		this.UpdateLog();
+	}
+
 	ReturnParty()
 	{
 		let self = this;
@@ -258,7 +267,13 @@ export class FightScene extends Phaser.Scene {
 					selectedTarget.push(random);
 					this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
 				}
-				this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+
+				let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+				
+				for(let j = 0; j < this.enemies[i].targets.length; j++){
+					this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allaySelected[selectedTarget[j]])
+				}
+				
 				for(let h = 0; h < selectedTarget.length; h++){
 					this.alliesHud[selectedTarget[h]].Update();
 				}
@@ -345,12 +360,6 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	create(){
-		/*
-		Esto de aquí lo usaremos cuando le pasemos la party a esta escena, aunque no sé muy bien cómo
-		this.party.foreach(function (character){
-			this.charBlocks[0] = new AllyHUD(this,character, 'AllyBlock', 'attackBlock');
-		});*/
-		
 		// INPUT
 		this.aux = new InputMan(this);
 		
@@ -363,6 +372,8 @@ export class FightScene extends Phaser.Scene {
 		// Creación de enemigos
 		this.enemiesHud = [];
 		this.GenerateRandomEncounter();
+
+		this.log = new Log(this);
 
 		this.currentAlly = 0;
 
@@ -769,6 +780,66 @@ class AllyHUD{
 	Update(){
 		this.HealthBar.Update(this.character.actualHp);
 		this.ManaBar.Update(this.character.actualMp);
+	}
+}
+
+class Log {
+	constructor(scene){
+		this.scene = scene;
+		this.log = ["¡Comienza el combate!"];
+		this.img = this.scene.add.image(50, 400, 'log').setOrigin(0,0);
+		this.currentText = 0;
+		this.verticalOffset = 25;
+		this.CreateTexts();
+		this.ShowLog();
+	}
+
+	CreateTexts(){
+		this.text1 = this.scene.add.text(this.img.x, this.img.y, this.log[this.currentText], 
+			{
+			font: '20px "Press Start 2P"',
+			color: '#ffffff',
+			align: 'left',
+			});
+	
+		this.text2 = this.scene.add.text(this.img.x, this.text1.y + this.verticalOffset, "---", 
+			{
+			font: '20px "Press Start 2P"',
+			color: '#ffffff',
+			align: 'left',
+			});
+	;
+		this.text3 = this.scene.add.text(this.img.x, this.text2.y + this.verticalOffset, "---", 
+			{
+			font: '20px "Press Start 2P"',
+			color: '#ffffff',
+			align: 'left',
+			});
+	;
+		this.text1.depth = 3;
+		this.text2.depth = 3;
+		this.text3.depth = 3;
+	}
+
+	AddText(text){
+		this.log.push(text);
+	}
+
+	UpdateLog(){
+		this.currentText = this.currentText % this.log.length;
+		this.ShowLog();
+	}
+
+	ShowLog(){
+		this.text1.text = this.log[this.currentText];
+		if(this.currentText + 1 >= this.log.length){
+			this.text2.text = "---";
+		}
+		else this.text2.text = this.log[(this.currentText + 1)];
+		if(this.currentText + 2 >= this.log.length){
+			this.text3.text = "---";
+		}
+		else this.text3.text = this.log[(this.currentText + 2)];
 	}
 }
 
