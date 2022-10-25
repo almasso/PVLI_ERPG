@@ -21,6 +21,7 @@ export class FightScene extends Phaser.Scene {
 		
 		// cargar los botones
 		this.load.image('log','assets/log.png');
+		this.load.image('logButton','assets/logButton.png');
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('attackButton','assets/attackButton.png');
 		this.load.image('attackButtonHover','assets/attackButtonHover.png');
@@ -50,12 +51,13 @@ export class FightScene extends Phaser.Scene {
 		this.objectButtonHover.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
 		this.objectButtonHover.visible = false;
 		
-		this.logUp = this.add.image(620, 500,'attackPointer');
-		this.logDown = this.add.image(620,550,'attackPointer');
+		this.logUp = this.add.image(620, 515,'logButton');
+		this.logDown = this.add.image(620,this.logUp.y + 50,'logButton');
 		this.logUp.setInteractive();
-		this.logUp.angle = -90;
 		this.logDown.setInteractive();
-		this.logDown.angle = 90;
+		this.logUp.setScale(2);
+		this.logDown.setScale(2);
+		this.logDown.angle = 180;
 		// Falta botón de Huída.
 
 		//#region input de Botones
