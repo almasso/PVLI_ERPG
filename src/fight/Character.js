@@ -9,11 +9,11 @@ const typeOfAttack = {
 };
 
 export default class Character extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, imageId, actualHp, maxHp, actualMp, maxMp){
+	constructor(scene, name,x, y, imageId, actualHp, maxHp, actualMp, maxMp){
 		super(scene, x, y, imageId);
 		this.imageId = imageId;
 		this.scene.add.existing(this);
-		
+		this.name = name;
 		this.actualHp = actualHp;
 		this.maxHp = maxHp;
 		this.actualMp = actualMp;

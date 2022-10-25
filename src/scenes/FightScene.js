@@ -20,13 +20,13 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('attackPointer','assets/attackPointer.png');
 		
 		// cargar los botones
+		this.load.image('log','assets/log.png');
 		this.load.image('fightBg','assets/bgFight.png')
 		this.load.image('attackButton','assets/attackButton.png');
 		this.load.image('attackButtonHover','assets/attackButtonHover.png');
 		this.load.image('objectButton','assets/objectButton.png');
 		this.load.image('objectButtonHover','assets/objectButtonHover.png');
 		//this.load.image('fleeButton','assets/fleeButton.png');
-		this.load.image('log','assets/log.png');
 		this.load.image('AllyBlock','assets/AllyBlock.png');
 		this.load.image('attackBlock','assets/AllyAttack.png');
 	}
@@ -50,6 +50,12 @@ export class FightScene extends Phaser.Scene {
 		this.objectButtonHover.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
 		this.objectButtonHover.visible = false;
 		
+		this.logUp = this.add.image(620, 500,'attackPointer');
+		this.logDown = this.add.image(620,550,'attackPointer');
+		this.logUp.setInteractive();
+		this.logUp.angle = -90;
+		this.logDown.setInteractive();
+		this.logDown.angle = 90;
 		// Falta botón de Huída.
 
 		//#region input de Botones
@@ -81,9 +87,17 @@ export class FightScene extends Phaser.Scene {
 			this.objectButtonHover.visible = false;
 		});
 
+		this.logUp.on('pointerup', () =>{
+			// Mover el Log hacia arriba
+			this.log.Up();
+		})
+
+		this.logDown.on('pointerup', () =>{
+			// Mover el Log hacia abajo
+			this.log.Down();
+		})
 		//#endregion
 	}
-
 
 	ToggleAttackButtons(bool)
 	{
@@ -158,7 +172,7 @@ export class FightScene extends Phaser.Scene {
 		this.allies = [];
 		let self = this;
 		allyParty.party.forEach(function (ally, index){
-			self.allies[index] = new Character(self,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
+			self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
 			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
 			self.allies[index].dead = ally.dead;
 			let scene = self;
@@ -206,8 +220,8 @@ export class FightScene extends Phaser.Scene {
 		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
 		if(effective == 1) {text+="¡Es super efectivo!";}
 		else if (effective == -1) {text+= "No es muy efectivo..."}
-		this.log.push(text);
-		this.UpdateLog();
+		this.log.AddText(text);
+		this.log.UpdateLog();
 	}
 
 	ReturnParty()
@@ -229,10 +243,10 @@ export class FightScene extends Phaser.Scene {
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
-				this.enemies[0] = new Character(this,this.sys.game.canvas.width/2 +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
+				this.enemies[0] = new Character(this,this.enemiesInfo[enemyType].name,this.sys.game.canvas.width/2 +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			else{
-				this.enemies[i] = new Character(this,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
+				this.enemies[i] = new Character(this,this.enemiesInfo[enemyType].name,this.enemies[0].x + Math.pow(-1,i - 1)*(Math.floor(i-1/2 + 1))*75+(75*Math.floor(i/2)* Math.pow(-1,i)), height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
@@ -259,7 +273,7 @@ export class FightScene extends Phaser.Scene {
 		while(i < this.enemies.length && !this.CheckState(this.allies)){
 			if(!this.enemies[i].dead){
 				console.log("AtacandO!");
-				let selectedAttack = 0;//this.GetRandom(this.enemies[i].attacks.length, true);
+				let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 				let selectedTarget = [];
 				for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
 					let random = this.GetRandom(this.allies.length, true);
@@ -271,7 +285,7 @@ export class FightScene extends Phaser.Scene {
 				let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
 				
 				for(let j = 0; j < this.enemies[i].targets.length; j++){
-					this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allaySelected[selectedTarget[j]])
+					this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
 				}
 				
 				for(let h = 0; h < selectedTarget.length; h++){
@@ -787,7 +801,8 @@ class Log {
 	constructor(scene){
 		this.scene = scene;
 		this.log = ["¡Comienza el combate!"];
-		this.img = this.scene.add.image(50, 400, 'log').setOrigin(0,0);
+		this.img = this.scene.add.image(10, 490, 'log').setOrigin(0,0);
+		this.img.setScale(2,1);
 		this.currentText = 0;
 		this.verticalOffset = 25;
 		this.CreateTexts();
@@ -795,27 +810,27 @@ class Log {
 	}
 
 	CreateTexts(){
-		this.text1 = this.scene.add.text(this.img.x, this.img.y, this.log[this.currentText], 
+		this.text3 = this.scene.add.text(this.img.x + 25, this.img.y + 15, "---", 
 			{
 			font: '20px "Press Start 2P"',
 			color: '#ffffff',
 			align: 'left',
 			});
 	
-		this.text2 = this.scene.add.text(this.img.x, this.text1.y + this.verticalOffset, "---", 
+		this.text2 = this.scene.add.text(this.text3.x, this.text3.y + this.verticalOffset, "---", 
 			{
 			font: '20px "Press Start 2P"',
 			color: '#ffffff',
 			align: 'left',
 			});
-	;
-		this.text3 = this.scene.add.text(this.img.x, this.text2.y + this.verticalOffset, "---", 
+
+		this.text1 = this.scene.add.text(this.text2.x, this.text2.y + this.verticalOffset, this.log[this.currentText], 
 			{
 			font: '20px "Press Start 2P"',
 			color: '#ffffff',
 			align: 'left',
 			});
-	;
+
 		this.text1.depth = 3;
 		this.text2.depth = 3;
 		this.text3.depth = 3;
@@ -826,20 +841,35 @@ class Log {
 	}
 
 	UpdateLog(){
-		this.currentText = this.currentText % this.log.length;
+		this.currentText++;
 		this.ShowLog();
 	}
 
+	Up(){
+		if(this.currentText !== 0){
+			this.currentText--;
+			this.ShowLog();
+		}
+	}
+
+	Down(){
+		if(this.currentText < this.log.length - 1){
+			this.currentText++;
+			this.ShowLog();
+		}
+	}
+
 	ShowLog(){
+		console.log(this.currentText);
 		this.text1.text = this.log[this.currentText];
-		if(this.currentText + 1 >= this.log.length){
+		if(this.currentText - 1 < 0){
 			this.text2.text = "---";
 		}
-		else this.text2.text = this.log[(this.currentText + 1)];
-		if(this.currentText + 2 >= this.log.length){
+		else this.text2.text = this.log[(this.currentText - 1)];
+		if(this.currentText - 2 < 0){
 			this.text3.text = "---";
 		}
-		else this.text3.text = this.log[(this.currentText + 2)];
+		else this.text3.text = this.log[(this.currentText - 2)];
 	}
 }
 
