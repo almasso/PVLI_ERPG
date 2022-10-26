@@ -10,9 +10,10 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		super(scene, x, y, 'manin');
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(3,3);
+		this.depth = 2;
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
-        
+        this.touchingGrass =false;
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
 		/*this.scene.anims.create({
@@ -85,7 +86,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(false, false)
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
-            this.stepsWalked++;
+            if(this.touchingGrass)this.stepsWalked++;
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
@@ -93,7 +94,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(true, false)
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
-            this.stepsWalked++;
+			if(this.touchingGrass) this.stepsWalked++;
 		}
 
 		// Phaser.Input.Keyboard.JustUp y Phaser.Input.Keyboard.JustDown nos aseguran detectar la tecla una sola vez (evitamos repeticiones)
@@ -103,13 +104,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
 		if(this.sKey.isDown){
             this.body.setVelocityY(100*dt*this.speed/1000);
-            this.stepsWalked++;
+            if(this.touchingGrass)this.stepsWalked++;
 		}
-        
+
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
 		if(this.wKey.isDown){
             this.body.setVelocityY(-100*dt*this.speed/1000);
-            this.stepsWalked++;
+            if(this.touchingGrass)this.stepsWalked++;
 		}
 
         if(Phaser.Input.Keyboard.JustUp(this.wKey) || Phaser.Input.Keyboard.JustUp(this.sKey)){
@@ -122,7 +123,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 
         console.log(this.stepsWalked);
-        if(this.stepsWalked > 20){
+        if(this.stepsWalked > 2000){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
