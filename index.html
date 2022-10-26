@@ -29,12 +29,17 @@
         <nav>
             <ul id="navegacion">
                 <li class="enlacesNAV currentLink"><a href="index.html" class="enlacesNAV">Inicio</a></li>
+                <li class="enlacesNAV"><a class="enlacesNAV" onclick="openPopup()">Controles</a></li>
                 <li class="enlacesNAV"><a href="./html/manin.html" class="enlacesNAV">Manín Interactive</a></li>
             </ul>
         </nav>
         <hr>
         <!--<script src="./src/game.js" type="module"></script>-->
         <section>
+            <div id="popup" style="display:none;">
+                <button id="popupclose" style="float: right;" onclick="closePopup()">X</button>
+                <img src="./assets/Controls.png" style="height:35%;width:35%;">
+            </div>
             <div id="divcanvas">
                 <canvas id='game' style="image-rendering: pixelated; width: 800px; height: 600px"></canvas>
             </div>
@@ -47,9 +52,19 @@
                 <a class="socialslinks" href="https://twitter.com/manin_int" target="_blank"><i class="fa-brands fa-twitter"></i></a>
                 <a class="socialslinks" href="https://www.instagram.com/manin.interactive/" target="_blank"><i class="fa-brands fa-instagram"></i></a> 
                 <a class="socialslinks" href="https://github.com/almasso/PVLI_ERPG" target="_blank"><i class="fa-brands fa-github"></i></a>
-            </div>
-            
+            </div>      
         </footer>
     </body>
+
+    <script>
+        function openPopup() {
+            var divControls = document.getElementById('popup');
+            divControls.style.display = "block";
+        }
+        function closePopup() {
+            var divControls = document.getElementById('popup');
+            divControls.style.display = "none";
+        }
+    </script>
 
 </html>

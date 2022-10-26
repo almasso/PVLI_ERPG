@@ -61,6 +61,12 @@ li.enlacesNAV:hover {
     border-left-color:yellow;
     border-right-color:yellow;
 }
+.popup {
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 /*SOLO PÁG MANIN*/
 ul.desarrolladores{
     list-style-type: none;
