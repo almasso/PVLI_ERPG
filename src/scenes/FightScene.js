@@ -15,6 +15,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('manin', 'assets/Manín.png');
 		this.load.image('fightBg','assets/parqueLucha.png')
 		this.load.image('melendi','assets/Melendi.png')
+		this.load.image('artista','assets/Artista.png')
 		this.load.image('dinoseto','assets/Dinoseto.png')
 		this.load.image('angel','assets/AngelCaido.png')
 		this.load.image('attackPointer','assets/attackPointer.png');
