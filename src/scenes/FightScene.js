@@ -218,10 +218,11 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
-	BuildLog(chName,attackInfo, effective,enemy){
+	BuildLog(chName,attackInfo, effective,enemy, index){
 		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
-		if(effective === -1) {text+="¡Es super efectivo!";}
-		else if (effective === 1) {text+= "No es muy efectivo..."}
+		if(effective[index] === -1) {text+="¡Es super efectivo!";}
+		else if (effective[index] === 1) {text+= "No es muy efectivo..."}
+		else if(effective[index] === 2){text+="Pero no tuvo efecto."}
 		this.log.AddText(text);
 		this.log.UpdateLog();
 	}
@@ -373,7 +374,7 @@ export class FightScene extends Phaser.Scene {
 	AllyAttack(){
 		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack);
 		let self = this;
-		this.allies[this.currentAlly].targets.forEach(function (enemy) {
+		this.allies[this.currentAlly].targets.forEach(function (enemy, index) {
 			let i = 0;
 			if(self.selectedAttack.isSupport()){
 				while(self.alliesHud[i].character !== enemy){i++;}
@@ -383,7 +384,7 @@ export class FightScene extends Phaser.Scene {
 				while(self.enemiesHud[i].character !== enemy){i++;}
 				self.enemiesHud[i].Update();
 			}
-			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy)
+			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy, index)
 		})
 		this.allies[this.currentAlly].targets = [];
 		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
