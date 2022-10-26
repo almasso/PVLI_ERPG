@@ -270,36 +270,31 @@ export class FightScene extends Phaser.Scene {
 		else return Math.floor(Math.random()*maxRange + 1);
 	}
 
-	EnemyAttacks(){
-		let i = 0;
-		while(i < this.enemies.length && !this.CheckState(this.allies)){
-			if(!this.enemies[i].dead){
-				console.log("AtacandO!");
-				let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
-				let selectedTarget = [];
-				for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
-					let random = this.GetRandom(this.allies.length, true);
-					while(this.allies[random].dead) { random = (random +1) % this.allies.length};
-					selectedTarget.push(random);
-					this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
-				}
-
-				let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
-				
-				for(let j = 0; j < this.enemies[i].targets.length; j++){
-					this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
-				}
-				
-				for(let h = 0; h < selectedTarget.length; h++){
-					this.alliesHud[selectedTarget[h]].Update();
-				}
-				console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
-				console.log(selectedTarget);
-				this.enemies[i].targets = [];
+	EnemyAttacks(i){
+		if(!this.enemies[i].dead){
+			console.log("AtacandO!");
+			let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
+			let selectedTarget = [];
+			for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
+				let random = this.GetRandom(this.allies.length, true);
+				while(this.allies[random].dead) { random = (random +1) % this.allies.length};
+				selectedTarget.push(random);
+				this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
 			}
-			i++;
+
+			let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+			
+			for(let j = 0; j < this.enemies[i].targets.length; j++){
+				this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
+			}
+			
+			for(let h = 0; h < selectedTarget.length; h++){
+				this.alliesHud[selectedTarget[h]].Update();
+			}
+			console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
+			console.log(selectedTarget);
+			this.enemies[i].targets = [];
 		}
-		if(i < this.enemies.length) this.EndCombat();
 	}
 
 	NextAlly(){
@@ -307,7 +302,11 @@ export class FightScene extends Phaser.Scene {
 		else {
 			if (this.currentAlly + 1 === this.allies.length){
 				// PUM ataque enemigos
-				this.EnemyAttacks();
+				let self = this;
+				this.enemies.forEach(function (enemy, index){
+					self.EnemyAttacks(index);
+				});
+
 			}
 
 			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
