@@ -220,8 +220,8 @@ export class FightScene extends Phaser.Scene {
 
 	BuildLog(chName,attackInfo, effective,enemy){
 		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
-		if(effective == 1) {text+="¡Es super efectivo!";}
-		else if (effective == -1) {text+= "No es muy efectivo..."}
+		if(effective === -1) {text+="¡Es super efectivo!";}
+		else if (effective === 1) {text+= "No es muy efectivo..."}
 		this.log.AddText(text);
 		this.log.UpdateLog();
 	}
