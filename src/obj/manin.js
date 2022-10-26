@@ -1,3 +1,6 @@
+import NPC from "./npc.js";
+import DialogBox from "../ui/dialogues.js";
+
 export default class Manin extends Phaser.GameObjects.Sprite {
 	/**
 	 * Constructor de Manín, nuestro increíble y maravilloso protagonita semidesnudo
@@ -14,6 +17,9 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
         this.touchingGrass =false;
+		this.collider = null;
+		this.dialogBox = new DialogBox(scene);
+        
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
 		/*this.scene.anims.create({
@@ -53,6 +59,8 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		
+		this.pKey = this.scene.input.keyboard.addKey('P');
 
 		// Agregamos el caballero a las físicas para que Phaser lo tenga en cuenta
 		scene.physics.add.existing(this);
@@ -68,8 +76,17 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
-        console.log("INTERACCIÓN WOW!");
+		this.dialogBox.init();
+			if(this.collider instanceof NPC) {
+				this.collider.readDialogues();
+			}
+			else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
+
+	clearCollider() {
+		console.log("Colisión borrada");
+		this.collider = null;
+	}
 
 	/**
 	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
@@ -125,9 +142,9 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         console.log(this.stepsWalked);
         if(this.stepsWalked > 2000){
             this.stepsWalked = 0;
-            this.body.setVelocityX(0);
-            this.body.setVelocityY(0);
-            this.scene.Fight()
+            //this.body.setVelocityX(0);
+            //this.body.setVelocityY(0);
+            //this.scene.Fight()
         }
 	}
 }
