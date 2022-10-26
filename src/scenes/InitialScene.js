@@ -6,14 +6,20 @@ export default class InitialScene extends Phaser.Scene {
 		super({ key: 'initial' });
 	}
 	
-	preload(){
-		this.load.image('initialBg', 'assets/Inicio.png');
-		this.load.image('startButton', 'assets/StartInicio.png');
+    preload(){
+		this.load.image('finalBg', 'assets/GameOver.png');
+		this.load.image('retryButton', 'assets/Retry.png');
 	}
 	z
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
+
+	preload(){
+		this.load.image('initialBg', 'assets/Inicio.png');
+		this.load.image('startButton', 'assets/StartInicio.png');
+	}
+
 
 	create() {
         this.bg = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'initialBg');
@@ -32,8 +38,6 @@ export default class InitialScene extends Phaser.Scene {
             this.scene.stop('initial');
 		})
     }
-
-
 
 	
 }

@@ -168,7 +168,15 @@ export class FightScene extends Phaser.Scene {
 		this.choseA=false;
 		this.choseE=false;
 		this.combat=false;
-		this.scene.wake('movement');
+		if(!this.CheckState(this.allies))
+		{
+			this.scene.wake('movement');
+		}
+		else
+		{
+			this.scene.launch('final');
+			this.scene.stop('movement');
+		}
 		this.scene.stop('fightscene');
 		
 	}

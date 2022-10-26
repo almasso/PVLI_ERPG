@@ -1,6 +1,8 @@
 import MovementExample from './scenes/exampleMovement.js'
 import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
+import FinalScene from './scenes/FinalScene.js'
+
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -26,7 +28,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene],
+    scene: [InitialScene, MovementExample, FightScene, FinalScene],
     physics: { 
         default: 'arcade', 
         arcade: { 
