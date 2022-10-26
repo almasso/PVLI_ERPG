@@ -271,29 +271,80 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	EnemyAttacks(i){
-		if(!this.enemies[i].dead){
-			console.log("AtacandO!");
-			let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
-			let selectedTarget = [];
-			for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
-				let random = this.GetRandom(this.allies.length, true);
-				while(this.allies[random].dead) { random = (random +1) % this.allies.length};
-				selectedTarget.push(random);
-				this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
-			}
+		console.log("AtacandO!");
+		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
+		let selectedTarget = [];
+		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
+			let random = this.GetRandom(this.allies.length, true);
+			while(this.allies[random].dead) { random = (random +1) % this.allies.length};
+			selectedTarget.push(random);
+			this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+		}
 
-			let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
-			
-			for(let j = 0; j < this.enemies[i].targets.length; j++){
-				this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
+		let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
+		
+		for(let j = 0; j < this.enemies[i].targets.length; j++){
+			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
+		}
+		
+		for(let h = 0; h < selectedTarget.length; h++){
+			this.alliesHud[selectedTarget[h]].Update();
+		}
+		console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
+		console.log(selectedTarget);
+		this.enemies[i].targets = [];
+		this.finishedTurn = true;
+	}
+
+	CreateTurns(){
+		let self = this;
+		this.allies.forEach(function (ally, i)
+		{
+			self.turns.push({char: ally, type: true, index: i});
+		})
+		this.enemies.forEach(function (enemy, i)
+		{
+			self.turns.push({char: enemy, type: false, index: i});
+		})
+
+
+		this.turns.sort(function(char1, char2)
+		{
+			if(char1.char.speed < char2.char.speed)
+			{
+				return -1;
 			}
-			
-			for(let h = 0; h < selectedTarget.length; h++){
-				this.alliesHud[selectedTarget[h]].Update();
+			else if(char1.char.speed > char2.char.speed)
+			{
+				return 1;
 			}
-			console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
-			console.log(selectedTarget);
-			this.enemies[i].targets = [];
+			else return 0;
+		})
+	}
+
+	NextTurn(){
+		this.finishedTurn = false;
+		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat();}
+		else if(!this.turns[this.currentTurn].char.dead)
+		{
+			if(this.turns[this.currentTurn].type) // ALIADOS
+			{
+				this.currentAlly = this.turns[this.currentTurn].index;
+				//···RAUL PRUEBAS···
+				this.choseA=false;
+				this.choseE=false;
+				this.pointer.visible=false;
+			}
+			else    // ENEMIGOS
+			{   
+				this.EnemyAttacks(this.turns[this.currentTurn].index);
+				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
+			}
+		}
+		else
+		{
+			this.finishedTurn = true;
+			this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 		}
 	}
 
@@ -339,7 +390,9 @@ export class FightScene extends Phaser.Scene {
 		this.DisableTargetting(this.enemies);
 		this.ToggleButtons(true);
 		this.alliesHud[this.currentAlly].Update();
-		this.NextAlly();
+
+		this.currentTurn = (this.currentTurn + 1) % this.turns.length;
+		this.finishedTurn = true;
 	}
 
 	i=0;//···RAUL PRUEBAS···
@@ -389,6 +442,11 @@ export class FightScene extends Phaser.Scene {
 		this.enemiesHud = [];
 		this.GenerateRandomEncounter();
 
+		this.turns = [];
+		this.finishedTurn = false;
+		this.currentTurn = 0;
+		this.CreateTurns();
+
 		this.log = new Log(this);
 
 		this.currentAlly = 0;
@@ -411,8 +469,7 @@ export class FightScene extends Phaser.Scene {
 		this.pointer.depth = 2;
 
 		this.CreateButtons();
-
-		if(this.allies[0].dead) this.NextAlly(); // Si el primer personaje está muerto, que se actualice el turno
+		this.NextTurn();
 	}
 
 	//···RAUL PRUEBAS···
@@ -429,6 +486,12 @@ export class FightScene extends Phaser.Scene {
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
 		}*/
+		if(this.finishedTurn)
+		{
+			this.NextTurn();
+		}
+
+
 		if(this.choseE===false && this.choseA===false){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
