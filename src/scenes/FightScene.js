@@ -226,6 +226,10 @@ export class FightScene extends Phaser.Scene {
 		if(effective[index] === -1) {text+="¡Es super efectivo!";}
 		else if (effective[index] === 1) {text+= "No es muy efectivo..."}
 		else if(effective[index] === 2){text+="Pero no tuvo efecto."}
+		if(attackInfo.type === 5) // Si el ataque es de tipo support
+		{
+			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
+		}
 		this.log.AddText(text);
 		this.log.UpdateLog();
 	}
