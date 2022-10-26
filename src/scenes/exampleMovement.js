@@ -46,19 +46,16 @@ export default class MovementExample extends Phaser.Scene {
 		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
-        let house = new enviromentObj(this,400,300, 'house',0.2,0.2);
+        let house = new enviromentObj(this,200,300, 'house',0.5,0.5);
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
-
-		this.manin.body.onCollide = true; // Activamos onCollide para poder detectar la colisión del caballero con el suelo
 		this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
 		this.physics.add.collider(this.manin, bDown);
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
-		
 		/*
 		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
 		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
@@ -78,7 +75,7 @@ export default class MovementExample extends Phaser.Scene {
 			}
 		}
 		
-		this.hierbasColliders = this.add.zone(this.hierbas[0].x,this.hierbas[0].y).setSize(this.hierbas[0].displayWidth +this.hierbas[0].displayWidth * 2.0,this.hierbas[0].displayHeight * 2.5).setOrigin(0,0);		
+		this.hierbasColliders = this.add.zone(this.hierbas[0].x,this.hierbas[0].y - 55).setSize(this.hierbas[0].displayWidth +this.hierbas[0].displayWidth * 1.5,(this.hierbas[0].displayHeight) * 2.5 + 55).setOrigin(0,0);		
 		this.physics.world.enable(this.hierbasColliders);
 		this.hierbasColliders.body.setAllowGravity(false);
 		this.hierbasColliders.body.moves = false;
