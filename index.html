@@ -29,7 +29,7 @@
         <nav>
             <ul id="navegacion">
                 <li class="enlacesNAV currentLink"><a href="index.html" class="enlacesNAV">Inicio</a></li>
-                <li class="enlacesNAV"><a class="enlacesNAV" onclick="openPopup()">Controles</a></li>
+                <li class="enlacesNAV" id="controlNAV"><a class="enlacesNAV" onclick="openPopup()">Controles</a></li>
                 <li class="enlacesNAV"><a href="./html/manin.html" class="enlacesNAV">Manín Interactive</a></li>
             </ul>
         </nav>
@@ -37,7 +37,6 @@
         <!--<script src="./src/game.js" type="module"></script>-->
         <section>
             <div id="popup" style="display:none;">
-                <button id="popupclose" style="float: right;" onclick="closePopup()">X</button>
                 <img src="./assets/Controls.png" style="height:35%;width:35%;">
             </div>
             <div id="divcanvas">
@@ -59,11 +58,19 @@
     <script>
         function openPopup() {
             var divControls = document.getElementById('popup');
+            var controlNav = document.getElementById('controlNAV');
+            var link = controlNav.querySelector('a');
             divControls.style.display = "block";
+            controlNav.classList.add('currentLink');
+            link.onclick = function() {closePopup();};
         }
         function closePopup() {
             var divControls = document.getElementById('popup');
+            var controlNav = document.getElementById('controlNAV');
+            var link = controlNav.querySelector('a');
             divControls.style.display = "none";
+            controlNav.classList.remove('currentLink');
+            link.onclick = function() {openPopup();};
         }
     </script>
 
