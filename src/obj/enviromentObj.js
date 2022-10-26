@@ -5,9 +5,9 @@ export default class enviromentObj extends Phaser.GameObjects.Sprite {
 	 * @param {number} x - coordenada x
 	 * @param {number} y - coordenada y
 	 */
-	constructor(scene, x, y, imageID) {
+	constructor(scene, x, y, imageID, sX, sY) {
 		super(scene, x, y, imageID);
-		this.setScale(0.2,0.2);
+		this.setScale(sX,sY);
 		this.scene.add.existing(this); //Añadimos la caja a la escena
 
 		// Agregamos la caja a las físicas para que Phaser lo tenga en cuenta
