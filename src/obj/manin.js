@@ -1,4 +1,5 @@
 import NPC from "./npc.js";
+import DialogBox from "../ui/dialogues.js";
 
 export default class Manin extends Phaser.GameObjects.Sprite {
 	/**
@@ -15,6 +16,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
 		this.collider = null;
+		this.dialogBox = new DialogBox(scene);
         
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
@@ -55,6 +57,8 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		
+		this.pKey = this.scene.input.keyboard.addKey('P');
 
 		// Agregamos el caballero a las físicas para que Phaser lo tenga en cuenta
 		scene.physics.add.existing(this);
@@ -70,6 +74,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
+		this.dialogBox.init();
 			if(this.collider instanceof NPC) {
 				this.collider.readDialogues();
 			}
