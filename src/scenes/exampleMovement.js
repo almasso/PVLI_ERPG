@@ -2,7 +2,6 @@ import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import {EnviromentInfo} from '../fight/EnviromentInfo.js';
-import NPC from '../obj/npc.js';
 
 /**
  * Escena principal.
@@ -24,11 +23,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('pixel', 'assets/pixel1x1.png');
 		this.load.image('hierba', 'assets/hierba.png')
 
-		//TEST DE NPCS
-		this.load.image('melendi','assets/textures/Melendi.png'); 
-		//TEST DE JSON
-		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
-		
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
@@ -46,11 +40,7 @@ export default class MovementExample extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
-		let npc_dialogues = this.cache.json.get('npc_dialogues');
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
-		//
-
-		let manin = new Manin(this, 100, 50);
+		this.manin = new Manin(this, 100, 50);
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
@@ -62,22 +52,21 @@ export default class MovementExample extends Phaser.Scene {
 		this.GenerateHostileGround();
 
 		this.manin.body.onCollide = true; // Activamos onCollide para poder detectar la colisión del caballero con el suelo
-
-		this.physics.add.collider(manin, npc1);
-
-		this.physics.add.collider(manin, house);
-		this.physics.add.collider(manin, bg);
-		this.physics.add.collider(manin, bLeft);
-		this.physics.add.collider(manin, bDown);
-		this.physics.add.collider(manin, bRight);
-		this.physics.add.collider(manin, bUp);
-		manin.collider = null;
-
-		scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			console.log("HA HABIDO COLISIÓN")
-			gameObject1.collider = gameObject2;
-		});
+		this.physics.add.collider(this.manin, house);
+		this.physics.add.collider(this.manin, bg);
+		this.physics.add.collider(this.manin, bLeft);
+		this.physics.add.collider(this.manin, bDown);
+		this.physics.add.collider(this.manin, bRight);
+		this.physics.add.collider(this.manin, bUp);
+		
+		/*
+		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
+		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
+		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
+		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
+		*/
 	}
+	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)
 	GenerateHostileGround(){
 		this.hierbas = [];
