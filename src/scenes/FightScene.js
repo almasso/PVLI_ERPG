@@ -321,7 +321,7 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	AllyAttack(){
-		this.allies[this.currentAlly].Attack(this.selectedAttack);
+		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack);
 		let self = this;
 		this.allies[this.currentAlly].targets.forEach(function (enemy) {
 			let i = 0;
@@ -333,6 +333,7 @@ export class FightScene extends Phaser.Scene {
 				while(self.enemiesHud[i].character !== enemy){i++;}
 				self.enemiesHud[i].Update();
 			}
+			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy)
 		})
 		this.allies[this.currentAlly].targets = [];
 		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
