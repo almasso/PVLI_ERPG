@@ -30,9 +30,8 @@ export default class MovementExample extends Phaser.Scene {
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
-    
-	create() {
 
+	create() {
         this.scene.sleep('uimanager');
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
@@ -40,11 +39,12 @@ export default class MovementExample extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
+		let upperBackgroundOffset = 20;
 		this.manin = new Manin(this, 100, 50);
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
-		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
-		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
+		let bUp = new Bound(this, 0, -1 + upperBackgroundOffset,bg.displayWidth,1);
+		let bDown = new Bound(this, 0, bg.displayHeight - upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
         let house = new enviromentObj(this,200,300, 'house',0.5,0.5);
 
