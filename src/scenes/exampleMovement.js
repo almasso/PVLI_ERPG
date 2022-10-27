@@ -16,11 +16,11 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	preload(){
-		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('bg', 'assets/bg.png');
-		this.load.image('house', 'assets/house.png');
-		this.load.image('pixel', 'assets/pixel1x1.png');
-		this.load.image('hierba', 'assets/hierba.png');
+		this.load.image('manin', 'assets/textures/Manin.png');
+		this.load.image('bg', 'assets/textures/bg.png');
+		this.load.image('house', 'assets/textures/house.png');
+		this.load.image('pixel', 'assets/textures/pixel1x1.png');
+		this.load.image('hierba', 'assets/textures/hierba.png');
 		this.load.image('melendi','assets/textures/Melendi.png'); 
 		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
 

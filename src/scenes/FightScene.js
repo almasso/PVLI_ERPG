@@ -14,7 +14,7 @@ export class FightScene extends Phaser.Scene {
 
 	preload(){
 		// cargar personajes
-		this.load.image('manin', 'assets/textures/Manín.png');
+		this.load.image('manin', 'assets/textures/Manin.png');
 		this.load.image('fightBg','assets/textures/parqueLucha.png')
 		this.load.image('melendi','assets/textures/Melendi.png')
 		//this.load.image('artista','assets/textures/Artista.png')
