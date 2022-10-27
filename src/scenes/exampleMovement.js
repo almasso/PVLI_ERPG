@@ -21,7 +21,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
-		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
+		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
