@@ -9,7 +9,7 @@ body {
     padding: 0;
     overflow: hidden;
 }
-.enlacesNAV {
+.enlacesNAV, .enlacesNAVJuego {
     display: inline-block;
     color: white;
     text-align: center;
@@ -19,8 +19,14 @@ body {
 li.enlacesNAV:hover {
     background-color: rgba(239, 10, 10, 0.4);
 }
+li.enlacesNAVJuego:hover {
+    background-color:rgba(241, 241, 126, 0.5);
+}
 .currentLink {
     background-color: rgba(169,169,169,0.5);
+}
+.currentLinkJuego{
+    background-color:rgba(75, 233, 27, 0.5);
 }
 #titulo:link, :visited {
     text-decoration: none;
