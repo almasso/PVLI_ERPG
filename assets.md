@@ -6,4 +6,4 @@
 - Se ha decidido usar un estilo simple porque nadie del equipo destaca en artes plásticas y el Pixel Art sin sombras es una forma bastante sencilla de crear 
 assets bonitos y simples que puedan quedar graciosos frente al público. 
 - Todos los NPCs partirán de una plantilla para que todos mantengan una misma estética y simplicidad.
-![]{GENERICO EL MAN.png}
+![GENERICO EL MAN](https://user-images.githubusercontent.com/91317502/198380011-c99149a5-e66d-4ba2-808b-d4f3b0332c8d.png)
