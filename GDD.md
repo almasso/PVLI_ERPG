@@ -214,6 +214,6 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 - Objetos de boss: Trozo de Dinoseto y algo que reviva a todo el grupo (depende de cada boss)
 
 ### Menús y Flujo de Juego
-
+En este juego se distinguen dos partes, la exploración y los combates. Durante la parte de explorar habrá un menú para ver la party y otro para usar objetos consumibles para gestionar la party. Por otro lado, en los combates habrá un menú
 ### Referencias
 Nos hemos basado en RPGs clásicos como el Dragon Quest, Final Fantasy o Lisa: the Painful
