@@ -16,12 +16,11 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	preload(){
-		this.load.image('manin', 'assets/textures/Manin.png');
-		this.load.image('bg', 'assets/textures/bg.png');
-		this.load.image('house', 'assets/textures/house.png');
-		this.load.image('pixel', 'assets/textures/pixel1x1.png');
-		this.load.image('hierba', 'assets/textures/hierba.png');
-		this.load.image('melendi','assets/textures/Melendi.png'); 
+		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
+		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
+		this.load.image('hierba', 'assets/textures/Props/hierba.png');
+		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
 
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
@@ -47,7 +46,6 @@ export default class MovementExample extends Phaser.Scene {
 		let bUp = new Bound(this, 0, -1 + upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight - upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
-        let house = new enviromentObj(this,200,300, 'house',0.5,0.5);
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
 		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);

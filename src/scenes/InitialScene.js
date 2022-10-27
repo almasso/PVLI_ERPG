@@ -13,8 +13,8 @@ export default class InitialScene extends Phaser.Scene {
 	*/
 
 	preload(){
-		this.load.image('initialBg', 'assets/textures/Inicio.png');
-		this.load.image('startButton', 'assets/textures/StartInicio.png');
+		this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
+		this.load.image('startButton', 'assets/textures/HUD/StartInicio.png');
 	}
 
 
