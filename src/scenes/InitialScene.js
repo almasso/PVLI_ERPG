@@ -6,18 +6,15 @@ export default class InitialScene extends Phaser.Scene {
 		super({ key: 'initial' });
 	}
 	
-    preload(){
-		this.load.image('finalBg', 'assets/GameOver.png');
-		this.load.image('retryButton', 'assets/Retry.png');
-	}
-	z
+
+	
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
 
 	preload(){
-		this.load.image('initialBg', 'assets/Inicio.png');
-		this.load.image('startButton', 'assets/StartInicio.png');
+		this.load.image('initialBg', 'assets/textures/Inicio.png');
+		this.load.image('startButton', 'assets/textures/StartInicio.png');
 	}
 
 

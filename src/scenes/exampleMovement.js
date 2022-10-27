@@ -1,6 +1,7 @@
 import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
+import NPC from '../obj/npc.js';
 
 /**
  * Escena principal.
@@ -19,7 +20,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('bg', 'assets/bg.png');
 		this.load.image('house', 'assets/house.png');
 		this.load.image('pixel', 'assets/pixel1x1.png');
-		this.load.image('hierba', 'assets/hierba.png')
+		this.load.image('hierba', 'assets/hierba.png');
+		this.load.image('melendi','assets/textures/Melendi.png'); 
+		this.load.json('npc_dialogues', '../../assets/dialogues/npc_dialog.json');
 
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
@@ -50,20 +53,29 @@ export default class MovementExample extends Phaser.Scene {
 		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
-		this.physics.add.collider(manin, npc1);
-		this.physics.add.collider(manin, npc2);
-		this.physics.add.collider(this.manin, house);
+		this.physics.add.collider(this.manin, npc1);
+		this.physics.add.collider(this.manin, npc2);
+		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
 		this.physics.add.collider(this.manin, bDown);
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
+		this.manin.body.onCollide = true;
 		/*
 		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
 		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
+
+
+
+		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			console.log("HA COLISIONAO")
+			gameObject1.collider = gameObject2;
+		});
+
 	}
 	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)
@@ -97,10 +109,6 @@ export default class MovementExample extends Phaser.Scene {
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
-		scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			gameObject1.collider = gameObject2;
-		});
-
 	}
 
     Fight(){

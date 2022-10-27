@@ -8,8 +8,8 @@ export default class FinalScene extends Phaser.Scene {
 	}
 	
 	preload(){
-		this.load.image('finalBg', 'assets/GameOver.png');
-		this.load.image('retryButton', 'assets/Retry.png');
+		this.load.image('finalBg', 'assets/textures/GameOver.png');
+		this.load.image('retryButton', 'assets/textures/Retry.png');
 	}
 	z
 	/**

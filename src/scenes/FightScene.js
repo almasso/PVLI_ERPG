@@ -14,27 +14,27 @@ export class FightScene extends Phaser.Scene {
 
 	preload(){
 		// cargar personajes
-		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('fightBg','assets/parqueLucha.png')
-		this.load.image('melendi','assets/Melendi.png')
-		//this.load.image('artista','assets/Artista.png')
-		this.load.image('artista2','assets/Artista2.png')
-		this.load.image('culturista','assets/Culturista.png')
-		this.load.image('dinoseto','assets/Dinoseto.png')
-		this.load.image('angel','assets/AngelCaido.png')
-		this.load.image('attackPointer','assets/attackPointer.png');
+		this.load.image('manin', 'assets/textures/Manín.png');
+		this.load.image('fightBg','assets/textures/parqueLucha.png')
+		this.load.image('melendi','assets/textures/Melendi.png')
+		//this.load.image('artista','assets/textures/Artista.png')
+		this.load.image('artista2','assets/textures/Artista2.png')
+		this.load.image('culturista','assets/textures/Culturista.png')
+		this.load.image('dinoseto','assets/textures/Dinoseto.png')
+		this.load.image('angel','assets/textures/AngelCaido.png')
+		this.load.image('attackPointer','assets/textures/attackPointer.png');
 		
 		// cargar los botones
-		this.load.image('log','assets/log.png');
-		this.load.image('logButton','assets/logButton.png');
-		this.load.image('fightBg','assets/bgFight.png')
-		this.load.image('attackButton','assets/attackButton.png');
-		this.load.image('attackButtonHover','assets/attackButtonHover.png');
-		this.load.image('objectButton','assets/objectButton.png');
-		this.load.image('objectButtonHover','assets/objectButtonHover.png');
-		//this.load.image('fleeButton','assets/fleeButton.png');
-		this.load.image('AllyBlock','assets/AllyBlock.png');
-		this.load.image('attackBlock','assets/AllyAttack.png');
+		this.load.image('log','assets/textures/log.png');
+		this.load.image('logButton','assets/textures/logButton.png');
+		this.load.image('fightBg','assets/textures/bgFight.png')
+		this.load.image('attackButton','assets/textures/attackButton.png');
+		this.load.image('attackButtonHover','assets/textures/attackButtonHover.png');
+		this.load.image('objectButton','assets/textures/objectButton.png');
+		this.load.image('objectButtonHover','assets/textures/objectButtonHover.png');
+		//this.load.image('fleeButton','assets/textures/fleeButton.png');
+		this.load.image('AllyBlock','assets/textures/AllyBlock.png');
+		this.load.image('attackBlock','assets/textures/AllyAttack.png');
 	}
 
 	CreateButtons(){
