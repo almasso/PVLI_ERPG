@@ -195,6 +195,9 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 
 ##### Objetos
 
+###### LEYENDA:
+    - (+) "algo" -> se recupera un poco de "algo". En caso de ser un estado alterado, se gana el objetivo gana el estado alterado "algo".
+       
 ###### Consumibles
 - Cigarro: +maná -vida
 - Kebab: +vida -maná
@@ -214,6 +217,20 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 - Objetos de boss: Trozo de Dinoseto y algo que reviva a todo el grupo (depende de cada boss)
 
 ### Menús y Flujo de Juego
+
+Desde una pantalla de Inicio podremos cargar nuestro último estado de la partida (se guarda un estado en Puntos de Guardado encontrados por el mapa) y acceder así a una escena de _exploración_. Caminando por las _zonas hostiles_ eventualmente el jugador se enzarzará en un combate. Si el jugador gana el combate se muestran menús de victoria, subida de experiencia y reparto de objetos si los enemigos han _droppeado_ alguno. En el caso contrario, se muestra una escena de _Game Over_ que lleva a la pantalla de título o al último estado guardado (ambas opciones representadas con botones).
+
+###### PANTALLA DE TÍTULO:
+
+![Inicio](https://user-images.githubusercontent.com/91317502/198381932-ed76295a-35ad-435f-8de9-a371e14ac0ac.png)
+
+###### GAME OVER:
+
+![Gameover](https://user-images.githubusercontent.com/91317502/198381775-05067790-be16-423a-a53b-3401b4a3e67b.png)
+
+
+Como se ha mencionado antes, hay dos partes del juego claramente distinguidas: la exploración y el combate. Durante la primera parte nos podemos encontrar con un menú que aparecerá al pulsar ESC donde podremos entrar a ver el estado de nuestra Party, otra opción para entrar a nuestro inventario de objetos (que mostrarán sus características y una opción para usarlos sobre la party revelando un menú parecido al del estado de la misma) y finalmente una opción para volver a la pantalla d título. 
+El caso de combate ya ha sido descrito en ***HUD***. 
 En este juego se distinguen dos partes, la exploración y los combates. Durante la parte de explorar habrá un menú para ver la party y otro para usar objetos consumibles para gestionar la party. Por otro lado, en los combates habrá un menú
 ### Referencias
 Nos hemos basado en RPGs clásicos como el Dragon Quest, Final Fantasy o Lisa: the Painful
