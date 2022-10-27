@@ -44,9 +44,10 @@ export default class MovementExample extends Phaser.Scene {
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
+		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
 		//
 
-		let manin = new Manin(this, 100, 50);
+		let manin = new Manin(this, 100, 50, this.scene.get('dialog'));
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
@@ -59,6 +60,7 @@ export default class MovementExample extends Phaser.Scene {
 		manin.body.onCollide = true; // Activamos onCollide para poder detectar la colisión del caballero con el suelo
 
 		this.physics.add.collider(manin, npc1);
+		this.physics.add.collider(manin, npc2);
 
 		this.physics.add.collider(manin, house);
 		this.physics.add.collider(manin, bg);
@@ -76,7 +78,6 @@ export default class MovementExample extends Phaser.Scene {
 		manin.collider = null;
 
 		scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			console.log("HA HABIDO COLISIÓN")
 			gameObject1.collider = gameObject2;
 		});
 	}

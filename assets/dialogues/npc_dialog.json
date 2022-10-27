@@ -1,14 +1,26 @@
 {"texts" : [
     {
-        "npcID" : "0",
+        "npcID" : 0,
         "text" : "¡Hola! Soy un texto leído de un JSON"
     },
     {
-        "npcID": "0",
+        "npcID": 0,
         "text": "¡Yo soy otro texto!"
     },
     {
-        "npcID": "1",
+        "npcID": 1,
+        "text": "AAAAAAAA"
+    },
+    {
+        "npcID": 1,
+        "text": "AAAAAAAA OTRA VEZ"
+    },
+    {
+        "npcID": 1,
+        "text": "ME DUELE VIVIR"
+    },
+    {
+        "npcID": 2,
         "text": "AAAAAAAA"
     }
 ]}

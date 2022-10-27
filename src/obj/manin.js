@@ -1,5 +1,4 @@
 import NPC from "./npc.js";
-import DialogBox from "../ui/dialogues.js";
 
 export default class Manin extends Phaser.GameObjects.Sprite {
 	/**
@@ -9,14 +8,14 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	 * @param {number} y - coordenada y
 	 */
 
-	constructor(scene, x, y) {
+	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin');
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(0.2,0.2);
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
 		this.collider = null;
-		this.dialogBox = new DialogBox(scene);
+		this.uiScene = uiScene;
         
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
@@ -57,8 +56,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
-		
-		this.pKey = this.scene.input.keyboard.addKey('P');
 
 		// Agregamos el caballero a las físicas para que Phaser lo tenga en cuenta
 		scene.physics.add.existing(this);
@@ -74,15 +71,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
-		this.dialogBox.init();
-			if(this.collider instanceof NPC) {
-				this.collider.readDialogues();
-			}
-			else { /*Aquí interactuaremos en el futuro con otras cosas*/}
+		if(this.collider instanceof NPC) {
+			this.collider.readDialogues(this.uiScene);
+		}
+		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
 
 	clearCollider() {
-		console.log("Colisión borrada");
 		this.collider = null;
 	}
 
