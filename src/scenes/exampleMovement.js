@@ -43,8 +43,8 @@ export default class MovementExample extends Phaser.Scene {
 		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
-		let bUp = new Bound(this, 0, -1 + upperBackgroundOffset,bg.displayWidth,1);
-		let bDown = new Bound(this, 0, bg.displayHeight - upperBackgroundOffset,bg.displayWidth,1);
+		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
+		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);

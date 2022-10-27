@@ -64,11 +64,11 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		// Decimos que el caballero colisiona con los límites del mundo
 
 		// Ajustamos el "collider" de nuestro caballero
-		this.bodyOffset = this.body.width/4;
+		this.bodyOffset = this.body.height/5;
 		this.bodyWidth = this.body.width/2;
 
-		this.body.setOffset(this.bodyOffset, 0);
-		this.body.width = this.bodyWidth;
+		this.body.setOffset(0, -this.bodyOffset);
+		this.body.height *= 2;
 	}
 
     interact(){
