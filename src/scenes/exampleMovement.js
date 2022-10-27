@@ -38,16 +38,20 @@ export default class MovementExample extends Phaser.Scene {
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
 		let upperBackgroundOffset = 20;
-		this.manin = new Manin(this, 100, 50);
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1 + upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight - upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
         let house = new enviromentObj(this,200,300, 'house',0.5,0.5);
-
+		let npc_dialogues = this.cache.json.get('npc_dialogues');
+		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
+		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
+		this.physics.add.collider(manin, npc1);
+		this.physics.add.collider(manin, npc2);
 		this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
@@ -93,6 +97,10 @@ export default class MovementExample extends Phaser.Scene {
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
+		scene.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			gameObject1.collider = gameObject2;
+		});
+
 	}
 
     Fight(){

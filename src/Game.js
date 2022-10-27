@@ -2,6 +2,8 @@ import MovementExample from './scenes/exampleMovement.js'
 import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
+import DialogScene from './ui/dialogues.js'
+
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -28,12 +30,12 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene, FinalScene],
-    physics: { 
-        default: 'arcade', 
-        arcade: { 
-            gravity: { y: 0 }, 
-            debug: false 
+    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene],
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: false
         },
         checkCollision: {
             up: true,
