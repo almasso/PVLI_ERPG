@@ -329,11 +329,11 @@ export class FightScene extends Phaser.Scene {
 		{
 			if(char1.char.speed < char2.char.speed)
 			{
-				return -1;
+				return 1;
 			}
 			else if(char1.char.speed > char2.char.speed)
 			{
-				return 1;
+				return -1;
 			}
 			else return 0;
 		})
