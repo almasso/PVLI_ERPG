@@ -18,6 +18,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
+		//this.isInteracting = false;
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
 		/*this.scene.anims.create({

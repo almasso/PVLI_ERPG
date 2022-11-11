@@ -47,15 +47,13 @@ export default class MovementExample extends Phaser.Scene {
 		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
-		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
+		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues, this.manin);
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
-		this.physics.add.collider(this.manin, npc1);
-		this.physics.add.collider(this.manin, npc2);
 		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
@@ -69,12 +67,18 @@ export default class MovementExample extends Phaser.Scene {
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
+		var self = this;
+		var isColliding = false;
+		this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
+			console.log(isColliding);
+			self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+				isColliding = true;
+				console.log(isColliding);
+				gameObject1.collider = gameObject2;
+			});
+			if(!isColliding) gameObject1.collider = null;
+			else isColliding = false;
 
-
-
-		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			console.log("HA COLISIONAO")
-			gameObject1.collider = gameObject2;
 		});
 
 	}

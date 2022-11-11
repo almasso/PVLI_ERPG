@@ -1,5 +1,5 @@
 export default class NPC extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, imageID, npcID, dialogues) {
+    constructor(scene, x, y, imageID, npcID, dialogues, manin) {
         super(scene, x, y, imageID);
         this.npcID = npcID;
         this.dialogues = dialogues;
@@ -10,6 +10,18 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.setScale(0.15,0.15);
         scene.physics.add.existing(this, true);
         this.countDialogues();
+        this.manin = manin;
+
+        this.trigger = this.scene.add.zone(x, y, this.body.width + 7, this.body.height + 7);
+        this.generateTrigger();
+        this.scene.physics.world.enable(this.trigger);
+        this.trigger.body.onOverlap = true;
+        this.trigger.setScale(7,7);
+    }
+
+    generateTrigger() {
+        this.scene.physics.add.collider(this.manin, this);
+		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
 
     countDialogues() {
@@ -36,6 +48,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
         if(this.currentDialog < this.dialogIndex + this.dialogCount) {
             uiScene.setText(this.dialogues.texts[this.currentDialog].text);
+            console.log(uiScene.isCurrentlyBeingAnimated);
             this.currentDialog++;
         }
         else {

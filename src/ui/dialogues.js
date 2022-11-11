@@ -150,6 +150,7 @@ export class DialogBox {
      * Anima el texto
      */
     animateText() {
+        this.isCurrentlyBeingAnimated = true;
         this.eventCounter++;
         this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
         if (this.eventCounter === this.dialog.length) {
@@ -186,6 +187,7 @@ export default class DialogScene extends Phaser.Scene {
         this.dialogBox = new DialogBox(this);
         this.hasCreatedWindow = false;
         this.isToggled = true;
+        this.isCurrentlyBeingAnimated;
     }
 
     preload() {
@@ -196,6 +198,7 @@ export default class DialogScene extends Phaser.Scene {
 
     createWindow() {
         this.dialogBox.init();
+        this.isCurrentlyBeingAnimated = this.dialogBox.isCurrentlyBeingAnimated;
         this.hasCreatedWindow = true;
     }
 
