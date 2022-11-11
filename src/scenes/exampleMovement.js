@@ -1,7 +1,8 @@
 import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
-import {EnviromentInfo} from '../fight/EnviromentInfo.js';
+import NPC from '../obj/npc.js';
+import {walkingHUD} from '../fight/HUD.js'
 
 /**
  * Escena principal.
@@ -17,12 +18,14 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	preload(){
-		this.load.image('manin', 'assets/Manín.png');
-		this.load.image('bg', 'assets/bg.png');
-		this.load.image('house', 'assets/house.png');
-		this.load.image('pixel', 'assets/pixel1x1.png');
-		this.load.image('hierba', 'assets/hierba.png')
-
+		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
+		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
+		this.load.image('hierba', 'assets/textures/Props/hierba.png');
+		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
+		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
+		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
+		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
@@ -62,6 +65,14 @@ export default class MovementExample extends Phaser.Scene {
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
+
+		this.walkingHUD = new walkingHUD(40, 550, 'miniHUD	', this)
+
+		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			console.log("HA COLISIONAO")
+			gameObject1.collider = gameObject2;
+		});
+
 	}
 	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)
