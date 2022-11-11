@@ -12,7 +12,6 @@ export default class MovementExample extends Phaser.Scene {
 	
 	constructor() {
 		super({ key: 'movement' });
-		this.enviromentInfo = EnviromentInfo;
 		this.manin;
 		this.hierbas = [];
 	}
@@ -33,9 +32,8 @@ export default class MovementExample extends Phaser.Scene {
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
-    
-	create() {
 
+	create() {
         this.scene.sleep('uimanager');
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
@@ -43,22 +41,30 @@ export default class MovementExample extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
 		//Instanciamos nuestro personaje, que es un caballero, y la plataforma invisible que hace de suelo
-		this.manin = new Manin(this, 100, 50);
+		let upperBackgroundOffset = 20;
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
-		let bUp = new Bound(this, 0, -1,bg.displayWidth,1);
-		let bDown = new Bound(this, 0, bg.displayHeight,bg.displayWidth,1);
+		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
+		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
-        let house = new enviromentObj(this,200,300, 'house',0.5,0.5);
+		let npc_dialogues = this.cache.json.get('npc_dialogues');
+		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
+		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
+		npc1.scale = 2.5;
+		npc2.scale = 2.5;
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
-		this.physics.add.collider(this.manin, house);
+		this.physics.add.collider(this.manin, npc1);
+		this.physics.add.collider(this.manin, npc2);
+		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
 		this.physics.add.collider(this.manin, bDown);
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
+		this.manin.body.onCollide = true;
 		/*
 		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
 		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
