@@ -72,7 +72,7 @@ export default class MovementExample extends Phaser.Scene {
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
 
-		this.walkingHUD = new walkingHUD(40, 550, 'miniHUD	', this)
+		this.walkingHUD = new walkingHUD(40, 550, this, 'miniHUD')
 
 		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
 			console.log("HA COLISIONAO")

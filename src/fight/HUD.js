@@ -1,3 +1,6 @@
+import { allyParty } from "./Party.js";
+
+
 export class Log {
 	constructor(scene){
 		this.scene = scene;
@@ -274,3 +277,21 @@ class HealthBar {
 	}
 }
 var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
+
+export class walkingHUD {
+	constructor(x,y,scene,img){
+		this.x = x;
+		this.y = y;
+		this.scene = scene;
+		this.imgID = img;
+		scene.add.image(x, y, imgID);
+		this.GenerateImages();
+	}
+	GenerateImages(){
+		let self = this;
+		allyParty.party.forEach(function(ally, index){
+			let offset = index * 50 + 30;
+			this.add.image(self.x + offset, self.y + offset, ally.imgID);
+		});
+	}
+}
