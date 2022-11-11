@@ -10,6 +10,7 @@ export class FightScene extends Phaser.Scene {
 		this.bg;
 		this.enemiesInfo = EnemiesInfo;
 		this.selectedAttack;
+		this.timeBetweenAttacks = 2000;
 	}
 
 	preload(){
@@ -449,6 +450,8 @@ export class FightScene extends Phaser.Scene {
 		// INPUT
 		this.aux = new InputMan(this);
 		
+		this.count = 0
+
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
 
@@ -503,10 +506,27 @@ export class FightScene extends Phaser.Scene {
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
 		}*/
+		this.alliesHud.forEach(function (hud){
+			if(hud.HealthBar.keepDrawing()) hud.HealthBar.draw();
+			if(hud.ManaBar.keepDrawing()) hud.ManaBar.draw();
+		})
+
+		this.enemiesHud.forEach(function (hud){
+			if(hud.healthBar.keepDrawing()) hud.healthBar.draw();
+		})
+
 		if(this.finishedTurn)
 		{
-			this.NextTurn();
+			this.count += dt;
+			this.ToggleButtons(false);
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.ToggleButtons(true);
+				this.NextTurn();
+				this.count = 0;
+			}
 		}
+
 
 
 		if(this.choseE===false && this.choseA===false){

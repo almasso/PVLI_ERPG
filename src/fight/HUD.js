@@ -229,7 +229,9 @@ class HealthBar {
 		this.bar = new Phaser.GameObjects.Graphics(scene);
 		this.x = x;
 		this.y = y;
+		this.renderDiff = 0.5;
 		this.value = initialValue;
+		this.renderingValue = initialValue;
 		this.width = width;
 		this.type = type;
 		this.maxValue = maxValue;
@@ -245,7 +247,7 @@ class HealthBar {
 	}
 
 	updateValue(newValue){
-		this.value = newValue;
+		this.value = Math.floor(newValue);
 	}
 
 	draw ()
@@ -268,9 +270,17 @@ class HealthBar {
 			else this.bar.fillStyle(0x0000ff);
 		}
 
-		let barWidth = (this.value*this.width) / this.maxValue;
+		if(this.keepDrawing()) this.renderingValue -= this.renderDiff;
+
+		let barWidth = (this.renderingValue*this.width) / this.maxValue;
 
 		this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, 6);
 	}
+
+	keepDrawing()
+	{
+		return this.renderingValue > this.value;
+	}
 }
+
 var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
