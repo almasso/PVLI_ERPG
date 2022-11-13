@@ -70,15 +70,16 @@ export default class MovementExample extends Phaser.Scene {
 		var self = this;
 		var isColliding = false;
 		this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
-			console.log(isColliding);
-			self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-				isColliding = true;
-				console.log(isColliding);
-				gameObject1.collider = gameObject2;
-			});
+			//console.log(isColliding);
+			
 			if(!isColliding) gameObject1.collider = null;
 			else isColliding = false;
 
+		});
+		self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			isColliding = true;
+			console.log("HA CHOCAO");
+			gameObject1.collider = gameObject2;
 		});
 
 	}
