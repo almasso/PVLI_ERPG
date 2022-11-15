@@ -1,19 +1,21 @@
 import { allyParty } from "./Party.js";
 
-
+// LOG DE COMBATE
 export class Log {
 	constructor(scene){
-		this.scene = scene;
-		this.log = ["¡Comienza el combate!"];
-		this.img = this.scene.add.image(10, 490, 'log').setOrigin(0,0);
-		this.img.setScale(2,1);
-		this.currentText = 0;
-		this.verticalOffset = 25;
-		this.CreateTexts();
+		this.scene = scene; // referencia a escena
+		this.log = ["¡Comienza el combate!"]; // inicializamos el LOG
+		this.img = this.scene.add.image(10, 490, 'log').setOrigin(0,0); // añadimos la imagen de fondo
+		this.img.setScale(2,1); // setteamos su tamaño
+		this.currentText = 0; // índice del texto actual
+		this.verticalOffset = 25; // offset vertical
+		this.CreateTexts(); // creamos los textos
 		this.ShowLog();
 	}
 
+	// creación de textos
 	CreateTexts(){
+		// creamos los textos con vlaor base ---
 		this.text3 = this.scene.add.text(this.img.x + 25, this.img.y + 15, "---", 
 			{
 			font: '20px "Press Start 2P"',
@@ -27,7 +29,8 @@ export class Log {
 			color: '#ffffff',
 			align: 'left',
 			});
-
+		
+		// este texto se crea con el valor que tenga el array en la posición 0. será el primero que se cree
 		this.text1 = this.scene.add.text(this.text2.x, this.text2.y + this.verticalOffset, this.log[this.currentText], 
 			{
 			font: '20px "Press Start 2P"',
@@ -35,20 +38,24 @@ export class Log {
 			align: 'left',
 			});
 
+		// cambiamos su profundidad
 		this.text1.depth = 3;
 		this.text2.depth = 3;
 		this.text3.depth = 3;
 	}
 
+	// añadimos un nuevo texto
 	AddText(text){
 		this.log.push(text);
 	}
 
+	// actualizamos el texto
 	UpdateLog(){
-		this.currentText++;
-		this.ShowLog();
+		this.currentText++; // movemos el índice
+		this.ShowLog(); // mostramos esto
 	}
 
+	// vamos hacia arriba
 	Up(){
 		if(this.currentText !== 0){
 			this.currentText--;
@@ -56,6 +63,7 @@ export class Log {
 		}
 	}
 
+	// vamos hacia abajo
 	Down(){
 		if(this.currentText < this.log.length - 1){
 			this.currentText++;
@@ -63,6 +71,7 @@ export class Log {
 		}
 	}
 
+	// mostramos el log en función de la posición del currentText
 	ShowLog(){
 		console.log(this.currentText);
 		this.text1.text = this.log[this.currentText];
