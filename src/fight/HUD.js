@@ -287,7 +287,8 @@ export class walkingHUD {
 		this.y = y;
 		this.scene = scene;
 		this.imgID = img;
-		this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0);
+		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0);
+		bgIMG.setScale(0.4 * allyParty.party.length,1)
 		this.charInfo = {image:"",health:"", mana: ""};		
 		this.characters = [];
 		this.GenerateImages();
@@ -297,7 +298,7 @@ export class walkingHUD {
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
 			self.characters[index] = self.charInfo;
-			let offset = 30;
+			let offset = 28;
 			let x = self.x+ offset + index * 50;
 			let barX = x - offset/2;
 			self.characters[index].image = self.scene.add.image(self.x + offset +index*50, self.y + 30, ally.imgID + 'Head');
