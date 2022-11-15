@@ -28,7 +28,6 @@ export default class MovementExample extends Phaser.Scene {
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
-	z
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
@@ -71,14 +70,18 @@ export default class MovementExample extends Phaser.Scene {
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
-
-		this.walkingHUD = new walkingHUD(40, 550, this, 'miniHUD')
-
+		
 		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
 			console.log("HA COLISIONAO")
 			gameObject1.collider = gameObject2;
 		});
-
+		
+		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
+		this.walkingHUD.depth = 3;
+	}
+	
+	UpdateHUD(){
+		this.walkingHUD.Update();
 	}
 	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)

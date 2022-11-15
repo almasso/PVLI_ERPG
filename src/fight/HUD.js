@@ -227,7 +227,7 @@ export class EnemyHUD{
 
 class HealthBar {
 
-	constructor (scene, x, y, width, type, initialValue, maxValue)
+	constructor (scene, x, y, width, type, initialValue, maxValue, hasText = true)
 	{
 		this.bar = new Phaser.GameObjects.Graphics(scene);
 		this.x = x;
@@ -238,7 +238,10 @@ class HealthBar {
 		this.maxValue = maxValue;
 		this.height = 10;
 		scene.add.existing(this.bar);
-		this.texto = scene.add.text(x + this.width/3.2, y + this.height/1.5, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+		this.hasText = hasText;
+		if(this.hasText){
+			this.texto = scene.add.text(x + this.width/3.2, y + this.height/1.5, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+		}
 		this.draw();
 	}
 
@@ -255,7 +258,7 @@ class HealthBar {
 	{
 		this.bar.clear();
 
-		this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type)
+		if(this.hasText) this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type)
 
 		//  BG
 		this.bar.fillStyle(0x000000);
@@ -284,14 +287,32 @@ export class walkingHUD {
 		this.y = y;
 		this.scene = scene;
 		this.imgID = img;
-		scene.add.image(x, y, imgID);
+		this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0);
+		this.charInfo = {image:"",health:"", mana: ""};		
+		this.characters = [];
 		this.GenerateImages();
 	}
+
 	GenerateImages(){
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
-			let offset = index * 50 + 30;
-			this.add.image(self.x + offset, self.y + offset, ally.imgID);
+			self.characters[index] = self.charInfo;
+			let offset = 30;
+			let x = self.x+ offset + index * 50;
+			let barX = x - offset/2;
+			self.characters[index].image = self.scene.add.image(self.x + offset +index*50, self.y + 30, ally.imgID + 'Head');
+			self.characters[index].image.setScale(2);
+			self.characters[index].health = new HealthBar(self.scene,barX,self.y + 40,30,"HP",ally.actualHp, ally.maxHp, false);
+			self.characters[index].mana = new HealthBar(self.scene,barX,self.y + 50,30,"MP",ally.actualMp, ally.maxMp, false);
+		});
+	}
+
+	Update(){
+		let self = this;
+		allyParty.party.forEach(function(ally, index){
+			console.log(ally.actualHp, ally.actualMp);
+			self.characters[index].health.Update(ally.actualHp);
+			self.characters[index].mana.Update(ally.actualMp);
 		});
 	}
 }

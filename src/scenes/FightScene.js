@@ -172,6 +172,8 @@ export class FightScene extends Phaser.Scene {
 		if(!this.CheckState(this.allies))
 		{
 			this.scene.wake('movement');
+			let movement = this.scene.get('movement');
+			movement.UpdateHUD();
 		}
 		else
 		{
@@ -258,7 +260,7 @@ export class FightScene extends Phaser.Scene {
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let height = 360;
-		let enemiesNumber = this.GetRandom(5, false);
+		let enemiesNumber = this.GetRandom(1, false);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {

@@ -20,7 +20,6 @@ export class Party{
 		this.party.push(character);
 	}
 
-
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
