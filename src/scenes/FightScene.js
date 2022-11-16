@@ -23,7 +23,14 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png')
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png')
 		this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
-		
+
+		//ANIMACON
+		this.load.spritesheet('people','assets/textures/Characters/daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_idle','assets/textures/Characters/idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_wow','assets/textures/Characters/wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('artist_daño','assets/textures/Characters/daño2.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -288,6 +295,8 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	EnemyAttacks(i){
+
+			
 		console.log("AtacandO!");
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 		let selectedTarget = [];
@@ -399,6 +408,8 @@ export class FightScene extends Phaser.Scene {
 			else{
 				while(self.enemiesHud[i].character !== enemy){i++;}
 				self.enemiesHud[i].Update();
+
+			
 			}
 			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy, index)
 		})
@@ -446,6 +457,8 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	create(){
+
+
 		// INPUT
 		this.aux = new InputMan(this);
 		
@@ -489,6 +502,7 @@ export class FightScene extends Phaser.Scene {
 		this.NextTurn();
 	}
 
+	
 	//···RAUL PRUEBAS···
 	attack=-1;
 	enemyselected=-1;
@@ -506,6 +520,7 @@ export class FightScene extends Phaser.Scene {
 		if(this.finishedTurn)
 		{
 			this.NextTurn();
+			
 		}
 
 
@@ -534,7 +549,7 @@ export class FightScene extends Phaser.Scene {
 						 this.choseE=true;
 						 this.enemyselected=0;
 						 console.log(this.enemyselected);
-						 console.log(this.enemies.length);
+						 console.log(this.enemies.length);						
 
 						}
 						this.alliesHud[this.currentAlly].DisplayAttacks();
@@ -600,7 +615,18 @@ export class FightScene extends Phaser.Scene {
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
 			{					
 				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
-				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+				
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
+				{
+					for(let i=0;i<this.enemies.length;i++)
+				{
+				
+				this.enemies[i].stop();
+				this.enemies[i].play('wow');
+				}
+					this.AllyAttack();
+
+				}
 				//this.chose=false;
 				//this.pointer.visible=false;
 			}

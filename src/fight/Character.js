@@ -25,6 +25,53 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.speed = 0;
 		this.attacks = [];
 		this.targets = [];
+		
+
+		this.scene.anims.create({
+			key: 'daño', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers('artist_daño', 
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 1
+		});
+
+		this.scene.anims.create({
+			key: 'wow', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers('artist_wow', 
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 1
+		});
+
+		this.scene.anims.create({
+			key: 'idle', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers('artist', 
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: -1
+		});
+
+		this.on('animationcomplete', end =>{ //evento que se ejecuta cuando una animación ha terminado
+			//console.log(this.anims.currentAnim.key)
+			if(this.anims.currentAnim.key === 'daño' || this.anims.currentAnim.key === 'wow'){ //comprobamos si la animación que ha terminado es 'attack'
+				this.play('idle'); //ejecutamos la animación 'idle'
+			}
+			
+		});
+
+		this.play('idle');
+
+
+		//this.setScale(2,1);
 
 		// Estados Alterados
 	}
@@ -58,6 +105,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		let effective = [];
 		this.targets.forEach(function (enemy) {
 			effective.push(enemy.Damage(attack));
+
 		})
 		this.actualMp -= attack.requiredMps;
 		return effective;
@@ -65,6 +113,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 	Damage(attack)
 	{
+		this.stop();
+		this.play('daño');
 		let effective = 0;
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
 		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
@@ -85,7 +135,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 
 		if(lastHp === this.actualHp) effective = 2;   // Si no le ha bajado vida, el ataque falló
+
+		
 		return effective;
+		
+
 	}
 
 	Die()
