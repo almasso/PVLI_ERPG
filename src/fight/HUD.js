@@ -233,7 +233,8 @@ export class EnemyHUD{
 	
 	// actualizamos la barra de vida
 	Update(){
-		this.healthBar.Update(this.character.actualHp)
+		this.healthBar.Update(this.character.actualHp);
+		// cambiarle la pos
 	}
 }
 
@@ -320,12 +321,12 @@ export class walkingHUD {
 			let offset = 28; // offset que cuadra bien 
 			let x = self.x+ offset + index * 50; // x para las imágenes
 			let barX = x - offset/2; // x para las barras
-			self.characters[index].image = self.scene.add.image(x, self.y + 30, ally.imgID + 'Head'); // generar imagen
+			self.characters[index].image = self.scene.add.image(x, self.y + 25, ally.imgID + 'Head'); // generar imagen
 			self.characters[index].image.setScale(2); // escalarla
 			// generar barras de vida
 			// usamos la allyParty para acceder a los valores de vida de cada PJ
-			self.characters[index].health = new HealthBar(self.scene,barX,self.y + 40,30,"HP",ally.actualHp, ally.maxHp, false);
-			self.characters[index].mana = new HealthBar(self.scene,barX,self.y + 50,30,"MP",ally.actualMp, ally.maxMp, false);
+			self.characters[index].health = new HealthBar(self.scene,barX,self.y + 35,30,"HP",ally.actualHp, ally.maxHp, false);
+			self.characters[index].mana = new HealthBar(self.scene,barX,self.y + 45,30,"MP",ally.actualMp, ally.maxMp, false);
 		});
 	}
 

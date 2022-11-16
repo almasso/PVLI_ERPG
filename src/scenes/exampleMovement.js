@@ -24,13 +24,11 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
+		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
 		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
-	/**
-	* Creación de los elementos de la escena principal de juego
-	*/
 
 	create() {
         this.scene.sleep('uimanager');
@@ -64,6 +62,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
+		
 		/*
 		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
 		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
