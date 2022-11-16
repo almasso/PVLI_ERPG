@@ -56,4 +56,14 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             this.currentDialog = this.dialogIndex;
         }
     }
+
+    preUpdate() {
+        var touching = !this.body.touching.none;
+        var touchingTrigger = !this.trigger.body.touching.none;
+		var wasTouching = !this.body.wasTouching.none;
+        var wasTouchingTrigger = !this.trigger.body.wasTouching.none;
+
+        if(touching && !wasTouching && !wasTouchingTrigger) {this.emit("overlapstart");}
+        else if(!touching && touchingTrigger && wasTouching && wasTouchingTrigger) {this.emit("overlapend");}
+    }
 } 

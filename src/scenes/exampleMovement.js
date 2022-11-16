@@ -49,6 +49,7 @@ export default class MovementExample extends Phaser.Scene {
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues, this.manin);
+		let npcs = [npc1, npc2];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 
@@ -69,7 +70,7 @@ export default class MovementExample extends Phaser.Scene {
 		*/
 		var self = this;
 		var isColliding = false;
-		this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
+		/*this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
 			//console.log(isColliding);
 			
 			if(!isColliding) gameObject1.collider = null;
@@ -80,7 +81,22 @@ export default class MovementExample extends Phaser.Scene {
 			isColliding = true;
 			console.log("HA CHOCAO");
 			gameObject1.collider = gameObject2;
-		});
+		});*/
+
+		for(let i of npcs) {
+			i.on("overlapstart", () => {
+				console.log(i.body.touching);
+				console.log(i.body.wasTouching);
+				console.log(i.trigger.body.touching);
+				console.log(i.trigger.body.wasTouching);
+				console.log("has tocao");
+				//this.manin.collider = i;
+			})
+			i.on("overlapend", () => {
+				console.log("se acabo");
+				//this.manin.collider = null;
+			})
+		}
 
 	}
 	
@@ -112,6 +128,7 @@ export default class MovementExample extends Phaser.Scene {
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
 		var wasTouching = !this.hierbasColliders.body.wasTouching.none;
+
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
