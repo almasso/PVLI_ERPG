@@ -1,3 +1,4 @@
+// gestión de INPUT para la FightScene
 export class InputMan extends Phaser.GameObjects.Sprite{
 	constructor(scene){
 		super(scene,-100,-100,'pixel1x1');

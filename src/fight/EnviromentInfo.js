@@ -1,5 +1,6 @@
 export {EnviromentInfo, EnemiesInfo};
 import {attackInfo} from "../fight/Attack.js"
+// esta clase gestionará el cambio entre escenarios y escenas.
 class EnviromentManager{
 
 	constructor(){
@@ -7,6 +8,7 @@ class EnviromentManager{
 	}
 }
 
+// información de los personajes que se encuentran en el parque
 let park = {
 	info: {character: {name: "Melendi", imgID: 'people', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
@@ -20,5 +22,6 @@ let park = {
 	attackInfo("Poñetaso", 0, 30, 0, 1)]}]
 }
 
+// variables exportadas
 let EnviromentInfo = park.info;
 let EnemiesInfo = park.enemies;
