@@ -120,7 +120,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 	Damage(attack)
 	{
-		this.stop();
+		//this.stop();
 		this.play(this.mon+'_daño');
 		let effective = 0;
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
@@ -151,6 +151,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 	Die()
 	{
+
 		this.dead = true;
 	}
 }

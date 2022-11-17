@@ -621,7 +621,7 @@ export class FightScene extends Phaser.Scene {
 					for(let i=0;i<this.enemies.length;i++)
 				{
 				
-				this.enemies[i].stop();
+				//this.enemies[i].stop();
 				this.enemies[i].play(this.enemies[i].imageId+'_wow');
 				}
 					this.AllyAttack();
