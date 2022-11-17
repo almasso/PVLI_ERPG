@@ -8,8 +8,8 @@ export class FightScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'fightscene'});
 		this.bg;
-		this.enemiesInfo = EnemiesInfo;
-		this.selectedAttack;
+		this.enemiesInfo = EnemiesInfo; // información de enemigos que conseguimos del script EnviromentInfo
+		this.selectedAttack; // ataque seleccionado actualmente con el puntero
 	}
 
 	preload(){
@@ -43,25 +43,27 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
 	}
 
+	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
 	CreateButtons(){
+		// añadimos la imagen
 		this.attackButton = this.add.image(this.sys.game.canvas.width/15,this.sys.game.canvas.height/2 + this.sys.game.canvas.height/30,'attackButton');
-		this.attackButton.setScale(1.5);
+		this.attackButton.setScale(1.5); // setteamos la escala
 		this.attackButton.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
-
+		// repeat (Hover)
 		this.attackButtonHover = this.add.image(this.attackButton.x,this.attackButton.y,'attackButtonHover');
-		this.attackButtonHover.setScale(1.5);
+		this.attackButtonHover.setScale(1.5); 
 		this.attackButtonHover.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
 		this.attackButtonHover.visible = false;
-
+		// repeat
 		this.objectButton = this.add.image(this.attackButton.x,this.attackButton.y + this.attackButton.displayHeight,'objectButton');
 		this.objectButton.setScale(1.5);
 		this.objectButton.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
-
+		// repeat (Hover)
 		this.objectButtonHover = this.add.image(this.objectButton.x,this.objectButton.y,'objectButtonHover');
 		this.objectButtonHover.setScale(1.5);
 		this.objectButtonHover.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
 		this.objectButtonHover.visible = false;
-		
+		// repeat: creamos los botones para el Log
 		this.logUp = this.add.image(620, 515,'logButton');
 		this.logDown = this.add.image(620,this.logUp.y + 50,'logButton');
 		this.logUp.setInteractive();
@@ -69,7 +71,6 @@ export class FightScene extends Phaser.Scene {
 		this.logUp.setScale(2);
 		this.logDown.setScale(2);
 		this.logDown.angle = 180;
-		// Falta botón de Huída.
 
 		//#region input de Botones
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"
@@ -81,10 +82,12 @@ export class FightScene extends Phaser.Scene {
 		});
 
 		this.attackButtonHover.on('pointerup',()=>{
+			// mostramos los ataques del aliado seleccionado
 			this.alliesHud[this.currentAlly].DisplayAttacks();
 		})
 		
 		this.attackButtonHover.on('pointerout', () => {
+			// quitamos el Hover y ponemos el botón "normal"
 			this.attackButton.visible = true;
 			this.attackButtonHover.visible = false;
 		})
@@ -96,6 +99,7 @@ export class FightScene extends Phaser.Scene {
 		});
 
 	    this.objectButtonHover.on('pointerout', () => {
+			// quitamos el Hover y ponemos el botón "normal"
 			this.objectButton.visible = true;
 			this.objectButtonHover.visible = false;
 		});
@@ -112,54 +116,60 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 	}
 
+	// Desactivar botones de ataque
 	ToggleAttackButtons(bool)
 	{
-		if(bool)
+		if(bool) // activamos
 		{
 			this.attackButton.setInteractive();
 			this.attackButtonHover.setInteractive();
 		}
-		else
+		else // desactivamos
 		{
 			this.attackButton.disableInteractive();
 			this.attackButtonHover.disableInteractive();
 		}
 	}
 
+	// Desactivar botones de objeto (aunque este todavía no hace más que el hover)
 	ToggleObjectButtons(bool)
 	{
-		if(bool)
+		if(bool) // activamos
 		{
 			this.objectButton.setInteractive();
 			this.objectButtonHover.setInteractive();
 		}
-		else
+		else // desactivamos
 		{
 			this.objectButton.disableInteractive();
 			this.objectButtonHover.disableInteractive();
 		}
 	}
 
+	// Desactivar botones de ataque y de objeto (esta función solo agrupa otras 2)
 	ToggleButtons(bool){
 
 		this.ToggleAttackButtons(bool);
 		this.ToggleObjectButtons(bool);
 	}
 
-	EnableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+	// Activamos el targetting para el grupo de entidades que se pasen como argumento
+	EnableTargetting(array){
 		
 		for(let i = 0; i < array.length; i++){
 			if(!array[i].dead) array[i].setInteractive();
 		}
 	}
-	DisableTargetting(array){ // Falta implementar esto con varios personajes y enemigos (¿Arrays de personajes y enemigos con un index que se le pase al metodo?)
+	// Desactivamos el targetting para el grupo de entidades que se pasen como argumento
+	DisableTargetting(array){ 
 		
 		for(let i = 0; i < array.length; i++){
 			array[i].disableInteractive();
 		}
-		this.pointer.visible = false;
+		this.pointer.visible = false; // ponemos en invisible el puntero
 	}
 
+	// Ver el estado de las entidades que se pasan como argumento
 	CheckState(array){
 		let i = 0;
 		while(i < array.length && array[i].dead){
@@ -168,57 +178,66 @@ export class FightScene extends Phaser.Scene {
 		return i === array.length;
 	}
 
+	// Acabamos el combate
 	EndCombat(){
-		this.ReturnParty();
-		this.attack=-1;
+		this.ReturnParty(); // reescribimos los valores de la Party
+		//#region input teclado
+		// ponemos las variables usadas para input por teclado a valores no válidos
+		this.attack=-1; 
 		this.allaySelected=-1;
 		this.enemyselected=-1;
 		this.choseA=false;
 		this.choseE=false;
 		this.combat=false;
-		if(!this.CheckState(this.allies))
+		//#endregion
+		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
 			this.scene.wake('movement');
 			let movement = this.scene.get('movement');
 			movement.UpdateHUD();
 		}
-		else
+		else // Si se han matado a todos los enemigos...
 		{
 			this.scene.launch('final');
 			this.scene.stop('movement');
 		}
-		this.scene.stop('fightscene');
+		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
 		
 	}
 
+	// cargamos a los aliados
 	LoadParty(){
-		this.allies = [];
-		let self = this;
-		allyParty.party.forEach(function (ally, index){
+		this.allies = []; // incializamos el array de aliados
+		let self = this; 
+		allyParty.party.forEach(function (ally, index){ // recorremos todo el array de objetos con info de la party
+			// creamos al character en función de su información
 			self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
 			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
 			self.allies[index].dead = ally.dead;
 			let scene = self;
-			ally.attack.forEach(function (attack) {
+			ally.attack.forEach(function (attack) { // setteamos sus ataques
 				scene.allies[index].SetAttacks(attack);
 			})
+			// añadimos un nuevo HUD
 			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 			self.allies[index].scale = 2;
 			self.allies[index].depth = 1;
-			self.AddPartySelector(self.allies[index]);
+			self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
 		})
 	}
 	
     k=0;//···RAUL PRUEBAS···
+	// Añadimos eventos para seleccionar a aliados como objetivos
 	AddPartySelector(ally){
 		ally.on("pointerover",() => {
-			//console.log("SELECCIONANDO A " + enemy.imageId);
+			// ponemos el cursor encima del personaje aliado
 			this.pointer.visible = true;
 			this.cursor=true;//···RAUL PRUEBAS···
 			this.pointer.x = ally.x - 75;
 			this.pointer.y = ally.y;
 			this.pointer.angle = 0;
 			//···RAUL PRUEBAS···
+
 			while(this.k<this.allies.length)
 			{
 				if(this.allies[this.k]===ally)this.allaySelected=this.k;
@@ -226,21 +245,22 @@ export class FightScene extends Phaser.Scene {
 			}
 		})
 		ally.on("pointerout",() => {
-			//this.pointer.visible = false;
 			//···RAUL PRUEBAS···
+			// quitamos el cursor
 			this.cursor=false;
 			this.k=0;
-			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		ally.on("pointerup",() => {
-			console.log("SUPPORTEANDO A " + ally.imageId);
+			// hacemos el ataque de support sobre el aliado ojetivo
 			this.allies[this.currentAlly].targets.push(ally);
 			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
 		})
 	}
 
+	// construimos una nueva frase para el Log
 	BuildLog(chName,attackInfo, effective,enemy, index){
 		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		// dependiendo del valor que recibamos ponemos un texto u otro
 		if(effective[index] === -1) {text+="¡Es super efectivo!";}
 		else if (effective[index] === 1) {text+= "No es muy efectivo..."}
 		else if(effective[index] === 2){text+="Pero no tuvo efecto."}
@@ -248,10 +268,11 @@ export class FightScene extends Phaser.Scene {
 		{
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
 		}
-		this.log.AddText(text);
-		this.log.UpdateLog();
+		this.log.AddText(text); // añadimos el texto al log
+		this.log.UpdateLog(); // y lo mostramos (quizá esto podría hacerlo el propio log cuando se añade un texto?)
 	}
 
+	// actualizamos el objeto con info de la party
 	ReturnParty()
 	{
 		let self = this;
@@ -263,29 +284,35 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
-	// physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed
+	// generamos a los enemigos en función de la información que nos llega desde enemiesInfo
 	GenerateRandomEncounter(){
-		this.enemies = [];
-		let height = 360;
-		let enemiesNumber = this.GetRandom(1, false);
+		this.enemies = []; // inicializamos el array de enemigos
+		let height = 360; 
+		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
 		for(let i = 0; i < enemiesNumber; i++){
-			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
+			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
+				// primer enemigo colocado con una posición específica
 				this.enemies[0] = new Character(this,this.enemiesInfo[enemyType].name,this.sys.game.canvas.width/2-(75*enemiesNumber/2) +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
 			else{
+				// resto de enemigos colocados en función de los enemigos anteriores
 				this.enemies[i] = new Character(this,this.enemiesInfo[enemyType].name,this.enemies[i-1].x +100, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
 			}
+			// setteamos sus stats
 			this.enemies[i].SetStats(this.enemiesInfo[enemyType].rP, this.enemiesInfo[enemyType].rR, this.enemiesInfo[enemyType].rF, this.enemiesInfo[enemyType].rE,
 			this.enemiesInfo[enemyType].rT, this.enemiesInfo[enemyType].acurracy, this.enemiesInfo[enemyType].speed);
+
+			// creamos el nuevo HUD para enemigo
 			this.enemiesHud.push(new EnemyHUD(this,this.enemies[i]));
 			
+			// creamos sus ataques
 			for(let o = 0; o < this.enemiesInfo[enemyType].attack.length; o++)
 			{
 				this.enemies[i].SetAttacks(this.enemiesInfo[enemyType].attack[o]);
 			}
 			this.enemies[i].scale = 4;
-			this.AddEnemySelector(this.enemies[i]);
+			this.AddEnemySelector(this.enemies[i]); // escuchamos eventos para seleccionar al enemigo
 		}
 	}
 
@@ -296,34 +323,38 @@ export class FightScene extends Phaser.Scene {
 		else return Math.floor(Math.random()*maxRange + 1);
 	}
 
+	// Ataque de enemigos
 	EnemyAttacks(i){
-
-			
-		console.log("AtacandO!");
+		// el ataque seleccionado será aleatorio para los enemigos
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
-		let selectedTarget = [];
+		let selectedTarget = []; // también lo serán sus targets. esto es un array de índices
+		// se seleccionarán tantos objetivos como diga el ataque que se ha seleccionado
 		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
-			let random = this.GetRandom(this.allies.length, true);
-			while(this.allies[random].dead) { random = (random +1) % this.allies.length};
-			selectedTarget.push(random);
-			this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
+			let random = this.GetRandom(this.allies.length, true); // escogemos al target
+			while(this.allies[random].dead) { random = (random +1) % this.allies.length}; // si ese aliado está muerto, pasamos al siguiente
+			selectedTarget.push(random); // añadimos el target
+			this.enemies[i].targets.push(this.allies[selectedTarget[o]]); // añadimos el target al propio del character
 		}
 
+		// ataque. también se recibe el texto del log
 		let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
 		
+		// construimos el log
 		for(let j = 0; j < this.enemies[i].targets.length; j++){
 			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
 		}
 		
+		// cambiamos el HUD de aliados
 		for(let h = 0; h < selectedTarget.length; h++){
 			this.alliesHud[selectedTarget[h]].Update();
 		}
-		console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
-		console.log(selectedTarget);
+
+		// vaciamos sus targets
 		this.enemies[i].targets = [];
-		this.finishedTurn = true;
+		this.finishedTurn = true; // su turno acaba
 	}
 
+	// generamos los turnos en función de la velocidad de los aliados y enemigos
 	CreateTurns(){
 		let self = this;
 		this.allies.forEach(function (ally, i)
@@ -335,7 +366,7 @@ export class FightScene extends Phaser.Scene {
 			self.turns.push({char: enemy, type: false, index: i});
 		})
 
-
+		// ordenamos el array de turnos
 		this.turns.sort(function(char1, char2)
 		{
 			if(char1.char.speed < char2.char.speed)
@@ -350,59 +381,45 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
+	// pasamos al siguiente turno
 	NextTurn(){
-		this.finishedTurn = false;
+		this.finishedTurn = false; // el turno actual no ha acabado
+		// checkeamos si el combate ha terminado
 		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat();}
-		else if(!this.turns[this.currentTurn].char.dead)
+		else if(!this.turns[this.currentTurn].char.dead) // si no ha terminado y no está muerto el personaje actual...
 		{
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
+				// cambiamos el aliado actual
 				this.currentAlly = this.turns[this.currentTurn].index;
-				//···RAUL PRUEBAS···
+				// Input teclado
 				this.choseA=false;
 				this.choseE=false;
 				this.pointer.visible=false;
 			}
 			else    // ENEMIGOS
 			{   
+				// el enemigo ataca
 				this.EnemyAttacks(this.turns[this.currentTurn].index);
 				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 			}
 		}
-		else
+		else // si el personaje está muerto, pasamos al siguiente turno
 		{
 			this.finishedTurn = true;
 			this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 		}
 	}
 
-	NextAlly(){
-		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat(); }
-		else {
-			if (this.currentAlly + 1 === this.allies.length){
-				// PUM ataque enemigos
-				let self = this;
-				this.enemies.forEach(function (enemy, index){
-					self.EnemyAttacks(index);
-				});
-
-			}
-
-			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
-			if(this.allies[this.currentAlly].dead) this.NextAlly();
-
-			//···RAUL PRUEBAS···
-			this.choseA=false;
-			this.choseE=false;
-			this.pointer.visible=false;
-		}
-	}
-
+	// Ataque de aliado
 	AllyAttack(){
-		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack);
+		// se realiza el ataque y se recibe el texto de log
+		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack); 
 		let self = this;
+		// 
 		this.allies[this.currentAlly].targets.forEach(function (enemy, index) {
 			let i = 0;
+			// actulizamos HUD
 			if(self.selectedAttack.isSupport()){
 				while(self.alliesHud[i].character !== enemy){i++;}
 				self.alliesHud[i].Update();
@@ -410,27 +427,27 @@ export class FightScene extends Phaser.Scene {
 			else{
 				while(self.enemiesHud[i].character !== enemy){i++;}
 				self.enemiesHud[i].Update();
-
-			
 			}
+			// construimos el log
 			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy, index)
 		})
+		// vaciamos los targets (creo que debería ser en una función propia del character)
 		this.allies[this.currentAlly].targets = [];
-		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies);
-		this.DisableTargetting(this.enemies);
-		this.ToggleButtons(true);
-		this.alliesHud[this.currentAlly].Update();
-
+		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies); // desactivamos target aliado si supporteamos
+		this.DisableTargetting(this.enemies); // desactivamos targetting de enemigos
+		this.ToggleButtons(true); // activamos botones de ataque y objeto
+		this.alliesHud[this.currentAlly].Update(); // actualizamos el HUD de aliado
+		// avanzamos un turno
 		this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 		this.finishedTurn = true;
 	}
 
+	// Hacemos que los enemigos puedan escuchar eventos de ratón
 	i=0;//···RAUL PRUEBAS···
 	AddEnemySelector(enemy){
 		enemy.on("pointerover",() => {
-			//console.log("SELECCIONANDO A " + enemy.imageId);
-			this.pointer.visible = true;
-			this.cursor=true;//···RAUL PRUEBAS···
+			// activamos el cursor encima del enemigo
+			this.cursor=true; //···RAUL PRUEBAS···
 			this.pointer.x = enemy.x;
 			this.pointer.y = enemy.y - 75;
 			this.pointer.angle = 90;
@@ -443,23 +460,21 @@ export class FightScene extends Phaser.Scene {
 			}
 		})
 		enemy.on("pointerout",() => {
-			//this.pointer.visible = false;
 			//···RAUL PRUEBAS···
+			// quitamos el cursor de encima del enemigo
 			this.cursor=false;
 			this.i=0;
-			//console.log("YA NO ESTÁ SELECCIONANDO A " + enemy.imageId);			
 		})
 		enemy.on("pointerup",() => {
-			console.log("ATACANDO A " + enemy.imageId);
-			this.allies[this.currentAlly].targets.push(enemy);
+			// realizamos el ataque sobre el enemigos seleccionado
+			this.allies[this.currentAlly].targets.push(enemy); // añadimos el target
+			// si el ataque tiene más de un objetivo, se tendrá que selecccionar a otro objetivo
 			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
-			//this.chose=false;
-			//this.pointer.visible = false;
 		})
 	}
 
+	// Creación de la escena
 	create(){
-
 
 		// INPUT
 		this.aux = new InputMan(this);
@@ -468,27 +483,28 @@ export class FightScene extends Phaser.Scene {
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
 
 		// Creación de Party
-		this.alliesHud = [];
-		this.LoadParty();
+		this.alliesHud = []; // huds de aliados
+		this.LoadParty(); // cargamos la party
 		// Creación de enemigos
-		this.enemiesHud = [];
-		this.GenerateRandomEncounter();
+		this.enemiesHud = []; // huds de enemigos
+		this.GenerateRandomEncounter(); // generamos a los enemigos
 
-		this.turns = [];
-		this.finishedTurn = false;
-		this.currentTurn = 0;
-		this.CreateTurns();
+		// Creación de gestión de Turnos
+		this.turns = []; // creamos un array para ordenar a aliados y enemigos por velocidad 
+		this.finishedTurn = false; 
+		this.currentTurn = 0; // turno actual
+		this.CreateTurns(); // creamos los turnos
 
-		this.log = new Log(this);
+		this.log = new Log(this); // añadimos el Log a la escena
 
-		this.currentAlly = 0;
+		this.currentAlly = 0; // aliado actualmente seleccionado
 
-		this.pointer = this.add.image(0,0,'attackPointer');
+		this.pointer = this.add.image(0,0,'attackPointer'); // puntero que muestra la selección de algo en los menús
 		this.pointer.visible = false;
 		this.pointer.depth = 2;
 
-		this.CreateButtons();
-		this.NextTurn();
+		this.CreateButtons(); // creamos los botones
+		this.NextTurn(); // avanzamos el turno
 	}
 
 	
@@ -501,17 +517,13 @@ export class FightScene extends Phaser.Scene {
 	choseA=false;
 	//···RAUL PRUEBAS···
 
+	// INPUT DE TECLADO POR FA RAÚL COMENTA ESTO
 	update(t,dt){
-	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
-			this.scene.wake('movement');
-			this.scene.sleep('fightscene');
-		}*/
 		if(this.finishedTurn)
 		{
 			this.NextTurn();
 			
 		}
-
 
 		if(this.choseE && !this.choseA){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
@@ -692,10 +704,3 @@ export class FightScene extends Phaser.Scene {
 		}
 	}
 }
-
-
-
-
-
-
-
