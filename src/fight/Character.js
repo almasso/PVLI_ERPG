@@ -26,10 +26,17 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.attacks = [];
 		this.targets = [];
 		
+		this.mon='artist';
+		console.log(imageId);
+		if(imageId!='manin'){						
+				this.mon=imageId;	
+		}
+		
 
 		this.scene.anims.create({
-			key: 'daño', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('artist_daño', 
+			
+			key: this.mon+'_daño', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_daño', 
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -39,8 +46,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		});
 
 		this.scene.anims.create({
-			key: 'wow', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('artist_wow', 
+			key: this.mon+'_wow', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_wow', 
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -50,8 +57,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		});
 
 		this.scene.anims.create({
-			key: 'idle', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('artist', 
+			key: this.mon+'_idle', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon, 
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -62,13 +69,13 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		this.on('animationcomplete', end =>{ //evento que se ejecuta cuando una animación ha terminado
 			//console.log(this.anims.currentAnim.key)
-			if(this.anims.currentAnim.key === 'daño' || this.anims.currentAnim.key === 'wow'){ //comprobamos si la animación que ha terminado es 'attack'
-				this.play('idle'); //ejecutamos la animación 'idle'
+			if(this.anims.currentAnim.key === this.mon+'_daño' || this.anims.currentAnim.key === this.mon+'_wow'){ //comprobamos si la animación que ha terminado es 'attack'
+				this.play(this.mon+'_idle'); //ejecutamos la animación 'idle'
 			}
 			
 		});
 
-		this.play('idle');
+		this.play(this.mon+'_idle');
 
 
 		//this.setScale(2,1);
@@ -114,7 +121,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Damage(attack)
 	{
 		this.stop();
-		this.play('daño');
+		this.play(this.mon+'_daño');
 		let effective = 0;
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
 		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
