@@ -1,28 +1,30 @@
+// clase con información de los ataques
 export class Attack{
 	constructor(name, type, dmg, requiredMps, targets){
-		this.type = type;
-		this.dmg = dmg;
-		this.requiredMps = requiredMps; 
-		this.targets = targets;
-		this.name = name;
-		// Estados Alterados
+		this.type = type; // tipo de ataque (Enumerator)
+		this.dmg = dmg; // daño
+		this.requiredMps = requiredMps; // Mana Points que necesita
+		this.targets = targets; // nº de objetivos
+		this.name = name; // nombre
+		// Estados Alterados (FUTURO)
 	}
 
-	GetDmg()
+	GetDmg() // getter de dmg
 	{
 		return this.dmg;
 	}
 
-	GetType()
+	GetType() // getter de type
 	{
 		return this.type;
 	}
 
-	isSupport(){
+	isSupport(){ // saber si un ataque es support o no
 		return this.type === 5;
 	}
 }
 
+// tipo especial de ataque (NO IMPLIMENTADO TODAVÍA)
 export class Ultimate extends Attack{
 	constructor(type, dmg, requiredMps, targets, turnsToActivate){
 		super(type, dmg, requiredMps, targets);
@@ -32,7 +34,7 @@ export class Ultimate extends Attack{
 		this.used = false;
 	}
 
-	UpdateUltimate()
+	UpdateUltimate() // actualizamos los turnos que le faltan
 	{
 		if(this.currentTurns < this.turnsToActivate)
 			this.currentTurns++;
@@ -57,11 +59,12 @@ export class Ultimate extends Attack{
 	}
 }
 
+// función que devuelve un objeto según la información que le pongas
 export function attackInfo(name,type,dmg,requiredMps,targets){
 	return {name:name,type:type,dmg:dmg,requiredMps:requiredMps,targets:targets}
 }
 
-
+// enumerador de tipos de ataque
 const typeOfAttack = {
 	Physical: 0,
 	Ranged: 1,
@@ -70,22 +73,3 @@ const typeOfAttack = {
 	Toxic: 4,
 	Support: 5
 };
-
-export let maninAttacks = [
-	new Attack(typeOfAttack.Physical,50,0,1),
-	new Attack(typeOfAttack.Physical,50,0,1),
-	new Attack(typeOfAttack.Physical,50,0,1),
-	new Ultimate(typeOfAttack.Physical,50,0,1)
-];
-
-export let Attacks = [
-	new Attack(),
-	new Attack(),
-	new Attack(),
-	new Ultimate()
-];
-
-
-
-
-

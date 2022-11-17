@@ -1,12 +1,6 @@
 import NPC from "./npc.js";
 
 export default class Manin extends Phaser.GameObjects.Sprite {
-	/**
-	 * Constructor de Manín, nuestro increíble y maravilloso protagonita semidesnudo
-	 * @param {Scene} scene - escena en la que aparece
-	 * @param {number} x - coordenada x
-	 * @param {number} y - coordenada y
-	 */
 
 	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin');
@@ -18,38 +12,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
-		//#region  animations
-        // Creamos las animaciones de nuestro caballero
-		/*this.scene.anims.create({
-			key: 'idle',
-			frames: scene.anims.generateFrameNumbers('knight', {start:0, end:3}),
-			frameRate: 5,
-			repeat: -1
-		});
-		this.scene.anims.create({
-			key: 'attack',
-			frames: scene.anims.generateFrameNumbers('knight', {start:4, end:7}),
-			frameRate: 18,
-			repeat: 0
-		});
-		this.scene.anims.create({
-			key: 'run',
-			frames: scene.anims.generateFrameNumbers('knight', {start:8, end:14}),
-			frameRate: 5,
-			repeat: -1
-		});
-
-		// Si la animación de ataque se completa pasamos a ejecutar la animación 'idle'
-		this.on('animationcomplete', end => {
-			if (this.anims.currentAnim.key === 'attack'){
-				this.stopAttack()
-			}
-		})
-
-		// La animación a ejecutar según se genere el personaje será 'idle'
-		this.play('idle');
-		*/
-		//#endregion
 
 		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
@@ -58,19 +20,17 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
 
-		// Agregamos el caballero a las físicas para que Phaser lo tenga en cuenta
+		// añadimos físicas
 		scene.physics.add.existing(this);
 
-		// Decimos que el caballero colisiona con los límites del mundo
-
-		// Ajustamos el "collider" de nuestro caballero
+		// Ajustamos el "collider" de manín
 		this.bodyOffset = this.body.height/5;
 		this.bodyWidth = this.body.width/2;
-
 		this.body.setOffset(0, -this.bodyOffset);
 		this.body.height *= 2;
 	}
 
+	// interacción 
     interact(){
 		if(this.collider instanceof NPC) {
 			this.collider.readDialogues(this.uiScene);
@@ -78,15 +38,10 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
 
+	// quitamos collider
 	clearCollider() {
 		this.collider = null;
 	}
-
-	/**
-	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
-	 * @param {number} t - Tiempo total
-	 * @param {number} dt - Tiempo entre frames
-	 */
 
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
@@ -127,12 +82,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
         }
 
-		// Si pulsamos 'SPACE' interactuamos con nuestro entorno uwu
+		// Si pulsamos 'SPACE' interactuamos con nuestro entorno
 		if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
 			this.interact();
 		}
 
         console.log(this.stepsWalked);
+		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
