@@ -2,6 +2,7 @@ import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
+import {walkingHUD} from '../fight/HUD.js'
 
 /**
  * Escena principal.
@@ -22,14 +23,12 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
-
+		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
+		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
+		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
 		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
 	}
-	z
-	/**
-	* Creación de los elementos de la escena principal de juego
-	*/
 
 	create() {
         this.scene.sleep('uimanager');
@@ -63,20 +62,25 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
+		
 		/*
 		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
 		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
-
-
-
+		
 		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
 			console.log("HA COLISIONAO")
 			gameObject1.collider = gameObject2;
 		});
-
+		
+		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
+		this.walkingHUD.depth = 3;
+	}
+	
+	UpdateHUD(){
+		this.walkingHUD.Update();
 	}
 	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)

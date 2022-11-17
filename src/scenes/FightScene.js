@@ -179,6 +179,8 @@ export class FightScene extends Phaser.Scene {
 		if(!this.CheckState(this.allies))
 		{
 			this.scene.wake('movement');
+			let movement = this.scene.get('movement');
+			movement.UpdateHUD();
 		}
 		else
 		{
@@ -265,7 +267,7 @@ export class FightScene extends Phaser.Scene {
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let height = 360;
-		let enemiesNumber = this.GetRandom(5, false);
+		let enemiesNumber = this.GetRandom(1, false);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
@@ -481,19 +483,6 @@ export class FightScene extends Phaser.Scene {
 
 		this.currentAlly = 0;
 
-		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
-		// this.character = new Character(this,this.sys.game.canvas.width/2, 10, 'manin', 100, 100).setOrigin(0,0);
-		// this.character.scale = 0.13;
-		// this.character.depth = 1;
-		// this.character.visible = false;
-
-		//this.character.visible = false;
-		// for(let i = 0; i < 4; i++)
-		// {
-		// 	this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
-		// }
-		// this.character.SetStats(5,0,0,0,0,0,100);
-
 		this.pointer = this.add.image(0,0,'attackPointer');
 		this.pointer.visible = false;
 		this.pointer.depth = 2;
@@ -524,7 +513,7 @@ export class FightScene extends Phaser.Scene {
 		}
 
 
-		if(this.choseE===false && this.choseA===false){
+		if(this.choseE && !this.choseA){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
 				this.alliesHud[this.currentAlly].DisplayAttacks();

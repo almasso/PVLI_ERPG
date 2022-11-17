@@ -89,7 +89,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	 */
 
 	preUpdate(t, dt) {
-		// Es muy imporante llamar al preUpdate del padre (Sprite), sino no se ejecutará la animación
 		super.preUpdate(t, dt);
 
 		// Mientras pulsemos la tecla 'A' movemos el personaje en -X
@@ -132,7 +131,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
 			this.interact();
 		}
-
 
         console.log(this.stepsWalked);
         if(this.stepsWalked > 100){
