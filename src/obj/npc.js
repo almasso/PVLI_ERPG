@@ -46,9 +46,13 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(!uiScene.hasCreatedWindow) uiScene.createWindow();
         else if(!uiScene.isToggled) uiScene.toggleWindow();
 
-        if(this.currentDialog < this.dialogIndex + this.dialogCount) {
-            uiScene.setText(this.dialogues.texts[this.currentDialog].text);
+        if(this.currentDialog < this.dialogIndex + this.dialogCount && !this.dialogues.texts[this.currentDialog].unique) {
+            uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text);
             console.log(uiScene.isCurrentlyBeingAnimated);
+            this.currentDialog++;
+        }
+        else if(this.dialogues.texts[this.currentDialog].unique) {
+            uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text);
             this.currentDialog++;
         }
         else {

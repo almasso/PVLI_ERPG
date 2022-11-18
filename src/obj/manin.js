@@ -74,7 +74,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 
     interact(){
 		if(this.collider instanceof NPC) {
-			console.log("me cago en mi puta vida dios mio que asco me da js");
 			this.collider.readDialogues(this.uiScene);
 		}
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}

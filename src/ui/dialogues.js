@@ -20,6 +20,8 @@ export class DialogBox {
      * @param {number} opts.windowHeight Altura de la caja de texto
      * @param {number} opts.padding Padding del texto
      * @param {number} opts.dialogSpeed Velocidad de aparición de los textos
+     * @param {number} opts.x Posición en X de la caja de texto
+     * @param {number} optx.y Posición en Y de la caja de texto
      */
     init(opts) {
         if (!opts) opts = {}; 
@@ -30,7 +32,9 @@ export class DialogBox {
         this.windowColor = opts.windowColor || 0x303030;
         this.windowHeight = opts.windowHeight || 150; 
         this.padding = opts.padding || 32; 
-        this.dialogSpeed = opts.dialogSpeed || 10; 
+        this.dialogSpeed = opts.dialogSpeed || 10;
+        this.x = opts.x || this.padding;
+        this.y = opts.y;
         this.eventCounter = 0; //Contador de eventos
         this.visible = true; //Variable que dice si el cuadro de texto es visible o no
         this.text; //Referencia a Phaser.Text
@@ -63,8 +67,8 @@ export class DialogBox {
      * @returns {Object.<number, number, number, number>} Objeto con el rectángulo con las dimensiones de la caja de texto
      */
     calculateWindowDimensions(width, height) {
-        var x = this.padding;
-        var y = height - this.windowHeight - this.padding;
+        var x = this.x;
+        var y = this.y || height - this.windowHeight - this.padding;
         var rectWidth = width - (this.padding * 2);
         var rectHeight = this.windowHeight;
         return {
@@ -164,8 +168,8 @@ export class DialogBox {
      */
     textPosition(text) {
         if (this.text) this.text.destroy();
-        var x = this.padding + 10;
-        var y = this.getGameHeight() - this.windowHeight - this.padding + 10;
+        var x = this.x + 10|| this.padding + 10;
+        var y = this.y + 10|| this.getGameHeight() - this.windowHeight - this.padding + 10;
         this.text = this.scene.make.text({
             x,
             y,
@@ -185,6 +189,7 @@ export default class DialogScene extends Phaser.Scene {
     constructor() {
         super({key: 'dialog', active: true, visible: true});
         this.dialogBox = new DialogBox(this);
+        this.nameBox = new DialogBox(this);
         this.hasCreatedWindow = false;
         this.isToggled = true;
         this.isCurrentlyBeingAnimated;
@@ -198,16 +203,26 @@ export default class DialogScene extends Phaser.Scene {
 
     createWindow() {
         this.dialogBox.init();
+        this.nameBox.init({
+            borderThickness : 2,
+            windowColor: 0xE3BE39,
+            windowHeight: 35,
+            padding: 310,
+            x:20,
+            y:380
+        })
         this.isCurrentlyBeingAnimated = this.dialogBox.isCurrentlyBeingAnimated;
         this.hasCreatedWindow = true;
     }
 
-    setText(text) {
+    setText(character, text) {
         this.dialogBox.setText(text, true);
+        this.nameBox.setText(character, false);
     }
 
     toggleWindow() {
         this.dialogBox.toggleWindow();
+        this.nameBox.toggleWindow();
         this.isToggled = !this.isToggled;
     }
 }
