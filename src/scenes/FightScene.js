@@ -31,6 +31,9 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('artist_daño','assets/textures/Characters/daño2.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('jarfaiter', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:24, frameHeight:32})
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
