@@ -301,7 +301,9 @@ export class FightScene extends Phaser.Scene {
 		else return Math.floor(Math.random()*maxRange + 1);
 	}
 
-	EnemySelection(i){
+
+	EnemyAttacks(i){
+		console.log("AtacandO!");
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 		let selectedTarget = [];
 		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
@@ -310,13 +312,6 @@ export class FightScene extends Phaser.Scene {
 			selectedTarget.push(random);
 			this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
 		}
-		this.state = FightState.ExecuteAttack;
-	}
-
-
-	EnemyAttacks(i){
-		console.log("AtacandO!");
-		
 
 		let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
 		
@@ -374,7 +369,7 @@ export class FightScene extends Phaser.Scene {
 			}
 			else    // ENEMIGOS
 			{   
-				this.state = FightState.EnemyChooseAttack;
+				this.state = FightState.ExecuteAttack;
 				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 			}
 		}
@@ -555,9 +550,6 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state == FightState.ChooseAlly){
 
-		}
-		else if(this.state == FightState.EnemyChooseAttack){
-			this.EnemySelection(this.turns[this.currentTurn].index)
 		}
 		else if(this.state == FightState.ExecuteAttack){
 			if(this.turns[this.currentTurn].type) // ALIADOS
