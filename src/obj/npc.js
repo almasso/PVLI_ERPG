@@ -2,10 +2,15 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, imageID, npcID, dialogues, manin) {
         super(scene, x, y, imageID);
         this.npcID = npcID;
+        
         this.dialogues = dialogues;
         this.dialogIndex = 0;
         this.dialogCount = 0;
         this.currentDialog = 0;
+        this.formerDialog = 0;
+        this.hasShownText = true;
+        this.hasNotInteracted = false;
+        
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
         scene.physics.add.existing(this, true);
@@ -40,21 +45,37 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             i++;
         }
         this.currentDialog = this.dialogIndex;
+        this.formerDialog = this.dialogIndex;
     }
 
     readDialogues(uiScene) {
         if(!uiScene.hasCreatedWindow) uiScene.createWindow();
         else if(!uiScene.isToggled) uiScene.toggleWindow();
 
-        if(this.currentDialog < this.dialogIndex + this.dialogCount && this.dialogues.texts[this.currentDialog].unique) {
-            uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text);
-            console.log(uiScene.isCurrentlyBeingAnimated);
-            this.currentDialog++;
+        if(this.currentDialog < this.dialogIndex + this.dialogCount) {
+                uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text, true);
+                this.hasShownText = false;
+                this.hasNotInteracted = true;
+            
+            /*else if(this.spacekeyPresses === 1){
+                uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
+                this.formerDialog++;
+                this.spacekeyPresses = 0;
+            }*/
         }
         else {
             uiScene.toggleWindow();
             this.currentDialog = this.dialogIndex;
+            return;
         }
+        //this.dialogBeingShown = !this.dialogBeingShown;
+        this.currentDialog++;
+    }
+
+    showFullDialog(uiScene) {
+        uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
+        this.formerDialog++;
+        this.hasShownText = true;
     }
 
     preUpdate() {

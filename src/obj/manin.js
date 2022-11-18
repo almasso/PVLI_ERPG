@@ -18,6 +18,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
+		this.spacebarPresses = 0;
 		//this.isInteracting = false;
 		//#region  animations
         // Creamos las animaciones de nuestro caballero
@@ -73,8 +74,25 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
+		this.spacebarPresses++;
 		if(this.collider instanceof NPC) {
-			this.collider.readDialogues(this.uiScene);
+			if(this.spacebarPresses === 1) {
+				console.log("OPÇÃO UM");
+				this.collider.readDialogues(this.uiScene);
+				//this.spacebarPresses = 0;
+			}
+			else if(this.spacebarPresses === 2 && (!this.collider.hasShownText && this.collider.hasNotInteracted)) {
+				console.log("OPÇÃO DOS")
+				this.collider.readDialogues(this.uiScene);
+				this.collider.hasNotInteracted = false;
+				this.spacebarPresses = 0;
+			}
+			else if(this.spacebarPresses === 2 && !this.collider.hasShownText && !this.collider.hasNotInteracted){
+				console.log("OPÇÃO tres")
+				this.spacebarPresses = 0;
+				this.collider.showFullDialog(this.uiScene);
+			}
+		
 		}
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
