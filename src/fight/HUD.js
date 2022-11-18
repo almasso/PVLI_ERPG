@@ -370,7 +370,8 @@ export class ExploreMenu {
 			attacks: [],
 			resistances: [],
 			acurracy: 95,
-			speed: 50
+			speed: 50,
+			resP: 0,resR: 0,resE: 0,resF: 0,resT: 0
 		} };
 	}
 	
@@ -381,36 +382,64 @@ export class ExploreMenu {
 		this.partyImages = [];
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
+			// declaración de variables
 			let scale = 1.5;
 			let newY = y+98 * scale *index;
-			self.partyImages[index] = self.imageInfo(self.scene.add.image(x,newY,'partyStateBG').setOrigin(0,0),
+			let images = self.partyImages[index];
+			
+			// imágenes de fondo
+			images = self.imageInfo(self.scene.add.image(x,newY,'partyStateBG').setOrigin(0,0),
 			self.scene.add.image(x + 49*scale, newY + 49*scale, ally.imgID), self.scene.add.image(x + 100 * scale, newY, 'partyStats').setOrigin(0,0));
-			self.partyImages[index].bImage.setScale(scale);
-			self.partyImages[index].charIMG.setScale(scale*2);
-			
-			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
-			self.partyImages[index].stats.resistances = self.scene.add.text(x+ 100*scale + 50, newY + 110, res,{font: "30px Courier New"});
-			self.partyImages[index].stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
-			self.partyImages[index].stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
-			
-			self.partyImages[index].stats.mp = ally.actualMp;
-			self.partyImages[index].stats.maxMp = ally.maxMp;
-			self.partyImages[index].stats.speed = ally.speed;
-			self.partyImages[index].stats.attacks = ally.attacks;
-			
-			self.partyImages[index].charIMG.depth = 6;
-			self.partyImages[index].bImage.depth = 5;
-			self.partyImages[index].statIMG.depth = 5;
-			self.partyImages[index].stats.resistances.depth = 7;
-			self.partyImages[index].stats.maxHp.depth = 7;
-			self.partyImages[index].stats.hp.depth = 7;
 
-			self.partyImages[index].bImage.visible = false;
-			self.partyImages[index].charIMG.visible = false;
-			self.partyImages[index].statIMG.visible = false;
-			self.partyImages[index].stats.resistances.visible = false;
-			self.partyImages[index].stats.hp.visible = false;
-			self.partyImages[index].stats.maxHp.visible = false;
+			// cambiar escala
+			images.bImage.setScale(scale);
+			images.charIMG.setScale(scale*2);
+			
+			// generación de textos
+			let resOffset = 63;
+			let resOffset1 = 35;
+			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
+			images.stats.rP = self.scene.add.image(x+ 100*scale + resOffset, newY +80, 'resP');
+			images.stats.rR = self.scene.add.image(x+ 100*scale + resOffset + resOffset1, newY +80, 'resR');
+			images.stats.rE = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 2, newY +80, 'resE');
+			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +80, 'resF');
+			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +80, 'resT');
+			images.stats.resistances = self.scene.	add.text(x+ 100*scale + 50, newY + 110, res,{font: "30px Courier New"});
+			images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
+			images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
+			
+			images.stats.mp = ally.actualMp;
+			images.stats.maxMp = ally.maxMp;
+			images.stats.speed = ally.speed;
+			images.stats.attacks = ally.attacks;
+			
+			// cambio de depth
+			images.stats.rP.depth = 7;
+			images.stats.rR.depth = 7;
+			images.stats.rE.depth = 7;
+			images.stats.rF.depth = 7;
+			images.stats.rT.depth = 7;
+			images.charIMG.depth = 6;
+			images.bImage.depth = 5;
+			images.statIMG.depth = 5;
+			images.stats.resistances.depth = 7;
+			images.stats.maxHp.depth = 7;
+			images.stats.hp.depth = 7;
+
+			// invisible4
+			images.stats.rP.visible = false;
+			images.stats.rR.visible = false;
+			images.stats.rE.visible = false;
+			images.stats.rF.visible = false;
+			images.stats.rT.visible = false;
+			images.bImage.visible = false;
+			images.charIMG.visible = false;
+			images.statIMG.visible = false;
+			images.stats.resistances.visible = false;
+			images.stats.hp.visible = false;
+			images.stats.maxHp.visible = false;
+
+			self.partyImages[index] = images;
 		})
 	}
 
@@ -475,6 +504,11 @@ export class ExploreMenu {
 			images.stats.resistances.visible = bool;
 			images.stats.hp.visible = bool;
 			images.stats.maxHp.visible = bool;
+			images.stats.rP.visible = bool;
+			images.stats.rR.visible = bool;
+			images.stats.rE.visible = bool;
+			images.stats.rF.visible = bool;
+			images.stats.rT.visible = bool;
 		})
 	}
 

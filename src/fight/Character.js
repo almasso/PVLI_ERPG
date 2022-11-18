@@ -134,8 +134,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
 		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
 		
-		let lastHp = this.actualHp; // última HP
-
 		let acurracy = 1;
 		let hit = Math.floor(Math.random()*100 + 1);
 		if(hit > this.acurracy) acurracy = 0;

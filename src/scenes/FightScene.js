@@ -507,7 +507,6 @@ export class FightScene extends Phaser.Scene {
 		this.NextTurn(); // avanzamos el turno
 	}
 
-	
 	//···RAUL PRUEBAS···
 	attack=-1;
 	enemyselected=-1;
