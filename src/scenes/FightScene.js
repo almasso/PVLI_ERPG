@@ -415,6 +415,7 @@ export class FightScene extends Phaser.Scene {
 			else    // ENEMIGOS
 			{   
 				// el enemigo ataca
+				
 				this.EnemyAttacks(this.turns[this.currentTurn].index);
 				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 			}
@@ -539,6 +540,11 @@ export class FightScene extends Phaser.Scene {
 		if(this.finishedTurn)
 		{
 			this.NextTurn();
+			for(let i=0;i<this.allies.length;i++)
+				{				
+					//this.enemies[i].stop();
+					if(!this.allies[i].dead) this.allies[i].play(this.allies[i].imgID+'_wow');
+				}
 			
 		}
 
@@ -638,10 +644,9 @@ export class FightScene extends Phaser.Scene {
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
 				{
 				for(let i=0;i<this.enemies.length;i++)
-				{
-				
-				//this.enemies[i].stop();
-				if(!this.enemies[i].dead) this.enemies[i].play(this.enemies[i].imageId+'_wow');
+				{				
+					//this.enemies[i].stop();
+					if(!this.enemies[i].dead) this.enemies[i].play(this.enemies[i].imageId+'_wow');
 				}
 					this.AllyAttack();
 
