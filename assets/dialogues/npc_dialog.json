@@ -40,5 +40,41 @@
         "unique" : true,
         "npcName" : "Vovovo",
         "text": "No se puede vivir ya en esta triste sociedad, mi espíritu ha adquirido la social enemistad. ¡Toma ya! ¡Toma ya!"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "*vocaloid noises*"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "*blushes* >w<"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "uwu"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "To become god is the loneliest achievement of them all"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "owo"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "npcName" : "Jatsune Micu",
+        "text": "M-Manin kun...*blushes again*"
     }
 ]}

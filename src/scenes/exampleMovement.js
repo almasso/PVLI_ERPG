@@ -23,6 +23,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('melendi','assets/textures/Characters/Melendi.png');
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
 		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
+		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
@@ -51,9 +52,11 @@ export default class MovementExample extends Phaser.Scene {
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		let npc1 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npcs = [npc1, npc2];
+		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
+		let npcs = [npc1, npc2, npc3];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
+		npc3.scale = 2.5;
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround();
