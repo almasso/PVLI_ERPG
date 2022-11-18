@@ -239,7 +239,7 @@ export class EnemyHUD{
 }
 
 // BARRAS DE VIDA / MANÁ
-class HealthBar {
+class HealthBar extends Phaser{
 
 	constructor (scene, x, y, width, type, initialValue, maxValue, hasText = true)
 	{
@@ -257,6 +257,7 @@ class HealthBar {
 		if(this.hasText){ // si lo tiene, se crea
 			this.texto = scene.add.text(x + this.width/3.2, y + this.height/1.5, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
 		}
+		this.hidden;
 		this.draw(); // dibujamos la barra en la escena
 	}
 
@@ -271,31 +272,38 @@ class HealthBar {
 		this.value = newValue;
 	}
 
+	// ocultar barra
+	hide(bool){
+		this.hidden = bool;
+		this.draw();
+	}
+
 	// dibujado
 	draw ()
 	{
 		this.bar.clear(); // limpiamos la barra
-
-		// si tiene texto...
-		if(this.hasText) this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type)
-
-		//  fondo
-		this.bar.fillStyle(0x000000);
-		this.bar.fillRect(this.x, this.y, this.width, 10);
-		//  fill
-		if (this.value < 30 && this.type == 'HP') // en rojo si está a poca vida
-		{
-			this.bar.fillStyle(0xff0000);
+		if(!this.hidden){
+			// si tiene texto...
+			if(this.hasText){ this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type); this.texto.visible = this.hidden;}
+			
+			//  fondo
+			this.bar.fillStyle(0x000000);
+			this.bar.fillRect(this.x, this.y, this.width, 10);
+			//  fill
+			if (this.value < 30 && this.type == 'HP') // en rojo si está a poca vida
+			{
+				this.bar.fillStyle(0xff0000);
+			}
+			else // color base con más vida
+			{
+				if(this.type == 'HP') this.bar.fillStyle(0x00ff00);
+				else this.bar.fillStyle(0x0000ff);
+			}
+	
+			let barWidth = (this.value*this.width) / this.maxValue; // ancho
+	
+			this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, 6); // dibujado
 		}
-		else // color base con más vida
-		{
-			if(this.type == 'HP') this.bar.fillStyle(0x00ff00);
-			else this.bar.fillStyle(0x0000ff);
-		}
-
-		let barWidth = (this.value*this.width) / this.maxValue; // ancho
-
-		this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, 6); // dibujado
 	}
 }
 var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
@@ -405,8 +413,9 @@ export class ExploreMenu {
 			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +80, 'resF');
 			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +80, 'resT');
 			images.stats.resistances = self.scene.	add.text(x+ 100*scale + 50, newY + 110, res,{font: "30px Courier New"});
-			images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
-			images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
+			//images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
+			//images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
+			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +30, 100, 'HP', ally.actualHp, ally.maxHp, true);
 			
 			images.stats.mp = ally.actualMp;
 			images.stats.maxMp = ally.maxMp;
@@ -423,10 +432,10 @@ export class ExploreMenu {
 			images.bImage.depth = 5;
 			images.statIMG.depth = 5;
 			images.stats.resistances.depth = 7;
-			images.stats.maxHp.depth = 7;
+			//images.stats.maxHp.depth = 7;
 			images.stats.hp.depth = 7;
 
-			// invisible4
+			// invisible
 			images.stats.rP.visible = false;
 			images.stats.rR.visible = false;
 			images.stats.rE.visible = false;
@@ -436,8 +445,8 @@ export class ExploreMenu {
 			images.charIMG.visible = false;
 			images.statIMG.visible = false;
 			images.stats.resistances.visible = false;
-			images.stats.hp.visible = false;
-			images.stats.maxHp.visible = false;
+			images.stats.hp.hide(true);
+			//images.stats.maxHp.visible = false;
 
 			self.partyImages[index] = images;
 		})
@@ -502,13 +511,13 @@ export class ExploreMenu {
 			images.bImage.visible = bool;
 			images.statIMG.visible = bool;
 			images.stats.resistances.visible = bool;
-			images.stats.hp.visible = bool;
-			images.stats.maxHp.visible = bool;
+			//images.stats.maxHp.visible = bool;
 			images.stats.rP.visible = bool;
 			images.stats.rR.visible = bool;
 			images.stats.rE.visible = bool;
 			images.stats.rF.visible = bool;
 			images.stats.rT.visible = bool;
+			images.stats.hp.hide(!bool);
 		})
 	}
 
