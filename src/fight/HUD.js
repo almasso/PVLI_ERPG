@@ -239,9 +239,9 @@ export class EnemyHUD{
 }
 
 // BARRAS DE VIDA / MANÁ
-class HealthBar extends Phaser{
+class HealthBar {
 
-	constructor (scene, x, y, width, type, initialValue, maxValue, hasText = true)
+	constructor (scene, x, y, width, type, initialValue, maxValue, hasText = true, height = 10)
 	{
 		this.bar = new Phaser.GameObjects.Graphics(scene); // Generamos el tipo de objeto
 		// posición
@@ -251,11 +251,14 @@ class HealthBar extends Phaser{
 		this.width = width; // ancho
 		this.type = type; // tipo: VIDA / MANÁ
 		this.maxValue = maxValue; // valor máximo
-		this.height = 10; // altura
+		this.height = height; // altura
 		scene.add.existing(this.bar); // añadimos la barra a la escena
 		this.hasText = hasText; // tiene texto?
+		this.bar.depth = 3;
 		if(this.hasText){ // si lo tiene, se crea
-			this.texto = scene.add.text(x + this.width/3.2, y + this.height/1.5, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+			this.texto = scene.add.text(x + this.width/3.2, y + this.height, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+			this.texto.depth = 7;
+			this.bar.depth = 7;
 		}
 		this.hidden;
 		this.draw(); // dibujamos la barra en la escena
@@ -282,13 +285,14 @@ class HealthBar extends Phaser{
 	draw ()
 	{
 		this.bar.clear(); // limpiamos la barra
+		if(this.hasText) this.texto.visible = !this.hidden;
 		if(!this.hidden){
 			// si tiene texto...
-			if(this.hasText){ this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type); this.texto.visible = this.hidden;}
+			if(this.hasText){ this.texto.setText(this.value + ' / '+this.maxValue + ' ' + this.type); }
 			
 			//  fondo
 			this.bar.fillStyle(0x000000);
-			this.bar.fillRect(this.x, this.y, this.width, 10);
+			this.bar.fillRect(this.x, this.y, this.width, this.height);
 			//  fill
 			if (this.value < 30 && this.type == 'HP') // en rojo si está a poca vida
 			{
@@ -302,7 +306,7 @@ class HealthBar extends Phaser{
 	
 			let barWidth = (this.value*this.width) / this.maxValue; // ancho
 	
-			this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, 6); // dibujado
+			this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
 		}
 	}
 }
@@ -360,6 +364,7 @@ export class ExploreMenu {
 		this.imgID = imgID; // imagen
 		this.bImage = this.scene.add.image(x,y,imgID).setOrigin(0,0);
 		this.bImage.setScale(1.5);
+		this.bImage.depth = 5;
 		this.pointer = pointer;
 		this.AddPartyMenu();
 		this.AddButtons();
@@ -402,23 +407,23 @@ export class ExploreMenu {
 			// cambiar escala
 			images.bImage.setScale(scale);
 			images.charIMG.setScale(scale*2);
+			images.statIMG.setScale(0.72,1);
 			
 			// generación de textos
 			let resOffset = 63;
 			let resOffset1 = 35;
 			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
-			images.stats.rP = self.scene.add.image(x+ 100*scale + resOffset, newY +80, 'resP');
-			images.stats.rR = self.scene.add.image(x+ 100*scale + resOffset + resOffset1, newY +80, 'resR');
-			images.stats.rE = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 2, newY +80, 'resE');
-			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +80, 'resF');
-			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +80, 'resT');
-			images.stats.resistances = self.scene.	add.text(x+ 100*scale + 50, newY + 110, res,{font: "30px Courier New"});
+			images.stats.rP = self.scene.add.image(x+ 100*scale + resOffset, newY +90, 'resP');
+			images.stats.rR = self.scene.add.image(x+ 100*scale + resOffset + resOffset1, newY +90, 'resR');
+			images.stats.rE = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 2, newY +90, 'resE');
+			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +90, 'resF');
+			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +90, 'resT');
+			images.stats.resistances = self.scene.	add.text(x+ 100*scale + 50, newY + 115, res,{font: "30px Courier New"});
 			//images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
 			//images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
-			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +30, 100, 'HP', ally.actualHp, ally.maxHp, true);
+			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
+			images.stats.mp = new HealthBar(self.scene, x+100*scale + 50, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
 			
-			images.stats.mp = ally.actualMp;
-			images.stats.maxMp = ally.maxMp;
 			images.stats.speed = ally.speed;
 			images.stats.attacks = ally.attacks;
 			
@@ -446,6 +451,7 @@ export class ExploreMenu {
 			images.statIMG.visible = false;
 			images.stats.resistances.visible = false;
 			images.stats.hp.hide(true);
+			images.stats.mp.hide(true);
 			//images.stats.maxHp.visible = false;
 
 			self.partyImages[index] = images;
@@ -460,7 +466,8 @@ export class ExploreMenu {
 		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
 		this.viewPartyButton.setInteractive();
 		this.viewPartyButton.setScale(1.5);
-
+		this.viewPartyButton.depth = 6;
+		this.pointer.depth = 6;
 		let self = this;
 		let viewParty = false;
 		this.viewPartyButton.on("pointerup", function(){
@@ -518,6 +525,7 @@ export class ExploreMenu {
 			images.stats.rF.visible = bool;
 			images.stats.rT.visible = bool;
 			images.stats.hp.hide(!bool);
+			images.stats.mp.hide(!bool);
 		})
 	}
 

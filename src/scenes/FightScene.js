@@ -202,7 +202,6 @@ export class FightScene extends Phaser.Scene {
 			this.scene.stop('movement');
 		}
 		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
-		
 	}
 
 	// cargamos a los aliados
