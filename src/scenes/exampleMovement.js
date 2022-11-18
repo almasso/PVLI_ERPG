@@ -30,6 +30,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('pointer', 'assets/textures/HUD/explore/pointer.png')
 		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
 		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')
+		this.load.image('partyStats', 'assets/textures/HUD/explore/partyStats.png')
 	}
 
 	// inicializamos la escena
