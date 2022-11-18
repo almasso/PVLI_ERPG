@@ -24,6 +24,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
 		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
+		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png')
 	}
 
 	// inicializamos la escena
@@ -75,6 +76,9 @@ export default class MovementExample extends Phaser.Scene {
 		// generamos HUD de estado de party
 		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
 		this.walkingHUD.depth = 3;
+
+		// generamos el Menú
+		this.menu = new ExploreMenu(700,100,this,'menuBG');
 	}
 	
 	// actualizamos el HUD de estado de party

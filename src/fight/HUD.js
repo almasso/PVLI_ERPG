@@ -343,3 +343,47 @@ export class walkingHUD {
 		});
 	}
 }
+
+export class ExploreMenu {
+	constructor(x,y,scene, imgID){
+		this.x = x; // posición
+        this.y = y;
+        this.scene = scene; // escena
+		this.imgID = imgID; // imagen
+		this.bImage = this.scene.add.image(x,y,imgID);
+		this.viewPartyButton = this.scene.add.text(this.x,this.y,"PARTY", {font: '"Press Start 2P"'}); // botón para ver el estado de la party
+		this.changePartyButton;
+		this.backButton; // salir del menú actual
+		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
+		this.objectButton;
+	}
+
+	Show(bool){ // mostrar/ocultar el menú
+		ToggleButtons(bool); // activar o desactivar botones
+	}
+
+	ToggleButtons(bool){ // activar o desactivar botones 
+		if(bool){
+			viewPartyButton.disableInteractive();
+		} 
+		else{
+			viewPartyButton.setInteractive();
+		}
+	}
+
+	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
+		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
+	}
+
+	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party
+		// se mostrarán los personajes activmos en grande en el centro de la pantalla y debajo
+		// los personajes disponibles para intercambiar
+	}
+
+	Back(){ // ejecutado al pulsar el botón back
+		// en función del menú actual, se irá a uno anterior
+	}
+
+
+
+}
