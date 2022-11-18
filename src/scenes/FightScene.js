@@ -4,6 +4,18 @@ import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
 import {Log, AllyHUD, EnemyHUD} from '../fight/HUD.js'
 
+
+const FightState = {
+	SelectTurn: 0,
+	ChooseAttack: 1,
+	EnemyChooseAttack: 2,
+	ChooseEnemy: 3,
+	ChooseAlly: 4,
+	ExecuteAttack: 5,
+	TimeUntilNextTurn: 6,
+	Finish: 7
+};
+
 export class FightScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'fightscene'});
@@ -11,6 +23,7 @@ export class FightScene extends Phaser.Scene {
 		this.enemiesInfo = EnemiesInfo;
 		this.selectedAttack;
 		this.timeBetweenAttacks = 2000;
+		this.state = FightState.SelectTurn;
 	}
 
 	preload(){
@@ -227,7 +240,7 @@ export class FightScene extends Phaser.Scene {
 		ally.on("pointerup",() => {
 			console.log("SUPPORTEANDO A " + ally.imageId);
 			this.allies[this.currentAlly].targets.push(ally);
-			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.state = this.FightState.ExecuteAttack}
 		})
 	}
 
@@ -288,8 +301,7 @@ export class FightScene extends Phaser.Scene {
 		else return Math.floor(Math.random()*maxRange + 1);
 	}
 
-	EnemyAttacks(i){
-		console.log("AtacandO!");
+	EnemySelection(i){
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 		let selectedTarget = [];
 		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
@@ -298,6 +310,13 @@ export class FightScene extends Phaser.Scene {
 			selectedTarget.push(random);
 			this.enemies[i].targets.push(this.allies[selectedTarget[o]]);
 		}
+		this.state = FightState.ExecuteAttack;
+	}
+
+
+	EnemyAttacks(i){
+		console.log("AtacandO!");
+		
 
 		let effective = this.enemies[i].Attack(this.enemies[i].GetAttack(selectedAttack));
 		
@@ -311,7 +330,7 @@ export class FightScene extends Phaser.Scene {
 		console.log(this.enemies[i].GetAttack(selectedAttack).name + this.enemies[i].GetAttack(selectedAttack).dmg)
 		console.log(selectedTarget);
 		this.enemies[i].targets = [];
-		this.finishedTurn = true;
+		this.state = FightState.TimeUntilNextTurn;
 	}
 
 	CreateTurns(){
@@ -341,12 +360,12 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	NextTurn(){
-		this.finishedTurn = false;
-		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat();}
+		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.state = FightState.Finish;}
 		else if(!this.turns[this.currentTurn].char.dead)
 		{
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
+				this.state = FightState.ChooseAttack;
 				this.currentAlly = this.turns[this.currentTurn].index;
 				//···RAUL PRUEBAS···
 				this.choseA=false;
@@ -355,38 +374,16 @@ export class FightScene extends Phaser.Scene {
 			}
 			else    // ENEMIGOS
 			{   
-				this.EnemyAttacks(this.turns[this.currentTurn].index);
+				this.state = FightState.EnemyChooseAttack;
 				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 			}
 		}
 		else
 		{
-			this.finishedTurn = true;
 			this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 		}
 	}
 
-	NextAlly(){
-		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat(); }
-		else {
-			if (this.currentAlly + 1 === this.allies.length){
-				// PUM ataque enemigos
-				let self = this;
-				this.enemies.forEach(function (enemy, index){
-					self.EnemyAttacks(index);
-				});
-
-			}
-
-			this.currentAlly = (this.currentAlly + 1) % this.allies.length;
-			if(this.allies[this.currentAlly].dead) this.NextAlly();
-
-			//···RAUL PRUEBAS···
-			this.choseA=false;
-			this.choseE=false;
-			this.pointer.visible=false;
-		}
-	}
 
 	AllyAttack(){
 		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack);
@@ -410,7 +407,7 @@ export class FightScene extends Phaser.Scene {
 		this.alliesHud[this.currentAlly].Update();
 
 		this.currentTurn = (this.currentTurn + 1) % this.turns.length;
-		this.finishedTurn = true;
+		this.state = FightState.TimeUntilNextTurn;
 	}
 
 	i=0;//···RAUL PRUEBAS···
@@ -440,7 +437,7 @@ export class FightScene extends Phaser.Scene {
 		enemy.on("pointerup",() => {
 			console.log("ATACANDO A " + enemy.imageId);
 			this.allies[this.currentAlly].targets.push(enemy);
-			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.state = this.FightState.ExecuteAttack}
 			//this.chose=false;
 			//this.pointer.visible = false;
 		})
@@ -506,7 +503,7 @@ export class FightScene extends Phaser.Scene {
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
 		}*/
-		this.alliesHud.forEach(function (hud){
+		this.alliesHud.forEach(function (hud){ // Roi
 			if(hud.HealthBar.keepDrawing()) hud.HealthBar.draw();
 			if(hud.ManaBar.keepDrawing()) hud.ManaBar.draw();
 		})
@@ -515,28 +512,17 @@ export class FightScene extends Phaser.Scene {
 			if(hud.healthBar.keepDrawing()) hud.healthBar.draw();
 		})
 
-		if(this.finishedTurn)
-		{
-			this.count += dt;
-			this.ToggleButtons(false);
-			if(this.count > this.timeBetweenAttacks)
-			{
-				this.ToggleButtons(true);
-				this.NextTurn();
-				this.count = 0;
-			}
+		if(this.state == FightState.SelectTurn){ // Roi
+			this.NextTurn();
 		}
-
-
-
-		if(this.choseE===false && this.choseA===false){
+		else if(this.state == FightState.ChooseAttack){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
 				this.alliesHud[this.currentAlly].DisplayAttacks();
 			}
-			if(this.combat===true)
-			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+		}
+		else if(this.state == FightState.ChooseEnemy){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 				{
 					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
 						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
@@ -566,6 +552,44 @@ export class FightScene extends Phaser.Scene {
 
 					
 				}
+		}
+		else if(this.state == FightState.ChooseAlly){
+
+		}
+		else if(this.state == FightState.EnemyChooseAttack){
+			this.EnemySelection(this.turns[this.currentTurn].index)
+		}
+		else if(this.state == FightState.ExecuteAttack){
+			if(this.turns[this.currentTurn].type) // ALIADOS
+			{
+				this.AllyAttack();
+			}
+			else
+			{
+				this.EnemyAttacks(this.turns[this.currentTurn].index);
+			}
+		}
+		else if(this.state == FightState.TimeUntilNextTurn){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.state = FightState.SelectTurn;
+				this.count = 0;
+			}
+		}
+		else{
+			this.EndCombat();
+		}
+
+
+		if(this.choseE===false && this.choseA===false){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
+			{
+				this.alliesHud[this.currentAlly].DisplayAttacks();
+			}
+			if(this.combat===true)
+			{
+				
 
 				if(this.cursor===false)
 				{

@@ -145,19 +145,22 @@ export class AllyHUD{
 		});
 		attackText.text.on('pointerup', () => {
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
+				this.scene.ToggleButtons(false); // Roi
 				this.scene.selectedAttack = attackText.srcAttack;
 				if(attackText.srcAttack.isSupport())
 				{
-					 this.scene.EnableTargetting(this.scene.allies);
-
-					 //···RAUL PRUEBAS···
-					 this.scene.choseA=true;
+					this.scene.state = this.scene.FightState.ChooseAlly; // Roi
+					this.scene.EnableTargetting(this.scene.allies);
+					
+					//···RAUL PRUEBAS···
+					this.scene.choseA=true;
 					this.scene.cursor=false;
 					this.scene.allaySelected=0;
 					console.log(this.scene.allaySelected);
 					console.log(this.scene.allies.length);
 				}
 				else {
+					this.scene.state = this.scene.FightState.ChooseEnemy; // Roi
 					this.scene.EnableTargetting(this.scene.enemies);
 					//···RAUL PRUEBAS···
 					this.scene.choseE=true;
