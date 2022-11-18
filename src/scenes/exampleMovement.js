@@ -20,7 +20,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
-		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
+		this.load.image('melendi','assets/textures/Characters/Melendi.png');
+		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
+		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
         /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
@@ -47,8 +49,8 @@ export default class MovementExample extends Phaser.Scene {
 		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
         this.cameras.main.startFollow(this.manin);
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues, this.manin);
+		let npc1 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npcs = [npc1, npc2];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
@@ -84,18 +86,23 @@ export default class MovementExample extends Phaser.Scene {
 		});*/
 
 		for(let i of npcs) {
-			i.on("overlapstart", () => {
-				console.log(i.body.touching);
-				console.log(i.body.wasTouching);
-				console.log(i.trigger.body.touching);
-				console.log(i.trigger.body.wasTouching);
-				console.log("has tocao");
-				//this.manin.collider = i;
+			/*i.on("collision", () => {
+				//console.log(i.body.touching);
+				//console.log(i.body.wasTouching);
+				//console.log(i.trigger.body.touching);
+				//console.log(i.trigger.body.wasTouching);
+				//console.log("has tocao");
+				this.manin.collider = i;
 			})
 			i.on("overlapend", () => {
 				console.log("se acabo");
 				//this.manin.collider = null;
-			})
+			})*/
+			self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+				isColliding = true;
+				console.log("HA CHOCAO");
+				gameObject1.collider = gameObject2;
+			});
 		}
 
 	}
