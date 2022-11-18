@@ -20,15 +20,11 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
-<<<<<<< HEAD
+
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
 		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
-=======
 
-        /*this.load.spritesheet('knight', 'assets/Knight/knight.png', {frameWidth: 72, frameHeight: 86})
-		this.load.spritesheet('box', 'assets/Box/box.png', {frameWidth: 64, frameHeight: 64})*/
->>>>>>> parent of 13b09ec (Merge branch 'David')
 	}
 	z
 	/**
@@ -79,7 +75,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
-<<<<<<< HEAD
+
 		//#endregion
 		
 		// generamos HUD de estado de party
@@ -90,22 +86,7 @@ export default class MovementExample extends Phaser.Scene {
 	// actualizamos el HUD de estado de party
 	UpdateHUD(){
 		this.walkingHUD.Update();
-=======
-		/*
-		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
-		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
-		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
-		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
-		*/
 
-
-
-		this.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			console.log("HA COLISIONAO")
-			gameObject1.collider = gameObject2;
-		});
-
->>>>>>> parent of 13b09ec (Merge branch 'David')
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
