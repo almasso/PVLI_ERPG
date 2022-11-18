@@ -22,7 +22,11 @@ export class Party{
 		this.party.push(character);
 	}
 
+<<<<<<< HEAD
 	// Llevamos la party al estado original (TEMPORAL)
+=======
+
+>>>>>>> parent of 13b09ec (Merge branch 'David')
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,

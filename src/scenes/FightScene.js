@@ -193,8 +193,6 @@ export class FightScene extends Phaser.Scene {
 		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
 			this.scene.wake('movement');
-			let movement = this.scene.get('movement');
-			movement.UpdateHUD();
 		}
 		else // Si se han matado a todos los enemigos...
 		{
@@ -286,9 +284,15 @@ export class FightScene extends Phaser.Scene {
 
 	// generamos a los enemigos en función de la información que nos llega desde enemiesInfo
 	GenerateRandomEncounter(){
+<<<<<<< HEAD
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
 		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
+=======
+		this.enemies = [];
+		let height = 360;
+		let enemiesNumber = this.GetRandom(5, false);
+>>>>>>> parent of 13b09ec (Merge branch 'David')
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
@@ -499,7 +503,24 @@ export class FightScene extends Phaser.Scene {
 
 		this.currentAlly = 0; // aliado actualmente seleccionado
 
+<<<<<<< HEAD
 		this.pointer = this.add.image(0,0,'attackPointer'); // puntero que muestra la selección de algo en los menús
+=======
+		// Ahora mismo tenemos que crear el character porque no nos lo está pasando el EnviromentInfo. Tenemos que hacerlo uwu
+		// this.character = new Character(this,this.sys.game.canvas.width/2, 10, 'manin', 100, 100).setOrigin(0,0);
+		// this.character.scale = 0.13;
+		// this.character.depth = 1;
+		// this.character.visible = false;
+
+		//this.character.visible = false;
+		// for(let i = 0; i < 4; i++)
+		// {
+		// 	this.character.SetAttacks({name: 'cosa', type: 0, dmg: 20, requiredMps: 10, targets: 1});
+		// }
+		// this.character.SetStats(5,0,0,0,0,0,100);
+
+		this.pointer = this.add.image(0,0,'attackPointer');
+>>>>>>> parent of 13b09ec (Merge branch 'David')
 		this.pointer.visible = false;
 		this.pointer.depth = 2;
 
@@ -525,7 +546,12 @@ export class FightScene extends Phaser.Scene {
 			
 		}
 
+<<<<<<< HEAD
 		if(this.choseE && !this.choseA){
+=======
+
+		if(this.choseE===false && this.choseA===false){
+>>>>>>> parent of 13b09ec (Merge branch 'David')
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
 				this.alliesHud[this.currentAlly].DisplayAttacks();
