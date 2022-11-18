@@ -2,7 +2,8 @@ import Manin from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
-import {walkingHUD} from '../fight/HUD.js'
+import {walkingHUD, ExploreMenu} from '../fight/HUD.js'
+import {InputMan} from '../fight/InputManager.js'
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -24,11 +25,25 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
 		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
-		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png')
+		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png');
+		this.load.image('menuPartyButton', 'assets/textures/HUD/explore/menuPartyButton.png');
+		this.load.image('pointer', 'assets/textures/HUD/explore/pointer.png')
+		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
+		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')
 	}
 
 	// inicializamos la escena
 	create() {
+		//#region input
+		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
+		this.wKey = this.input.keyboard.addKey('W'); // move up
+		this.aKey = this.input.keyboard.addKey('A'); // move left
+		this.sKey = this.input.keyboard.addKey('S'); // move down
+		this.dKey = this.input.keyboard.addKey('D'); // move right
+		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
+		this.eKey = this.input.keyboard.addKey('E'); //chose
+		this.qKey = this.input.keyboard.addKey('Q');  //attack
+		//#endregion	
 		// ponemos a dormir la escena que controla la UI
 		this.scene.sleep('uimanager');
 
@@ -77,8 +92,13 @@ export default class MovementExample extends Phaser.Scene {
 		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
 		this.walkingHUD.depth = 3;
 
+		this.pointer = this.add.image(0,0,'pointer').setOrigin(0,0);
+		this.pointer.visible = false;
+		this.pointer.depth = 3;
 		// generamos el Menú
-		this.menu = new ExploreMenu(700,100,this,'menuBG');
+		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer);
+		this.menu.Show(false);
+		this.showMenu = false;
 	}
 	
 	// actualizamos el HUD de estado de party
@@ -114,13 +134,16 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
 	
-	// comprobación de colisiones
+	// comprobación de colisiones y apertura de menús
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
 		var wasTouching = !this.hierbasColliders.body.wasTouching.none;
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
+
+		// 
+		if(Phaser.Input.Keyboard.JustDown(this.qKey)) {this.showMenu = !this.showMenu; this.menu.Show(this.showMenu); }
 	}
 
 	// pasamos a la escena de pelea

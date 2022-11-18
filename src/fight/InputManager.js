@@ -2,7 +2,6 @@
 export class InputMan extends Phaser.GameObjects.Sprite{
 	constructor(scene){
 		super(scene,-100,-100,'pixel1x1');
-		this.scene.add.existing(this); //Añadimos a Manín a la escena
         
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
 		this.aKey = this.scene.input.keyboard.addKey('A'); // move left
@@ -12,5 +11,6 @@ export class InputMan extends Phaser.GameObjects.Sprite{
 		//···RAUL···
 		this.eKey = this.scene.input.keyboard.addKey('E'); //chose
 		this.qKey = this.scene.input.keyboard.addKey('Q');  //attack
+		this.scene.add.existing(this); //Añadimos a Manín a la escena
 	}
 }
