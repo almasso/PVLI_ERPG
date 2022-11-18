@@ -21,9 +21,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
-		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
-		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
-		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
+		// this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
+		// this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
+		// this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
 
 	}
 	z
@@ -78,16 +78,16 @@ export default class MovementExample extends Phaser.Scene {
 
 		//#endregion
 		
-		// generamos HUD de estado de party
-		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
-		this.walkingHUD.depth = 3;
+		// // generamos HUD de estado de party
+		// this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
+		// this.walkingHUD.depth = 3;
 	}
 	
 	// actualizamos el HUD de estado de party
-	UpdateHUD(){
-		this.walkingHUD.Update();
+	// UpdateHUD(){
+	// 	this.walkingHUD.Update();
 
-	}
+	// }
 	
 	// generación de la hierba hostil (TEMPORAL)
 	GenerateHostileGround(){

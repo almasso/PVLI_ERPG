@@ -25,12 +25,27 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
 
 		//ANIMACON
-		this.load.spritesheet('people_daño','assets/textures/Characters/daño.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people','assets/textures/Characters/idle.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people_wow','assets/textures/Characters/wow.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('artist_daño','assets/textures/Characters/daño2.png',{frameWidth:24, frameHeight:32});
-		this.load.spritesheet('artist','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('people_daño','assets/textures/Characters/people_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_idle','assets/textures/Characters/people_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_wow','assets/textures/Characters/people_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_dead','assets/textures/Characters/people_dead.png',{frameWidth:19, frameHeight:26});
+
+		this.load.spritesheet('artist_daño','assets/textures/Characters/artist_daño.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_idle','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
+
+		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:13, frameHeight:20});
+		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:13, frameHeight:20});
+		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:13, frameHeight:20});
+		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:13, frameHeight:20});
+
+		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
+
+
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -622,11 +637,11 @@ export class FightScene extends Phaser.Scene {
 				
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
 				{
-					for(let i=0;i<this.enemies.length;i++)
+				for(let i=0;i<this.enemies.length;i++)
 				{
 				
 				//this.enemies[i].stop();
-				this.enemies[i].play(this.enemies[i].imageId+'_wow');
+				if(!this.enemies[i].dead) this.enemies[i].play(this.enemies[i].imageId+'_wow');
 				}
 					this.AllyAttack();
 
