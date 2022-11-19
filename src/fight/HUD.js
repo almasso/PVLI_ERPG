@@ -356,6 +356,16 @@ export class walkingHUD {
 	}
 }
 
+// enumerador de tipos de ataque
+const typeOfAttack = {
+	0: "Físco",
+	1: "Rango",
+	2: "Fuego",
+	3: "Eléctrico",
+	4: "Tóxico",
+	5: "Apoyo"
+};
+
 export class ExploreMenu {
 	constructor(x,y,scene, imgID, pointer){
 		this.x = x; // posición
@@ -430,7 +440,7 @@ export class ExploreMenu {
 			images.stats.attacks[2] = self.scene.add.text(x + 200 * scale + 100, newY + 80, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[2].type]} );
 			images.stats.attacks[3] = self.scene.add.text(x + 200 * scale + 100, newY + 110, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[3].type]} );
 			
-			self.SetAttackInfo(images.stats.attacks);
+			self.SetAttackInfo(images.stats.attacks, index, ally.attack);
 
 			// cambio de depth
 			images.stats.rP.depth = 7;
@@ -470,18 +480,48 @@ export class ExploreMenu {
 		})
 	}
 
-	SetAttackInfo(attacks){
+	// Crear la información de los ataques
+	SetAttackInfo(attacks,oldIndex, srcAttack){
 		this.attackInfo = [];
 		let self = this;
 		attacks.forEach(function(attack, index) {
 			attack.setInteractive();
-			self.attackInfo[index] = {
+			let newIndex = (oldIndex +1)* (index+1) + index;
+			let info = self.attackInfo[newIndex];
+			let attType = "Tipo: " + typeOfAttack[srcAttack[index].type];
+			let attDmg = srcAttack[index].dmg;
+			if(attType === "Tipo: " + typeOfAttack[5]) attDmg = 'Cura: ' + (-attDmg);
+			else attDmg = 'Daño: ' + attDmg;
+			info = {
 				bgIMG: self.scene.add.image(attack.x, attack.y, 'partyStateBG').setOrigin(0,0),
-				type: self.scene.add.text(attack.x + 15, attack.y + 15, 'Tipo: ' + attack.type, {font: "12px Courier New"}).setOrigin(0,0),
-				dmg: self.scene.add.text(attack.x+15, attack.y + 30, 'Daño: ' +attack.dmg, {font: "12px Courier New"}).setOrigin(0,0)
-			}
+				type: self.scene.add.text(attack.x + 15, attack.y + 15, attType, {font: "12px Courier New"}).setOrigin(0,0),
+				dmg: self.scene.add.text(attack.x+15, attack.y + 30, attDmg, {font: "12px Courier New"}).setOrigin(0,0),
+				targets: self.scene.add.text(attack.x+15, attack.y + 45, 'Nº Obj.: ' + srcAttack[index].targets, {font: "12px Courier New"}).setOrigin(0,0)
+			};
+
+			info.bgIMG.setScale(1.2,0.8);
+
+			info.bgIMG.depth = 8;
+			info.dmg.depth = 8;
+			info.type.depth = 8;
+			info.targets.depth = 8;
+
+			info.bgIMG.visible = false;
+			info.dmg.visible = false;
+			info.type.visible = false;
+			info.targets.visible = false;
+
 			attack.on("pointerover", function (){
-				// acabar con esto por fa
+				info.bgIMG.visible = true;
+				info.dmg.visible = true;
+				info.type.visible = true;
+				info.targets.visible = true;
+			})
+			attack.on("pointerout", function (){
+				info.bgIMG.visible = false;
+				info.dmg.visible = false;
+				info.type.visible = false;
+				info.targets.visible = false;
 			})
 		});
 	}
