@@ -10,7 +10,7 @@ class EnviromentManager{
 
 // información de los personajes que se encuentran en el parque
 let park = {
-	info: {character: {name: "Melendi", imgID: 'people', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
+	info: {character: {name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]},

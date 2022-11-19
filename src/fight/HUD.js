@@ -343,3 +343,150 @@ export class walkingHUD {
 		});
 	}
 }
+
+export class ExploreMenu {
+	constructor(x,y,scene, imgID, pointer){
+		this.x = x; // posición
+        this.y = y;
+        this.scene = scene; // escena
+		this.imgID = imgID; // imagen
+		this.bImage = this.scene.add.image(x,y,imgID).setOrigin(0,0);
+		this.bImage.setScale(1.5);
+		this.pointer = pointer;
+		this.AddPartyMenu();
+		this.AddButtons();
+		this.backButton; // salir del menú actual
+		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
+		this.objectButton;
+	}
+
+	// devuelve un objeto con dos imágenes dadas (usado en AddPartyMenu)
+	imageInfo(char, bg, statsBG){
+		return {charIMG: bg, bImage: char, statIMG: statsBG, stats:{
+			hp: 100,
+			maxHp: 100,
+            mp: 100,
+			maxMp: 100,
+			attacks: [],
+			resistances: [],
+			acurracy: 95,
+			speed: 50
+		} };
+	}
+	
+	// usado solo para crear el menú de la party	
+	AddPartyMenu(){
+		let x = 0;
+		let y = 2;
+		this.partyImages = [];
+		let self = this;
+		allyParty.party.forEach(function(ally, index){
+			let scale = 1.5;
+			let newY = y+98 * scale *index;
+			self.partyImages[index] = self.imageInfo(self.scene.add.image(x,newY,'partyStateBG').setOrigin(0,0),
+			self.scene.add.image(x + 49*scale, newY + 49*scale, ally.imgID), self.scene.add.image(x + 100 * scale, newY, 'partyStats').setOrigin(0,0));
+			self.partyImages[index].bImage.setScale(scale);
+			self.partyImages[index].charIMG.setScale(scale*2);
+			
+			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
+			self.partyImages[index].stats.resistances = self.scene.add.text(x+ 100*scale + 50, newY + 110, res,{font: "30px Courier New"});
+			self.partyImages[index].stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
+			self.partyImages[index].stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
+			
+			self.partyImages[index].stats.mp = ally.actualMp;
+			self.partyImages[index].stats.maxMp = ally.maxMp;
+			self.partyImages[index].stats.speed = ally.speed;
+			self.partyImages[index].stats.attacks = ally.attacks;
+			
+			self.partyImages[index].charIMG.depth = 6;
+			self.partyImages[index].bImage.depth = 5;
+			self.partyImages[index].statIMG.depth = 5;
+			self.partyImages[index].stats.resistances.depth = 7;
+			self.partyImages[index].stats.maxHp.depth = 7;
+			self.partyImages[index].stats.hp.depth = 7;
+
+			self.partyImages[index].bImage.visible = false;
+			self.partyImages[index].charIMG.visible = false;
+			self.partyImages[index].statIMG.visible = false;
+			self.partyImages[index].stats.resistances.visible = false;
+			self.partyImages[index].stats.hp.visible = false;
+			self.partyImages[index].stats.maxHp.visible = false;
+		})
+	}
+
+	// usado solo para crear los botones
+	AddButtons(){
+		let buttonX = this.x+20;
+		let buttonY = this.y+60;
+		//#region MAIN MENU BUTTONS
+		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
+		this.viewPartyButton.setInteractive();
+		this.viewPartyButton.setScale(1.5);
+
+		let self = this;
+		let viewParty = false;
+		this.viewPartyButton.on("pointerup", function(){
+			viewParty = !viewParty;
+			self.ShowParty(viewParty);
+		});
+
+		this.viewPartyButton.on("pointerover", function(){
+			self.pointer.x = buttonX - self.viewPartyButton.displayWidth / 6;
+			self.pointer.y = buttonY + self.viewPartyButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		
+		this.viewPartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+		//#endregion
+
+		//#region PARTY MENU BUTTONS
+		
+		
+		//#endregion
+	}
+
+	Show(bool){ // mostrar/ocultar el menú
+		this.bImage.visible = bool;
+		this.ToggleButtons(bool); // activar o desactivar botones
+	}
+
+	ToggleButtons(bool){ // activar o desactivar botones 
+		if(!bool){
+			this.viewPartyButton.disableInteractive();
+		} 
+		else{
+			this.viewPartyButton.setInteractive();
+		}
+		this.viewPartyButton.visible = bool;
+		this.pointer.visible = false;
+	}
+
+	TogglePartyButtons(bool){ // activar/desactivar botones del submenú de selección de party
+
+	}  
+	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
+		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
+		this.partyImages.forEach(function(images){
+			images.charIMG.visible = bool;
+			images.bImage.visible = bool;
+			images.statIMG.visible = bool;
+			images.stats.resistances.visible = bool;
+			images.stats.hp.visible = bool;
+			images.stats.maxHp.visible = bool;
+		})
+	}
+
+	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party
+		// se mostrarán los personajes activmos en grande en el centro de la pantalla y debajo
+		// los personajes disponibles para intercambiar
+	}
+
+	Back(){ // ejecutado al pulsar el botón back
+		// en función del menú actual, se irá a uno anterior
+	}
+
+
+
+}

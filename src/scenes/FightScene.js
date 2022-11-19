@@ -525,7 +525,6 @@ export class FightScene extends Phaser.Scene {
 		if(this.finishedTurn)
 		{
 			this.NextTurn();
-			
 		}
 
 		if(this.choseE && !this.choseA){
