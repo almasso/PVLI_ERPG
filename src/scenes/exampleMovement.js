@@ -14,19 +14,23 @@ export default class MovementExample extends Phaser.Scene {
 	
 	// cargamos todas las imágenes
 	preload(){
-		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
+		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
+		this.load.spritesheet('manin_pop','assets/textures/Characters/manin_pop.png',{frameWidth:25, frameHeight:32});
+		this.load.spritesheet('manin_pose','assets/textures/Characters/manin_pose.png',{frameWidth:25, frameHeight:32});
+
 		// this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		// this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
 		// this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
 
 	}
-	z
+	
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/

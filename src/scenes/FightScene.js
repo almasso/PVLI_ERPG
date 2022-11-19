@@ -14,7 +14,7 @@ export class FightScene extends Phaser.Scene {
 
 	preload(){
 		// cargar personajes
-		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
 		this.load.image('melendi','assets/textures/Characters/Melendi.png')
 		//this.load.image('artista','assets/textures/Artista.png')
@@ -35,10 +35,10 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
 
-		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:13, frameHeight:20});
-		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:13, frameHeight:20});
-		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:13, frameHeight:20});
-		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:13, frameHeight:20});
+		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:19, frameHeight:26});
 
 		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
