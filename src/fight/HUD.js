@@ -576,9 +576,6 @@ export class ExploreMenu {
 		this.pointer.visible = false;
 	}
 
-	TogglePartyButtons(bool){ // activar/desactivar botones del submenú de selección de party
-
-	}  
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
 		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
 		this.partyImages.forEach(function(images){
@@ -609,7 +606,4 @@ export class ExploreMenu {
 	Back(){ // ejecutado al pulsar el botón back
 		// en función del menú actual, se irá a uno anterior
 	}
-
-
-
 }
