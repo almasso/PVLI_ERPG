@@ -547,14 +547,76 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.ChooseAttack){
 			
-			// COSAS DE RAUL
+		
+		}
+		else if(this.state === FightState.ChooseEnemy){
+		}
+		else if(this.state === FightState.ChooseAlly){
+		}
+		else if(this.state === FightState.ExecuteAttack){
+
+			if(this.turns[this.currentTurn].type) // ALIADOS
+			{
+				this.AllyAttack();
+			}
+			else
+			{
+				this.EnemyAttacks(this.turns[this.currentTurn].index);
+			}
+		}
+		else if(this.state === FightState.TimeUntilNextTurn){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
+		}
+		else{
+			this.EndCombat();
+		}
+
+
+		
+		/*  COSAS DE RAUL
+		if(this.choseE && !this.choseA){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
-				this.alliesHud[this.currentAlly].DisplayAttacks(true);
+				this.alliesHud[this.currentAlly].DisplayAttacks();
 			}
-
 			if(this.combat===true)
 			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+				{
+					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
+						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+						{ 
+						  this.EnableTargetting(this.allies);
+						  this.choseA=true;
+						  this.allaySelected=0;
+						  console.log(this.allaySelected);
+						  console.log(this.allies.length);
+					
+						}
+						else{
+						 this.EnableTargetting(this.enemies);
+						 this.choseE=true;
+						 this.enemyselected=0;
+						 console.log(this.enemyselected);
+						 console.log(this.enemies.length);						
+
+						}
+						this.alliesHud[this.currentAlly].DisplayAttacks();
+						this.ToggleButtons(false);
+						this.pointer.visible = true;
+						this.combat=false;
+						
+					} else console.log("No hay maná ;-;");
+
+					
+				}
+
 				if(this.cursor===false)
 				{
 					if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
@@ -595,160 +657,105 @@ export class FightScene extends Phaser.Scene {
 					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
 				}
 			}
-
-			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
-			{
-				if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
-					this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
-					if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
-					{ 
-						this.EnableTargetting(this.allies);
-						this.choseA=true;
-						this.allaySelected=0;
-				
-					}
-					else{
-						this.EnableTargetting(this.enemies);
-						this.choseE=true;
-						this.enemyselected=0;
-
-					}
-					this.alliesHud[this.currentAlly].DisplayAttacks(true);
-					this.ToggleButtons(false);
-					this.pointer.visible = true;
-					this.combat=false;
-					
-				} else console.log("No hay maná ;-;");
-
-				
-			}
-
-			// end COSAS DE RAUL
 			
-		
 		}
-		else if(this.state === FightState.ChooseEnemy){
-			// COSAS DE RAUL
-			if(this.choseE===true)
-			{
-				while(this.enemies[this.enemyselected].dead ){
-									
-					if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
-					else this.enemyselected=0;
-				}	
+		else if(this.choseE===true)
+		{
+			while(this.enemies[this.enemyselected].dead ){
+								
+				if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+				else this.enemyselected=0;
+			}	
+			
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
+			{					
+				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
 				
-				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
-				{					
-					this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
-					if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
-					//this.chose=false;
-					//this.pointer.visible=false;
-				}
-				if(this.cursor===false)
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
 				{
-					if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
-					{
-						if(this.enemyselected<this.enemies.length-1) 
-						{
-							this.enemyselected++;					
-						
-						}	else this.enemyselected=0;
+					for(let i=0;i<this.enemies.length;i++)
+				{
+				
+				//this.enemies[i].stop();
+				this.enemies[i].play(this.enemies[i].imageId+'_wow');
+				}
+					this.AllyAttack();
 
-						while(this.enemies[this.enemyselected].dead ){
-									
-							if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
-							else this.enemyselected=0;
-						}	
-					}
-					if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.enemyselected<this.enemies.length-1) 
 					{
-						if(this.enemyselected>0)
-						{
-							this.enemyselected--;
+						this.enemyselected++;					
 					
-						}
+					}	else this.enemyselected=0;
+
+					while(this.enemies[this.enemyselected].dead ){
+								
+						if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+						else this.enemyselected=0;
+					}	
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.enemyselected>0)
+					{
+						this.enemyselected--;
+				
+					}
+					else this.enemyselected=this.enemies.length-1;
+
+					while(this.enemies[this.enemyselected].dead){
+								
+						if(this.enemyselected>0)this.enemyselected--;
 						else this.enemyselected=this.enemies.length-1;
-
-						while(this.enemies[this.enemyselected].dead){
-									
-							if(this.enemyselected>0)this.enemyselected--;
-							else this.enemyselected=this.enemies.length-1;
-						}
 					}
 				}
-				if(this.enemyselected!=-1)
+			}
+			if(this.enemyselected!=-1)
+			{
+				
+				this.pointer.x = this.enemies[this.enemyselected].x;
+				this.pointer.y = this.enemies[this.enemyselected].y - 75;
+				this.pointer.angle = 90;
+			}
+		}
+		else if(this.choseA===true)
+		{
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+			{					
+				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
 				{
-					
-					this.pointer.x = this.enemies[this.enemyselected].x;
-					this.pointer.y = this.enemies[this.enemyselected].y - 75;
-					this.pointer.angle = 90;
+					if(this.allaySelected<this.allies.length-1) this.allaySelected++;
+					else this.allaySelected=0;
 				}
-			}
-			// end COSAS DE RAUL
-		}
-		else if(this.state === FightState.ChooseAlly){
-			// COSAS DE RAUL
-			if(this.choseA===true)
-			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
-				{					
-					this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
-					if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
-					//this.chose=false;
-					//this.pointer.visible=false;
-				}
-				if(this.cursor===false)
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
 				{
-					if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
-					{
-						if(this.allaySelected<this.allies.length-1) this.allaySelected++;
-						else this.allaySelected=0;
-					}
-					if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
-					{
-						if(this.allaySelected>0)this.allaySelected--;
-						else this.allaySelected=this.allies.length-1;
-					}
-				}
-				if(this.allaySelected!=-1 )
-				{
-					this.pointer.x = this.allies[this.allaySelected].x-75;
-					this.pointer.y = this.allies[this.allaySelected].y;
-					this.pointer.angle = 0;
-
-
+					if(this.allaySelected>0)this.allaySelected--;
+					else this.allaySelected=this.allies.length-1;
 				}
 			}
-
-			// end COSAS DE RAUL
-		}
-		else if(this.state === FightState.ExecuteAttack){
-
-			if(this.turns[this.currentTurn].type) // ALIADOS
+			if(this.allaySelected!=-1 )
 			{
-				this.AllyAttack();
-			}
-			else
-			{
-				this.EnemyAttacks(this.turns[this.currentTurn].index);
-			}
-		}
-		else if(this.state === FightState.TimeUntilNextTurn){
-			this.count += dt;
-			if(this.count > this.timeBetweenAttacks)
-			{
-				this.RequestChangeState();
-				this.count = 0;
-			}
-		}
-		else{
-			this.EndCombat();
-		}
+				this.pointer.x = this.allies[this.allaySelected].x-75;
+				this.pointer.y = this.allies[this.allaySelected].y;
+				this.pointer.angle = 0;
 
-
-		
-		
-		
+	
+			}
+		}  */
 	}
 }
 
