@@ -418,15 +418,20 @@ export class ExploreMenu {
 			images.stats.rE = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 2, newY +90, 'resE');
 			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +90, 'resF');
 			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +90, 'resT');
-			images.stats.resistances = self.scene.	add.text(x+ 100*scale + 50, newY + 115, res,{font: "30px Courier New"});
+			images.stats.resistances = self.scene.add.text(x+ 100*scale + 50, newY + 115, res,{font: "30px Courier New"});
 			//images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
 			//images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
 			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
 			images.stats.mp = new HealthBar(self.scene, x+100*scale + 50, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
-			
+
 			images.stats.speed = ally.speed;
-			images.stats.attacks = ally.attacks;
+			images.stats.attacks[0] = self.scene.add.text(x + 200 * scale + 100, newY + 20, ally.attack[0].name +" "+ ally.attack[0].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[0].type]} );
+			images.stats.attacks[1] = self.scene.add.text(x + 200 * scale + 100, newY + 50, ally.attack[1].name +" "+ ally.attack[1].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[1].type]} );
+			images.stats.attacks[2] = self.scene.add.text(x + 200 * scale + 100, newY + 80, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[2].type]} );
+			images.stats.attacks[3] = self.scene.add.text(x + 200 * scale + 100, newY + 110, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[3].type]} );
 			
+			self.SetAttackInfo(images.stats.attacks);
+
 			// cambio de depth
 			images.stats.rP.depth = 7;
 			images.stats.rR.depth = 7;
@@ -439,6 +444,10 @@ export class ExploreMenu {
 			images.stats.resistances.depth = 7;
 			//images.stats.maxHp.depth = 7;
 			images.stats.hp.depth = 7;
+			images.stats.attacks[0].depth = 7;
+			images.stats.attacks[1].depth = 7;
+			images.stats.attacks[2].depth = 7;
+			images.stats.attacks[3].depth = 7;
 
 			// invisible
 			images.stats.rP.visible = false;
@@ -452,10 +461,29 @@ export class ExploreMenu {
 			images.stats.resistances.visible = false;
 			images.stats.hp.hide(true);
 			images.stats.mp.hide(true);
-			//images.stats.maxHp.visible = false;
+			images.stats.attacks[0].visible = false;
+			images.stats.attacks[1].visible = false;
+			images.stats.attacks[2].visible = false;
+			images.stats.attacks[3].visible = false;
 
 			self.partyImages[index] = images;
 		})
+	}
+
+	SetAttackInfo(attacks){
+		this.attackInfo = [];
+		let self = this;
+		attacks.forEach(function(attack, index) {
+			attack.setInteractive();
+			self.attackInfo[index] = {
+				bgIMG: self.scene.add.image(attack.x, attack.y, 'partyStateBG').setOrigin(0,0),
+				type: self.scene.add.text(attack.x + 15, attack.y + 15, 'Tipo: ' + attack.type, {font: "12px Courier New"}).setOrigin(0,0),
+				dmg: self.scene.add.text(attack.x+15, attack.y + 30, 'Daño: ' +attack.dmg, {font: "12px Courier New"}).setOrigin(0,0)
+			}
+			attack.on("pointerover", function (){
+				// acabar con esto por fa
+			})
+		});
 	}
 
 	// usado solo para crear los botones
@@ -526,6 +554,10 @@ export class ExploreMenu {
 			images.stats.rT.visible = bool;
 			images.stats.hp.hide(!bool);
 			images.stats.mp.hide(!bool);
+			images.stats.attacks[0].visible = bool;
+			images.stats.attacks[1].visible = bool;
+			images.stats.attacks[2].visible = bool;
+			images.stats.attacks[3].visible = bool;
 		})
 	}
 
