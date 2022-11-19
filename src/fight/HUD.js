@@ -145,13 +145,9 @@ export class AllyHUD{
 		});
 		attackText.text.on('pointerup', () => {
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
-				this.scene.ToggleButtons(false); // Roi
 				this.scene.selectedAttack = attackText.srcAttack;
 				if(attackText.srcAttack.isSupport())
 				{
-					this.scene.state = this.scene.FightState.ChooseAlly; // Roi
-					this.scene.EnableTargetting(this.scene.allies);
-					
 					//···RAUL PRUEBAS···
 					this.scene.choseA=true;
 					this.scene.cursor=false;
@@ -160,8 +156,7 @@ export class AllyHUD{
 					console.log(this.scene.allies.length);
 				}
 				else {
-					this.scene.state = this.scene.FightState.ChooseEnemy; // Roi
-					this.scene.EnableTargetting(this.scene.enemies);
+					
 					//···RAUL PRUEBAS···
 					this.scene.choseE=true;
 					this.scene.cursor=false;
@@ -169,8 +164,8 @@ export class AllyHUD{
 					console.log(this.scene.enemyselected);
 					console.log(this.scene.enemies.length);
 				}
-				this.DisplayAttacks();
-				this.scene.ToggleButtons(false);
+				this.scene.RequestChangeState();
+				this.DisplayAttacks(false);
 				this.scene.pointer.visible = true;//···RAUL PRUEBAS···
 				this.scene.combat=false;//···RAUL PRUEBAS···
 				
@@ -184,13 +179,13 @@ export class AllyHUD{
 		})
 	}
 
-	DisplayAttacks(){
+	DisplayAttacks(hideObjects){
 		this.attackBlock.visible = !this.attackBlock.visible;
 		this.attackText.forEach(function (attack){
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
-		this.scene.ToggleObjectButtons(!this.attackBlock.visible);
+		if(hideObjects) this.scene.ToggleObjectButtons(!this.attackBlock.visible);
 			//···RAUL PRUEBAS···
 		if(this.scene.combat===false)
 		{
@@ -235,6 +230,7 @@ class HealthBar {
 		this.renderDiff = 0.5;
 		this.value = initialValue;
 		this.renderingValue = initialValue;
+		this.increase = 0; // 1 suma, 0 nada, -1 resta
 		this.width = width;
 		this.type = type;
 		this.maxValue = maxValue;
@@ -273,7 +269,11 @@ class HealthBar {
 			else this.bar.fillStyle(0x0000ff);
 		}
 
-		if(this.keepDrawing()) this.renderingValue -= this.renderDiff;
+		let keepDrawing = this.keepDrawing();
+		if(keepDrawing.changing) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
+			if(keepDrawing.decrease) this.renderingValue -= this.renderDiff;
+			else this.renderingValue += this.renderDiff;
+		}
 
 		let barWidth = (this.renderingValue*this.width) / this.maxValue;
 
@@ -282,7 +282,9 @@ class HealthBar {
 
 	keepDrawing()
 	{
-		return this.renderingValue > this.value;
+		if(this.renderingValue > this.value) return { changing: true, decrease: true };
+		else if (this.renderingValue < this.value) return { changing: true, decrease: false };
+		else return { changing: false, decrease: false };
 	}
 }
 
