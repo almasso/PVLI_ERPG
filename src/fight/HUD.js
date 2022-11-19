@@ -222,6 +222,13 @@ export class AllyHUD{
 	}
 }
 
+export class InventoryHUD{
+	constructor(scene, inv){
+		this.inventoryBlock = scene.add.image(this.block.x - 3*this.block.displayWidth/4, this.block.y*1.94, 'attackBlock').setOrigin(0,0);
+		this.inventory = inv;
+	}
+}
+
 // ENEMIGOS EN COMBATE
 export class EnemyHUD{
 	constructor(scene, character)

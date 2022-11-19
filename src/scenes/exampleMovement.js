@@ -4,6 +4,8 @@ import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import {walkingHUD, ExploreMenu} from '../fight/HUD.js'
 import {InputMan} from '../fight/InputManager.js'
+//import Object from '../obj/Object.js'
+import Inventory from '../obj/Inventory.js'
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -12,6 +14,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
+		this.inventory = new Inventory();
 	}
 	
 	// cargamos todas las imágenes
@@ -134,6 +137,10 @@ export default class MovementExample extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
+
+	updateInventory(inv){
+		this.inventory = inv;
+	}
 	
 	// comprobación de colisiones y apertura de menús
 	update(){
@@ -151,6 +158,7 @@ export default class MovementExample extends Phaser.Scene {
     Fight(){
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
+		this.scene.get('fightscene').LoadInventory(this.inventory);
         this.scene.sleep('movement');
     }
 }
