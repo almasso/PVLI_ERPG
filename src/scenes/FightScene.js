@@ -238,7 +238,7 @@ export class FightScene extends Phaser.Scene {
 			self.allies[index].depth = 1;
 			self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
 		})
-		this.inventoryHUD = new InventoryHUD(this, this.inventory);
+		this.inventoryHUD = new InventoryHUD(this, this.inventory, this.alliesHud[0]);
 	}
 	
     k=0;//···RAUL PRUEBAS···
