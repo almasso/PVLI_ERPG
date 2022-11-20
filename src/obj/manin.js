@@ -98,14 +98,15 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		super.preUpdate(t, dt);
 
 		
-		if(!this.dKey.isDown&&!this.aKey.isDown&&!this.sKey.isDown&&!this.wKey.isDown)
+		if(Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey))
 		{
-			//this.stop();
+			this.play('move');
 			
 		}
+		this.dKey.isDown
 		// Mientras pulsemos la tecla 'A' movemos el personaje en -X
-		if(Phaser.Input.Keyboard.JustDown(this.aKey)){
-			this.play('move');
+		if(this.aKey.isDown){
+			//this.play('move');
 			this.setFlip(true, false)
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
@@ -113,8 +114,8 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
-		if(Phaser.Input.Keyboard.JustDown(this.dKey)){
-			this.play('move');	
+		if(this.dKey.isDown){
+			//this.play('move');	
 			this.setFlip(false, false)
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
@@ -128,15 +129,15 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		
 		}
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
-		if(Phaser.Input.Keyboard.JustDown(this.sKey)){
-			this.play('move');
+		if(this.sKey.isDown){
+			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
             if(this.touchingGrass)this.stepsWalked++;
 		}
 
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
-		if(Phaser.Input.Keyboard.JustDown(this.wKey)){
-			this.play('move');
+		if(this.wKey.isDown){
+			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
             if(this.touchingGrass)this.stepsWalked++;
 		}

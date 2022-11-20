@@ -343,6 +343,19 @@ export class FightScene extends Phaser.Scene {
 		// el ataque seleccionado será aleatorio para los enemigos
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 		let selectedTarget = []; // también lo serán sus targets. esto es un array de índices
+
+		//animación de la party al ser atacada
+		for(let w=0;w<this.allies.length;w++)
+		{				
+			
+			if(!this.allies[w].dead)
+			{
+				//console.log('SI');
+				 this.allies[w].play(this.allies[w].imageId+'_wow');
+		
+			}
+		}
+
 		// se seleccionarán tantos objetivos como diga el ataque que se ha seleccionado
 		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
 			let random = this.GetRandom(this.allies.length, true); // escogemos al target
@@ -358,6 +371,7 @@ export class FightScene extends Phaser.Scene {
 		for(let j = 0; j < this.enemies[i].targets.length; j++){
 			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
 		}
+		
 		
 		// cambiamos el HUD de aliados
 		for(let h = 0; h < selectedTarget.length; h++){
@@ -540,11 +554,6 @@ export class FightScene extends Phaser.Scene {
 		if(this.finishedTurn)
 		{
 			this.NextTurn();
-			for(let i=0;i<this.allies.length;i++)
-				{				
-					//this.enemies[i].stop();
-					if(!this.allies[i].dead) this.allies[i].play(this.allies[i].imgID+'_wow');
-				}
 			
 		}
 
