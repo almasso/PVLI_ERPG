@@ -28,7 +28,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.targets = []; // objetivos
 		
 		//#region  animaciones (PRUEBAS RAÚL)
-		this.mon='artist'; // pruebas animación
+		/*this.mon='artist'; // pruebas animación
 		console.log(imageId);
 		if(imageId!='manin'){						
 				this.mon=imageId;	
@@ -78,7 +78,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		this.play(this.mon+'_idle');
 
-		//#endregion
+*/		//#endregion
 		// Estados Alterados (POR IMPLEMENTAR)
 	}
 
