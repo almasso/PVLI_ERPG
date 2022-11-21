@@ -376,11 +376,37 @@ export class ExploreMenu {
 		this.bImage.setScale(1.5);
 		this.bImage.depth = 5;
 		this.pointer = pointer;
-		this.AddPartyMenu();
-		this.AddButtons();
+		this.AddPartyMenu(); // añadir el submenú de la party
+		this.AddPartyManagementMenu()
+		this.AddButtons(); // añadir botones para los submenús
 		this.backButton; // salir del menú actual
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
 		this.objectButton;
+	}
+
+	AddPartyManagementMenu(){
+		let x = 0;
+		let y = 2;
+		this.managerImages = [];
+		let self = this;
+		allyParty.party.forEach(function(ally, index){
+			// declaración de variables
+			let images = self.managerImages[index];
+			if(index < allyParty.alliesNum){
+				let scale = 1.5;
+				let newX = x+98 * scale *index;
+				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
+						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID)};
+				images.bgIMG.depth = 7;
+				images.charIMG.depth = 8;
+				images.bgIMG.visible = false;
+				images.charIMG.visible = false;
+			}
+			else{
+
+			}
+			self.managerImages[index] = images;
+		})
 	}
 
 	// devuelve un objeto con dos imágenes dadas (usado en AddPartyMenu)
@@ -429,8 +455,6 @@ export class ExploreMenu {
 			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +90, 'resF');
 			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +90, 'resT');
 			images.stats.resistances = self.scene.add.text(x+ 100*scale + 50, newY + 115, res,{font: "30px Courier New"});
-			//images.stats.hp = self.scene.add.text(x+ 100*scale + 50,newY + 30, "HP:" + ally.actualHp,{font: "30px Courier New"});
-			//images.stats.maxHp = self.scene.add.text(x+ 100*scale + 160,newY + 30,"/"+ ally.maxHp,{font: "30px Courier New"});
 			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
 			images.stats.mp = new HealthBar(self.scene, x+100*scale + 50, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
 
@@ -538,8 +562,11 @@ export class ExploreMenu {
 		this.pointer.depth = 6;
 		let self = this;
 		let viewParty = false;
+		let manageParty = false;
 		this.viewPartyButton.on("pointerup", function(){
 			viewParty = !viewParty;
+			manageParty = false;
+			self.ManageParty(manageParty);
 			self.ShowParty(viewParty);
 		});
 
@@ -550,6 +577,24 @@ export class ExploreMenu {
 		});
 		
 		this.viewPartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+
+		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuPartyButton').setOrigin(0,0).setInteractive().setScale(1.5);
+		this.managePartyButton.depth = 6;
+		this.managePartyButton.visible = false;
+		this.managePartyButton.on("pointerup", function(){
+			manageParty = !manageParty;
+			viewParty = false;
+			self.ShowParty(viewParty);
+			self.ManageParty(manageParty);
+		});
+		this.managePartyButton.on("pointerover", function(){
+			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;
+			self.pointer.y = buttonY +60 + self.managePartyButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		this.managePartyButton.on("pointerout", function(){
 			self.pointer.visible = false;
 		});
 		//#endregion
@@ -568,11 +613,14 @@ export class ExploreMenu {
 	ToggleButtons(bool){ // activar o desactivar botones 
 		if(!bool){
 			this.viewPartyButton.disableInteractive();
+			this.managePartyButton.disableInteractive();
 		} 
 		else{
 			this.viewPartyButton.setInteractive();
+			this.managePartyButton.setInteractive();
 		}
 		this.viewPartyButton.visible = bool;
+		this.managePartyButton.visible = bool;
 		this.pointer.visible = false;
 	}
 
@@ -596,6 +644,13 @@ export class ExploreMenu {
 			images.stats.attacks[2].visible = bool;
 			images.stats.attacks[3].visible = bool;
 		})
+	}
+
+	ManageParty(bool){
+		this.managerImages.forEach(function(image){
+			image.bgIMG.visible = bool;
+			image.charIMG.visible = bool;
+		});
 	}
 
 	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party

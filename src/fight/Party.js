@@ -23,11 +23,14 @@ export class Party{
 							[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 							attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
 		this.level = 1; // comienza en nivel 1
+		this.alliesNum = this.party.length;
 	}
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
 		this.party.push(character);
+		if(this.alliesNum < 4) this.alliesNum++;
+		else this.alliesNum = 4;
 	}
 
 	// Llevamos la party al estado original (TEMPORAL)
