@@ -255,6 +255,7 @@ export class FightScene extends Phaser.Scene {
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
 		}
 		this.log.AddText(text);
+		console.log(text);
 		this.log.UpdateLog();
 	}
 
@@ -273,7 +274,7 @@ export class FightScene extends Phaser.Scene {
 	GenerateRandomEncounter(){
 		this.enemies = [];
 		let height = 360;
-		let enemiesNumber = 1;//this.GetRandom(5, false);
+		let enemiesNumber = this.GetRandom(5, false);
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true);
 			if(i === 0) {
@@ -528,7 +529,7 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	update(t,dt){
-		console.log("estado: " + this.state);
+
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
@@ -546,12 +547,169 @@ export class FightScene extends Phaser.Scene {
 			this.RequestChangeState();
 		}
 		else if(this.state === FightState.ChooseAttack){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
+			{
+				this.alliesHud[this.currentAlly].DisplayAttacks();
+			}
+
+			if(this.combat){
+				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+				{
+					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
+						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+						{ 
+							this.allaySelected=0;
+							console.log(this.allaySelected);
+							console.log(this.allies.length);
+					
+						}
+						else{
+							this.enemyselected=0;
+							console.log(this.enemyselected);
+							console.log(this.enemies.length);						
+
+						}
+						this.RequestChangeState();
+						this.alliesHud[this.currentAlly].DisplayAttacks();
+						this.pointer.visible = true;
+						
+					} else console.log("No hay maná ;-;");
+
+					
+				}
+				
+				if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+					{
+						if(this.attack<3)
+						{
+							this.attack++;
+
+							
+						} 
+						else this.attack=0;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack<3)this.attack++;
+							else this.attack=0;
+						}
+					}
+					if(Phaser.Input.Keyboard.JustDown(this.aux.wKey))
+					{
+						if(this.attack>0)
+						{
+							this.attack--;
+							
+						}
+						else this.attack=3;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack>0)this.attack--;
+							else this.attack=3;
+						}
+					}
+
+				if(this.attack!=-1)
+				{
+					
+					this.pointer.x=this.alliesHud[this.currentAlly].attackText[this.attack].text.x-15;
+					this.pointer.angle = 0;
+					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
+				}
+			}
 			
-		
 		}
 		else if(this.state === FightState.ChooseEnemy){
+			while(this.enemies[this.enemyselected].dead ){
+								
+				if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+				else this.enemyselected=0;
+			}	
+			
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
+			{					
+				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
+				
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
+				{
+					for(let i=0;i<this.enemies.length;i++)
+					{
+					
+					//this.enemies[i].stop();
+					this.enemies[i].play(this.enemies[i].imageId+'_wow');
+					}
+					this.RequestChangeState();
+				}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.enemyselected<this.enemies.length-1) 
+					{
+						this.enemyselected++;					
+					
+					}	else this.enemyselected=0;
+
+					while(this.enemies[this.enemyselected].dead ){
+								
+						if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+						else this.enemyselected=0;
+					}	
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.enemyselected>0)
+					{
+						this.enemyselected--;
+				
+					}
+					else this.enemyselected=this.enemies.length-1;
+
+					while(this.enemies[this.enemyselected].dead){
+								
+						if(this.enemyselected>0)this.enemyselected--;
+						else this.enemyselected=this.enemies.length-1;
+					}
+				}
+			}
+			if(this.enemyselected!=-1)
+			{
+				
+				this.pointer.x = this.enemies[this.enemyselected].x;
+				this.pointer.y = this.enemies[this.enemyselected].y - 75;
+				this.pointer.angle = 90;
+			}
 		}
 		else if(this.state === FightState.ChooseAlly){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+			{					
+				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState();}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.allaySelected<this.allies.length-1) this.allaySelected++;
+					else this.allaySelected=0;
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.allaySelected>0)this.allaySelected--;
+					else this.allaySelected=this.allies.length-1;
+				}
+			}
+			if(this.allaySelected!=-1 )
+			{
+				this.pointer.x = this.allies[this.allaySelected].x-75;
+				this.pointer.y = this.allies[this.allaySelected].y;
+				this.pointer.angle = 0;
+			}
 		}
 		else if(this.state === FightState.ExecuteAttack){
 

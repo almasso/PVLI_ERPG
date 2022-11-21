@@ -68,23 +68,22 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		let effective = 0;
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
 		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
-		let lastHp = this.actualHp;
+
 		// Hacer que reciba daño
-		let acurracy = 1;
-		let prueba = Math.floor(Math.random()*100 + 1);
-		if(prueba > this.acurracy) acurracy = 0;
-		console.log("HE ACERTADO: " + acurracy + "   " + prueba);
-
-		this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10 * acurracy;
-		this.actualHp = Math.floor(this.actualHp);
-		if(this.actualHp <= 0) 
+		let attackProbability = Math.floor(Math.random()*100 + 1);
+		if(attackProbability <= this.acurracy)
 		{
-			this.actualHp = 0;
-			this.Die();
-		}
-		else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
+			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
+			this.actualHp = Math.floor(this.actualHp);
+			if(this.actualHp <= 0) 
+			{
+				this.actualHp = 0;
+				this.Die();
+			}
+			else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 
-		if(lastHp === this.actualHp) effective = 2;   // Si no le ha bajado vida, el ataque falló
+		}
+		else effective = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
 		return effective;
 	}
 
