@@ -267,6 +267,7 @@ class HealthBar {
 
 	// actualizamos la barra
 	Update(newValue){
+		console.log(newValue + this.type);
 		this.updateValue(newValue); // actualizamos su valor
 		this.draw(); // dibujado
 	}
@@ -306,7 +307,7 @@ class HealthBar {
 			}
 	
 			let keepDrawing = this.keepDrawing();
-			if(keepDrawing.changing) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
+			if(keepDrawing.changing && this.renderingValue > 0) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
 				if(keepDrawing.decrease) this.renderingValue -= this.renderDiff;
 				else this.renderingValue += this.renderDiff;
 			}
@@ -365,6 +366,17 @@ export class walkingHUD {
 		allyParty.party.forEach(function(ally, index){ // recorremos toda la party
 			// console.log(ally.actualHp, ally.actualMp); // DEBUG que no entiendo por qué no actualiza a manín
 			// actualizamos las barras de vida y maná
+			console.log("COSAS:");
+			console.log(self.characters[index].health.x, self.characters[index].health.y)
+			console.log(self.characters[index].health.renderingValue);
+			console.log(self.characters[index].mana.renderingValue);
+
+			self.characters[index].health.renderingValue = ally.actualHp;
+			self.characters[index].mana.renderingValue = ally.actualMp;
+
+			console.log(self.characters[index].health.renderingValue);
+			console.log(self.characters[index].mana.renderingValue);
+
 			self.characters[index].health.Update(ally.actualHp); 
 			self.characters[index].mana.Update(ally.actualMp);
 		});

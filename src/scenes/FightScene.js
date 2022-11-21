@@ -301,7 +301,7 @@ export class FightScene extends Phaser.Scene {
 	GenerateRandomEncounter(){
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
-		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
+		let enemiesNumber = this.GetRandom(1, false); // número de enemigos
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
