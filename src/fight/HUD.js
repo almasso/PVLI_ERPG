@@ -161,27 +161,25 @@ export class AllyHUD{
 				this.scene.selectedAttack = attackText.srcAttack;
 				if(attackText.srcAttack.isSupport())
 				{
-					 this.scene.EnableTargetting(this.scene.allies);
-
-					 //···RAUL PRUEBAS···
-					 this.scene.choseA=true;
+					//···RAUL PRUEBAS···
+					this.scene.choseA=true;
 					this.scene.cursor=false;
 					this.scene.allaySelected=0;
 					console.log(this.scene.allaySelected);
 					console.log(this.scene.allies.length);
 				}
 				else {
-					this.scene.EnableTargetting(this.scene.enemies);
+					//···RAUL PRUEBAS···
 					this.scene.choseE=true;
 					this.scene.cursor=false;
 					this.scene.enemyselected=0;
 					console.log(this.scene.enemyselected);
 					console.log(this.scene.enemies.length);
 				}
-				this.DisplayAttacks();
-				this.scene.ToggleButtons(false);
-				this.scene.pointer.visible = true;
-				this.scene.combat=false;
+				this.scene.RequestChangeState();
+				this.DisplayAttacks(false);
+				this.scene.pointer.visible = true;//···RAUL PRUEBAS···
+				this.scene.combat=false;//···RAUL PRUEBAS···
 				
 			} else console.log("No hay maná ;-;");
 		})
@@ -192,14 +190,14 @@ export class AllyHUD{
 	}
 
 	// mostrar ataques
-	DisplayAttacks(){
+	DisplayAttacks(hideObjects){
 		this.attackBlock.visible = !this.attackBlock.visible; // este método sirve para mostrar y esconder ataques
 		this.attackText.forEach(function (attack){
 			attack.text.visible = !attack.text.visible;
 			attack.mp.visible = !attack.mp.visible;
 		});
-		this.scene.ToggleObjectButtons(!this.attackBlock.visible); // desactivamos / activamos botones
-
+		if(hideObjects) this.scene.ToggleObjectButtons(!this.attackBlock.visible); // desactivamos / activamos botones
+			//···RAUL PRUEBAS···
 		// updateamos cosas para el uso del ratón en combate
 		if(!this.scene.combat)
 		{
@@ -248,6 +246,9 @@ class HealthBar {
 		this.x = x;
 		this.y = y;
 		this.value = initialValue; // valor incial
+		this.renderDiff = 0.5;
+		this.renderingValue = initialValue;
+		this.increase = 0; // 1 suma, 0 nada, -1 resta
 		this.width = width; // ancho
 		this.type = type; // tipo: VIDA / MANÁ
 		this.maxValue = maxValue; // valor máximo
@@ -272,7 +273,7 @@ class HealthBar {
 
 	// actualización de valor (método "interno")
 	updateValue(newValue){
-		this.value = newValue;
+		this.value = Math.floor(newValue);
 	}
 
 	// ocultar barra
@@ -304,12 +305,26 @@ class HealthBar {
 				else this.bar.fillStyle(0x0000ff);
 			}
 	
-			let barWidth = (this.value*this.width) / this.maxValue; // ancho
+			let keepDrawing = this.keepDrawing();
+			if(keepDrawing.changing) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
+				if(keepDrawing.decrease) this.renderingValue -= this.renderDiff;
+				else this.renderingValue += this.renderDiff;
+			}
+
+			let barWidth = (this.renderingValue*this.width) / this.maxValue; // ancho
 	
 			this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
 		}
 	}
+
+	keepDrawing()
+	{
+		if(this.renderingValue > this.value) return { changing: true, decrease: true };
+		else if (this.renderingValue < this.value) return { changing: true, decrease: false };
+		else return { changing: false, decrease: false };
+	}
 }
+
 var colors = ['#cccccc','#aaaaaa','#ff0000','#00ffff','#ff00ff','#00ff00'];
 
 // MODO EXPLORACIÓN 

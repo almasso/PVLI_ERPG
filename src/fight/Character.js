@@ -133,15 +133,13 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		// ROI AYUDA
 		if(this.resistances[attack.GetType()] <= 3) effective = -1;
 		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
-		
-		let acurracy = 1;
-		let hit = Math.floor(Math.random()*100 + 1);
-		if(hit > this.acurracy) acurracy = 0;
-		console.log("HE ACERTADO: " + acurracy + "   " + prueba);
 
-		if(acurracy !== 0){
+		// Hacer que reciba daño
+		let attackProbability = Math.floor(Math.random()*100 + 1);
+		if(attackProbability <= this.acurracy)
+		{
 			// Bajamos vida en función de la resistencia y tipo del ataque
-			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10 * acurracy;
+			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
 			this.actualHp = Math.floor(this.actualHp);
 			if(this.actualHp <= 0) 
 			{
@@ -149,12 +147,10 @@ export default class Character extends Phaser.GameObjects.Sprite {
 				this.Die(); // morir si estamos a 0 o menor vida
 			}
 			else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
-	
-		}
-		else effective = 2;   // Si no le ha bajado vida, el ataque falló
 
-		// devuelve la efectividad de un ataque 
-		return effective;
+		}
+		else effective = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
+		return effective; // devuelve la efectividad de un ataque 
 	}
 
 	// morir

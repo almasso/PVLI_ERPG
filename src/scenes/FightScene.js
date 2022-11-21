@@ -4,12 +4,26 @@ import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
 import {Log, AllyHUD, EnemyHUD} from '../fight/HUD.js'
 
+
+const FightState = {
+	SelectTurn: 0,
+	ChooseAttack: 1,
+	EnemyChooseAttack: 2,
+	ChooseEnemy: 3,
+	ChooseAlly: 4,
+	ExecuteAttack: 5,
+	TimeUntilNextTurn: 6,
+	Finish: 7
+};
+
 export class FightScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'fightscene'});
 		this.bg;
 		this.enemiesInfo = EnemiesInfo; // información de enemigos que conseguimos del script EnviromentInfo
 		this.selectedAttack; // ataque seleccionado actualmente con el puntero
+		this.timeBetweenAttacks = 2000;
+		this.state = FightState.SelectTurn;
 	}
 
 	preload(){
@@ -83,7 +97,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.attackButtonHover.on('pointerup',()=>{
 			// mostramos los ataques del aliado seleccionado
-			this.alliesHud[this.currentAlly].DisplayAttacks();
+			this.alliesHud[this.currentAlly].DisplayAttacks(true);
 		})
 		
 		this.attackButtonHover.on('pointerout', () => {
@@ -148,7 +162,6 @@ export class FightScene extends Phaser.Scene {
 
 	// Desactivar botones de ataque y de objeto (esta función solo agrupa otras 2)
 	ToggleButtons(bool){
-
 		this.ToggleAttackButtons(bool);
 		this.ToggleObjectButtons(bool);
 	}
@@ -201,6 +214,7 @@ export class FightScene extends Phaser.Scene {
 			this.scene.launch('final');
 			this.scene.stop('movement');
 		}
+		this.state = FightState.SelectTurn;
 		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
 	}
 
@@ -252,7 +266,7 @@ export class FightScene extends Phaser.Scene {
 		ally.on("pointerup",() => {
 			// hacemos el ataque de support sobre el aliado ojetivo
 			this.allies[this.currentAlly].targets.push(ally);
-			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState()}
 		})
 	}
 
@@ -350,7 +364,8 @@ export class FightScene extends Phaser.Scene {
 
 		// vaciamos sus targets
 		this.enemies[i].targets = [];
-		this.finishedTurn = true; // su turno acaba
+
+		this.RequestChangeState();  // Su turno acaba.
 	}
 
 	// generamos los turnos en función de la velocidad de los aliados y enemigos
@@ -382,15 +397,18 @@ export class FightScene extends Phaser.Scene {
 
 	// pasamos al siguiente turno
 	NextTurn(){
-		this.finishedTurn = false; // el turno actual no ha acabado
-		// checkeamos si el combate ha terminado
-		if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ this.EndCombat();}
-		else if(!this.turns[this.currentTurn].char.dead) // si no ha terminado y no está muerto el personaje actual...
+		this.currentTurn = (this.currentTurn + 1) % this.turns.length;
+
+		if(!this.turns[this.currentTurn].char.dead) // si no ha terminado y no está muerto el personaje actual...
 		{
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
+				this.ToggleButtons(true);
+				this.state = FightState.ChooseAttack;
 				// cambiamos el aliado actual
 				this.currentAlly = this.turns[this.currentTurn].index;
+
+				//···RAUL PRUEBAS···
 				// Input teclado
 				this.choseA=false;
 				this.choseE=false;
@@ -398,19 +416,12 @@ export class FightScene extends Phaser.Scene {
 			}
 			else    // ENEMIGOS
 			{   
-				// el enemigo ataca
-				this.EnemyAttacks(this.turns[this.currentTurn].index);
-				this.currentTurn = (this.currentTurn + 1) % this.turns.length;
+				this.state = FightState.ExecuteAttack;
 			}
-		}
-		else // si el personaje está muerto, pasamos al siguiente turno
-		{
-			this.finishedTurn = true;
-			this.currentTurn = (this.currentTurn + 1) % this.turns.length;
 		}
 	}
 
-	// Ataque de aliado
+
 	AllyAttack(){
 		// se realiza el ataque y se recibe el texto de log
 		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack); 
@@ -432,13 +443,9 @@ export class FightScene extends Phaser.Scene {
 		})
 		// vaciamos los targets (creo que debería ser en una función propia del character)
 		this.allies[this.currentAlly].targets = [];
-		if(this.selectedAttack.isSupport())this.DisableTargetting(this.allies); // desactivamos target aliado si supporteamos
-		this.DisableTargetting(this.enemies); // desactivamos targetting de enemigos
-		this.ToggleButtons(true); // activamos botones de ataque y objeto
 		this.alliesHud[this.currentAlly].Update(); // actualizamos el HUD de aliado
-		// avanzamos un turno
-		this.currentTurn = (this.currentTurn + 1) % this.turns.length;
-		this.finishedTurn = true;
+		
+		this.RequestChangeState();
 	}
 
 	// Hacemos que los enemigos puedan escuchar eventos de ratón
@@ -468,7 +475,7 @@ export class FightScene extends Phaser.Scene {
 			// realizamos el ataque sobre el enemigos seleccionado
 			this.allies[this.currentAlly].targets.push(enemy); // añadimos el target
 			// si el ataque tiene más de un objetivo, se tendrá que selecccionar a otro objetivo
-			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
+			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState();}
 		})
 	}
 
@@ -478,6 +485,8 @@ export class FightScene extends Phaser.Scene {
 		// INPUT
 		this.aux = new InputMan(this);
 		
+		this.count = 0
+
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
 
@@ -490,8 +499,7 @@ export class FightScene extends Phaser.Scene {
 
 		// Creación de gestión de Turnos
 		this.turns = []; // creamos un array para ordenar a aliados y enemigos por velocidad 
-		this.finishedTurn = false; 
-		this.currentTurn = 0; // turno actual
+		this.currentTurn = -1; // turno actual
 		this.CreateTurns(); // creamos los turnos
 
 		this.log = new Log(this); // añadimos el Log a la escena
@@ -503,8 +511,10 @@ export class FightScene extends Phaser.Scene {
 		this.pointer.depth = 2;
 
 		this.CreateButtons(); // creamos los botones
-		this.NextTurn(); // avanzamos el turno
+		this.ToggleButtons(false); // se deshabilitan los botones
 	}
+
+	
 
 	//···RAUL PRUEBAS···
 	attack=-1;
@@ -515,13 +525,251 @@ export class FightScene extends Phaser.Scene {
 	choseA=false;
 	//···RAUL PRUEBAS···
 
-	// INPUT DE TECLADO POR FA RAÚL COMENTA ESTO
+
+	RequestChangeState(){
+		if(this.state === FightState.SelectTurn){ // Roi
+			if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ console.log("aaa"); this.state = FightState.Finish;}
+			else this.NextTurn();
+		}
+		else if(this.state === FightState.ChooseAttack){
+			this.ToggleButtons(false);
+			if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+			{
+				this.state = FightState.ChooseAlly;			
+				this.EnableTargetting(this.allies);
+			}
+			else {
+				this.state = FightState.ChooseEnemy;
+				this.EnableTargetting(this.enemies);
+			}
+		}
+		else if(this.state === FightState.ChooseEnemy){
+			this.state = FightState.ExecuteAttack
+			this.DisableTargetting(this.enemies);
+		}
+		else if(this.state === FightState.ChooseAlly){
+			this.state = FightState.ExecuteAttack;
+			this.DisableTargetting(this.allies);
+		}
+		else if(this.state === FightState.ExecuteAttack){
+			this.state = FightState.TimeUntilNextTurn;
+		}
+		else if(this.state === FightState.TimeUntilNextTurn){
+			this.state = FightState.SelectTurn;
+		}
+	}
+
 	update(t,dt){
-		if(this.finishedTurn)
-		{
-			this.NextTurn();
+
+	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
+			this.scene.wake('movement');
+			this.scene.sleep('fightscene');
+		}*/
+		this.alliesHud.forEach(function (hud){ // Roi
+			if(hud.HealthBar.keepDrawing().changing) hud.HealthBar.draw();
+			if(hud.ManaBar.keepDrawing().changing) hud.ManaBar.draw();
+		})
+
+		this.enemiesHud.forEach(function (hud){
+			if(hud.healthBar.keepDrawing().changing) hud.healthBar.draw();
+		})
+
+
+		// INPUT DE TECLADO POR FA RAÚL COMENTA ESTO
+		if(this.state === FightState.SelectTurn){ // Roi
+			this.RequestChangeState();
+		}
+		else if(this.state === FightState.ChooseAttack){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
+			{
+				this.alliesHud[this.currentAlly].DisplayAttacks();
+			}
+
+			if(this.combat){
+				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+				{
+					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
+						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+						{ 
+							this.allaySelected=0;
+							console.log(this.allaySelected);
+							console.log(this.allies.length);
+					
+						}
+						else{
+							this.enemyselected=0;
+							console.log(this.enemyselected);
+							console.log(this.enemies.length);						
+
+						}
+						this.RequestChangeState();
+						this.alliesHud[this.currentAlly].DisplayAttacks();
+						this.pointer.visible = true;
+						
+					} else console.log("No hay maná ;-;");
+
+					
+				}
+				
+				if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
+					{
+						if(this.attack<3)
+						{
+							this.attack++;
+
+							
+						} 
+						else this.attack=0;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack<3)this.attack++;
+							else this.attack=0;
+						}
+					}
+					if(Phaser.Input.Keyboard.JustDown(this.aux.wKey))
+					{
+						if(this.attack>0)
+						{
+							this.attack--;
+							
+						}
+						else this.attack=3;
+						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
+								
+							if(this.attack>0)this.attack--;
+							else this.attack=3;
+						}
+					}
+
+				if(this.attack!=-1)
+				{
+					
+					this.pointer.x=this.alliesHud[this.currentAlly].attackText[this.attack].text.x-15;
+					this.pointer.angle = 0;
+					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
+				}
+			}
+			
+		}
+		else if(this.state === FightState.ChooseEnemy){
+			while(this.enemies[this.enemyselected].dead ){
+								
+				if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+				else this.enemyselected=0;
+			}	
+			
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
+			{					
+				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
+				
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
+				{
+					for(let i=0;i<this.enemies.length;i++)
+					{
+					
+					//this.enemies[i].stop();
+					this.enemies[i].play(this.enemies[i].imageId+'_wow');
+					}
+					this.RequestChangeState();
+				}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.enemyselected<this.enemies.length-1) 
+					{
+						this.enemyselected++;					
+					
+					}	else this.enemyselected=0;
+
+					while(this.enemies[this.enemyselected].dead ){
+								
+						if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
+						else this.enemyselected=0;
+					}	
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.enemyselected>0)
+					{
+						this.enemyselected--;
+				
+					}
+					else this.enemyselected=this.enemies.length-1;
+
+					while(this.enemies[this.enemyselected].dead){
+								
+						if(this.enemyselected>0)this.enemyselected--;
+						else this.enemyselected=this.enemies.length-1;
+					}
+				}
+			}
+			if(this.enemyselected!=-1)
+			{
+				
+				this.pointer.x = this.enemies[this.enemyselected].x;
+				this.pointer.y = this.enemies[this.enemyselected].y - 75;
+				this.pointer.angle = 90;
+			}
+		}
+		else if(this.state === FightState.ChooseAlly){
+			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
+			{					
+				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
+				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState();}
+				//this.chose=false;
+				//this.pointer.visible=false;
+			}
+			if(this.cursor===false)
+			{
+				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
+				{
+					if(this.allaySelected<this.allies.length-1) this.allaySelected++;
+					else this.allaySelected=0;
+				}
+				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
+				{
+					if(this.allaySelected>0)this.allaySelected--;
+					else this.allaySelected=this.allies.length-1;
+				}
+			}
+			if(this.allaySelected!=-1 )
+			{
+				this.pointer.x = this.allies[this.allaySelected].x-75;
+				this.pointer.y = this.allies[this.allaySelected].y;
+				this.pointer.angle = 0;
+			}
+		}
+		else if(this.state === FightState.ExecuteAttack){
+
+			if(this.turns[this.currentTurn].type) // ALIADOS
+			{
+				this.AllyAttack();
+			}
+			else
+			{
+				this.EnemyAttacks(this.turns[this.currentTurn].index);
+			}
+		}
+		else if(this.state === FightState.TimeUntilNextTurn){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
+		}
+		else{
+			this.EndCombat();
 		}
 
+
+		
+		/*  COSAS DE RAUL
 		if(this.choseE && !this.choseA){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
 			{
@@ -698,6 +946,6 @@ export class FightScene extends Phaser.Scene {
 
 	
 			}
-		}
+		}  */
 	}
 }
