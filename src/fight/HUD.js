@@ -412,6 +412,7 @@ export class ExploreMenu {
 		this.backButton; // salir del menú actual
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
 		this.objectButton;
+		this.alliesToSwap = [];
 	}
 
 	AddPartyManagementMenu(){
@@ -426,7 +427,8 @@ export class ExploreMenu {
 				let scale = 1.5;
 				let newX = x+98 * scale *index;
 				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
-						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID)};
+						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
+						  index: index};
 				images.bgIMG.depth = 7;
 				images.charIMG.depth = 8;
 				images.bgIMG.visible = false;
@@ -439,6 +441,95 @@ export class ExploreMenu {
 		})
 	}
 
+	SwapAllies(images, index){
+		this.alliesToSwap.push(images[index]); // acordarse de borrar el array cuando quites el menú
+		if(this.alliesToSwap.length == 2){
+			[this.alliesToSwap[0].charIMG,this.alliesToSwap[1].charIMG] = 
+			[this.alliesToSwap[1].charIMG,this.alliesToSwap[0].charIMG];
+
+			[this.alliesToSwap[0].charIMG.x,this.alliesToSwap[1].charIMG.x] =
+			[this.alliesToSwap[1].charIMG.x,this.alliesToSwap[0].charIMG.x];
+
+			[this.alliesToSwap[0].index ,this.alliesToSwap[1].index] =
+			[this.alliesToSwap[1].index,this.alliesToSwap[0].index];
+
+			this.alliesToSwap = [];
+		} 
+	}
+
+	// usado solo para crear los botones
+	AddButtons(){
+		let buttonX = this.x+20;
+		let buttonY = this.y+60;
+		//#region MAIN MENU BUTTONS
+		// PARTY STATE BUTTONS
+		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
+		this.viewPartyButton.setInteractive();
+		this.viewPartyButton.setScale(1.5);
+		this.viewPartyButton.depth = 6;
+		this.pointer.depth = 6;
+		let self = this;
+		let viewParty = false;
+		let manageParty = false;
+		this.viewPartyButton.on("pointerup", function(){
+			viewParty = !viewParty;
+			manageParty = false;
+			self.ManageParty(manageParty);
+			self.ShowParty(viewParty);
+		});
+
+		this.viewPartyButton.on("pointerover", function(){
+			self.pointer.x = buttonX - self.viewPartyButton.displayWidth / 6;
+			self.pointer.y = buttonY + self.viewPartyButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		
+		this.viewPartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+
+		// PARTY MANAGER BUTTON
+		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuPartyButton').setOrigin(0,0).setInteractive().setScale(1.5);
+		this.managePartyButton.depth = 6;
+		this.managePartyButton.visible = false;
+		this.managePartyButton.on("pointerup", function(){
+			manageParty = !manageParty;
+			viewParty = false;
+			self.ShowParty(viewParty);
+			self.ManageParty(manageParty);
+		});
+		this.managePartyButton.on("pointerover", function(){
+			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;
+			self.pointer.y = buttonY +60 + self.managePartyButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		this.managePartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+		//#endregion
+
+		//#region PARTY MENU BUTTONS
+		
+		//#endregion
+		//#region MANAGE PARTY MENU BUTTONS
+		this.managerImages.forEach(function(image, index){
+			image.bgIMG.setInteractive();
+
+			image.bgIMG.on("pointerover", function(){
+				console.log("HOVER ON PARTY BUTTON")
+			})
+
+			image.bgIMG.on("pointerout", function(){
+				console.log("NOT HOVER")
+			})
+			
+			image.bgIMG.on("pointerup", function(){
+				self.SwapAllies(self.managerImages, index);
+			})
+		});
+
+		//#endregion
+	}
 	// devuelve un objeto con dos imágenes dadas (usado en AddPartyMenu)
 	imageInfo(char, bg, statsBG){
 		return {charIMG: bg, bImage: char, statIMG: statsBG, stats:{
@@ -580,61 +671,6 @@ export class ExploreMenu {
 		});
 	}
 
-	// usado solo para crear los botones
-	AddButtons(){
-		let buttonX = this.x+20;
-		let buttonY = this.y+60;
-		//#region MAIN MENU BUTTONS
-		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
-		this.viewPartyButton.setInteractive();
-		this.viewPartyButton.setScale(1.5);
-		this.viewPartyButton.depth = 6;
-		this.pointer.depth = 6;
-		let self = this;
-		let viewParty = false;
-		let manageParty = false;
-		this.viewPartyButton.on("pointerup", function(){
-			viewParty = !viewParty;
-			manageParty = false;
-			self.ManageParty(manageParty);
-			self.ShowParty(viewParty);
-		});
-
-		this.viewPartyButton.on("pointerover", function(){
-			self.pointer.x = buttonX - self.viewPartyButton.displayWidth / 6;
-			self.pointer.y = buttonY + self.viewPartyButton.displayHeight / 3;
-			self.pointer.visible = true;
-		});
-		
-		this.viewPartyButton.on("pointerout", function(){
-			self.pointer.visible = false;
-		});
-
-		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuPartyButton').setOrigin(0,0).setInteractive().setScale(1.5);
-		this.managePartyButton.depth = 6;
-		this.managePartyButton.visible = false;
-		this.managePartyButton.on("pointerup", function(){
-			manageParty = !manageParty;
-			viewParty = false;
-			self.ShowParty(viewParty);
-			self.ManageParty(manageParty);
-		});
-		this.managePartyButton.on("pointerover", function(){
-			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;
-			self.pointer.y = buttonY +60 + self.managePartyButton.displayHeight / 3;
-			self.pointer.visible = true;
-		});
-		this.managePartyButton.on("pointerout", function(){
-			self.pointer.visible = false;
-		});
-		//#endregion
-
-		//#region PARTY MENU BUTTONS
-		
-		
-		//#endregion
-	}
-
 	Show(bool){ // mostrar/ocultar el menú
 		this.bImage.visible = bool;
 		this.ToggleButtons(bool); // activar o desactivar botones
@@ -681,6 +717,9 @@ export class ExploreMenu {
 			image.bgIMG.visible = bool;
 			image.charIMG.visible = bool;
 		});
+		if(!bool){
+			allyParty.swapAllies(this.managerImages);
+		}
 	}
 
 	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party

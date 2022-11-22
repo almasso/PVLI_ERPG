@@ -84,7 +84,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			this.interact();
 		}
 
-        console.log(this.stepsWalked);
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;

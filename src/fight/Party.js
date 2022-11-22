@@ -22,8 +22,27 @@ export class Party{
 							,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
 							[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 							attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
+		this.party[0].index = 0;
+		this.party[1].index = 1;
+		this.party[2].index = 2;
+		this.party[3].index = 3;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
+	}
+
+	swapAllies(newOrder){
+		let self = this
+		this.party.forEach(function(ally, index) {
+			console.log(newOrder[index].index, ally.index);
+			if(newOrder[index].index != ally.index){
+				[ally, self.party[newOrder[index].index]] = 
+				[self.party[newOrder[index].index], ally]; // esto no acaba de cambiar y no comprendo
+			}
+		});
+
+		this.party.forEach(function(ally, index) {
+			ally.index = index;
+		});
 	}
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
@@ -49,7 +68,7 @@ export class Party{
 
 // función que devuvelve un objeto con información de un personaje
 function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
-	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack}
+	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0}
 }
 
 // exportamos una variable de tipo party que será la instancia que queremos
