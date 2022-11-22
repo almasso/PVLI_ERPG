@@ -337,15 +337,18 @@ export class walkingHUD {
 		this.imgID = img; // id imagen
 		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
 		bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
-		this.charInfo = {image:"",health:"", mana: ""};	// objeto de información del HUD
 		this.characters = []; // array de objetos de información
 		this.GenerateImages(); // generamos las imágenes de cada bichito
+	}
+
+	charInfo(){
+		return {image: "", health: "", mana: ""};	// objeto de información del HUD
 	}
 
 	GenerateImages(){
 		let self = this; // guardamos referencia al this
 		allyParty.party.forEach(function(ally, index){ // recorremos toda la party
-			self.characters[index] = self.charInfo; // metemos un nuevo objeto de info al array de info
+			self.characters[index] = self.charInfo(); // metemos un nuevo objeto de info al array de info
 			let offset = 28; // offset que cuadra bien 
 			let x = self.x+ offset + index * 50; // x para las imágenes
 			let barX = x - offset/2; // x para las barras
