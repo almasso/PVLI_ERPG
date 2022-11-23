@@ -450,11 +450,11 @@ export class ExploreMenu {
 			[this.alliesToSwap[0].charIMG.x,this.alliesToSwap[1].charIMG.x] =
 			[this.alliesToSwap[1].charIMG.x,this.alliesToSwap[0].charIMG.x];
 
-			[this.alliesToSwap[0].index ,this.alliesToSwap[1].index] =
-			[this.alliesToSwap[1].index,this.alliesToSwap[0].index];
+			[this.alliesToSwap[0].index, this.alliesToSwap[1].index] =
+			[this.alliesToSwap[1].index, this.alliesToSwap[0].index];
 
 			this.alliesToSwap = [];
-		} 
+		}
 	}
 
 	// usado solo para crear los botones
@@ -489,7 +489,7 @@ export class ExploreMenu {
 		});
 
 		// PARTY MANAGER BUTTON
-		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuPartyButton').setOrigin(0,0).setInteractive().setScale(1.5);
+		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(1.5);
 		this.managePartyButton.depth = 6;
 		this.managePartyButton.visible = false;
 		this.managePartyButton.on("pointerup", function(){

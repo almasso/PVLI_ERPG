@@ -14,7 +14,7 @@ export class Party{
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
 						[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 						attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
 						  [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 						  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
@@ -35,8 +35,13 @@ export class Party{
 		this.party.forEach(function(ally, index) {
 			console.log(newOrder[index].index, ally.index);
 			if(newOrder[index].index != ally.index){
-				[ally, self.party[newOrder[index].index]] = 
-				[self.party[newOrder[index].index], ally]; // esto no acaba de cambiar y no comprendo
+				let num = 0;
+				while(index != newOrder[num].index)
+				{
+					num++;
+				}
+				[self.party[index], self.party[num]] = 
+				[self.party[num], self.party[index]]; // esto no acaba de cambiar y no comprendo
 			}
 		});
 
