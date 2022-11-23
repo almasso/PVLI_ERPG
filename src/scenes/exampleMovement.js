@@ -118,10 +118,10 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	// actualizamos el HUD de estado de party
-	// UpdateHUD(){
-	// 	this.walkingHUD.Update();
+	UpdateHUD(){
+	 	this.walkingHUD.Update();
 
-	// }
+	}
 	
 	// generación de la hierba hostil (TEMPORAL)
 	GenerateHostileGround(){

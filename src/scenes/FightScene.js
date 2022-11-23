@@ -221,6 +221,8 @@ export class FightScene extends Phaser.Scene {
 		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
 			this.scene.wake('movement');
+			let movement = this.scene.get('movement');
+			movement.UpdateHUD();
 		}
 		else // Si se han matado a todos los enemigos...
 		{
