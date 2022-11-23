@@ -139,7 +139,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Damage(attack)
 	{
 		// animación
-		this.play(this.mon+'_daño');
+		let currentHP=this.actualHp;
 
 		let effective = 0;
 		// ROI AYUDA
@@ -150,6 +150,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		let attackProbability = Math.floor(Math.random()*100 + 1);
 		if(attackProbability <= this.acurracy)
 		{
+			
 			// Bajamos vida en función de la resistencia y tipo del ataque
 			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
 			this.actualHp = Math.floor(this.actualHp);
@@ -162,6 +163,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		}
 		else effective = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
+		if(this.actualHp<currentHP && this.actualHp>0)this.play(this.mon+'_daño');
 		return effective; // devuelve la efectividad de un ataque 
 	}
 

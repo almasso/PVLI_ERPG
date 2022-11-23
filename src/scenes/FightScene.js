@@ -454,9 +454,21 @@ export class FightScene extends Phaser.Scene {
 
 
 	AllyAttack(){
-		// se realiza el ataque y se recibe el texto de log
-		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack); 
+
+		
 		let self = this;
+		if(!self.selectedAttack.isSupport())
+		{
+			for(let i=0;i<this.enemies.length;i++)
+			{			
+				//this.enemies[i].stop();
+				if(!this.enemies[i].dead)this.enemies[i].play(this.enemies[i].imageId+'_wow');
+			}
+		}
+		// se realiza el ataque y se recibe el texto de log
+		let effective = this.allies[this.currentAlly].Attack(this.selectedAttack);
+		//let self = this;
+		
 		// 
 		this.allies[this.currentAlly].targets.forEach(function (enemy, index) {
 			let i = 0;
@@ -472,6 +484,7 @@ export class FightScene extends Phaser.Scene {
 			// construimos el log
 			self.BuildLog(self.allies[self.currentAlly].name,self.selectedAttack, effective, enemy, index)
 		})
+
 		// vaciamos los targets (creo que debería ser en una función propia del character)
 		this.allies[this.currentAlly].targets = [];
 		this.alliesHud[this.currentAlly].Update(); // actualizamos el HUD de aliado
@@ -698,12 +711,6 @@ export class FightScene extends Phaser.Scene {
 				
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
 				{
-					for(let i=0;i<this.enemies.length;i++)
-					{
-					
-					//this.enemies[i].stop();
-					this.enemies[i].play(this.enemies[i].imageId+'_wow');
-					}
 					this.RequestChangeState();
 				}
 				//this.chose=false;
