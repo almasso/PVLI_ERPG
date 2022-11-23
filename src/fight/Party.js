@@ -33,7 +33,9 @@ export class Party{
 		else this.alliesNum = 4;
 	}
 
+
 	// Llevamos la party al estado original (TEMPORAL)
+
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,

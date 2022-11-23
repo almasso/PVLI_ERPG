@@ -16,7 +16,7 @@ export default class MovementExample extends Phaser.Scene {
 	
 	// cargamos todas las imágenes
 	preload(){
-		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
@@ -37,7 +37,15 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('resE', 'assets/textures/HUD/explore/resE.png')
 		this.load.image('resF', 'assets/textures/HUD/explore/resF.png')
 		this.load.image('resT', 'assets/textures/HUD/explore/resT.png')
+
+		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
+		this.load.spritesheet('manin_pop','assets/textures/Characters/manin_pop.png',{frameWidth:25, frameHeight:32});
+		this.load.spritesheet('manin_pose','assets/textures/Characters/manin_pose.png',{frameWidth:25, frameHeight:32});
 	}
+	
+	/**
+	* Creación de los elementos de la escena principal de juego
+	*/
 
 	// inicializamos la escena
 	create() {
@@ -93,6 +101,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bRight);
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
+
 		//#endregion
 		
 		// generamos HUD de estado de party
@@ -109,9 +118,10 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	// actualizamos el HUD de estado de party
-	UpdateHUD(){
-		this.walkingHUD.Update();
-	}
+	// UpdateHUD(){
+	// 	this.walkingHUD.Update();
+
+	// }
 	
 	// generación de la hierba hostil (TEMPORAL)
 	GenerateHostileGround(){
