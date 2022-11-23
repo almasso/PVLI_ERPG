@@ -420,24 +420,26 @@ export class ExploreMenu {
 		let y = 2;
 		this.managerImages = [];
 		let self = this;
+		let row = 1;
 		allyParty.party.forEach(function(ally, index){
 			// declaración de variables
 			let images = self.managerImages[index];
-			if(index < allyParty.alliesNum){
-				let scale = 1.5;
-				let newX = x+98 * scale *index;
-				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
-						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
-						  index: index};				
-				images.bgIMG.depth = 7;
-				images.charIMG.depth = 8;
-				images.bgIMG.visible = false;
-				images.charIMG.visible = false;
+			let scale = 1.5;
+			let newX = x+98 * scale * (index%allyParty.alliesNum);
+			if(index === allyParty.alliesNum * row){
+				row++;
+				newX = 0;
+				y += 98*scale*(row-1);
 			}
-			else{
+			images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
+			charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
+			index: index};				
+			images.bgIMG.depth = 7;
+			images.charIMG.depth = 8;
+			images.bgIMG.visible = false;
+			images.charIMG.visible = false;
 
-			}
-			self.managerImages[index] = images;
+			self.managerImages[index]=images ;
 		})
 	}
 	SwapAllies(images, index){
@@ -449,6 +451,9 @@ export class ExploreMenu {
 
 			[this.alliesToSwap[0].charIMG.x,this.alliesToSwap[1].charIMG.x] =
 			[this.alliesToSwap[1].charIMG.x,this.alliesToSwap[0].charIMG.x];
+
+			[this.alliesToSwap[0].charIMG.y,this.alliesToSwap[1].charIMG.y] =
+			[this.alliesToSwap[1].charIMG.y,this.alliesToSwap[0].charIMG.y];
 
 			[this.alliesToSwap[0].index, this.alliesToSwap[1].index] =
 			[this.alliesToSwap[1].index, this.alliesToSwap[0].index];
@@ -512,7 +517,6 @@ export class ExploreMenu {
 		
 		//#endregion
 		//#region MANAGE PARTY MENU BUTTONS
-		console.log("NAJS D");
 		this.managerImages.forEach(function(image, index){
 			image.bgIMG.setInteractive();
 
@@ -622,9 +626,31 @@ export class ExploreMenu {
 			images.stats.attacks[1].visible = false;
 			images.stats.attacks[2].visible = false;
 			images.stats.attacks[3].visible = false;
-
 			self.partyImages[index] = images;
 		})
+	}
+
+	// actualizar el partyMenu.
+	UpdatePartyMenu(){
+		let self = this;
+		this.partyImages.forEach(function(image, index) {
+			if(image.index != self.managerImages[index].index){
+				let num = 0;
+				console.log("NAOSHIDVBYPAHUSOIJDPÖK");
+				while(index != self.managerImages[num].index)
+				{
+					num++;
+				}
+
+				[self.partyImages[index], self.partyImages[num]] = 
+				[self.partyImages[num], self.partyImages[index]]; // esto no acaba de cambiar y no comprendo
+				
+				[self.partyImages[index].stats.resistances.y, self.partyImages[num].stats.resistances.y] = 
+				[self.partyImages[num].stats.resistances.y, self.partyImages[index].stats.resistances.y]; // esto no acaba de cambiar y no comprendo
+			}
+
+		});
+
 	}
 
 	// Crear la información de los ataques
@@ -694,23 +720,25 @@ export class ExploreMenu {
 
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
 		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
-		this.partyImages.forEach(function(images){
-			images.charIMG.visible = bool;
-			images.bImage.visible = bool;
-			images.statIMG.visible = bool;
-			images.stats.resistances.visible = bool;
-			//images.stats.maxHp.visible = bool;
-			images.stats.rP.visible = bool;
-			images.stats.rR.visible = bool;
-			images.stats.rE.visible = bool;
-			images.stats.rF.visible = bool;
-			images.stats.rT.visible = bool;
-			images.stats.hp.hide(!bool);
-			images.stats.mp.hide(!bool);
-			images.stats.attacks[0].visible = bool;
-			images.stats.attacks[1].visible = bool;
-			images.stats.attacks[2].visible = bool;
-			images.stats.attacks[3].visible = bool;
+		this.partyImages.forEach(function(images, index){
+			if(index < allyParty.alliesNum){
+				images.charIMG.visible = bool;
+				images.bImage.visible = bool;
+				images.statIMG.visible = bool;
+				images.stats.resistances.visible = bool;
+				//images.stats.maxHp.visible = bool;
+				images.stats.rP.visible = bool;
+				images.stats.rR.visible = bool;
+				images.stats.rE.visible = bool;
+				images.stats.rF.visible = bool;
+				images.stats.rT.visible = bool;
+				images.stats.hp.hide(!bool);
+				images.stats.mp.hide(!bool);
+				images.stats.attacks[0].visible = bool;
+				images.stats.attacks[1].visible = bool;
+				images.stats.attacks[2].visible = bool;
+				images.stats.attacks[3].visible = bool;
+			}
 		})
 	}
 
@@ -722,6 +750,7 @@ export class ExploreMenu {
 		if(!bool){
 			allyParty.swapAllies(this.managerImages);
 		}
+		this.UpdatePartyMenu();
 	}
 
 	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party

@@ -59,7 +59,6 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
 
-
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -67,7 +66,6 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('attackButtonHover','assets/textures/HUD/attackButtonHover.png');
 		this.load.image('objectButton','assets/textures/HUD/objectButton.png');
 		this.load.image('objectButtonHover','assets/textures/HUD/objectButtonHover.png');
-		//this.load.image('fleeButton','assets/textures/fleeButton.png');
 		this.load.image('AllyBlock','assets/textures/HUD/AllyBlock.png');
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
 	}
@@ -238,19 +236,23 @@ export class FightScene extends Phaser.Scene {
 		this.allies = []; // incializamos el array de aliados
 		let self = this; 
 		allyParty.party.forEach(function (ally, index){ // recorremos todo el array de objetos con info de la party
-			// creamos al character en función de su información
-			self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
-			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
-			self.allies[index].dead = ally.dead;
-			let scene = self;
-			ally.attack.forEach(function (attack) { // setteamos sus ataques
-				scene.allies[index].SetAttacks(attack);
-			})
-			// añadimos un nuevo HUD
-			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
-			self.allies[index].scale = 2;
-			self.allies[index].depth = 1;
-			self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
+			
+			if(index < allyParty.alliesNum){ //)
+				// creamos al character en función de su información
+				
+				self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.alliesNum+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
+				self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
+				self.allies[index].dead = ally.dead;
+				let scene = self;
+				ally.attack.forEach(function (attack) { // setteamos sus ataques
+					scene.allies[index].SetAttacks(attack);
+				})
+				// añadimos un nuevo HUD
+				self.alliesHud.push(new AllyHUD(self,self.allies[index]));
+				self.allies[index].scale = 2;
+				self.allies[index].depth = 1;
+				self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
+		}
 		})
 	}
 	
@@ -700,14 +702,10 @@ export class FightScene extends Phaser.Scene {
 				{
 					for(let i=0;i<this.enemies.length;i++)
 					{
-					
-					//this.enemies[i].stop();
-					this.enemies[i].play(this.enemies[i].imageId+'_wow');
+						this.enemies[i].play(this.enemies[i].imageId+'_wow');
 					}
-					this.RequestChangeState();
+						this.RequestChangeState();
 				}
-				//this.chose=false;
-				//this.pointer.visible=false;
 			}
 			if(this.cursor===false)
 			{
@@ -799,185 +797,5 @@ export class FightScene extends Phaser.Scene {
 		else{
 			this.EndCombat();
 		}
-
-
-		
-		/*  COSAS DE RAUL
-		if(this.choseE && !this.choseA){
-			if(Phaser.Input.Keyboard.JustDown(this.aux.qKey))
-			{
-				this.alliesHud[this.currentAlly].DisplayAttacks();
-			}
-			if(this.combat===true)
-			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
-				{
-					if(this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
-						this.selectedAttack = this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack;
-						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
-						{ 
-						  this.EnableTargetting(this.allies);
-						  this.choseA=true;
-						  this.allaySelected=0;
-						  console.log(this.allaySelected);
-						  console.log(this.allies.length);
-					
-						}
-						else{
-						 this.EnableTargetting(this.enemies);
-						 this.choseE=true;
-						 this.enemyselected=0;
-						 console.log(this.enemyselected);
-						 console.log(this.enemies.length);						
-
-						}
-						this.alliesHud[this.currentAlly].DisplayAttacks();
-						this.ToggleButtons(false);
-						this.pointer.visible = true;
-						this.combat=false;
-						
-					} else console.log("No hay maná ;-;");
-
-					
-				}
-
-				if(this.cursor===false)
-				{
-					if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))
-					{
-						if(this.attack<3)
-						{
-							this.attack++;
-
-							
-						} 
-						else this.attack=0;
-						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
-								
-							if(this.attack<3)this.attack++;
-							else this.attack=0;
-						}
-					}
-					if(Phaser.Input.Keyboard.JustDown(this.aux.wKey))
-					{
-						if(this.attack>0)
-						{
-							this.attack--;
-							
-						}
-						else this.attack=3;
-						while(!this.allies[this.currentAlly].CanAttack(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack)){
-								
-							if(this.attack>0)this.attack--;
-							else this.attack=3;
-						}
-					}
-				}
-				if(this.attack!=-1)
-				{
-					
-					this.pointer.x=this.alliesHud[this.currentAlly].attackText[this.attack].text.x-15;
-					this.pointer.angle = 0;
-					this.pointer.y=this.alliesHud[this.currentAlly].attackText[this.attack].text.y+this.alliesHud[this.currentAlly].attackText[this.attack].text.displayHeight/2;
-				}
-			}
-			
-		}
-		else if(this.choseE===true)
-		{
-			while(this.enemies[this.enemyselected].dead ){
-								
-				if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
-				else this.enemyselected=0;
-			}	
-			
-			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey) && !this.enemies[this.enemyselected].dead)
-			{					
-				this.allies[this.currentAlly].targets.push(this.enemies[this.enemyselected]);
-				
-				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
-				{
-				for(let i=0;i<this.enemies.length;i++)
-				{				
-					//this.enemies[i].stop();
-					if(!this.enemies[i].dead) this.enemies[i].play(this.enemies[i].imageId+'_wow');
-				}
-					this.AllyAttack();
-
-				}
-				//this.chose=false;
-				//this.pointer.visible=false;
-			}
-			if(this.cursor===false)
-			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
-				{
-					if(this.enemyselected<this.enemies.length-1) 
-					{
-						this.enemyselected++;					
-					
-					}	else this.enemyselected=0;
-
-					while(this.enemies[this.enemyselected].dead ){
-								
-						if(this.enemyselected<this.enemies.length-1)this.enemyselected++;
-						else this.enemyselected=0;
-					}	
-				}
-				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
-				{
-					if(this.enemyselected>0)
-					{
-						this.enemyselected--;
-				
-					}
-					else this.enemyselected=this.enemies.length-1;
-
-					while(this.enemies[this.enemyselected].dead){
-								
-						if(this.enemyselected>0)this.enemyselected--;
-						else this.enemyselected=this.enemies.length-1;
-					}
-				}
-			}
-			if(this.enemyselected!=-1)
-			{
-				
-				this.pointer.x = this.enemies[this.enemyselected].x;
-				this.pointer.y = this.enemies[this.enemyselected].y - 75;
-				this.pointer.angle = 90;
-			}
-		}
-		else if(this.choseA===true)
-		{
-			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
-			{					
-				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
-				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.AllyAttack()}
-				//this.chose=false;
-				//this.pointer.visible=false;
-			}
-			if(this.cursor===false)
-			{
-				if(Phaser.Input.Keyboard.JustDown(this.aux.dKey))
-				{
-					if(this.allaySelected<this.allies.length-1) this.allaySelected++;
-					else this.allaySelected=0;
-				}
-				if(Phaser.Input.Keyboard.JustDown(this.aux.aKey))
-				{
-					if(this.allaySelected>0)this.allaySelected--;
-					else this.allaySelected=this.allies.length-1;
-				}
-			}
-			if(this.allaySelected!=-1 )
-			{
-				this.pointer.x = this.allies[this.allaySelected].x-75;
-				this.pointer.y = this.allies[this.allaySelected].y;
-				this.pointer.angle = 0;
-
-	
-			}
-		}  */
 	}
 }
