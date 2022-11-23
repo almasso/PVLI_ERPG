@@ -163,7 +163,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		}
 		else effective = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
-		if(this.actualHp<currentHP)this.play(this.mon+'_daño');
+		if(this.actualHp<currentHP && this.actualHp>0)this.play(this.mon+'_daño');
 		return effective; // devuelve la efectividad de un ataque 
 	}
 
