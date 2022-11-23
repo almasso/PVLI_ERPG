@@ -40,6 +40,7 @@ export class DialogBox {
         this.text; //Referencia a Phaser.Text
         this.dialog; //Referencia a Phaser.Dialog
         this.graphics; //Referencia a Phaser.Graphics
+        this.beingAnimated; //Nos dice si el texto está siendo o no activado
         this.createWindow(); //Crear la ventana
     }
 
@@ -153,11 +154,22 @@ export class DialogBox {
      * Anima el texto
      */
     animateText() {
+        this.beingAnimated = true;
         this.eventCounter++;
         this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
         if (this.eventCounter === this.dialog.length) {
           this.timedEvent.remove();
+          this.scene.time.addEvent({
+            delay: 180,
+            callback: this.endTextAnimation,
+            callbackScope: this,
+            loop: false
+        });
         }
+    }
+
+    endTextAnimation() {
+        this.beingAnimated = false;
     }
 
     /**
@@ -190,12 +202,18 @@ export default class DialogScene extends Phaser.Scene {
         this.nameBox = new DialogBox(this);
         this.hasCreatedWindow = false;
         this.isToggled = true;
+        this.event = false;
     }
 
-    preload() {
-    }
-
-    create() {
+    update() {
+        if(this.dialogBox.beingAnimated && !this.event) {
+            this.events.emit("isBeingAnimated");
+            this.event = true;
+        }
+        else if (!this.dialogBox.beingAnimated && this.event) {
+            this.events.emit("isNotBeingAnimated");
+            this.event = false;
+        }
     }
 
     createWindow() {

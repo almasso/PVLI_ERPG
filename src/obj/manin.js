@@ -74,7 +74,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
-		this.spacebarPresses++;
+		/*this.spacebarPresses++;
 		if(this.collider instanceof NPC) {
 			if(this.spacebarPresses === 1) {
 				console.log("OPÇÃO UM");
@@ -93,13 +93,12 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 				this.collider.showFullDialog(this.uiScene);
 			}
 		
+		}*/
+		if(this.collider instanceof NPC) {
+			this.collider.readDialogues();
 		}
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
-
-	clearCollider() {
-		this.collider = null;
-	}
 
 	/**
 	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
@@ -161,4 +160,5 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.scene.Fight()
         }
 	}
+	
 }
