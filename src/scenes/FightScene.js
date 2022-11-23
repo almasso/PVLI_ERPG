@@ -28,7 +28,7 @@ export class FightScene extends Phaser.Scene {
 
 	preload(){
 		// cargar personajes
-		this.load.image('manin', 'assets/textures/Characters/Manin.png');
+		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
 		this.load.image('melendi','assets/textures/Characters/Melendi.png')
 		//this.load.image('artista','assets/textures/Artista.png')
@@ -39,12 +39,27 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
 
 		//ANIMACON
-		this.load.spritesheet('people_daño','assets/textures/Characters/daño.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people','assets/textures/Characters/idle.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people_wow','assets/textures/Characters/wow.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('artist_daño','assets/textures/Characters/daño2.png',{frameWidth:24, frameHeight:32});
-		this.load.spritesheet('artist','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('people_daño','assets/textures/Characters/people_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_idle','assets/textures/Characters/people_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_wow','assets/textures/Characters/people_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('people_dead','assets/textures/Characters/people_dead.png',{frameWidth:19, frameHeight:26});
+
+		this.load.spritesheet('artist_daño','assets/textures/Characters/artist_daño.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_idle','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
+
+		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:19, frameHeight:26});
+
+		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
+
+
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -299,9 +314,11 @@ export class FightScene extends Phaser.Scene {
 
 	// generamos a los enemigos en función de la información que nos llega desde enemiesInfo
 	GenerateRandomEncounter(){
+
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
-		let enemiesNumber = this.GetRandom(1, false); // número de enemigos
+		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
+
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
@@ -341,6 +358,19 @@ export class FightScene extends Phaser.Scene {
 		// el ataque seleccionado será aleatorio para los enemigos
 		let selectedAttack = this.GetRandom(this.enemies[i].attacks.length, true);
 		let selectedTarget = []; // también lo serán sus targets. esto es un array de índices
+
+		//animación de la party al ser atacada
+		for(let w=0;w<this.allies.length;w++)
+		{				
+			
+			if(!this.allies[w].dead)
+			{
+				//console.log('SI');
+				 this.allies[w].play(this.allies[w].imageId+'_wow');
+		
+			}
+		}
+
 		// se seleccionarán tantos objetivos como diga el ataque que se ha seleccionado
 		for(let o = 0; o < this.enemies[i].GetAttack(selectedAttack).targets; o++){
 			let random = this.GetRandom(this.allies.length, true); // escogemos al target
@@ -356,6 +386,7 @@ export class FightScene extends Phaser.Scene {
 		for(let j = 0; j < this.enemies[i].targets.length; j++){
 			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
 		}
+		
 		
 		// cambiamos el HUD de aliados
 		for(let h = 0; h < selectedTarget.length; h++){
@@ -506,7 +537,9 @@ export class FightScene extends Phaser.Scene {
 
 		this.currentAlly = 0; // aliado actualmente seleccionado
 
+
 		this.pointer = this.add.image(0,0,'attackPointer'); // puntero que muestra la selección de algo en los menús
+
 		this.pointer.visible = false;
 		this.pointer.depth = 2;
 
@@ -864,11 +897,10 @@ export class FightScene extends Phaser.Scene {
 				
 				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) 
 				{
-					for(let i=0;i<this.enemies.length;i++)
-				{
-				
-				//this.enemies[i].stop();
-				this.enemies[i].play(this.enemies[i].imageId+'_wow');
+				for(let i=0;i<this.enemies.length;i++)
+				{				
+					//this.enemies[i].stop();
+					if(!this.enemies[i].dead) this.enemies[i].play(this.enemies[i].imageId+'_wow');
 				}
 					this.AllyAttack();
 

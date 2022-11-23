@@ -28,11 +28,12 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.targets = []; // objetivos
 		
 		//#region  animaciones (PRUEBAS RAÚL)
-		/*this.mon='artist'; // pruebas animación
-		console.log(imageId);
-		if(imageId!='manin'){						
-				this.mon=imageId;	
-		}
+		// this.mon='artist'; // pruebas animación
+		// console.log(imageId);
+		// if(imageId!='manin'){						
+		// 		this.mon=imageId;	
+		// }
+		this.mon=imageId;
 
 		this.scene.anims.create({
 			
@@ -59,7 +60,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		this.scene.anims.create({
 			key: this.mon+'_idle', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers(this.mon, 
+			frames: scene.anims.generateFrameNumbers(this.mon+'_idle', 
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -67,6 +68,17 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			frameRate: 5, // imágenes/frames por segundo
 			repeat: -1
 		});
+		this.scene.anims.create({
+			key: this.mon+'_dead', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_dead', 
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 0
+		});
+		
 
 		this.on('animationcomplete', end =>{ //evento que se ejecuta cuando una animación ha terminado
 			//console.log(this.anims.currentAnim.key)
@@ -78,7 +90,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		this.play(this.mon+'_idle');
 
-*/		//#endregion
+     	//#endregion
 		// Estados Alterados (POR IMPLEMENTAR)
 	}
 
@@ -156,6 +168,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	// morir
 	Die()
 	{
+		this.play(this.mon+'_dead');
 		this.dead = true; // se muere
 	}
 }
