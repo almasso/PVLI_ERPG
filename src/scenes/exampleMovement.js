@@ -27,6 +27,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
 		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png');
 		this.load.image('menuPartyButton', 'assets/textures/HUD/explore/menuPartyButton.png');
+		this.load.image('menuOrderButton', 'assets/textures/HUD/explore/menuOrderButton.png');
 		this.load.image('pointer', 'assets/textures/HUD/explore/pointer.png')
 		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
 		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')

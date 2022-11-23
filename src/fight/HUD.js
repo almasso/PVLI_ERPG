@@ -428,7 +428,7 @@ export class ExploreMenu {
 				let newX = x+98 * scale *index;
 				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
 						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
-						  index: index};
+						  index: index};				
 				images.bgIMG.depth = 7;
 				images.charIMG.depth = 8;
 				images.bgIMG.visible = false;
@@ -440,10 +440,10 @@ export class ExploreMenu {
 			self.managerImages[index] = images;
 		})
 	}
-
 	SwapAllies(images, index){
 		this.alliesToSwap.push(images[index]); // acordarse de borrar el array cuando quites el menú
 		if(this.alliesToSwap.length == 2){
+			console.log("2 selected");
 			[this.alliesToSwap[0].charIMG,this.alliesToSwap[1].charIMG] = 
 			[this.alliesToSwap[1].charIMG,this.alliesToSwap[0].charIMG];
 
@@ -512,6 +512,7 @@ export class ExploreMenu {
 		
 		//#endregion
 		//#region MANAGE PARTY MENU BUTTONS
+		console.log("NAJS D");
 		this.managerImages.forEach(function(image, index){
 			image.bgIMG.setInteractive();
 
@@ -524,6 +525,7 @@ export class ExploreMenu {
 			})
 			
 			image.bgIMG.on("pointerup", function(){
+				console.log("INTERACTUASDS");
 				self.SwapAllies(self.managerImages, index);
 			})
 		});
