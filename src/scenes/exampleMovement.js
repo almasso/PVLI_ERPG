@@ -42,6 +42,8 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
 		this.load.spritesheet('manin_pop','assets/textures/Characters/manin_pop.png',{frameWidth:25, frameHeight:32});
 		this.load.spritesheet('manin_pose','assets/textures/Characters/manin_pose.png',{frameWidth:25, frameHeight:32});
+		this.load.image('kratos','assets/textures/NPC-RAUL/Kratos.png'); 
+		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
 	}
 	
 	/**
@@ -85,8 +87,8 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
-		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
+		let npc1 = new NPC(this, 400, 400, 'aloy', 0, npc_dialogues);
+		let npc2 = new NPC(this, 200, 200, 'kratos', 1, npc_dialogues);
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 		//#endregion
