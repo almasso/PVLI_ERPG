@@ -74,26 +74,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	}
 
     interact(){
-		/*this.spacebarPresses++;
-		if(this.collider instanceof NPC) {
-			if(this.spacebarPresses === 1) {
-				console.log("OPÇÃO UM");
-				this.collider.readDialogues(this.uiScene);
-				//this.spacebarPresses = 0;
-			}
-			else if(this.spacebarPresses === 2 && (!this.collider.hasShownText && this.collider.hasNotInteracted)) {
-				console.log("OPÇÃO DOS")
-				this.collider.readDialogues(this.uiScene);
-				this.collider.hasNotInteracted = false;
-				this.spacebarPresses = 0;
-			}
-			else if(this.spacebarPresses === 2 && !this.collider.hasShownText && !this.collider.hasNotInteracted){
-				console.log("OPÇÃO tres")
-				this.spacebarPresses = 0;
-				this.collider.showFullDialog(this.uiScene);
-			}
-		
-		}*/
 		if(this.collider instanceof NPC) {
 			this.collider.readDialogues();
 		}

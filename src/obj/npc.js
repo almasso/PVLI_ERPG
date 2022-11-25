@@ -8,6 +8,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.dialogIndex = 0;
         this.dialogCount = 0;
         this.currentDialog = 0;
+        this.formerDialog = 0;
         this.hasShownText = true;
         this.hasNotInteracted = false;
         this.beingAnimated = false;
@@ -45,7 +46,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             }
             i++;
         }
-        this.currentDialog = this.dialogIndex;
+        this.currentDialog = this.formerDialog = this.dialogIndex;
     }
 
     readDialogues() {
@@ -56,21 +57,21 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             if(!this.beingAnimated) {
                 this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text, true);
                 this.hasShownText = false;
-                //this.beingAnimated = true;
+                this.beingAnimated = true;
             }    
             else if(this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text, false);
+                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
                 this.hasShownText = true;
-                //this.hasNotInteracted = false;
-                //this.beingAnimated = false;
+                this.formerDialog++;
+                this.beingAnimated = false;
             }
         }
         else {
             this.uiScene.toggleWindow();
             this.currentDialog = this.dialogIndex;
+            this.formerDialog = this.dialogIndex;
             return;
         }
-        //this.dialogBeingShown = !this.dialogBeingShown;
         if(!this.beingAnimated) this.currentDialog++;
     }
 
