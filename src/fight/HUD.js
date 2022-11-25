@@ -221,8 +221,8 @@ export class AllyHUD{
 }
 
 export class InventoryHUD{
-	constructor(scene, inv, allyHud){
-		this.inventoryBlock = scene.add.image(allyHud.attackBlock.x, allyHud.attackBlock.y, 'attackBlock');
+	constructor(scene, inv, x, y){
+		this.inventoryBlock = scene.add.image(x, y, 'attackBlock');
 		this.inventoryBlock.setScale(1.5,1);
 		this.inventoryBlock.visible = false;
 
@@ -230,12 +230,15 @@ export class InventoryHUD{
 		this.finalItem = 4;
 
 		this.inventory = inv;
+		this.scene = scene;
+
+		this.CreateItems(scene)
 	}
 
 	CreateItems(scene){
 		this.itemsText = [];
 		let self = this;
-		this.inventory.forEach(function(item, index){
+		this.inventory.inv.forEach(function(item, index){
 			self.itemsText[index] = {
 				text: scene.add.text(self.inventoryBlock.x + self.inventoryBlock.displayWidth / 14, self.inventoryBlock.y + index * self.inventoryBlock.displayHeight / 4 + self.inventoryBlock.displayHeight / 16, item.name,
 				{
@@ -264,13 +267,9 @@ export class InventoryHUD{
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
 			this.itemsText[i].quantity.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
 			this.itemsText[i].visible = true;
+			this.ItemButtom(this.itemsText[i], i)
 		}
 	}
-	// actualizamos el texto
-	/*UpdateLog(){
-		this.currentText++; // movemos el índice
-		this.ShowLog(); // mostramos esto
-	}*/
 
 	// vamos hacia arriba
 	Up(){
@@ -297,6 +296,12 @@ export class InventoryHUD{
 		for(i = this.initialItem; i <= this.finalItem; i++){
 			this.itemsText[i].visible = false;
 		}
+	}
+
+	ItemButtom(itemText, index){
+		itemText.text.on('pointerup', () =>{
+		scene.RequestChangeState(true);
+		})
 	}
 }
 
