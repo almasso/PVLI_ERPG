@@ -52,27 +52,31 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     readDialogues() {
         if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow();
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow();
-
-        if(this.currentDialog < this.dialogIndex + this.dialogCount) {
+        
+        
+        console.log(this.currentDialog);
+        console.log(this.formerDialog);
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog <= this.currentDialog) && this.dialogues.texts[this.formerDialog].npcID === this.npcID) {
             if(!this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName ,this.dialogues.texts[this.currentDialog].text, true);
-                this.hasShownText = false;
+                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true);
                 this.beingAnimated = true;
+                this.currentDialog++;
+                this.formerDialog = this.currentDialog - 1;
             }    
             else if(this.beingAnimated) {
                 this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
-                this.hasShownText = true;
                 this.formerDialog++;
+                if(this.currentDialog >= (this.dialogIndex + this.dialogCount) - 1 && this.currentDialog != this.formerDialog) this.currentDialog--;
                 this.beingAnimated = false;
             }
         }
-        else {
+        else if(this.currentDialog >= this.formerDialog) {
             this.uiScene.toggleWindow();
             this.currentDialog = this.dialogIndex;
             this.formerDialog = this.dialogIndex;
+            this.beingAnimated = false;
             return;
         }
-        if(!this.beingAnimated) this.currentDialog++;
     }
 
     preUpdate() {
@@ -85,11 +89,9 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         else if(!touching && touchingTrigger && wasTouching && wasTouchingTrigger) {this.emit("overlapend");}
 
         this.uiScene.events.on("isBeingAnimated", () => {
-			console.log("está siendo animado");
             this.beingAnimated = true;
 		})
 		this.uiScene.events.on("isNotBeingAnimated", () => {
-            console.log("ya no está siendo animado");
 			this.beingAnimated = false;
 		})
     }

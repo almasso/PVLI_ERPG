@@ -53,7 +53,7 @@ export default class MovementExample extends Phaser.Scene {
 		let npc1 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		let npcs = [npc1, npc2, npc3];
+		this.npcs = [npc1, npc2, npc3];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 		npc3.scale = 2.5;
@@ -87,26 +87,7 @@ export default class MovementExample extends Phaser.Scene {
 			console.log("HA CHOCAO");
 			gameObject1.collider = gameObject2;
 		});*/
-
-		for(let i of npcs) {
-			/*i.on("collision", () => {
-				//console.log(i.body.touching);
-				//console.log(i.body.wasTouching);
-				//console.log(i.trigger.body.touching);
-				//console.log(i.trigger.body.wasTouching);
-				//console.log("has tocao");
-				this.manin.collider = i;
-			})
-			i.on("overlapend", () => {
-				console.log("se acabo");
-				//this.manin.collider = null;
-			})*/
-			self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-				isColliding = true;
-				console.log("HA CHOCAO");
-				gameObject1.collider = gameObject2;
-			});
-		}
+		
 
 	}
 	
@@ -134,6 +115,11 @@ export default class MovementExample extends Phaser.Scene {
 		})
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
+
+	CollideWithNPC() {
+		
+		
+	}
 	
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
@@ -142,6 +128,18 @@ export default class MovementExample extends Phaser.Scene {
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
+
+			for(let i of this.npcs) {
+				if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+					console.log("overlap")
+					this.manin.collider = i;
+				}
+			}
+			if(this.manin.collider != null &&! this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
+				this.manin.collider = null;
+			}
+		
+
 	}
 
     Fight(){
