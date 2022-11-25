@@ -228,6 +228,9 @@ export class InventoryHUD{
 		this.inventoryBlock.setScale(1.5,1);
 		this.inventoryBlock.visible = false;
 
+		this.initialItem = 0;
+		this.finalItem = 4;
+
 		this.inventory = inv;
 	}
 
@@ -257,11 +260,45 @@ export class InventoryHUD{
 
 	DisplayItems(){
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
-		this.itemsText.forEach(function(item){
-			item.text.visible = !items.text.visible;
-			item.quantity.visible = !items.quantity.visible;
-		});
-		this.scene.ToggleObjectButtons(!this.inventoryBlock.visible);
+		for(i = this.initialItem; i <= this.finalItem; i++){
+			this.itemsText[i].text.x = this.inventoryBlock.x + self.inventoryBlock.displayWidth/14;
+			this.itemsText[i].text.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
+			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
+			this.itemsText[i].quantity.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
+			this.itemsText[i].visible = true;
+		}
+	}
+	// actualizamos el texto
+	/*UpdateLog(){
+		this.currentText++; // movemos el índice
+		this.ShowLog(); // mostramos esto
+	}*/
+
+	// vamos hacia arriba
+	Up(){
+		if(this.initialItem !== 0){
+			this.DisableItems()
+			this.initialItem--;
+			this.finalItem--;
+			this.DisplayItems();
+		}
+	}
+
+	// vamos hacia abajo
+	Down(){
+		if(this.finalItem < this.itemsText.length - 1){
+			this.DisableItems();
+			this.initialItem++;
+			this.finalItem++;
+			this.DisplayItems();
+		}
+	}
+
+	// Hacemos invisibles los objetos del inventario
+	DisableItems(){
+		for(i = this.initialItem; i <= this.finalItem; i++){
+			this.itemsText[i].visible = false;
+		}
 	}
 }
 
