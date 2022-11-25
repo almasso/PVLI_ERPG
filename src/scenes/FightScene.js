@@ -13,7 +13,8 @@ const FightState = {
 	ChooseAlly: 4,
 	ExecuteAttack: 5,
 	TimeUntilNextTurn: 6,
-	Finish: 7
+	Finish: 7,
+	AlteratedStates: 8
 };
 
 export class FightScene extends Phaser.Scene {
@@ -331,29 +332,34 @@ export class FightScene extends Phaser.Scene {
 			{
 				let ally = self.allies[character.index];
 				if(ally.alteredStates[0]){
+					console.log(ally);
 					let text = ally.name + " sufrio daño por estar quemado.";
 					ally.Burned();
 					self.BuildEndTurnLog(text);
 				} 
 				if(ally.alteredStates[2]){
+					console.log(ally);
 					let text = ally.name + " sufrio daño por estar envenenado.";
 					ally.Poisoned();
 					self.BuildEndTurnLog(text);
 				}
+				self.alliesHud[character.index].Update();
 
 			}
 			else{
 				let enemy= self.enemies[character.index];
 				if(enemy.alteredStates[0]){
-					let text = character.name + " sufrio daño por estar quemado.";
+					let text = enemy.name + " sufrio daño por estar quemado.";
 					enemy.Burned();
 					self.BuildEndTurnLog(text);
 				} 
 				if(enemy.alteredStates[2]){
-					let text = character.name + " sufrio daño por estar envenenado.";
+					let text = enemy.name + " sufrio daño por estar envenenado.";
 					enemy.Poisoned();
 					self.BuildEndTurnLog(text);
 				}
+				self.enemiesHud[character.index].Update();
+
 			}
 		});
 	}
@@ -659,8 +665,14 @@ export class FightScene extends Phaser.Scene {
 			this.state = FightState.TimeUntilNextTurn;
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
+			if(this.currentTurn === this.turns.length - 1) {
+				this.state = FightState.AlteratedStates;
+				this.CheckAlteredStates();
+			}
+			else this.state = FightState.SelectTurn;	
+		}
+		else if(this.state === FightState.AlteratedStates){
 			this.state = FightState.SelectTurn;
-			if(this.currentTurn === this.turns.length - 1) this.CheckAlteredStates();
 		}
 	}
 
@@ -855,6 +867,14 @@ export class FightScene extends Phaser.Scene {
 			}
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
+		}
+		else if(this.state === FightState.AlteratedStates){
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{

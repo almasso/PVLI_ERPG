@@ -187,7 +187,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	}
 
 	Burned(){
+		console.log("this.actualHp");
+
+		console.log(this.actualHp);
 		this.Damage(burned);
+		console.log(this.actualHp);
 	}
 
 	Paralized(){ // Por ahora no implementado
@@ -195,7 +199,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	}
 
 	Poisoned(){
+		console.log("this.actualHp");
+
 		this.Damage(poisoned);
+		console.log(this.actualHp);
+
 	}
 }
 
