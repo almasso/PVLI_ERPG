@@ -2,7 +2,7 @@ import Character from '../fight/Character.js'
 import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
-import {Log, AllyHUD, EnemyHUD} from '../fight/HUD.js'
+import {Log, AllyHUD, EnemyHUD, ExploreMenu} from '../fight/HUD.js'
 
 
 const FightState = {
@@ -289,15 +289,73 @@ export class FightScene extends Phaser.Scene {
 	BuildLog(chName,attackInfo, effective,enemy, index){
 		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
 		// dependiendo del valor que recibamos ponemos un texto u otro
-		if(effective[index] === -1) {text+="¡Es super efectivo!";}
-		else if (effective[index] === 1) {text+= "No es muy efectivo..."}
-		else if(effective[index] === 2){text+="Pero no tuvo efecto."}
+		console.log(effective);
+		if(effective[index].hit === -1) {text+="¡Es super efectivo!";}
+		else if (effective[index].hit === 1) {text+= "No es muy efectivo..."}
+		else if(effective[index].hit === 2){text+="Pero no tuvo efecto."}
 		if(attackInfo.type === 5) // Si el ataque es de tipo support
 		{
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
 		}
 		this.log.AddText(text); // añadimos el texto al log
 		this.log.UpdateLog(); // y lo mostramos (quizá esto podría hacerlo el propio log cuando se añade un texto?)
+		this.BuildLogState(enemy, effective, index);
+	}
+
+	BuildLogState(enemy, effective, index){
+		if(effective[index].state != -1){ // Creo que se puede hacer solo un update, pero por ahora no lo he hecho
+			let text;
+			if(effective[index].state == 2){
+				text = enemy.name +" fue quemado.";
+			}
+			else if (effective[index].state == 3){
+				text = enemy.name +" fue paralizado.";
+			}
+			else{
+				text = enemy.name +" fue envenenado.";
+			}
+			this.log.AddText(text);
+			this.log.UpdateLog();
+		}
+	}
+
+	BuildEndTurnLog(text){
+		this.log.AddText(text);
+		this.log.UpdateLog();
+	}
+
+	CheckAlteredStates(){
+		let self = this;
+		this.turns.forEach(function (character){
+			if(character.type) // ALIADO
+			{
+				let ally = self.allies[character.index];
+				if(ally.alteredStates[0]){
+					let text = ally.name + " sufrio daño por estar quemado.";
+					ally.Burned();
+					self.BuildEndTurnLog(text);
+				} 
+				if(ally.alteredStates[2]){
+					let text = ally.name + " sufrio daño por estar envenenado.";
+					ally.Poisoned();
+					self.BuildEndTurnLog(text);
+				}
+
+			}
+			else{
+				let enemy= self.enemies[character.index];
+				if(enemy.alteredStates[0]){
+					let text = character.name + " sufrio daño por estar quemado.";
+					enemy.Burned();
+					self.BuildEndTurnLog(text);
+				} 
+				if(enemy.alteredStates[2]){
+					let text = character.name + " sufrio daño por estar envenenado.";
+					enemy.Poisoned();
+					self.BuildEndTurnLog(text);
+				}
+			}
+		});
 	}
 
 	// actualizamos el objeto con info de la party
@@ -384,7 +442,7 @@ export class FightScene extends Phaser.Scene {
 		
 		// construimos el log
 		for(let j = 0; j < this.enemies[i].targets.length; j++){
-			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
+			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]], j)
 		}
 		
 		
@@ -602,6 +660,7 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
 			this.state = FightState.SelectTurn;
+			if(this.currentTurn === this.turns.length - 1) this.CheckAlteredStates();
 		}
 	}
 

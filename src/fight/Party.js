@@ -8,19 +8,19 @@ export class Party{
 	{
 		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
-					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
+					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",3,40,15,1),
+					  attackInfo("Pistola Agua",4,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
 					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+						[attackInfo("A Rango 1 Target", 2, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 						attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
 						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						  [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+						  [attackInfo("A Rango 1 Target", 2, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 						  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
 						  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 							,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-							[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+							[attackInfo("A Rango 1 Target", 2, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 							attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
 		this.party[0].index = 0;
 		this.party[1].index = 1;

@@ -26,6 +26,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.speed = 0; // velocidad
 		this.attacks = []; // ataques
 		this.targets = []; // objetivos
+		this.alteredStates = [false, false, false]; // estados alterados (quemado, paralizado, toxico) 
 		
 		//#region  animaciones (PRUEBAS RAÚL)
 		// this.mon='artist'; // pruebas animación
@@ -129,7 +130,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		let effective = [];
 		this.targets.forEach(function (enemy) {
 			effective.push(enemy.Damage(attack));
-
 		})
 		this.actualMp -= attack.requiredMps;
 		return effective; // devuelve la efectividad de un ataque frente a un target
@@ -141,18 +141,30 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		// animación
 		let currentHP=this.actualHp;
 
-		let effective = 0;
+		let effective = {hit: 0, state: -1};
+		let attackType = attack.GetType();
 		// ROI AYUDA
-		if(this.resistances[attack.GetType()] <= 3) effective = -1;
-		else if(this.resistances[attack.GetType()] >= 7) effective = 1;
+		if(this.resistances[attackType] <= 3) effective.hit = -1;
+		else if(this.resistances[attackType] >= 7) effective.hit = 1;
 
 		// Hacer que reciba daño
 		let attackProbability = Math.floor(Math.random()*100 + 1);
 		if(attackProbability <= this.acurracy)
 		{
 			
+			let stateProbability = Math.floor(Math.random()*100 + 1);
+
+			// Las dos primeras resistencias no tienen estado alterado 
+			if(attackType > 1  && attackType != 5 && stateProbability < this.resistances[attackType] * 10){
+				let i = 0;
+				if(this.alteredStates[attackType - 2] === false){
+					this.alteredStates[attackType - 2] = true;
+					effective.state = attackType;
+				}
+			}
+
 			// Bajamos vida en función de la resistencia y tipo del ataque
-			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attack.GetType()]) / 10;
+			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attackType]) / 10;
 			this.actualHp = Math.floor(this.actualHp);
 			if(this.actualHp <= 0) 
 			{
@@ -162,7 +174,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			else if (this.actualHp > this.maxHp) this.actualHp = this.maxHp;
 
 		}
-		else effective = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
+		else effective.hit = 2; // Si la probabilidad del ataque es superior a la probabilidad del personale, el ataque falló
 		if(this.actualHp<currentHP && this.actualHp>0)this.play(this.mon+'_daño');
 		return effective; // devuelve la efectividad de un ataque 
 	}
@@ -173,4 +185,19 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.play(this.mon+'_dead');
 		this.dead = true; // se muere
 	}
+
+	Burned(){
+		this.Damage(burned);
+	}
+
+	Paralized(){ // Por ahora no implementado
+
+	}
+
+	Poisoned(){
+		this.Damage(poisoned);
+	}
 }
+
+let burned = new Attack("Quemado", 2, 10, 0, 1);
+let poisoned = new Attack("Envenenado", 4, 10, 0, 1);
