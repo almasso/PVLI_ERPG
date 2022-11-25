@@ -283,6 +283,16 @@ class HealthBar {
 		this.draw();
 	}
 
+	// cambio de posición
+	setPos(x,y){
+		this.x = x;
+		this.y = y;
+		if(this.texto !== undefined){
+			this.texto.x = x + this.width/3.2;		
+			this.texto.y = y + this.height;		
+		}
+	}
+
 	// dibujado
 	draw ()
 	{
@@ -418,12 +428,11 @@ export class ExploreMenu {
 	AddPartyManagementMenu(){
 		let x = 0;
 		let y = 2;
-		this.managerImages = [];
 		let self = this;
 		let row = 1;
 		allyParty.party.forEach(function(ally, index){
 			// declaración de variables
-			let images = self.managerImages[index];
+			let images = self.partyImages[index];
 			let scale = 1.5;
 			let newX = x+98 * scale * (index%allyParty.alliesNum);
 			if(index === allyParty.alliesNum * row){
@@ -431,19 +440,18 @@ export class ExploreMenu {
 				newX = 0;
 				y += 98*scale*(row-1);
 			}
-			images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
-			charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
-			index: index};				
-			images.bgIMG.depth = 7;
-			images.charIMG.depth = 8;
-			images.bgIMG.visible = false;
-			images.charIMG.visible = false;
-
-			self.managerImages[index]=images ;
+			images.charIMG.x = newX + 49*scale;
+			images.charIMG.y = y +49*scale;
+			images.bImage.x = newX;
+			images.bImage.y = y;
+			images.managerX = newX;
+			images.managerY = y;
+			images.scale = scale;
+			self.partyImages[index]=images ;
 		})
 	}
-	SwapAllies(images, index){
-		this.alliesToSwap.push(images[index]); // acordarse de borrar el array cuando quites el menú
+	SwapAllies(ally){
+		this.alliesToSwap.push(ally); // acordarse de borrar el array cuando quites el menú
 		if(this.alliesToSwap.length == 2){
 			console.log("2 selected");
 			[this.alliesToSwap[0].charIMG,this.alliesToSwap[1].charIMG] = 
@@ -455,8 +463,70 @@ export class ExploreMenu {
 			[this.alliesToSwap[0].charIMG.y,this.alliesToSwap[1].charIMG.y] =
 			[this.alliesToSwap[1].charIMG.y,this.alliesToSwap[0].charIMG.y];
 
-			[this.alliesToSwap[0].index, this.alliesToSwap[1].index] =
-			[this.alliesToSwap[1].index, this.alliesToSwap[0].index];
+			/*
+			images.stats.rP.visible = false;
+			images.stats.rR.visible = false;
+			images.stats.rE.visible = false;
+			images.stats.rF.visible = false;
+			images.stats.rT.visible = false;
+			images.bImage.visible = false;
+			images.charIMG.visible = false;
+			images.statIMG.visible = false;
+			images.stats.resistances.visible = false;
+			images.stats.hp.hide(true);
+			images.stats.mp.hide(true);
+			images.stats.attacks[0].visible = false;
+			images.stats.attacks[1].visible = false;
+			images.stats.attacks[2].visible = false;
+			images.stats.attacks[3].visible = false;
+			self.partyImages[index] = images;
+			
+			*/
+
+			//#region 
+
+			//#endregion
+
+			//#region bars
+			let y0 = this.alliesToSwap[0].stats.hp.y;
+			let y1 = this.alliesToSwap[1].stats.hp.y;
+			let y2 = this.alliesToSwap[0].stats.mp.y;
+			let y3 = this.alliesToSwap[1].stats.mp.y;
+			
+			this.alliesToSwap[0].stats.hp.setPos(this.alliesToSwap[0].stats.hp.x, y1);
+			this.alliesToSwap[1].stats.hp.setPos(this.alliesToSwap[0].stats.hp.x, y0);
+			this.alliesToSwap[0].stats.mp.setPos(this.alliesToSwap[0].stats.hp.x, y3);
+			this.alliesToSwap[1].stats.mp.setPos(this.alliesToSwap[0].stats.hp.x, y2);
+			//#endregion
+
+			//#region bgImage
+			[this.alliesToSwap[0].stats.attacks[0].y,this.alliesToSwap[1].stats.attacks[0].y] =
+			[this.alliesToSwap[1].stats.attacks[0].y,this.alliesToSwap[0].stats.attacks[0].y];
+			
+			[this.alliesToSwap[0].stats.attacks[1].y,this.alliesToSwap[1].stats.attacks[1].y] =
+			[this.alliesToSwap[1].stats.attacks[1].y,this.alliesToSwap[0].stats.attacks[1].y];
+			
+			[this.alliesToSwap[0].stats.attacks[2].y,this.alliesToSwap[1].stats.attacks[2].y] =
+			[this.alliesToSwap[1].stats.attacks[2].y,this.alliesToSwap[0].stats.attacks[2].y];
+			
+			[this.alliesToSwap[0].stats.attacks[3].y,this.alliesToSwap[1].stats.attacks[3].y] =
+			[this.alliesToSwap[1].stats.attacks[3].y,this.alliesToSwap[0].stats.attacks[3].y];
+			//#endregion
+
+			//#region attacks
+			[this.alliesToSwap[0].bImage.x,this.alliesToSwap[1].bImage.x] =
+			[this.alliesToSwap[1].bImage.x,this.alliesToSwap[0].bImage.x];
+
+			[this.alliesToSwap[0].bImage.y,this.alliesToSwap[1].bImage.y] =
+			[this.alliesToSwap[1].bImage.y,this.alliesToSwap[0].bImage.y];
+			
+			//#endregion
+
+			//#region stats
+			[this.alliesToSwap[0].stats.resistances.y,this.alliesToSwap[1].stats.resistances.y] =
+			[this.alliesToSwap[1].stats.resistances.y,this.alliesToSwap[0].stats.resistances.y];
+
+			//#endregion
 
 			this.alliesToSwap = [];
 		}
@@ -517,20 +587,20 @@ export class ExploreMenu {
 		
 		//#endregion
 		//#region MANAGE PARTY MENU BUTTONS
-		this.managerImages.forEach(function(image, index){
-			image.bgIMG.setInteractive();
+		this.partyImages.forEach(function(image, index){
+			image.bImage.setInteractive();
 
-			image.bgIMG.on("pointerover", function(){
+			image.bImage.on("pointerover", function(){
 				console.log("HOVER ON PARTY BUTTON")
 			})
 
-			image.bgIMG.on("pointerout", function(){
+			image.bImage.on("pointerout", function(){
 				console.log("NOT HOVER")
 			})
 			
-			image.bgIMG.on("pointerup", function(){
+			image.bImage.on("pointerup", function(){
 				console.log("INTERACTUASDS");
-				self.SwapAllies(self.managerImages, index);
+				self.SwapAllies(image);
 			})
 		});
 
@@ -571,6 +641,8 @@ export class ExploreMenu {
 			images.bImage.setScale(scale);
 			images.charIMG.setScale(scale*2);
 			images.statIMG.setScale(0.72,1);
+			images.partyX = x;
+			images.partyY = newY;
 			
 			// generación de textos
 			let resOffset = 63;
@@ -628,29 +700,6 @@ export class ExploreMenu {
 			images.stats.attacks[3].visible = false;
 			self.partyImages[index] = images;
 		})
-	}
-
-	// actualizar el partyMenu.
-	UpdatePartyMenu(){
-		let self = this;
-		this.partyImages.forEach(function(image, index) {
-			if(image.index != self.managerImages[index].index){
-				let num = 0;
-				console.log("NAOSHIDVBYPAHUSOIJDPÖK");
-				while(index != self.managerImages[num].index)
-				{
-					num++;
-				}
-
-				[self.partyImages[index], self.partyImages[num]] = 
-				[self.partyImages[num], self.partyImages[index]]; // esto no acaba de cambiar y no comprendo
-				
-				[self.partyImages[index].stats.resistances.y, self.partyImages[num].stats.resistances.y] = 
-				[self.partyImages[num].stats.resistances.y, self.partyImages[index].stats.resistances.y]; // esto no acaba de cambiar y no comprendo
-			}
-
-		});
-
 	}
 
 	// Crear la información de los ataques
@@ -721,12 +770,14 @@ export class ExploreMenu {
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
 		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
 		this.partyImages.forEach(function(images, index){
-			if(index < allyParty.alliesNum){
+				images.charIMG.x = images.partyX +49*images.scale;
+				images.charIMG.y = images.partyY +49*images.scale;
+				images.bImage.x = images.partyX;
+				images.bImage.y = images.partyY;
 				images.charIMG.visible = bool;
 				images.bImage.visible = bool;
 				images.statIMG.visible = bool;
 				images.stats.resistances.visible = bool;
-				//images.stats.maxHp.visible = bool;
 				images.stats.rP.visible = bool;
 				images.stats.rR.visible = bool;
 				images.stats.rE.visible = bool;
@@ -738,24 +789,36 @@ export class ExploreMenu {
 				images.stats.attacks[1].visible = bool;
 				images.stats.attacks[2].visible = bool;
 				images.stats.attacks[3].visible = bool;
-			}
 		})
 	}
 
 	ManageParty(bool){
-		this.managerImages.forEach(function(image){
-			image.bgIMG.visible = bool;
-			image.charIMG.visible = bool;
+		this.partyImages.forEach(function(images){
+			images.charIMG.x = images.managerX +49*images.scale;
+			images.charIMG.y = images.managerY +49*images.scale;
+			images.bImage.x = images.managerX;
+			images.bImage.y = images.managerY;
+			images.bImage.visible = bool;
+			images.bImage.setInteractive();
+			images.charIMG.visible = bool;
+			images.statIMG.visible = false;
+			images.stats.resistances.visible = false;
+			images.stats.rP.visible = false;
+			images.stats.rR.visible = false;
+			images.stats.rE.visible = false;
+			images.stats.rF.visible = false;
+			images.stats.rT.visible = false;
+			images.stats.hp.hide(!false);
+			images.stats.mp.hide(!false);
+			images.stats.attacks[0].visible = false;
+			images.stats.attacks[1].visible = false;
+			images.stats.attacks[2].visible = false;
+			images.stats.attacks[3].visible = false;
 		});
-		if(!bool){
-			allyParty.swapAllies(this.managerImages);
-		}
-		this.UpdatePartyMenu();
-	}
-
-	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party
-		// se mostrarán los personajes activmos en grande en el centro de la pantalla y debajo
-		// los personajes disponibles para intercambiar
+		/*if(!bool){
+			allyParty.swapAllies(this.partyImages);
+		}*/
+		//this.UpdatePartyMenu();
 	}
 
 	Back(){ // ejecutado al pulsar el botón back

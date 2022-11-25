@@ -12,6 +12,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
+		
 	}
 	
 	// cargamos todas las imágenes
