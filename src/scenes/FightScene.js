@@ -2,7 +2,8 @@ import Character from '../fight/Character.js'
 import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
-import {Log, AllyHUD, EnemyHUD} from '../fight/HUD.js'
+import {Log, AllyHUD, EnemyHUD, InventoryHUD} from '../fight/HUD.js'
+import Inventory from '../obj/Inventory.js'
 
 
 const FightState = {
@@ -60,6 +61,9 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
 
 
+		this.load.spritesheet('jarfaiter', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:24, frameHeight:32})
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -125,6 +129,10 @@ export class FightScene extends Phaser.Scene {
 			// Hacer que el botón tenga otra imagen haciendo hover
 			this.objectButton.visible = false;
 			this.objectButtonHover.visible = true;
+		});
+
+		this.objectButtonHover.on('pointerup', () =>{
+
 		});
 
 	    this.objectButtonHover.on('pointerout', () => {
@@ -223,6 +231,7 @@ export class FightScene extends Phaser.Scene {
 			this.scene.wake('movement');
 			let movement = this.scene.get('movement');
 			movement.UpdateHUD();
+			movement.UpdateInventory(this.inventory);
 		}
 		else // Si se han matado a todos los enemigos...
 		{
@@ -231,6 +240,11 @@ export class FightScene extends Phaser.Scene {
 		}
 		this.state = FightState.SelectTurn;
 		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
+	}
+
+	//Cargamos el inventario desde la escena de exploración
+	LoadInventory(inv){
+		this.inventory = inv;
 	}
 
 	// cargamos a los aliados
@@ -252,6 +266,7 @@ export class FightScene extends Phaser.Scene {
 			self.allies[index].depth = 1;
 			self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
 		})
+		this.inventoryHUD = new InventoryHUD(this, this.inventory, this.alliesHud[0]);
 	}
 	
     k=0;//···RAUL PRUEBAS···

@@ -18,10 +18,10 @@ export class Party{
 						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
 						  [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 						  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-							,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-							[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-							attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
+						  characterInfo(EnviromentInfo.character2.name,EnviromentInfo.character2.imgID,EnviromentInfo.character2.actualHp,EnviromentInfo.character2.maxHp,EnviromentInfo.character2.actualMp,EnviromentInfo.character2.maxMp
+							,EnviromentInfo.character.rP,EnviromentInfo.character2.rR,EnviromentInfo.character2.rF,EnviromentInfo.character2.rE,EnviromentInfo.character2.rT,EnviromentInfo.character2.acurracy,EnviromentInfo.character2.speed,
+							[attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
+							attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60, 4)])];
 		this.party[0].index = 0;
 		this.party[1].index = 1;
 		this.party[2].index = 2;
