@@ -56,21 +56,30 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         
         console.log(this.currentDialog);
         console.log(this.formerDialog);
-        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog <= this.currentDialog) && this.dialogues.texts[this.formerDialog].npcID === this.npcID) {
-            if(!this.beingAnimated) {
+        // console.log((this.dialogIndex + this.dialogCount)-1);
+        // console.log(this.beingAnimated);
+        // console.log(this.dialogIndex);
+        // console.log(this.dialogCount);
+
+        if(this.currentDialog==this.dialogIndex)this.beingAnimated=false;
+
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
+            if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true);
                 this.beingAnimated = true;
                 this.currentDialog++;
-                this.formerDialog = this.currentDialog - 1;
+                
             }    
             else if(this.beingAnimated) {
                 this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
                 this.formerDialog++;
-                if(this.currentDialog >= (this.dialogIndex + this.dialogCount) - 1 && this.currentDialog != this.formerDialog) this.currentDialog--;
                 this.beingAnimated = false;
+                if(this.formerDialog != this.currentDialog)
+                this.formerDialog = this.currentDialog - 1;
+                
             }
-        }
-        else if(this.currentDialog >= this.formerDialog) {
+            }
+        else  {
             this.uiScene.toggleWindow();
             this.currentDialog = this.dialogIndex;
             this.formerDialog = this.dialogIndex;
