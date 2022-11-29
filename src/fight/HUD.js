@@ -227,7 +227,7 @@ export class InventoryHUD{
 		this.inventoryBlock.visible = false;
 
 		this.initialItem = 0;
-		this.finalItem = 4;
+		this.finalItem = 3;
 
 		this.inventory = inv;
 		this.scene = scene;
@@ -257,16 +257,20 @@ export class InventoryHUD{
 
 			self.itemsText[index].text.setInteractive();
 		});
+		if(this.inventory.inv.length < 4) this.finalItem = this.inventory.inv.length - 1;
 	}
 
 	DisplayItems(){
+		let i;
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
-			this.itemsText[i].text.x = this.inventoryBlock.x + self.inventoryBlock.displayWidth/14;
-			this.itemsText[i].text.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
+			console.log('A');
+			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth/14;
+			this.itemsText[i].text.y = this.inventoryBlock.y + (i%4) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
-			this.itemsText[i].quantity.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
-			this.itemsText[i].visible = true;
+			this.itemsText[i].quantity.y = this.inventoryBlock.y + (i%4) * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
+			this.itemsText[i].text.visible = this.inventoryBlock.visible;
+			this.itemsText[i].quantity.visible = this.inventoryBlock.visible;
 			this.ItemButtom(this.itemsText[i], i)
 		}
 	}
@@ -300,7 +304,8 @@ export class InventoryHUD{
 
 	ItemButtom(itemText, index){
 		itemText.text.on('pointerup', () =>{
-		scene.RequestChangeState(true);
+			this.scene.selectedItem = this.inventory.inv[index];
+			this.scene.RequestChangeState(true);
 		})
 	}
 }

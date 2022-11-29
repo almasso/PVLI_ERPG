@@ -4,7 +4,7 @@ import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import {walkingHUD, ExploreMenu} from '../fight/HUD.js'
 import {InputMan} from '../fight/InputManager.js'
-//import Object from '../obj/Object.js'
+import Object from '../obj/Object.js'
 import Inventory from '../obj/Inventory.js'
 
 // Escena de exploración (temporal de momento)
@@ -175,6 +175,7 @@ export default class MovementExample extends Phaser.Scene {
 
 	// pasamos a la escena de pelea
     Fight(){
+		this.inventory.addItem(new Object('Fría', 10, 0));
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);

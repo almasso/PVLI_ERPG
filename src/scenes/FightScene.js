@@ -24,6 +24,7 @@ export class FightScene extends Phaser.Scene {
 		this.bg;
 		this.enemiesInfo = EnemiesInfo; // información de enemigos que conseguimos del script EnviromentInfo
 		this.selectedAttack; // ataque seleccionado actualmente con el puntero
+		this.selectedItem;
 		this.timeBetweenAttacks = 2000;
 		this.state = FightState.SelectTurn;
 	}
@@ -244,7 +245,7 @@ export class FightScene extends Phaser.Scene {
 			this.scene.wake('movement');
 			let movement = this.scene.get('movement');
 			movement.UpdateHUD();
-			movement.UpdateInventory(this.inventory);
+			movement.updateInventory(this.inventory);
 		}
 		else // Si se han matado a todos los enemigos...
 		{
@@ -309,7 +310,7 @@ export class FightScene extends Phaser.Scene {
 		ally.on("pointerup",() => {
 			// hacemos el ataque de support sobre el aliado ojetivo
 			this.allies[this.currentAlly].targets.push(ally);
-			if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState(false)}
+			if(this.state === this.FightState.Item || this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState(false)}
 		})
 	}
 
@@ -588,8 +589,20 @@ export class FightScene extends Phaser.Scene {
 		this.ToggleButtons(false); // se deshabilitan los botones
 	}
 
-	UseItem(index){
+	UseItem(){
+		if(this.allies[this.currentAlly].targets[0].actualHp + selectedItem.hp >= this.allies[this.currentAlly].targets[0].maxHp) this.allies[this.currentAlly].targets[0].actualHp = this.allies[this.currentAlly].targets[0].maxHp;
+		this.allies[this.currentAlly].targets[0].actualHp += this.selectedItem.hp;
 
+		if(this.allies[this.currentAlly].targets[0].actualMp + selectedItem.mp >= this.allies[this.currentAlly].targets[0].maxMp) this.allies[this.currentAlly].targets[0].actualMp = this.allies[this.currentAlly].targets[0].maxMp;
+		this.allies[this.currentAlly].targets[0].actualMp += this.selectedItem.mp;
+
+		while(this.alliesHud[i].character !== this.allies[this.currentAlly].targets[0]){i++;}
+		this.alliesHud[i].Update();
+
+		this.allies[this.currentAlly].targets = [];
+		
+		this.inventory.removeItem(selectedItem);
+		this.selectedItem = -1;
 	}
 
 	//···RAUL PRUEBAS···
@@ -610,19 +623,20 @@ export class FightScene extends Phaser.Scene {
 		else if(this.state === FightState.ChooseAttack){
 			this.ToggleButtons(false);
 			if(item){
-				
+				this.state = FightState.Item;
+				this.EnableTargetting(this.allies);
 			}
-				else{
-					if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
-				{
-					this.state = FightState.ChooseAlly;			
-					this.EnableTargetting(this.allies);
-				}
-				else {
-					this.state = FightState.ChooseEnemy;
-					this.EnableTargetting(this.enemies);
-				}
-			}
+			else{
+				if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
+								{
+									this.state = FightState.ChooseAlly;			
+									this.EnableTargetting(this.allies);
+								}
+								else {
+									this.state = FightState.ChooseEnemy;
+									this.EnableTargetting(this.enemies);
+								}
+			}		
 		}
 		else if(this.state === FightState.ChooseEnemy){
 			this.state = FightState.ExecuteAttack
@@ -637,6 +651,10 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
 			this.state = FightState.SelectTurn;
+		}
+		else if(this.state === FightState.Item){
+			this.UseItem();
+			this.state = FightState.ChooseAttack;
 		}
 	}
 

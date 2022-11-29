@@ -1,12 +1,17 @@
 export default class Inventory{
     constructor(){
-        this.inv =[];
+        this.inv = [];
     }
 
     addItem(obj){
+        console.log(this.inv.length);
         let i = 0;
         if(this.isItem(obj.name, i)) this.inv[i].quantity++;
-        else this.inv.push(obj);
+        else{
+            obj.quantity++;
+            this.inv.push(obj);
+            console.log(this.inv.length);  
+        } 
     }
 
     removeItem(obj){
@@ -24,6 +29,7 @@ export default class Inventory{
     }
 
     isItem(name, i){
+        if(this.inv.length === 0) return false;
         while(i < this.inv.length && this.inv[i].name !== name) i++
         return (i === this.inv.length);
     }
