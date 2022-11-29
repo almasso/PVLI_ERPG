@@ -653,6 +653,7 @@ export class FightScene extends Phaser.Scene {
 			this.state = FightState.SelectTurn;
 		}
 		else if(this.state === FightState.Item){
+			this.DisableTargetting(this.allies);
 			this.UseItem();
 			this.state = FightState.ChooseAttack;
 		}
@@ -809,11 +810,11 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.angle = 90;
 			}
 		}
-		else if(this.state === FightState.ChooseAlly){
+		else if(this.state === FightState.ChooseAlly || this.state === FightState.Item){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 			{					
 				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
-				if(this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState(false);}
+				if(this.state === FightState.Item || this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState(false);}
 				//this.chose=false;
 				//this.pointer.visible=false;
 			}
@@ -855,6 +856,9 @@ export class FightScene extends Phaser.Scene {
 				this.RequestChangeState(false);
 				this.count = 0;
 			}
+		}
+		else if(this.state === FightState.Item){
+
 		}
 		else{
 			this.EndCombat();
