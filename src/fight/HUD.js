@@ -220,6 +220,86 @@ export class AllyHUD{
 	}
 }
 
+export class InventoryHUD{
+	constructor(scene, inv, allyHud){
+		this.inventoryBlock = scene.add.image(allyHud.attackBlock.x, allyHud.attackBlock.y, 'attackBlock');
+		this.inventoryBlock.setScale(1.5,1);
+		this.inventoryBlock.visible = false;
+
+		this.initialItem = 0;
+		this.finalItem = 4;
+
+		this.inventory = inv;
+	}
+
+	CreateItems(scene){
+		this.itemsText = [];
+		let self = this;
+		this.inventory.forEach(function(item, index){
+			self.itemsText[index] = {
+				text: scene.add.text(self.inventoryBlock.x + self.inventoryBlock.displayWidth / 14, self.inventoryBlock.y + index * self.inventoryBlock.displayHeight / 4 + self.inventoryBlock.displayHeight / 16, item.name,
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				
+				quantity: scene.add.text(self.inventoryBlock.x + 7.5 * self.inventoryBlock.displayWidth / 10, self.inventoryBlock.y + index * self.inventoryBlock.displayHeight / 4 + self.inventoryBlock.displayHeight / 16, item.quantity,
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',})}
+
+			self.itemsText[index].text.visible = false;
+			self.itemsText[index].quantity.visible = false;
+
+			self.itemsText[index].text.setInteractive();
+		});
+	}
+
+	DisplayItems(){
+		this.inventoryBlock.visible = !this.inventoryBlock.visible;
+		for(i = this.initialItem; i <= this.finalItem; i++){
+			this.itemsText[i].text.x = this.inventoryBlock.x + self.inventoryBlock.displayWidth/14;
+			this.itemsText[i].text.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
+			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
+			this.itemsText[i].quantity.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
+			this.itemsText[i].visible = true;
+		}
+	}
+	// actualizamos el texto
+	/*UpdateLog(){
+		this.currentText++; // movemos el índice
+		this.ShowLog(); // mostramos esto
+	}*/
+
+	// vamos hacia arriba
+	Up(){
+		if(this.initialItem !== 0){
+			this.DisableItems()
+			this.initialItem--;
+			this.finalItem--;
+			this.DisplayItems();
+		}
+	}
+
+	// vamos hacia abajo
+	Down(){
+		if(this.finalItem < this.itemsText.length - 1){
+			this.DisableItems();
+			this.initialItem++;
+			this.finalItem++;
+			this.DisplayItems();
+		}
+	}
+
+	// Hacemos invisibles los objetos del inventario
+	DisableItems(){
+		for(i = this.initialItem; i <= this.finalItem; i++){
+			this.itemsText[i].visible = false;
+		}
+	}
+}
+
 // ENEMIGOS EN COMBATE
 export class EnemyHUD{
 	constructor(scene, character)
