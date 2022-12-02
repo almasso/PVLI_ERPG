@@ -203,7 +203,7 @@ export default class MovementExample extends Phaser.Scene {
 					this.manin.collider = i;
 				}
 			}
-			if(this.manin.collider != null &&! this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
+			if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 				this.manin.collider = null;
 			}
 		

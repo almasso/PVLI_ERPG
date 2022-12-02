@@ -12,6 +12,39 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
+		//this.isInteracting = false;
+		//#region  animations
+        // Creamos las animaciones de nuestro caballero
+		/*this.scene.anims.create({
+			key: 'idle',
+			frames: scene.anims.generateFrameNumbers('knight', {start:0, end:3}),
+			frameRate: 5,
+			repeat: -1
+		});
+		this.scene.anims.create({
+			key: 'attack',
+			frames: scene.anims.generateFrameNumbers('knight', {start:4, end:7}),
+			frameRate: 18,
+			repeat: 0
+		});
+		this.scene.anims.create({
+			key: 'run',
+			frames: scene.anims.generateFrameNumbers('knight', {start:8, end:14}),
+			frameRate: 5,
+			repeat: -1
+		});
+
+		// Si la animación de ataque se completa pasamos a ejecutar la animación 'idle'
+		this.on('animationcomplete', end => {
+			if (this.anims.currentAnim.key === 'attack'){
+				this.stopAttack()
+			}
+		})
+
+		// La animación a ejecutar según se genere el personaje será 'idle'
+		this.play('idle');
+		*/
+		//#endregion
 
 		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
