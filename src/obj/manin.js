@@ -24,11 +24,8 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		scene.physics.add.existing(this);
 
 		// Ajustamos el "collider" de manín
-		this.bodyOffset = this.body.height/5;
+		this.bodyOffset = this.body.height/10;
 		this.bodyWidth = this.body.width/2;
-		this.body.setOffset(0, -this.bodyOffset);
-		this.body.height *= 2;
-
 
 		this.scene.anims.create({
 			key: 'move', //identificador de la animación
