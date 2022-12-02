@@ -25,6 +25,10 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
 		this.load.image('artist','assets/textures/Characters/artista2.png'); 
 		this.load.image('artistHead','assets/textures/HUD/explore/artista2Head.png'); 
+		this.load.image('melendi','assets/textures/Characters/Melendi.png');
+		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
+		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
+		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
@@ -88,18 +92,19 @@ export default class MovementExample extends Phaser.Scene {
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
-		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 400, 'melendi', 0, npc_dialogues);
-		let npc2 = new NPC(this, 200, 200, 'melendi', 1, npc_dialogues);
-		npc1.scale = 2.5;
-		npc2.scale = 2.5;
-		//#endregion
 		// genera la hierba y su collider. (temporal)
 		this.GenerateHostileGround();
+		let npc1 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
+		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
+		this.npcs = [npc1, npc2, npc3];
+		npc1.scale = 2.5;
+		npc2.scale = 2.5;
+		npc3.scale = 2.5;
 
-		//#region  añadimos colisiones (temporal)
-		this.physics.add.collider(this.manin, npc1);
-		this.physics.add.collider(this.manin, npc2);
+		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
+		this.GenerateHostileGround();
+		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
 		this.physics.add.collider(this.manin, bDown);
@@ -120,6 +125,28 @@ export default class MovementExample extends Phaser.Scene {
 		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer, this.walkingHUD);
 		this.menu.Show(false);
 		this.showMenu = false;
+		/*
+		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
+		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
+		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
+		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
+		*/
+		var self = this;
+		var isColliding = false;
+		/*this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
+			//console.log(isColliding);
+			
+			if(!isColliding) gameObject1.collider = null;
+			else isColliding = false;
+
+		});
+		self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
+			isColliding = true;
+			console.log("HA CHOCAO");
+			gameObject1.collider = gameObject2;
+		});*/
+		
+
 	}
 	
 	// actualizamos el HUD de estado de party
@@ -154,16 +181,33 @@ export default class MovementExample extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
+
+	CollideWithNPC() {
+		
+		
+	}
 	
 	// comprobación de colisiones y apertura de menús
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
 		var wasTouching = !this.hierbasColliders.body.wasTouching.none;
+
 		
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
 
 		if(Phaser.Input.Keyboard.JustDown(this.qKey)) {this.showMenu = !this.showMenu; this.menu.Show(this.showMenu); }
+			for(let i of this.npcs) {
+				if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+					console.log("overlap")
+					this.manin.collider = i;
+				}
+			}
+			if(this.manin.collider != null &&! this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
+				this.manin.collider = null;
+			}
+		
+
 	}
 
 	// pasamos a la escena de pelea

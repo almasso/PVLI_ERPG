@@ -80,16 +80,17 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 	// interacción 
     interact(){
 		if(this.collider instanceof NPC) {
-			this.collider.readDialogues(this.uiScene);
+			this.collider.readDialogues();
 		}
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
     }
 
-	// quitamos collider
-	clearCollider() {
-		this.collider = null;
-	}
-	
+	/**
+	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
+	 * @param {number} t - Tiempo total
+	 * @param {number} dt - Tiempo entre frames
+	 */
+
 	preUpdate(t, dt) {
 		// Es muy imporante llamar al preUpdate del padre (Sprite), sino no se ejecutará la animación
 		super.preUpdate(t, dt);
@@ -156,4 +157,5 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.scene.Fight()
         }
 	}
+	
 }
