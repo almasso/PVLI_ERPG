@@ -56,6 +56,9 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_burn','assets/textures/Characters/manin_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_poison','assets/textures/Characters/manin_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_shock','assets/textures/Characters/manin_shock.png',{frameWidth:19, frameHeight:26});
 
 		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
@@ -359,6 +362,7 @@ export class FightScene extends Phaser.Scene {
 						areAlteredStates = true;
 						let text = ally.name + " sufrio daño por estar quemado.";
 						ally.Burned();
+						ally.play(ally.imageId+'_burn');
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 					} 
@@ -367,6 +371,7 @@ export class FightScene extends Phaser.Scene {
 						areAlteredStates = true;
 						let text = ally.name + " sufrio daño por estar envenenado.";
 						ally.Poisoned();
+						ally.play(ally.imageId+'_poison');
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 					}
@@ -382,6 +387,8 @@ export class FightScene extends Phaser.Scene {
 						let text = enemy.name + " sufrio daño por estar quemado.";
 						areAlteredStates = true;
 						enemy.Burned();
+						enemy.play(enemy.imageId+'_burn');
+
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 
@@ -390,6 +397,7 @@ export class FightScene extends Phaser.Scene {
 						let text = enemy.name + " sufrio daño por estar envenenado.";
 						areAlteredStates = true;
 						enemy.Poisoned();
+						enemy.play(ally.imageId+'_poison');
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 
@@ -553,7 +561,7 @@ export class FightScene extends Phaser.Scene {
 					this.allies.forEach(function(ally){
 						ally.play(ally.imageId + '_wow');  
 					})
-					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_paralizado');// Insertar animación paralizado
+					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_shock');// Insertar animación paralizado
 				}
 
 
@@ -574,7 +582,7 @@ export class FightScene extends Phaser.Scene {
 					this.enemies.forEach(function(enemy){
 						enemy.play(enemy.imageId + '_wow');
 					})
-					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_paralizado');// Insertar animación paralizado
+					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_shock');// Insertar animación paralizado
 
 				}
 			}
