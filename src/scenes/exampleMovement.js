@@ -17,11 +17,14 @@ export default class MovementExample extends Phaser.Scene {
 	
 	// cargamos todas las imágenes
 	preload(){
+		this.load.image('logButton','assets/textures/HUD/logButton.png');
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
+		this.load.image('artist','assets/textures/Characters/artista2.png'); 
+		this.load.image('artistHead','assets/textures/HUD/explore/artista2Head.png'); 
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
@@ -114,7 +117,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.pointer.visible = false;
 		this.pointer.depth = 3;
 		// generamos el Menú
-		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer);
+		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer, this.walkingHUD);
 		this.menu.Show(false);
 		this.showMenu = false;
 	}
@@ -122,7 +125,6 @@ export default class MovementExample extends Phaser.Scene {
 	// actualizamos el HUD de estado de party
 	UpdateHUD(){
 	 	this.walkingHUD.Update();
-
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
