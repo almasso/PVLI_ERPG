@@ -2,7 +2,7 @@ import NPC from "./npc.js";
 
 export default class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene) {
+	constructor(scene, x, y, uiScene, nameScene) {
 		super(scene, x, y, 'manin_move');
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(3,3);
@@ -10,8 +10,10 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
         this.stepsWalked = 0;
         this.touchingGrass = false;
+		this.touchingFria=false;
 		this.collider = null;
 		this.uiScene = uiScene;
+		this.nameScene=nameScene;
 
 		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
@@ -156,7 +158,12 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
-            this.scene.Fight()
+            this.scene.Fight();
         }
+		if(this.touchingFria)
+		{
+			if(this.nameScene==="PLAZA")this.scene.Park();
+			else if (this.nameScene==="PARK")this.scene.Plaza();
+		}
 	}
 }

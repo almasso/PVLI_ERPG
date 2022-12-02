@@ -8,11 +8,11 @@ import {InputMan} from '../fight/InputManager.js'
 import Inventory from '../obj/Inventory.js'
 
 // Escena de exploración (temporal de momento)
-export default class MovementExample extends Phaser.Scene {
+export default class ParkScene extends Phaser.Scene {
 	
 	// construimos la escena
 	constructor() {
-		super({ key: 'movement' });
+		super({ key: 'park' });
 		this.manin; // protagonista
 		this.inventory = new Inventory();
 	}
@@ -20,7 +20,7 @@ export default class MovementExample extends Phaser.Scene {
 	// cargamos todas las imágenes
 	preload(){
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
-		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
+		this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
@@ -48,7 +48,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('kratos','assets/textures/NPC-RAUL/Kratos.png'); 
 		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
 
-		this.load.image('fria', 'assets/textures/Props/fria.png');
+        this.load.image('fria', 'assets/textures/Props/fria.png');
 	}
 	
 	/**
@@ -71,7 +71,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.scene.sleep('uimanager');
 
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'bg2').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -80,7 +80,7 @@ export default class MovementExample extends Phaser.Scene {
 		let upperBackgroundOffset = 20;
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'),"PLAZA");
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'),"PARK");
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -99,7 +99,8 @@ export default class MovementExample extends Phaser.Scene {
 		//#endregion
 		// genera la hierba y su collider. (temporal)
 		this.GenerateHostileGround();
-		this.ChangeScene();
+
+        this.ChangeScene();
 
 		//#region  añadimos colisiones (temporal)
 		this.physics.add.collider(this.manin, npc1);
@@ -159,7 +160,7 @@ export default class MovementExample extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
-	ChangeScene()
+    ChangeScene()
     {
         this.frias = []; // array de hierbas
 		this.friasCollider; //collider del trozo de hierba hostil
@@ -171,7 +172,7 @@ export default class MovementExample extends Phaser.Scene {
 			}
 		}
 		// añadimos la zona de colisión
-		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
+		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y).setSize(this.frias[0].displayWidth-55 ,(this.frias[0].displayHeight)).setOrigin(0,0);		
 		this.physics.world.enable(this.friasCollider); // añadimos su collider
 		this.friasCollider.body.setAllowGravity(false); // quitamos gravedad
 		this.friasCollider.body.moves = false;
@@ -199,12 +200,11 @@ export default class MovementExample extends Phaser.Scene {
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
 
-		var touchingFria = !this.friasCollider.body.touching.none;
+        var touchingFria = !this.friasCollider.body.touching.none;
 		var wasTouchingFria = !this.friasCollider.body.wasTouching.none;
 		
 		if(touchingFria && !wasTouchingFria) {this.friasCollider.emit("overlapstart");}
 		else if(!touchingFria && wasTouchingFria) this.friasCollider.emit("overlapend");
-
 
 		// 
 		if(Phaser.Input.Keyboard.JustDown(this.qKey)) {this.showMenu = !this.showMenu; this.menu.Show(this.showMenu); }
@@ -218,9 +218,11 @@ export default class MovementExample extends Phaser.Scene {
         this.scene.sleep('movement');
     }
 
-	Park(){
+	
+	Plaza(){
 		this.manin.touchingGrass = false;
-        this.scene.launch('park');
-        this.scene.stop('movement');
+        this.manin.touchingFria = false;
+        this.scene.launch('movement');
+        this.scene.stop('park');
     }
 }

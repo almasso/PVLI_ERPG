@@ -3,6 +3,7 @@ import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
 import DialogScene from './ui/dialogues.js'
+import ParkScene from './scenes/Park.js'
 
 
 /**
@@ -30,7 +31,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene],
+    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene,ParkScene],
     physics: {
         default: 'arcade',
         arcade: {
