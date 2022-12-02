@@ -222,7 +222,7 @@ export class AllyHUD{
 
 export class InventoryHUD{
 	constructor(scene, inv, x, y){
-		this.inventoryBlock = scene.add.image(x, y, 'attackBlock');
+		this.inventoryBlock = scene.add.image(x, y, 'attackBlock').setOrigin(0,0);
 		this.inventoryBlock.setScale(1.5,1);
 		this.inventoryBlock.visible = false;
 
@@ -265,10 +265,10 @@ export class InventoryHUD{
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
 			console.log('A');
-			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth/14;
-			this.itemsText[i].text.y = this.inventoryBlock.y + (i%4) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
+			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth / 14;
+			this.itemsText[i].text.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
-			this.itemsText[i].quantity.y = this.inventoryBlock.y + (i%4) * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
+			this.itemsText[i].quantity.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
 			this.itemsText[i].text.visible = this.inventoryBlock.visible;
 			this.itemsText[i].quantity.visible = this.inventoryBlock.visible;
 			this.ItemButtom(this.itemsText[i], i)
@@ -303,10 +303,21 @@ export class InventoryHUD{
 	}
 
 	ItemButtom(itemText, index){
+		let self = this;
 		itemText.text.on('pointerup', () =>{
-			this.scene.selectedItem = this.inventory.inv[index];
-			this.scene.RequestChangeState(true);
+			self.scene.selectedItem = self.inventory.inv[index];
+			console.log(itemText);
+			console.log(index);
+			self.scene.inventoryUp.visible = !self.scene.inventoryUp.visible
+			self.scene.inventoryDown.visible = !self.scene.inventoryDown.visible
+			self.DisplayItems();
+			self.scene.RequestChangeState(true);
 		})
+	}
+
+	UpdateItem(inv){
+		this.inventory = inv;
+		this.CreateItems(this.scene);
 	}
 }
 
