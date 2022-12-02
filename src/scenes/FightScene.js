@@ -347,8 +347,9 @@ export class FightScene extends Phaser.Scene {
 
 	CheckAlteredStates(){
 		let self = this;
-		let areAlteredStates = false;
+		let areAlteredStates = false; // Variable para no esperar si no hay ningun estado alterado
 		this.turns.forEach(function (character){
+			let hasAlteredStates = false; // variable para mantener las animaciones coordinadas
 			if(character.type) // ALIADO
 			{
 				let ally = self.allies[character.index];
@@ -359,6 +360,7 @@ export class FightScene extends Phaser.Scene {
 						let text = ally.name + " sufrio daño por estar quemado.";
 						ally.Burned();
 						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
 					} 
 					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
 						console.log(ally);
@@ -366,7 +368,9 @@ export class FightScene extends Phaser.Scene {
 						let text = ally.name + " sufrio daño por estar envenenado.";
 						ally.Poisoned();
 						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
 					}
+					if(!hasAlteredStates) ally.play(ally.imageId + '_wow'); 
 					self.alliesHud[character.index].Update();
 				}
 
@@ -379,13 +383,18 @@ export class FightScene extends Phaser.Scene {
 						areAlteredStates = true;
 						enemy.Burned();
 						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+
 					} 
 					if(enemy.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
 						let text = enemy.name + " sufrio daño por estar envenenado.";
 						areAlteredStates = true;
 						enemy.Poisoned();
 						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+
 					}
+					if(!hasAlteredStates) enemy.play(enemy.imageId + '_wow')
 					self.enemiesHud[character.index].Update();
 				}
 			}
@@ -415,7 +424,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
-		let enemiesNumber = this.GetRandom(2, false); // número de enemigos
+		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
 
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(1,true);//this.enemiesInfo.length, true); // tipo de enemigo
@@ -541,6 +550,10 @@ export class FightScene extends Phaser.Scene {
 				else{
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.allies[this.currentAlly].name + " no se pudo mover.");
+					this.allies.forEach(function(ally){
+						ally.play(ally.imageId + '_wow');  
+					})
+					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_paralizado');// Insertar animación paralizado
 				}
 
 
@@ -558,6 +571,11 @@ export class FightScene extends Phaser.Scene {
 				else{
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.enemies[this.turns[this.currentTurn].index].name + " no se pudo mover.");
+					this.enemies.forEach(function(enemy){
+						enemy.play(enemy.imageId + '_wow');
+					})
+					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_paralizado');// Insertar animación paralizado
+
 				}
 			}
 		}

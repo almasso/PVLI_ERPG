@@ -5,7 +5,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	constructor(scene, name,x, y, imageId, actualHp, maxHp, actualMp, maxMp){
 		super(scene, x, y, imageId);
 		this.imageId = imageId; // imagen
-		this.scene.add.existing(this); // añadimos a la escena de combate
+		this.me = this.scene.add.existing(this); // añadimos a la escena de combate
 		this.name = name; // nombre
 		this.actualHp = actualHp; // vida actual
 		this.maxHp = maxHp; // vida máxima
@@ -72,11 +72,49 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			frameRate: 5, // imágenes/frames por segundo
 			repeat: 0
 		});
+
+		this.scene.anims.create({
+			
+			key: this.mon+'_quemado', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_daño', // cambiar animaciones cuando esten hechas
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 1
+		});
+
+		this.scene.anims.create({
+			
+			key: this.mon+'_envenenado', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_daño', // cambiar animaciones cuando esten hechas
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 1
+		});
+
+		this.scene.anims.create({
+			
+			key: this.mon+'_paralizado', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers(this.mon+'_daño',  // cambiar animaciones cuando esten hechas
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:2 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: 1
+		});
 		
 
 		this.on('animationcomplete', end =>{ //evento que se ejecuta cuando una animación ha terminado
 			//console.log(this.anims.currentAnim.key)
-			if(this.anims.currentAnim.key === this.mon+'_daño' || this.anims.currentAnim.key === this.mon+'_wow'){ //comprobamos si la animación que ha terminado es 'attack'
+			if(this.anims.currentAnim.key === this.mon+'_daño' || this.anims.currentAnim.key === this.mon+'_wow' || 
+			this.anims.currentAnim.key === this.mon+'quemado' || this.anims.currentAnim.key === this.mon+'_paralizado'
+			 || this.anims.currentAnim.key === this.mon+'_envenenado'){ //comprobamos si la animación que ha terminado es 'attack'
 				this.play(this.mon+'_idle'); //ejecutamos la animación 'idle'
 			}
 			
