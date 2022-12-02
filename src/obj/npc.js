@@ -9,9 +9,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.dialogCount = 0;
         this.currentDialog = 0;
         this.formerDialog = 0;
-        this.hasShownText = true;
-        this.hasNotInteracted = false;
         this.beingAnimated = false;
+        this.canCloseWindow = false;
         
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
@@ -24,6 +23,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
         this.trigger.setScale(7,7);
+        this.create();
     }
 
     generateTrigger() {
@@ -56,52 +56,73 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         
         console.log(this.currentDialog);
         console.log(this.formerDialog);
-        // console.log((this.dialogIndex + this.dialogCount)-1);
+        // console.log((this.dialogIndex + this.dialogCount) - 1);
         // console.log(this.beingAnimated);
         // console.log(this.dialogIndex);
         // console.log(this.dialogCount);
 
-        if(this.currentDialog==this.dialogIndex)this.beingAnimated=false;
+        if(this.currentDialog==this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
-        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
-            if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true);
-                this.beingAnimated = true;
+        if(!this.dialogues.texts[this.currentDialog].unique) {
+            if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
+                if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
+                    this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true);
+                    this.beingAnimated = true;
+                    this.currentDialog++;
+                }    
+                else if(this.beingAnimated) {
+                    this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
+                    this.formerDialog++;
+                    this.beingAnimated = false;
+                    this.uiScene.events.emit('isNotBeingAnimated');
+                    if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
+                }
+            }
+            else {
+                this.closeWindow();
+            }
+        }
+        else {
+            if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
+                if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
+                    this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true);
+                    this.beingAnimated = true;
+                }    
+                else if(this.beingAnimated) {
+                    this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
+                    this.beingAnimated = false;
+                    this.canCloseWindow = true;
+                    this.uiScene.events.emit('isNotBeingAnimated');
+                }
+            }
+            else {
+                this.canCloseWindow = false;
                 this.currentDialog++;
-                
-            }    
-            else if(this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false);
                 this.formerDialog++;
-                this.beingAnimated = false;
-                if(this.formerDialog != this.currentDialog)
-                this.formerDialog = this.currentDialog - 1;
-                
+                this.beingAnimated=false;
+                this.closeWindow();
             }
-            }
-        else  {
-            this.uiScene.toggleWindow();
-            this.currentDialog = this.dialogIndex;
-            this.formerDialog = this.dialogIndex;
-            this.beingAnimated = false;
-            return;
         }
     }
 
-    preUpdate() {
-        var touching = !this.body.touching.none;
-        var touchingTrigger = !this.trigger.body.touching.none;
-		var wasTouching = !this.body.wasTouching.none;
-        var wasTouchingTrigger = !this.trigger.body.wasTouching.none;
+    closeWindow() {
+        this.uiScene.toggleWindow();
+        if(this.currentDialog >= this.dialogIndex + this.dialogCount) {
+            this.currentDialog = this.dialogIndex;
+            this.formerDialog = this.dialogIndex;
+        }
+        this.beingAnimated = false;
+        return;
+    }
 
-        if(touching && !wasTouching && !wasTouchingTrigger) {this.emit("overlapstart");}
-        else if(!touching && touchingTrigger && wasTouching && wasTouchingTrigger) {this.emit("overlapend");}
-
+    create() {
         this.uiScene.events.on("isBeingAnimated", () => {
             this.beingAnimated = true;
 		})
 		this.uiScene.events.on("isNotBeingAnimated", () => {
+            console.log("ya he terminado de animar");
 			this.beingAnimated = false;
+            this.canCloseWindow = true;
 		})
     }
 } 
