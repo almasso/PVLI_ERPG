@@ -13,6 +13,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.maxMp = maxMp; // maná máximo
 		this.lvl = 1; // nivel (NO IMPLEMENTADO)
 		this.resistances = [0, 0, 0, 0, 0, 0]; // resistencias
+		this.actualResistances = [0, 0, 0, 0, 0, 0]; // resistencias durante la pelea
 		this.acurracy = 0; // puntería
 		this.dead = false; // muerto
 		this.speed = 0; // velocidad
@@ -101,6 +102,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	// setteamos las resistencias, la velocidad y la puntería
 	SetStats(physicalRes, rangedRes, fireRes, electricalRes, toxicRes, acurracy, speed){
 		this.resistances = [physicalRes, rangedRes, fireRes, electricalRes, toxicRes, 0];
+		this.actualResistances = [physicalRes, rangedRes, fireRes, electricalRes, toxicRes, 0];
 		this.acurracy = acurracy;
 		this.speed = speed;
 	}
@@ -144,8 +146,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		let attackType = attack.GetType();
 		let attackDmg = attack.GetDmg();
 		// ROI AYUDA
-		if(this.resistances[attackType] <= 3) effective.hit = -1;
-		else if(this.resistances[attackType] >= 7) effective.hit = 1;
+		if(this.actualResistances[attackType] <= 3) effective.hit = -1;
+		else if(this.actualResistances[attackType] >= 7) effective.hit = 1;
 
 		// Hacer que reciba daño
 		let attackProbability = Math.floor(Math.random()*100 + 1);
@@ -155,17 +157,26 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			let stateProbability = Math.floor(Math.random()*100 + 1);
 
 			// Las dos primeras resistencias no tienen estado alterado 
-			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && stateProbability < this.resistances[attackType] * 10){
+			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && stateProbability < this.actualResistances[attackType] * 10){
 				let i = 0;
-				if(this.alteredStates[attackType - elementalAttackDifference] === false){
-					this.alteredStates[attackType - elementalAttackDifference] = true;
-					effective.state = attackType;
+				if(this.alteredStates[attackType - elementalAttackDifference] === false){ // Si no tenía el estado alterado correspondiente
+					this.alteredStates[attackType - elementalAttackDifference] = true; // Se aplica el estado alterado 
+					if(attackType === typeOfAttack.Fire){
+						this.ReduceResistances(reduceBurnedRes);
+					}
+					else if(attackType === typeOfAttack.Electrical){
+						this.ReduceResistances(reduceParalizedRes);
+					}
+					else{
+						this.ReduceResistances(reduceToxicRes);
+					}
+					effective.state = attackType;  // Información para el log
 				}
 			}
-			if(burned) attackDmg /= 2;
+			if(burned) attackDmg /= 2; // Si el atacante está quemado se reduce su daño a la mitad
 
 			// Bajamos vida en función de la resistencia y tipo del ataque
-			this.actualHp -= attackDmg * (10 - this.resistances[attackType]) / 10;
+			this.actualHp -= attackDmg * (10 - this.actualResistances[attackType]) / 10;
 			this.actualHp = Math.floor(this.actualHp);
 			if(this.actualHp <= 0) 
 			{
@@ -185,6 +196,15 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	{
 		this.play(this.mon+'_dead');
 		this.dead = true; // se muere
+	}
+
+	ReduceResistances(arrayDiff){ // Array con las el número que se resta a las resistencias
+		let self = this;
+		console.log(this.actualResistances);
+		arrayDiff.forEach(function (res){
+			self.actualResistances[res.index] -= res.value;
+		})
+		console.log(this.actualResistances);
 	}
 
 	Burned(){
@@ -208,5 +228,13 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	}
 }
 
+
+// No se si hacer esto asi, porque es posible que lo tengan todos los characters repetido
+// Deberia ser global y que se use cuando se quiera;
 let burned = new Attack("Quemado", 2, 10, 0, 1);
 let poisoned = new Attack("Envenenado", 4, 10, 0, 1);
+
+let reduceBurnedRes = [{value : 2, index : typeOfAttack.Physical}, {value : 1, index : typeOfAttack.Ranged},
+{value: 1, index : typeOfAttack.Fire}];
+let reduceParalizedRes = [{value: 2, index : typeOfAttack.Electrical}];
+let reduceToxicRes = [{value: 2, index : typeOfAttack.Toxic}];
