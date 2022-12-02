@@ -11,6 +11,7 @@ export class InputMan extends Phaser.GameObjects.Sprite{
 		//···RAUL···
 		this.eKey = this.scene.input.keyboard.addKey('E'); //chose
 		this.qKey = this.scene.input.keyboard.addKey('Q');  //attack
+		this.escKey = this.scene.input.keyboard.addKey("ESC");
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
 	}
 }

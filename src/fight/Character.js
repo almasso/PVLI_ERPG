@@ -1,12 +1,4 @@
-import {Attack, Ultimate} from './Attack.js'
-const typeOfAttack = { // enumerador de tipo de ataque (CONECTAR ESTO CON ATTACK PARA NO VOLVER A ESCRIBIRLO)
-	Physical: 0,
-	Ranged: 1,
-	Fire: 2,
-	Electrical: 3,
-	Toxic: 4,
-	Support: 5
-};
+import {Attack, Ultimate, typeOfAttack, elementalAttackDifference} from './Attack.js'
 
 // clase de personaje en combate
 export default class Character extends Phaser.GameObjects.Sprite {
@@ -26,7 +18,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.speed = 0; // velocidad
 		this.attacks = []; // ataques
 		this.targets = []; // objetivos
-		this.alteredStates = [false, false, false]; // estados alterados (quemado, paralizado, toxico) 
+		this.alteredStates = [false, false, false]; // estados alterados (quemado, paralizado, envenenado) 
 		
 		//#region  animaciones (PRUEBAS RAÚL)
 		// this.mon='artist'; // pruebas animación
@@ -113,6 +105,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.speed = speed;
 	}
 
+	// setteamos las resistencias, la velocidad y la puntería
+	SetAlteredStates(aStates){
+		this.alteredStates = aStates; 
+	}
+
 	// subimos de nivel (NO IMPLEMENTADO)
 	LevelUp(){
 		this.lvl++;
@@ -128,43 +125,47 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	// ataca 
 	Attack(attack){
 		let effective = [];
+		console.log(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]);
+		let self = this;
 		this.targets.forEach(function (enemy) {
-			effective.push(enemy.Damage(attack));
+			effective.push(enemy.Damage(attack, self.alteredStates[typeOfAttack.Fire - elementalAttackDifference]));
 		})
 		this.actualMp -= attack.requiredMps;
 		return effective; // devuelve la efectividad de un ataque frente a un target
 	}
 
 	// recibir daño
-	Damage(attack)
+	Damage(attack, burned)
 	{
 		// animación
 		let currentHP=this.actualHp;
 
 		let effective = {hit: 0, state: -1};
 		let attackType = attack.GetType();
+		let attackDmg = attack.GetDmg();
 		// ROI AYUDA
 		if(this.resistances[attackType] <= 3) effective.hit = -1;
 		else if(this.resistances[attackType] >= 7) effective.hit = 1;
 
 		// Hacer que reciba daño
 		let attackProbability = Math.floor(Math.random()*100 + 1);
-		if(attackProbability <= this.acurracy)
+		if(attackProbability <= this.acurracy || attackType === typeOfAttack.Support) // Los ataques de tipo Support no pueden fallar
 		{
 			
 			let stateProbability = Math.floor(Math.random()*100 + 1);
 
 			// Las dos primeras resistencias no tienen estado alterado 
-			if(attackType > 1  && attackType != 5 && stateProbability < this.resistances[attackType] * 10){
+			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && stateProbability < this.resistances[attackType] * 10){
 				let i = 0;
-				if(this.alteredStates[attackType - 2] === false){
-					this.alteredStates[attackType - 2] = true;
+				if(this.alteredStates[attackType - elementalAttackDifference] === false){
+					this.alteredStates[attackType - elementalAttackDifference] = true;
 					effective.state = attackType;
 				}
 			}
+			if(burned) attackDmg /= 2;
 
 			// Bajamos vida en función de la resistencia y tipo del ataque
-			this.actualHp -= attack.GetDmg() * (10 - this.resistances[attackType]) / 10;
+			this.actualHp -= attackDmg * (10 - this.resistances[attackType]) / 10;
 			this.actualHp = Math.floor(this.actualHp);
 			if(this.actualHp <= 0) 
 			{

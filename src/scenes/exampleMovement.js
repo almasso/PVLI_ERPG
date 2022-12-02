@@ -157,7 +157,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
 
-	updateInventory(inv){
+	UpdateInventory(inv){
 		this.inventory = inv;
 	}
 	

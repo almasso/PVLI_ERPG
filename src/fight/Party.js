@@ -9,10 +9,10 @@ export class Party{
 		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
 					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",3,40,15,1),
-					  attackInfo("Pistola Agua",4,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
+					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
 					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("PUM a distancia", 1, 25, 0, 1), attackInfo("PUM a distancia 2", 1, 20, 30, 1), 
+						[attackInfo("PUM a distancia", 1, 25, 0, 1), attackInfo("PUM a distancia 2", 3, 20, 30, 1), 
 						attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
 						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
@@ -75,7 +75,7 @@ export class Party{
 
 // función que devuvelve un objeto con información de un personaje
 function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
-	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0}
+	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0, alteredStates : [false,false,false]}
 }
 
 // exportamos una variable de tipo party que será la instancia que queremos

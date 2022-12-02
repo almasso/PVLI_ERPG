@@ -1,4 +1,5 @@
 import Character from '../fight/Character.js'
+import {elementalAttackDifference, typeOfAttack} from '../fight/Attack.js'
 import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
@@ -261,6 +262,7 @@ export class FightScene extends Phaser.Scene {
 			ally.attack.forEach(function (attack) { // setteamos sus ataques
 				scene.allies[index].SetAttacks(attack);
 			})
+			self.allies[index].SetAlteredStates(ally.alteredStates);
 			// añadimos un nuevo HUD
 			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 			self.allies[index].scale = 2;
@@ -303,16 +305,19 @@ export class FightScene extends Phaser.Scene {
 
 	// construimos una nueva frase para el Log
 	BuildLog(chName,attackInfo, effective,enemy, index){
-		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		let text;
 		// dependiendo del valor que recibamos ponemos un texto u otro
 		console.log(effective);
-		if(effective[index].hit === -1) {text+="¡Es super efectivo!";}
-		else if (effective[index].hit === 1) {text+= "No es muy efectivo..."}
-		else if(effective[index].hit === 2){text+="Pero no tuvo efecto."}
 		if(attackInfo.type === 5) // Si el ataque es de tipo support
 		{
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
 		}
+		else{
+			text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		}
+		if(effective[index].hit === -1) {text+="¡Es super efectivo!";}
+		else if (effective[index].hit === 1) {text+= "No es muy efectivo..."}
+		else if(effective[index].hit === 2){text+="Pero no tuvo efecto."}
 		this.log.AddText(text); // añadimos el texto al log
 		this.log.UpdateLog(); // y lo mostramos (quizá esto podría hacerlo el propio log cuando se añade un texto?)
 		this.BuildLogState(enemy, effective, index);
@@ -342,41 +347,50 @@ export class FightScene extends Phaser.Scene {
 
 	CheckAlteredStates(){
 		let self = this;
+		let areAlteredStates = false;
 		this.turns.forEach(function (character){
 			if(character.type) // ALIADO
 			{
 				let ally = self.allies[character.index];
-				if(ally.alteredStates[0]){
-					console.log(ally);
-					let text = ally.name + " sufrio daño por estar quemado.";
-					ally.Burned();
-					self.BuildEndTurnLog(text);
-				} 
-				if(ally.alteredStates[2]){
-					console.log(ally);
-					let text = ally.name + " sufrio daño por estar envenenado.";
-					ally.Poisoned();
-					self.BuildEndTurnLog(text);
+				if(!ally.dead){
+					if(ally.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
+						console.log(ally);
+						areAlteredStates = true;
+						let text = ally.name + " sufrio daño por estar quemado.";
+						ally.Burned();
+						self.BuildEndTurnLog(text);
+					} 
+					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+						console.log(ally);
+						areAlteredStates = true;
+						let text = ally.name + " sufrio daño por estar envenenado.";
+						ally.Poisoned();
+						self.BuildEndTurnLog(text);
+					}
+					self.alliesHud[character.index].Update();
 				}
-				self.alliesHud[character.index].Update();
 
 			}
 			else{
 				let enemy= self.enemies[character.index];
-				if(enemy.alteredStates[0]){
-					let text = enemy.name + " sufrio daño por estar quemado.";
-					enemy.Burned();
-					self.BuildEndTurnLog(text);
-				} 
-				if(enemy.alteredStates[2]){
-					let text = enemy.name + " sufrio daño por estar envenenado.";
-					enemy.Poisoned();
-					self.BuildEndTurnLog(text);
+				if(!enemy.dead){
+					if(enemy.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
+						let text = enemy.name + " sufrio daño por estar quemado.";
+						areAlteredStates = true;
+						enemy.Burned();
+						self.BuildEndTurnLog(text);
+					} 
+					if(enemy.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+						let text = enemy.name + " sufrio daño por estar envenenado.";
+						areAlteredStates = true;
+						enemy.Poisoned();
+						self.BuildEndTurnLog(text);
+					}
+					self.enemiesHud[character.index].Update();
 				}
-				self.enemiesHud[character.index].Update();
-
 			}
 		});
+		return areAlteredStates;
 	}
 
 	// actualizamos el objeto con info de la party
@@ -388,6 +402,11 @@ export class FightScene extends Phaser.Scene {
 			ally.actualHp = self.allies[index].actualHp;
 			ally.actualMp = self.allies[index].actualMp;
 			ally.dead = self.allies[index].dead;
+			console.log(self.allies[index].alteredStates);
+			ally.alteredStates = self.allies[index].alteredStates;
+			console.log(ally.alteredStates);
+			console.log(self.allies[index].alteredStates);
+
 		})
 	}
 
@@ -396,10 +415,10 @@ export class FightScene extends Phaser.Scene {
 
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
-		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
+		let enemiesNumber = this.GetRandom(2, false); // número de enemigos
 
 		for(let i = 0; i < enemiesNumber; i++){
-			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
+			let enemyType = this.GetRandom(1,true);//this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
 				// primer enemigo colocado con una posición específica
 				this.enemies[0] = new Character(this,this.enemiesInfo[enemyType].name,this.sys.game.canvas.width/2-(75*enemiesNumber/2) +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
@@ -514,9 +533,16 @@ export class FightScene extends Phaser.Scene {
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
 				this.ToggleButtons(true);
-				this.state = FightState.ChooseAttack;
 				// cambiamos el aliado actual
 				this.currentAlly = this.turns[this.currentTurn].index;
+				if(!this.allies[this.currentAlly].alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){ // Paralizado
+					this.state = FightState.ChooseAttack;
+				}
+				else{
+					this.state = FightState.TimeUntilNextTurn;
+					this.BuildEndTurnLog(this.allies[this.currentAlly].name + " no se pudo mover.");
+				}
+
 
 				//···RAUL PRUEBAS···
 				// Input teclado
@@ -526,7 +552,13 @@ export class FightScene extends Phaser.Scene {
 			}
 			else    // ENEMIGOS
 			{   
-				this.state = FightState.ExecuteAttack;
+				if(!this.enemies[this.turns[this.currentTurn].index].alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){ // Paralizado
+					this.state = FightState.ExecuteAttack;
+				}
+				else{
+					this.state = FightState.TimeUntilNextTurn;
+					this.BuildEndTurnLog(this.enemies[this.turns[this.currentTurn].index].name + " no se pudo mover.");
+				}
 			}
 		}
 	}
@@ -681,8 +713,9 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
 			if(this.currentTurn === this.turns.length - 1) {
-				this.state = FightState.AlteratedStates;
-				this.CheckAlteredStates();
+				let areAlteredStates = this.CheckAlteredStates();
+				if(!areAlteredStates) this.state = FightState.SelectTurn;
+				else this.state = FightState.AlteratedStates; 
 			}
 			else this.state = FightState.SelectTurn;	
 		}
@@ -841,6 +874,10 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.y = this.enemies[this.enemyselected].y - 75;
 				this.pointer.angle = 90;
 			}
+			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
+				console.log("entre");
+				this.state = FightState.ChooseAttack;
+			}
 		}
 		else if(this.state === FightState.ChooseAlly){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
@@ -868,6 +905,10 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.x = this.allies[this.allaySelected].x-75;
 				this.pointer.y = this.allies[this.allaySelected].y;
 				this.pointer.angle = 0;
+			}
+			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
+				console.log("entre");
+				this.state = FightState.ChooseAttack;
 			}
 		}
 		else if(this.state === FightState.ExecuteAttack){

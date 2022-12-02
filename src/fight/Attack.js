@@ -65,11 +65,14 @@ export function attackInfo(name,type,dmg,requiredMps,targets){
 }
 
 // enumerador de tipos de ataque
-const typeOfAttack = {
+export const typeOfAttack = {
 	Physical: 0,
 	Ranged: 1,
+	// Ataques que provocan estados alterados
 	Fire: 2,
 	Electrical: 3,
 	Toxic: 4,
+	// Ataque de curación
 	Support: 5
 };
+export const elementalAttackDifference = 2;
