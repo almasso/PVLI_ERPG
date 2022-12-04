@@ -222,6 +222,7 @@ export class FightScene extends Phaser.Scene {
 		{
 			this.scene.wake('movement');
 			this.scene.get('hud').Walk();
+			this.scene.get('hud').UpdateHUD();
 		}
 		else // Si se han matado a todos los enemigos...
 		{

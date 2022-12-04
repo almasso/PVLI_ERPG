@@ -1,6 +1,32 @@
 import NPC from "./npc.js";
+import { allyParty } from "../fight/Party.js";
 
-export default class Manin extends Phaser.GameObjects.Sprite {
+export class AllyTEST extends Phaser.GameObjects.Sprite {
+	constructor(scene, x, y, manin, info) {
+		super(scene, x, y, 'manin');
+        
+        this.scene.add.existing(this);
+        this.setScale(0.15,0.15);
+        scene.physics.add.existing(this, true);
+        this.manin = manin;
+
+        this.trigger = this.scene.add.zone(x, y, this.body.width + 7, this.body.height + 7);
+        this.generateTrigger();
+        this.scene.physics.world.enable(this.trigger);
+        this.trigger.body.onOverlap = true;
+        this.trigger.setScale(7,7);
+		this.info = info;
+	}
+	generateTrigger() {
+        this.scene.physics.add.collider(this.manin, this);
+		this.scene.physics.add.overlap(this.manin, this.trigger);
+    }
+
+}
+
+
+
+export class Manin extends Phaser.GameObjects.Sprite {
 
 	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin_move');
@@ -12,41 +38,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
-		//this.isInteracting = false;
-		//#region  animations
-        // Creamos las animaciones de nuestro caballero
-		/*this.scene.anims.create({
-			key: 'idle',
-			frames: scene.anims.generateFrameNumbers('knight', {start:0, end:3}),
-			frameRate: 5,
-			repeat: -1
-		});
-		this.scene.anims.create({
-			key: 'attack',
-			frames: scene.anims.generateFrameNumbers('knight', {start:4, end:7}),
-			frameRate: 18,
-			repeat: 0
-		});
-		this.scene.anims.create({
-			key: 'run',
-			frames: scene.anims.generateFrameNumbers('knight', {start:8, end:14}),
-			frameRate: 5,
-			repeat: -1
-		});
-
-		// Si la animación de ataque se completa pasamos a ejecutar la animación 'idle'
-		this.on('animationcomplete', end => {
-			if (this.anims.currentAnim.key === 'attack'){
-				this.stopAttack()
-			}
-		})
-
-		// La animación a ejecutar según se genere el personaje será 'idle'
-		this.play('idle');
-		*/
-		//#endregion
-
-		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
 		this.aKey = this.scene.input.keyboard.addKey('A'); // move left
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
@@ -59,7 +50,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		// Ajustamos el "collider" de manín
 		this.bodyOffset = this.body.height/10;
 		this.bodyWidth = this.body.width/2;
-
+		//#region animaciones
 		this.scene.anims.create({
 			key: 'move', //identificador de la animación
 			frames: scene.anims.generateFrameNumbers('manin_move', 
@@ -104,14 +95,20 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			}
 		});
 		this.play('pose');	
+		//#endregion
 	}
 
 	// interacción 
     interact(){
 		if(this.collider instanceof NPC) {
 			this.collider.readDialogues();
+			console.log(this.collider);
 		}
-		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
+		else if(this.collider instanceof AllyTEST) 
+		{ 
+			allyParty.Add(this.collider.info);
+			this.scene.scene.get('hud').Reset();
+		}
     }
 
 	/**

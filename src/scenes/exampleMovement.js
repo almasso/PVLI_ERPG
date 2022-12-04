@@ -1,9 +1,8 @@
-import Manin from '../obj/manin.js';
+import {Manin, AllyTEST} from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
-import {walkingHUD, ExploreMenu} from '../fight/HUD.js'
-import {InputMan} from '../fight/InputManager.js'
+import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -113,6 +112,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
 
+		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		//#endregion
 	}
 	
@@ -159,6 +159,12 @@ export default class MovementExample extends Phaser.Scene {
 				this.manin.collider = i;
 			}
 		}
+	
+		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
+			console.log("overlap con aliado")
+			this.manin.collider = this.ally;
+		}
+
 		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 			this.manin.collider = null;
 		}

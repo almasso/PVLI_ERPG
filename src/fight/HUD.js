@@ -413,6 +413,7 @@ export class walkingHUD {
 		});
 	}
 
+	// esconder menú
 	Hide(bool){
 		let self = this;
 		this.characters.forEach(function(char){
@@ -483,6 +484,7 @@ export class ExploreMenu {
 			self.managerImages.push(images);
 		})
 	}
+
 	SwapAllies(ally){
 		this.alliesToSwap.push(ally); // acordarse de borrar el array cuando quites el menú
 		if(this.alliesToSwap.length > 1){
@@ -610,6 +612,8 @@ export class ExploreMenu {
 		this.partyImages = [];
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
+			console.log(ally);
+			console.log(index);
 			// declaración de variables
 			let newY = y+self.blockSize * self.scale *index;
 			let images = self.partyImages[index];

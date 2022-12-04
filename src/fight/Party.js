@@ -39,6 +39,9 @@ export class Party{
 		this.party[1].index = 1;
 		this.party[2].index = 2;
 		this.party[3].index = 3;
+		this.party[4].index = 4;
+		this.party[5].index = 5;
+		this.party[6].index = 6;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
@@ -66,14 +69,14 @@ export class Party{
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
+		console.log("PINGA");
 		this.party.push(character);
 		if(this.alliesNum < 4) this.alliesNum++;
 		else this.alliesNum = 4;
+		this.party[this.party.length-1].index = this.party.length - 1;
 	}
 
-
 	// Llevamos la party al estado original (TEMPORAL)
-
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
@@ -88,7 +91,7 @@ export class Party{
 };
 
 // función que devuvelve un objeto con información de un personaje
-function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
+export function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
 	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0}
 }
 

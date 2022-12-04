@@ -53,7 +53,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow();
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow();
         
-        
         console.log(this.currentDialog);
         console.log(this.formerDialog);
         // console.log((this.dialogIndex + this.dialogCount) - 1);
