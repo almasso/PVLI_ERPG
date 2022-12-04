@@ -70,6 +70,7 @@ export default class MovementExample extends Phaser.Scene {
 		//#endregion	
 		// ponemos a dormir la escena que controla la UI
 		this.scene.sleep('uimanager');
+		this.scene.launch('hud');
 
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
@@ -113,45 +114,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.manin.body.onCollide = true;
 
 		//#endregion
-		
-		// generamos HUD de estado de party
-		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD')
-		this.walkingHUD.depth = 3;
-
-		this.pointer = this.add.image(0,0,'pointer').setOrigin(0,0);
-		this.pointer.visible = false;
-		this.pointer.depth = 3;
-		// generamos el Menú
-		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer, this.walkingHUD);
-		this.menu.Show(false);
-		this.showMenu = false;
-		/*
-		* Escuchamos los eventos de colisión en el mundo para poder actuar ante ellos
-		* En este caso queremos detectar cuando el caballero colisiona con el suelo para activar el salto del personaje
-		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
-		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
-		*/
-		var self = this;
-		var isColliding = false;
-		/*this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
-			//console.log(isColliding);
-			
-			if(!isColliding) gameObject1.collider = null;
-			else isColliding = false;
-
-		});
-		self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			isColliding = true;
-			console.log("HA CHOCAO");
-			gameObject1.collider = gameObject2;
-		});*/
-		
-
-	}
-	
-	// actualizamos el HUD de estado de party
-	UpdateHUD(){
-	 	this.walkingHUD.Update();
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -182,11 +144,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
 
-	CollideWithNPC() {
-		
-		
-	}
-	
 	// comprobación de colisiones y apertura de menús
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
@@ -196,16 +153,15 @@ export default class MovementExample extends Phaser.Scene {
 		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
 		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
 
-		if(Phaser.Input.Keyboard.JustDown(this.qKey)) {this.showMenu = !this.showMenu; this.menu.Show(this.showMenu); }
-			for(let i of this.npcs) {
-				if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-					console.log("overlap")
-					this.manin.collider = i;
-				}
+		for(let i of this.npcs) {
+			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+				console.log("overlap")
+				this.manin.collider = i;
 			}
-			if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
-				this.manin.collider = null;
-			}
+		}
+		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
+			this.manin.collider = null;
+		}
 		
 
 	}
@@ -215,5 +171,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
         this.scene.sleep('movement');
+		this.scene.get('hud').Fight();
     }
 }

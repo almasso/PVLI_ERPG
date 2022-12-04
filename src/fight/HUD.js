@@ -341,8 +341,8 @@ export class walkingHUD {
 		this.y = y;
 		this.scene = scene; // escena
 		this.imgID = img; // id imagen
-		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
-		bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
+		this.bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
+		this.bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
 		this.characters = []; // array de objetos de información
 		this.GenerateImages(); // generamos las imágenes de cada bichito
 		this.imagesToSwap = [];
@@ -410,6 +410,16 @@ export class walkingHUD {
 
 			self.characters[index].health.Update(ally.actualHp); 
 			self.characters[index].mana.Update(ally.actualMp);
+		});
+	}
+
+	Hide(bool){
+		let self = this;
+		this.characters.forEach(function(char){
+			char.image.visible = !bool;
+			char.health.hide(bool);
+			char.mana.hide(bool);
+			self.bgIMG.visible = !bool;
 		});
 	}
 }
@@ -861,12 +871,10 @@ export class ExploreMenu {
 		}
 	}
 
-	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party
-		// se mostrarán los personajes activmos en grande en el centro de la pantalla y debajo
-		// los personajes disponibles para intercambiar
+	Hide(bool){
+		this.ShowParty(!bool);
+		this.ManageParty(!bool);
+		this.Show(!bool);
 	}
 
-	Back(){ // ejecutado al pulsar el botón back
-		// en función del menú actual, se irá a uno anterior
-	}
 }

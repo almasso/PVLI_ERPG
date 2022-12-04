@@ -102,12 +102,8 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			else{
 				this.play('pose');
 			}
-			
 		});
-
-		this.play('pose');
-
-		
+		this.play('pose');	
 	}
 
 	// interacción 
