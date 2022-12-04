@@ -14,7 +14,7 @@ export default class ParkScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'park' });
 		this.manin; // protagonista
-		this.inventory = new Inventory();
+		this.inventory;
 	}
 	
 	// cargamos todas las imágenes
@@ -92,8 +92,8 @@ export default class ParkScene extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 400, 'aloy', 0, npc_dialogues);
-		let npc2 = new NPC(this, 200, 200, 'kratos', 1, npc_dialogues);
+		let npc1 = new NPC(this, 400, 400, 'kratos', 0, npc_dialogues);
+		let npc2 = new NPC(this, 200, 200, 'aloy', 1, npc_dialogues);
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 		//#endregion
@@ -168,7 +168,7 @@ export default class ParkScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		for(let i = 0; i < 1; i++){
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this, 64*i,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this, 20*i,200 + 64 *o, 'fria',2.5,2.5));
 			}
 		}
 		// añadimos la zona de colisión
@@ -223,6 +223,14 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.manin.touchingFria = false;
         this.scene.launch('movement');
-        this.scene.stop('park');
+		this.scene.get('movement').LoadInventory(this.inventory);
+		this.scene.get('movement').LoadManin(this.manin);
+        this.scene.sleep('park');
     }
+	LoadInventory(inv){
+		this.inventory = inv;
+	}
+	LoadManin(man){
+		this.manin=man;
+	}
 }

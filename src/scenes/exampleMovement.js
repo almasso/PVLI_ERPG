@@ -14,7 +14,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
-		this.inventory = new Inventory();
+		this.inventory;
 	}
 	
 	// cargamos todas las imágenes
@@ -221,6 +221,16 @@ export default class MovementExample extends Phaser.Scene {
 	Park(){
 		this.manin.touchingGrass = false;
         this.scene.launch('park');
-        this.scene.stop('movement');
+		this.scene.get('park').LoadInventory(this.inventory);
+		this.scene.get('park').LoadManin(this.manin);
+        this.scene.sleep('movement');
     }
+
+	LoadInventory(inv){
+		this.inventory = inv;
+	}
+	LoadManin(man){
+		delete this.manin;
+		this.manin=man;
+	}
 }
