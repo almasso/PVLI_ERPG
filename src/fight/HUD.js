@@ -612,8 +612,6 @@ export class ExploreMenu {
 		this.partyImages = [];
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
-			console.log(ally);
-			console.log(index);
 			// declaración de variables
 			let newY = y+self.blockSize * self.scale *index;
 			let images = self.partyImages[index];

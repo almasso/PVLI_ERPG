@@ -11,7 +11,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
-		
+		this.hierbasColliders = [];
 	}
 	
 	// cargamos todas las imágenes
@@ -93,7 +93,6 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// genera la hierba y su collider. (temporal)
-		this.GenerateHostileGround();
 		let npc1 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
@@ -103,7 +102,10 @@ export default class MovementExample extends Phaser.Scene {
 		npc3.scale = 2.5;
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
-		this.GenerateHostileGround();
+		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
+		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
+		
+
 		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
 		this.physics.add.collider(this.manin, bLeft);
@@ -117,41 +119,49 @@ export default class MovementExample extends Phaser.Scene {
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
-	GenerateHostileGround(){
-		this.hierbas = []; // array de hierbas
-		this.hierbasColliders; //collider del trozo de hierba hostil
-
-		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
-		for(let i = 0; i < 4; i++){
-			for(let o = 0; o < 4; o++){
-				this.hierbas.push(new enviromentObj(this,500 + 64*i,200 + 64 *o, 'hierba',2.5,2.5));
+	GenerateHostileGround(x, y, fils, cols, scale){
+		let hierbas = []; // array de hierbas
+		// generamos las hierbas que se nos digan
+		for(let i = 0; i < fils; i++){
+			for(let o = 0; o < cols; o++){
+				hierbas.push(new enviromentObj(this,x + 64*i,y + 64 *o, 'hierba',scale,scale));
 			}
 		}
 		// añadimos la zona de colisión
-		this.hierbasColliders = this.add.zone(this.hierbas[0].x,this.hierbas[0].y - 55).setSize(this.hierbas[0].displayWidth +this.hierbas[0].displayWidth * 1.5,(this.hierbas[0].displayHeight) * 2.5 + 55).setOrigin(0,0);		
-		this.physics.world.enable(this.hierbasColliders); // añadimos su collider
-		this.hierbasColliders.body.setAllowGravity(false); // quitamos gravedad
-		this.hierbasColliders.body.moves = false;
+		this.hierbasColliders.push(this.add.zone(x - 44, y - 33).setSize((hierbas[hierbas.length-1].displayWidth - 11) * fils,(hierbas[hierbas.length-1].displayHeight - 11) * cols).setOrigin(0,0));		
+		this.physics.world.enable(this.hierbasColliders[this.hierbasColliders.length-1]); // añadimos su collider
+		this.hierbasColliders[this.hierbasColliders.length-1].body.setAllowGravity(false); // quitamos gravedad
+		this.hierbasColliders[this.hierbasColliders.length-1].body.moves = false;
 		
 		// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
-		this.hierbasColliders.on("overlapstart", () =>{
+		this.hierbasColliders[this.hierbasColliders.length-1].on("overlapstart", () =>{
 			this.manin.touchingGrass = true;
 		})
-		this.hierbasColliders.on("overlapend", () =>{
+		this.hierbasColliders[this.hierbasColliders.length-1].on("overlapend", () =>{
 			this.manin.touchingGrass = false;
+			
 		})
 		// añadimos un overlap entre manín y esta nueva zona de colliders
-		this.physics.add.overlap(this.manin, this.hierbasColliders);
+		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
 
 	// comprobación de colisiones y apertura de menús
 	update(){
-		var touching = !this.hierbasColliders.body.touching.none;
-		var wasTouching = !this.hierbasColliders.body.wasTouching.none;
-
-		
-		if(touching && !wasTouching) {this.hierbasColliders.emit("overlapstart");}
-		else if(!touching && wasTouching) this.hierbasColliders.emit("overlapend");
+		let self = this;
+		let hasCollided = false;
+		this.hierbasColliders.forEach(function(colliders){
+			
+			let maninBounds = self.manin.zone.getBounds();
+			let colliderBounds = colliders.getBounds();
+			
+			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, colliderBounds)){
+				colliders.emit("overlapstart");
+				hasCollided = true;
+			}
+			else if(!hasCollided){
+				colliders.emit("overlapend");
+			}
+		});
 
 		for(let i of this.npcs) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
@@ -168,8 +178,6 @@ export default class MovementExample extends Phaser.Scene {
 		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 			this.manin.collider = null;
 		}
-		
-
 	}
 
 	// pasamos a la escena de pelea

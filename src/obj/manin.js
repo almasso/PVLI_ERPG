@@ -24,16 +24,17 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
 
 }
 
-
-
 export class Manin extends Phaser.GameObjects.Sprite {
 
 	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin_move');
+		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(3,3);
 		this.depth = 2;
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
+		this.zone = this.scene.add.zone(x, y + this.displayHeight / 3).setSize(this.displayWidth / 2,this.displayHeight / 4);
+		this.scene.physics.world.enable(this.zone);
         this.stepsWalked = 0;
         this.touchingGrass = false;
 		this.collider = null;
@@ -121,7 +122,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		// Es muy imporante llamar al preUpdate del padre (Sprite), sino no se ejecutará la animación
 		super.preUpdate(t, dt);
 
-		
 		if(Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey))
 		{
 			this.play('move');
@@ -134,7 +134,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(true, false)
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.x = this.body.x + this.displayWidth/2;
+            this.increaseSteps()
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
@@ -143,7 +144,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.setFlip(false, false)
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
-			if(this.touchingGrass) this.stepsWalked++;
+			this.zone.x = this.body.x + this.displayWidth/2;
+			this.increaseSteps()
 			
 		}
 
@@ -156,14 +158,16 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.sKey.isDown){
 			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
+            this.increaseSteps()
 		}
 
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
 		if(this.wKey.isDown){
 			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
+            this.increaseSteps()
 		}
 
         if(Phaser.Input.Keyboard.JustUp(this.wKey) || Phaser.Input.Keyboard.JustUp(this.sKey)){
@@ -182,6 +186,14 @@ export class Manin extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
             this.scene.Fight()
         }
+	}
+
+	increaseSteps(){
+		if(this.touchingGrass) 
+		{
+			this.stepsWalked++;
+			console.log("A VE");
+		}
 	}
 	
 }
