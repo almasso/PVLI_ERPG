@@ -76,7 +76,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.scene.anims.create({
 			
 			key: this.mon+'_burn', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('manin_burn', // cambiar animaciones cuando esten hechas
+			frames: scene.anims.generateFrameNumbers(this.mon+'_burn', // cambiar animaciones cuando esten hechas
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -88,7 +88,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.scene.anims.create({
 			
 			key: this.mon+'_poison', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('manin_poison', // cambiar animaciones cuando esten hechas
+			frames: scene.anims.generateFrameNumbers(this.mon+'_poison', // cambiar animaciones cuando esten hechas
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
@@ -100,7 +100,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.scene.anims.create({
 			
 			key: this.mon+'_shock', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers('manin_shock',  // cambiar animaciones cuando esten hechas
+			frames: scene.anims.generateFrameNumbers(this.mon+'_shock',  // cambiar animaciones cuando esten hechas
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación

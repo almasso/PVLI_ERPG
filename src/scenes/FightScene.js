@@ -34,6 +34,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
 		this.load.image('melendi','assets/textures/Characters/Melendi.png')
+		this.load.image('jarfaiter','assets/textures/Characters/Jarfaiter.png')
 		//this.load.image('artista','assets/textures/Artista.png')
 		this.load.image('artista2','assets/textures/Characters/Artista2.png')
 		this.load.image('culturista','assets/textures/Characters/Culturista.png')
@@ -51,6 +52,9 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('artist_idle','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_burn','assets/textures/Characters/artist_burn.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_shock','assets/textures/Characters/artist_shock.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_poison','assets/textures/Characters/artist_poison.png',{frameWidth:24, frameHeight:32});
 
 		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
@@ -64,11 +68,19 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_burn','assets/textures/Characters/melendi_burn.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_shock','assets/textures/Characters/melendi_shock.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_poison','assets/textures/Characters/melendi_poison.png',{frameWidth:22, frameHeight:27});
 
 
-		this.load.spritesheet('jarfaiter', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_dead', 'assets/textures/Characters/Jarfaiter_dead.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_burn', 'assets/textures/Characters/Jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_shock', 'assets/textures/Characters/Jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_poison', 'assets/textures/Characters/Jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
+
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -397,7 +409,7 @@ export class FightScene extends Phaser.Scene {
 						let text = enemy.name + " sufrio daño por estar envenenado.";
 						areAlteredStates = true;
 						enemy.Poisoned();
-						enemy.play(ally.imageId+'_poison');
+						enemy.play(enemy.imageId+'_poison');
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 
