@@ -11,7 +11,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
-		this.inventory = new Inventory();
+		//this.inventory = new Inventory();
 		this.hierbasColliders = [];
 	}
 	
@@ -96,16 +96,17 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 400, 'aloy', 0, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 200, 200, 'kratos', 1, npc_dialogues, this.manin);
-		let npc4 = new NPC(this, 400, 400, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 300, 100, 'kratos', 1, npc_dialogues, this.manin);
+		let npc1 = new NPC(this, 500, 100, 'aloy', 0, npc_dialogues, this.manin);
+		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
 		this.npcs = [npc1, npc2, npc3, npc4, npc5];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 		npc3.scale = 2.5;
-
+		npc4.scale = 2.5;
+		npc5.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
@@ -119,6 +120,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.manin.body.onCollide = true;
 
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
+		this.ally.scale = 2.5;
 		//#endregion
 	}
 	
@@ -149,9 +151,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
 
-	updateInventory(inv){
+	/*updateInventory(inv){
 		this.inventory = inv;
-	}
+	}*/
 	
 	// comprobación de colisiones y apertura de menús
 	update(){
@@ -192,7 +194,7 @@ export default class MovementExample extends Phaser.Scene {
     Fight(){
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
-		this.scene.get('fightscene').LoadInventory(this.inventory);
+		//this.scene.get('fightscene').LoadInventory(this.inventory);
         this.scene.sleep('movement');
 		this.scene.get('hud').Fight();
     }
