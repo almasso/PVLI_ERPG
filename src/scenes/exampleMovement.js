@@ -83,8 +83,10 @@ export default class MovementExample extends Phaser.Scene {
 		// Offset para el fondo
 		let upperBackgroundOffset = 20;
 
+		this.questLog = "test"; 
+
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), this.questLog);
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
