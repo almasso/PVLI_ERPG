@@ -96,11 +96,11 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc2 = new NPC(this, 300, 100, 'kratos', 1, npc_dialogues, this.manin);
-		let npc1 = new NPC(this, 500, 100, 'aloy', 0, npc_dialogues, this.manin);
 		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
+		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
 		this.npcs = [npc1, npc2, npc3, npc4, npc5];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
