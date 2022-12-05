@@ -29,6 +29,12 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
 		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
+		this.load.image('alex', 'assets/textures/Characters/Alex.png');
+		this.load.image('compuman', 'assets/textures/Characters/Compuman.png');
+		this.load.image('frozono', 'assets/textures/Characters/Frozono.png');
+		this.load.image('unverifiedtoni', 'assets/textures/Characters/toni1.png');
+		this.load.image('verifiedtoni', 'assets/textures/Characters/toni2.png');
+		this.load.image('pepperboy', 'assets/textures/Characters/PepperBoy.png');
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
@@ -96,20 +102,22 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
+		let npc1 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		this.npcs = [npc1, npc2, npc3, npc4, npc5];
-		npc1.scale = 2.5;
-		npc2.scale = 2.5;
-		npc3.scale = 2.5;
-		npc4.scale = 2.5;
-		npc5.scale = 2.5;
+		//let npc4 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
+		//let npc5 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
+		let npc4 = new NPC(this, 500, 100, 'alex', 3, npc_dialogues, this.manin);
+		let npc5 = new NPC(this, 100, 100, 'frozono', 4, npc_dialogues, this.manin);
+		let npc6 = new NPC(this, 100, 200, 'compuman', 5, npc_dialogues, this.manin);
+		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
+		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
+		let npc9 = new NPC(this, 300, 400, 'pepperboy', 8, npc_dialogues, this.manin);
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9];
+		for(let e of this.npcs) e.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
-		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
-		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
+		//this.GenerateHostileGround(120, 400, 2, 1, 2.5);
+		//this.GenerateHostileGround(500, 200, 4, 4, 2.5);
 		
 		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);

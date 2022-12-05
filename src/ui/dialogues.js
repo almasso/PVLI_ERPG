@@ -21,7 +21,8 @@ export class DialogBox {
      * @param {number} opts.padding Padding del texto
      * @param {number} opts.dialogSpeed Velocidad de aparición de los textos
      * @param {number} opts.x Posición en X de la caja de texto
-     * @param {number} optx.y Posición en Y de la caja de texto
+     * @param {number} opts.y Posición en Y de la caja de texto
+     * @param {string} opts.textColor Color del texto en la caja de texto
      */
     init(opts) {
         if (!opts) opts = {}; 
@@ -38,6 +39,7 @@ export class DialogBox {
         this.eventCounter = 0; //Contador de eventos
         this.visible = true; //Variable que dice si el cuadro de texto es visible o no
         this.text; //Referencia a Phaser.Text
+        this.textColor = opts.textColor;
         this.dialog; //Referencia a Phaser.Dialog
         this.graphics; //Referencia a Phaser.Graphics
         this.beingAnimated; //Nos dice si el texto está siendo o no activado
@@ -140,6 +142,7 @@ export class DialogBox {
         var tempText = animate ? '' : text;
 
         this.textPosition(tempText);
+        this.text.setColor(this.textColor);
         if (animate) {
             this.timedEvent = this.scene.time.addEvent({
             delay: 150 - (this.dialogSpeed * 30),
@@ -184,6 +187,7 @@ export class DialogBox {
             x,
             y,
             text,
+            color : this.textColor,
             style: {
               wordWrap: { width: this.getGameWidth() - (this.padding * 2) - 25 }
             }
@@ -217,14 +221,17 @@ export default class DialogScene extends Phaser.Scene {
     }
 
     createWindow() {
-        this.dialogBox.init();
+        this.dialogBox.init({
+            textColor : "#FFFFFF"
+        });
         this.nameBox.init({
             borderThickness : 2,
             windowColor: 0xE3BE39,
             windowHeight: 35,
-            padding: 310,
+            padding: 290,
             x:20,
-            y:380
+            y:380,
+            textColor: "#0015FF"
         })
         this.hasCreatedWindow = true;
     }

@@ -57,7 +57,7 @@
         "npcID": 2,
         "unique" : true,
         "npcName" : "Jatsune Micu",
-        "text": "uwu kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+        "text": "uwu"
     },
     {
         "npcID": 2,
@@ -69,12 +69,138 @@
         "npcID": 2,
         "unique" : true,
         "npcName" : "Jatsune Micu",
-        "text": "owo pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp"
+        "text": "owo"
     },
     {
         "npcID": 2,
         "unique" : true,
         "npcName" : "Jatsune Micu",
         "text": "M-Manin kun...*blushes again*"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "npcName" : "Alex",
+        "text": "Bueno."
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "npcName" : "Alex",
+        "text": "¿Y?"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "npcName" : "Alex",
+        "text": "Me cago en la **** de oros."
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "npcName" : "Alex",
+        "text": "¡Toma mango!"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "npcName" : "Alex",
+        "text": "Sí, sí, sí Pedrerol, sí, sí."
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "npcName" : "Frozono",
+        "text": "¿Dónde está mi súpertraje?"
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "npcName" : "Frozono",
+        "text": "Pongan bachata."
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "npcName" : "Frozono",
+        "text": "Me has dejado helado."
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "npcName" : "Compuman",
+        "text": "Hola a mis fans"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "npcName" : "Compuman",
+        "text": "jeje"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "npcName" : "Compuman",
+        "text": "¿Karnaugh? Es un buen amigo, jeje"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "npcName" : "Compuman",
+        "text": "Esto se acabó. Kisses."
+    },
+    {
+        "npcID": 6,
+        "unique" : true,
+        "npcName" : "Toni",
+        "text": "ª"
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "npcName" : "Toni ✅. Oficial ✅",
+        "text": "Ey, completo undefined."
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "npcName" : "Toni ✅. Oficial ✅",
+        "text": "Mira, acabo de terminar this insignia."
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "npcName" : "Toni ✅. Oficial ✅",
+        "text": "Se la he copiado al tal 'Musck' ese."
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "npcName" : "Toni ✅. Oficial ✅",
+        "text": "¿Tú tienes alguna insignia?."
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "npcName" : "Toni ✅. Oficial ✅",
+        "text": "Traeme 30 y te invito a una cerveza en la posada más cercana."
+    },
+    {
+        "npcID": 8,
+        "unique" : true,
+        "npcName" : "Pepperboy",
+        "text": "Ha llegado la época de los sobornos."
+    },
+    {
+        "npcID": 8,
+        "unique" : true,
+        "npcName" : "Pepperboy",
+        "text": "Llevo una semana cenando pimientos de Pliego."
+    },
+    {
+        "npcID": 8,
+        "unique" : true,
+        "npcName" : "Pepperboy",
+        "text": "Con un buen filetón están tremendos."
     }
 ]}
