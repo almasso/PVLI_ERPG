@@ -74,6 +74,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 
     interact(){
 		if(this.collider instanceof NPC) {
+			this.collider.currentlyTalking = true;
 			this.collider.readDialogues();
 		}
 		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
@@ -131,7 +132,6 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 
-        console.log(this.stepsWalked);
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);

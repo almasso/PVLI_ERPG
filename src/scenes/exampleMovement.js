@@ -73,22 +73,6 @@ export default class MovementExample extends Phaser.Scene {
 		* El salto del caballero lo desactivamos en su "clase" (archivo knight.js) para evitar dobles saltos
 		* También comprobamos si está en contacto con alguna caja mientras ataca, en ese caso destruimos la caja
 		*/
-		var self = this;
-		var isColliding = false;
-		/*this.physics.world.on('overlap', function(gameObject1, gameObject2, body1, body2) {
-			//console.log(isColliding);
-			
-			if(!isColliding) gameObject1.collider = null;
-			else isColliding = false;
-
-		});
-		self.physics.world.on('collide', function(gameObject1, gameObject2, body1, body2) {
-			isColliding = true;
-			console.log("HA CHOCAO");
-			gameObject1.collider = gameObject2;
-		});*/
-		
-
 	}
 	
 	// estaría muy guay parametrizar esto de aquí, pero de momento lo dejamos para esto de forma genérica :)
@@ -115,11 +99,6 @@ export default class MovementExample extends Phaser.Scene {
 		})
 		this.physics.add.overlap(this.manin, this.hierbasColliders);
 	}
-
-	CollideWithNPC() {
-		
-		
-	}
 	
 	update(){
 		var touching = !this.hierbasColliders.body.touching.none;
@@ -131,7 +110,6 @@ export default class MovementExample extends Phaser.Scene {
 
 			for(let i of this.npcs) {
 				if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-					console.log("overlap")
 					this.manin.collider = i;
 				}
 			}
