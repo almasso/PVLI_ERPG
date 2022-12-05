@@ -102,6 +102,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	// interacción 
     interact(){
 		if(this.collider instanceof NPC) {
+			this.collider.currentlyTalking = true;
 			this.collider.readDialogues();
 			console.log(this.collider);
 		}
@@ -180,6 +181,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
+
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);

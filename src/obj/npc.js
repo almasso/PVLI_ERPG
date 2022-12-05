@@ -11,6 +11,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.formerDialog = 0;
         this.beingAnimated = false;
         this.canCloseWindow = false;
+        this.currentlyTalking = false;
         
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
@@ -52,13 +53,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     readDialogues() {
         if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow();
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow();
-        
-        console.log(this.currentDialog);
-        console.log(this.formerDialog);
-        // console.log((this.dialogIndex + this.dialogCount) - 1);
-        // console.log(this.beingAnimated);
-        // console.log(this.dialogIndex);
-        // console.log(this.dialogCount);
 
         if(this.currentDialog==this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
@@ -95,10 +89,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 }
             }
             else {
-                this.canCloseWindow = false;
                 this.currentDialog++;
                 this.formerDialog++;
-                this.beingAnimated=false;
                 this.closeWindow();
             }
         }
@@ -111,17 +103,20 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             this.formerDialog = this.dialogIndex;
         }
         this.beingAnimated = false;
+        this.canCloseWindow = false;
+        this.currentlyTalking = false;
         return;
     }
 
     create() {
         this.uiScene.events.on("isBeingAnimated", () => {
-            this.beingAnimated = true;
+            if(this.currentlyTalking) this.beingAnimated = true;
 		})
 		this.uiScene.events.on("isNotBeingAnimated", () => {
-            console.log("ya he terminado de animar");
-			this.beingAnimated = false;
-            this.canCloseWindow = true;
+			if(this.currentlyTalking) {
+                this.beingAnimated = false;
+                this.canCloseWindow = true;
+            }
 		})
     }
 } 
