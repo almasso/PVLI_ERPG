@@ -12,7 +12,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.beingAnimated = false;
         this.canCloseWindow = false;
         this.currentlyTalking = false;
-        this.verified = this.dialogues.verified[this.npcID].verified;
+        this.verified = this.dialogues.attributes[this.npcID].verified;
+        this.developer = this.dialogues.attributes[this.npcID].developer;
         
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
@@ -52,8 +53,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     }
 
     readDialogues() {   
-        if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow(this.verified);
-        else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified);
+        if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow(this.verified, this.developer);
+        else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified, this.developer);
 
         if(this.currentDialog==this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
@@ -64,12 +65,12 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     multipleDialogues() {
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
                 this.currentDialog++;
             }    
             else if(this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
@@ -84,11 +85,11 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     uniqueDialogue() {
         if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
             }    
             else if(this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
                 this.beingAnimated = false;
                 this.canCloseWindow = true;
                 this.uiScene.events.emit('isNotBeingAnimated');
@@ -102,7 +103,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     }
 
     closeWindow() {
-        this.uiScene.toggleWindow(this.verified);
+        this.uiScene.toggleWindow(this.verified, this.developer);
         if(this.currentDialog >= this.dialogIndex + this.dialogCount) {
             this.currentDialog = this.dialogIndex;
             this.formerDialog = this.dialogIndex;

@@ -2,243 +2,227 @@
     {
         "npcID" : 0,
         "unique" : true,
-        "npcName" : "Elmo Tivao",
         "text" : "No temas a quien haya practicado 10000 patadas diferentes, teme a quien haya practicado una misma patada 10000 veces."
     },
     {
         "npcID": 0,
         "unique" : true,
-        "npcName" : "Elmo Tivao",
         "text": "He hecho kárate mucho tiempo mientras crecía, pero nada gana a un buen escopetazo."
     },
     {
         "npcID": 0,
         "unique" : true,
-        "npcName" : "Elmo Tivao",
         "text": "Hacer mudanzas es horrible."
     },
     {
         "npcID": 1,
         "unique" : true,
-        "npcName" : "Vovovo",
         "text": "Mi habilidad es ser capaz de decir 'aaaaa' ante un ventilador. En verano lo hago 3 veces a la semana, aunque en invierno tan solo 2. Y por cierto, en el campeonato de este año quedé en un digno 2º puesto."
     },
     {
         "npcID": 1,
         "unique" : true,
-        "npcName" : "Vovovo",
         "text": "¡Por el poder del cabello nasal!"
     },
     {
         "npcID": 1,
         "unique" : true,
-        "npcName" : "Vovovo",
         "text": "Por favor, haga el favor de mirar hacia otro lado... Me estoy cambiando de ropa. No vaya tan deprisa por favor, así no conseguirá nada."
     },
     {
         "npcID": 1,
         "unique" : true,
-        "npcName" : "Vovovo",
         "text": "No se puede vivir ya en esta triste sociedad, mi espíritu ha adquirido la social enemistad. ¡Toma ya! ¡Toma ya!"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "*vocaloid noises*"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "*blushes* >w<"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "uwu"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "To become god is the loneliest achievement of them all"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "owo"
     },
     {
         "npcID": 2,
         "unique" : true,
-        "npcName" : "Jatsune Micu",
         "text": "M-Manin kun...*blushes again*"
     },
     {
         "npcID": 3,
         "unique" : true,
-        "npcName" : "Alex",
         "text": "Bueno."
     },
     {
         "npcID": 3,
         "unique" : true,
-        "npcName" : "Alex",
         "text": "¿Y?"
     },
     {
         "npcID": 3,
         "unique" : true,
-        "npcName" : "Alex",
-        "text": "Me cago en la **** de oros."
+        "text": "Me **** en la **** de oros. (Este he sido yo haciendo que este texto se muestre en pantalla tal y como tú lo estás viendo ahora mismo)"
     },
     {
         "npcID": 3,
         "unique" : true,
-        "npcName" : "Alex",
         "text": "¡Toma mango!"
     },
     {
         "npcID": 3,
         "unique" : true,
-        "npcName" : "Alex",
         "text": "Sí, sí, sí Pedrerol, sí, sí."
     },
     {
         "npcID": 4,
         "unique" : true,
-        "npcName" : "Frozono",
         "text": "¿Dónde está mi súpertraje?"
     },
     {
         "npcID": 4,
         "unique" : true,
-        "npcName" : "Frozono",
         "text": "Pongan bachata."
     },
     {
         "npcID": 4,
         "unique" : true,
-        "npcName" : "Frozono",
         "text": "Me has dejado helado."
     },
     {
         "npcID": 5,
         "unique" : true,
-        "npcName" : "Compuman",
         "text": "Hola a mis fans"
     },
     {
         "npcID": 5,
         "unique" : true,
-        "npcName" : "Compuman",
         "text": "jeje"
     },
     {
         "npcID": 5,
         "unique" : true,
-        "npcName" : "Compuman",
         "text": "¿Karnaugh? Es un buen amigo, jeje"
     },
     {
         "npcID": 5,
         "unique" : true,
-        "npcName" : "Compuman",
         "text": "Esto se acabó. Kisses."
     },
     {
         "npcID": 6,
         "unique" : true,
-        "npcName" : "Toni",
         "text": "ª"
     },
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✔",
         "text": "Ey, completo undefined."
     },
     {
         "npcID": 7,
-        "unique" : true,
-        "npcName" : "Toni ✔",
+        "unique" : false,
         "text": "Mira, acabo de terminar this insignia."
     },
     {
         "npcID": 7,
-        "unique" : true,
-        "npcName" : "Toni ✔",
+        "unique" : false,
         "text": "Se la he copiado al tal 'Musck' ese."
     },
     {
         "npcID": 7,
-        "unique" : true,
-        "npcName" : "Toni ✔",
+        "unique" : false,
         "text": "¿Tú tienes alguna insignia?."
     },
     {
         "npcID": 7,
-        "unique" : true,
-        "npcName" : "Toni ✔",
+        "unique" : false,
         "text": "Traeme 30 y te invito a una cerveza en la posada más cercana."
     },
     {
         "npcID": 8,
         "unique" : true,
-        "npcName" : "Pepperboy",
         "text": "Ha llegado la época de los sobornos."
     },
     {
         "npcID": 8,
-        "unique" : true,
-        "npcName" : "Pepperboy",
+        "unique" : false,
         "text": "Llevo una semana cenando pimientos de Pliego."
     },
     {
         "npcID": 8,
-        "unique" : true,
-        "npcName" : "Pepperboy",
+        "unique" : false,
         "text": "Con un buen filetón están tremendos."
     }
 ],
-"verified" : [
+"attributes" : [
     {
         "npcID" : 0,
-        "verified" : false
+        "npcName" : "Elmo Tivao",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 1,
-        "verified" : false
+        "npcName" : "Vovovo",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 2,
-        "verified" : false
+        "npcName" : "Jatsune Micu",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 3,
-        "verified" : false
+        "npcName" : "Alex",
+        "verified" : false,
+        "developer" : true
     },
     {
         "npcID" : 4,
-        "verified" : false
+        "npcName" : "Frozono",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 5,
-        "verified" : false
+        "npcName" : "Compuman",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 6,
-        "verified" : false
+        "npcName" : "Toni",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 7,
-        "verified" : true
+        "npcName" : "Toni ✔",
+        "verified" : true,
+        "developer" : false
     },
     {
         "npcID" : 8,
-        "verified" : false
+        "npcName" : "Pepperboy",
+        "verified" : false,
+        "developer" : false
     }
 ]}

@@ -143,6 +143,7 @@ export class DialogBox {
 
         this.textPosition(tempText);
         this.text.setColor(this.textColor);
+        this.text.setFontFamily('Silkscreen');
         if (animate) {
             this.timedEvent = this.scene.time.addEvent({
             delay: 150 - (this.dialogSpeed * 30),
@@ -205,6 +206,7 @@ export default class DialogScene extends Phaser.Scene {
         this.dialogBox = new DialogBox(this);
         this.nameBox = new DialogBox(this);
         this.verifiedBox = new DialogBox(this);
+        this.developerBox = new DialogBox(this);
         this.hasCreatedWindow = false;
         this.isToggled = true;
         this.event = false;
@@ -221,7 +223,7 @@ export default class DialogScene extends Phaser.Scene {
         }
     }
 
-    createWindow(verified) {
+    createWindow(verified, developer) {
         this.dialogBox.init({
             textColor : "#FFFFFF",
             windowColor: 0x292929
@@ -234,7 +236,7 @@ export default class DialogScene extends Phaser.Scene {
             x:20,
             y:380,
             textColor: "#FFFFFF"
-        })
+        });
         this.verifiedBox.init({
             borderThickness : 2,
             windowColor: 0xE1E8ED,
@@ -244,21 +246,34 @@ export default class DialogScene extends Phaser.Scene {
             x:245,
             y:380,
             textColor: "#1DA1F2"
+        });
+        this.developerBox.init({
+            borderThickness : 2,
+            windowColor: 0xE1E8ED,
+            borderColor: 0x42B93C,
+            windowHeight: 35,
+            padding: 290,
+            x:245,
+            y:380,
+            textColor: "#42B93C"
         })
         if(!verified) this.verifiedBox.toggleWindow();
+        if(!developer) this.developerBox.toggleWindow();
         this.hasCreatedWindow = true;
     }
 
-    setText(character, text, animate, verified) {
+    setText(character, text, animate, verified, developer) {
         this.dialogBox.setText(text, animate);
         this.nameBox.setText(character, false);
-        if(verified) this.verifiedBox.setText("✔ Oficial", false)
+        if(verified) this.verifiedBox.setText("✔ Oficial", false);
+        else if(developer) this.developerBox.setText("</> Desarrollador", false);
     }
 
-    toggleWindow(verified) {
+    toggleWindow(verified, developer) {
         this.dialogBox.toggleWindow();
         this.nameBox.toggleWindow();
         if(verified) this.verifiedBox.toggleWindow();
+        else if(developer) this.developerBox.toggleWindow();
         this.isToggled = !this.isToggled;
     }
 }
