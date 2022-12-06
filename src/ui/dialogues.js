@@ -227,7 +227,7 @@ export default class DialogScene extends Phaser.Scene {
             windowColor: 0x292929
         });
         this.nameBox.init({
-            borderThickness : 2,
+            borderThickness : 3,
             windowColor: 0xE3BE39,
             windowHeight: 35,
             padding: 290,
@@ -241,7 +241,7 @@ export default class DialogScene extends Phaser.Scene {
             borderColor: 0x1DA1F2,
             windowHeight: 35,
             padding: 340,
-            x:240,
+            x:245,
             y:380,
             textColor: "#1DA1F2"
         })
