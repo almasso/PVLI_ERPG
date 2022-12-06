@@ -158,31 +158,31 @@
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✅. Oficial ✅",
+        "npcName" : "Toni ✔",
         "text": "Ey, completo undefined."
     },
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✅. Oficial ✅",
+        "npcName" : "Toni ✔",
         "text": "Mira, acabo de terminar this insignia."
     },
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✅. Oficial ✅",
+        "npcName" : "Toni ✔",
         "text": "Se la he copiado al tal 'Musck' ese."
     },
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✅. Oficial ✅",
+        "npcName" : "Toni ✔",
         "text": "¿Tú tienes alguna insignia?."
     },
     {
         "npcID": 7,
         "unique" : true,
-        "npcName" : "Toni ✅. Oficial ✅",
+        "npcName" : "Toni ✔",
         "text": "Traeme 30 y te invito a una cerveza en la posada más cercana."
     },
     {
@@ -202,5 +202,43 @@
         "unique" : true,
         "npcName" : "Pepperboy",
         "text": "Con un buen filetón están tremendos."
+    }
+],
+"verified" : [
+    {
+        "npcID" : 0,
+        "verified" : false
+    },
+    {
+        "npcID" : 1,
+        "verified" : false
+    },
+    {
+        "npcID" : 2,
+        "verified" : false
+    },
+    {
+        "npcID" : 3,
+        "verified" : false
+    },
+    {
+        "npcID" : 4,
+        "verified" : false
+    },
+    {
+        "npcID" : 5,
+        "verified" : false
+    },
+    {
+        "npcID" : 6,
+        "verified" : false
+    },
+    {
+        "npcID" : 7,
+        "verified" : true
+    },
+    {
+        "npcID" : 8,
+        "verified" : false
     }
 ]}

@@ -112,7 +112,7 @@ export default class MovementExample extends Phaser.Scene {
 		let npc6 = new NPC(this, 100, 200, 'compuman', 5, npc_dialogues, this.manin);
 		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
 		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
-		let npc9 = new NPC(this, 300, 400, 'pepperboy', 8, npc_dialogues, this.manin);
+		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
 		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9];
 		for(let e of this.npcs) e.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
