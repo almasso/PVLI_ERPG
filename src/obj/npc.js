@@ -57,43 +57,47 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
         if(this.currentDialog==this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
-        if(!this.dialogues.texts[this.currentDialog].unique) {
-            if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
-                if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                    this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
-                    this.beingAnimated = true;
-                    this.currentDialog++;
-                }    
-                else if(this.beingAnimated) {
-                    this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
-                    this.formerDialog++;
-                    this.beingAnimated = false;
-                    this.uiScene.events.emit('isNotBeingAnimated');
-                    if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
-                }
-            }
-            else {
-                this.closeWindow();
+        if(!this.dialogues.texts[this.currentDialog].unique) this.multipleDialogues();
+        else this.uniqueDialogue();   
+    }
+
+    multipleDialogues() {
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
+            if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
+                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
+                this.beingAnimated = true;
+                this.currentDialog++;
+            }    
+            else if(this.beingAnimated) {
+                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
+                this.formerDialog++;
+                this.beingAnimated = false;
+                this.uiScene.events.emit('isNotBeingAnimated');
+                if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
             }
         }
         else {
-            if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
-                if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                    this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
-                    this.beingAnimated = true;
-                }    
-                else if(this.beingAnimated) {
-                    this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
-                    this.beingAnimated = false;
-                    this.canCloseWindow = true;
-                    this.uiScene.events.emit('isNotBeingAnimated');
-                }
+            this.closeWindow();
+        }
+    }
+    
+    uniqueDialogue() {
+        if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
+            if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
+                this.uiScene.setText(this.dialogues.texts[this.currentDialog].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified);
+                this.beingAnimated = true;
+            }    
+            else if(this.beingAnimated) {
+                this.uiScene.setText(this.dialogues.texts[this.formerDialog].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified);
+                this.beingAnimated = false;
+                this.canCloseWindow = true;
+                this.uiScene.events.emit('isNotBeingAnimated');
             }
-            else {
-                this.currentDialog++;
-                this.formerDialog++;
-                this.closeWindow();
-            }
+        }
+        else {
+            this.currentDialog++;
+            this.formerDialog++;
+            this.closeWindow();
         }
     }
 
