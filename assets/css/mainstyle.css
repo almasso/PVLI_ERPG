@@ -1,13 +1,13 @@
 :root {
     --lightgray: #efefef;
-    --blue: steelblue;
+    --blue: rgba(30,150,255,1);
     --white: #fff;
     --black: rgba(0, 0, 0, 0.8);
     --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 }
 body {
     font-family: 'Silkscreen', cursive;
-    background-color: rgba(30,150,255,1);
+    background-color: var(--blue);
     text-align: center;
 }
 #navegacion {
@@ -74,14 +74,15 @@ li.enlacesNAVJuego:hover {
     border-left-color:yellow;
     border-right-color:yellow;*/
 }
-.close-modal {
+/*Modales del index.html*/
+.close-modal{
     cursor: pointer;
     background: transparent;
     border: none;
     outline: none;
     font-size: inherit;
 }
-.modal { 
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -90,24 +91,30 @@ li.enlacesNAVJuego:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     padding: 1rem;
     background: var(--black);
     cursor: pointer;
     visibility: hidden;
     opacity: 0;
     transition: all 0.35s ease-in;
+  }
+#controles{ 
+    text-align: center;
 }
 .modal-dialog {
     position: relative;
-    width: 100%;
-    height: 100%;
     max-width: 800px;
-    max-height: 800vh;
+    max-height: 80vh;
     border-radius: 5px;
-    background: var(--white);
+    background: var(--blue);
     overflow: auto;
     cursor: default;
+  }
+#controles .modal-dialog{
+    width: 100%;
+    height: 100%;
+    max-width:800px;
+    max-height: 800vh;
 }
 .modal-dialog > * {
     padding: 1rem;
@@ -123,15 +130,15 @@ li.enlacesNAVJuego:hover {
 .modal-header .modal-close {
     font-size: 1.5rem;
 }
-.modal p + p {
+.modal p + p{
     margin-top: 1rem;
 }
-.modal.is-visible {
+.modal.is-visible{
     visibility: visible;
     opacity: 1;
 }
 #filosofofo, #filosofofo:visited {
-    color: rgb(56, 16, 235)
+    color: rgb(77, 51, 190)
 }
 
 /*SOLO PÁG MANIN*/
