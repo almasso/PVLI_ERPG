@@ -148,6 +148,10 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	// setteamos las resistencias, la velocidad y la puntería
 	SetAlteredStates(aStates){
 		this.alteredStates = aStates; 
+		if(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]) this.ReduceResistances(reduceBurnedRes);
+		if(this.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]) this.ReduceResistances(reduceToxicRes);
+		if(this.alteredStates[typeOfAttack.Electrical - elementalAttackDifference]) this.ReduceResistances(reduceParalizedRes);
+		console.log(this.actualResistances);
 	}
 
 	// subimos de nivel (NO IMPLEMENTADO)
@@ -238,11 +242,9 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 	ReduceResistances(arrayDiff){ // Array con las el número que se resta a las resistencias
 		let self = this;
-		console.log(this.actualResistances);
 		arrayDiff.forEach(function (res){
 			self.actualResistances[res.index] -= res.value;
 		})
-		console.log(this.actualResistances);
 	}
 
 	Burned(){
