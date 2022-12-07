@@ -16,7 +16,8 @@ const FightState = {
 	ExecuteAttack: 5,
 	TimeUntilNextTurn: 6,
 	Finish: 7,
-	AlteratedStates: 8
+	AlteratedStatesFire: 8,
+	AlteratedStatesToxic: 9,
 };
 
 export class FightScene extends Phaser.Scene {
@@ -360,7 +361,7 @@ export class FightScene extends Phaser.Scene {
 		this.log.UpdateLog();
 	}
 
-	CheckAlteredStates(){
+	CheckBurnState(){
 		let self = this;
 		let areAlteredStates = false; // Variable para no esperar si no hay ningun estado alterado
 		this.turns.forEach(function (character){
@@ -378,15 +379,6 @@ export class FightScene extends Phaser.Scene {
 						self.BuildEndTurnLog(text);
 						hasAlteredStates = true;
 					} 
-					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
-						console.log(ally);
-						areAlteredStates = true;
-						let text = ally.name + " sufrio daño por estar envenenado.";
-						ally.Poisoned();
-						ally.play(ally.imageId+'_poison');
-						self.BuildEndTurnLog(text);
-						hasAlteredStates = true;
-					}
 					if(!hasAlteredStates) ally.play(ally.imageId + '_wow'); 
 					self.alliesHud[character.index].Update();
 				}
@@ -405,6 +397,40 @@ export class FightScene extends Phaser.Scene {
 						hasAlteredStates = true;
 
 					} 
+					if(!hasAlteredStates) enemy.play(enemy.imageId + '_wow')
+					self.enemiesHud[character.index].Update();
+				}
+			}
+		});
+		return areAlteredStates;
+	}
+
+	CheckToxicState(){
+		let self = this;
+		let areAlteredStates = false; // Variable para no esperar si no hay ningun estado alterado
+		this.turns.forEach(function (character){
+			let hasAlteredStates = false; // variable para mantener las animaciones coordinadas
+			if(character.type) // ALIADO
+			{
+				let ally = self.allies[character.index];
+				if(!ally.dead){
+					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+						console.log(ally);
+						areAlteredStates = true;
+						let text = ally.name + " sufrio daño por estar envenenado.";
+						ally.Poisoned();
+						ally.play(ally.imageId+'_poison');
+						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+					}
+					if(!hasAlteredStates) ally.play(ally.imageId + '_wow'); 
+					self.alliesHud[character.index].Update();
+				}
+
+			}
+			else{
+				let enemy= self.enemies[character.index];
+				if(!enemy.dead){
 					if(enemy.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
 						let text = enemy.name + " sufrio daño por estar envenenado.";
 						areAlteredStates = true;
@@ -751,13 +777,22 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
 			if(this.currentTurn === this.turns.length - 1) {
-				let areAlteredStates = this.CheckAlteredStates();
-				if(!areAlteredStates) this.state = FightState.SelectTurn;
-				else this.state = FightState.AlteratedStates; 
+				let areAlteredStates = this.CheckBurnState();
+				this.state = FightState.AlteratedStatesFire;
+				if(!areAlteredStates) {
+					this.BuildEndTurnLog("Nadie ha sido quemado");
+				}
 			}
 			else this.state = FightState.SelectTurn;	
 		}
-		else if(this.state === FightState.AlteratedStates){
+		else if(this.state === FightState.AlteratedStatesFire){
+			let areAlteredStates = this.CheckToxicState();
+			this.state = FightState.AlteratedStatesToxic;
+			if(!areAlteredStates) {
+				this.BuildEndTurnLog("Nadie ha sido envenenado");
+			}
+		}
+		else if(this.state === FightState.AlteratedStatesToxic){
 			this.state = FightState.SelectTurn;
 		}
 	}
@@ -968,7 +1003,15 @@ export class FightScene extends Phaser.Scene {
 				this.count = 0;
 			}
 		}
-		else if(this.state === FightState.AlteratedStates){
+		else if(this.state === FightState.AlteratedStatesFire){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
+		}
+		else if(this.state === FightState.AlteratedStatesToxic){
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{
