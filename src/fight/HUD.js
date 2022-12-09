@@ -264,7 +264,6 @@ export class InventoryHUD{
 		let i = 0;
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
-			console.log('A');
 			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth / 14;
 			this.itemsText[i].text.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
@@ -311,6 +310,34 @@ export class InventoryHUD{
 	UpdateItem(inv){
 		this.inventory = inv;
 		this.CreateItems(this.scene);
+	}
+}
+
+export class shopHUD{
+	constructor(scene, x, y, items){
+		this.scene = scene;
+		this.shopBlock = scene.add.image(x, y, 'log').setOrigin(0, 0);
+		this.currentItem = 0;
+		this.verticalOffset = 25;
+		this.items = items;
+		this.createItems();
+	}
+
+	createItems(){
+		this.itemsText = [];
+		let self = this;
+		this.items.forEach(function(item, index){
+			self.itemsText[index] = {
+				name: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + index * self.shopBlock.displayHeight / 2 + self.shopBlock.displayHeight / 16, item.name,
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				}
+			self.itemsText[index].name.visible = false;
+
+			self.itemsText[index].name.setInteractive();
+		});
 	}
 }
 
