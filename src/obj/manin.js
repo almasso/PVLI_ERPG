@@ -160,10 +160,20 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
             this.scene.Fight();
         }
-		if(this.touchingFria)
+		if(this.touchingFria )
 		{
-			if(this.nameScene==="PLAZA")this.scene.Park();
-			else if (this.nameScene==="PARK")this.scene.Plaza();
+			if(this.nameScene==="PLAZA" &&this.dKey.isDown)
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Park();
+			}
+			else if (this.nameScene==="PARK"&&this.aKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
 		}
 	}
 }

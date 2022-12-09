@@ -215,22 +215,27 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-        this.scene.sleep('movement');
+		this.scene.get('fightscene').CurrentScene('park');
+        this.scene.sleep('park');
     }
 
 	
 	Plaza(){
+		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.manin.touchingFria = false;
-        this.scene.launch('movement');
+        		
+        this.scene.wake('movement');
 		this.scene.get('movement').LoadInventory(this.inventory);
-		this.scene.get('movement').LoadManin(this.manin);
+		this.scene.get('movement').LoadManin();
         this.scene.sleep('park');
     }
 	LoadInventory(inv){
 		this.inventory = inv;
 	}
-	LoadManin(man){
-		this.manin=man;
+	LoadManin(){
+		
+		this.manin.x=this.frias[1].x+70
+		this.manin.y=this.frias[1].y
+		this.manin.touchingFria = false;
 	}
 }

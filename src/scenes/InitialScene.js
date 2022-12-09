@@ -25,6 +25,8 @@ export default class InitialScene extends Phaser.Scene {
         this.startButton.setInteractive();
 
         this.startButton.on('pointerup',()=>{
+			this.scene.launch('park');
+			this.scene.sleep('park');
 			this.scene.launch('movement');
             this.scene.stop('initial');
 		})

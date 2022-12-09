@@ -228,10 +228,11 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
-			this.scene.wake('movement');
-			let movement = this.scene.get('movement');
+			console.log(this.oldScene)
+			this.scene.wake(this.oldScene);
+			let movement = this.scene.get(this.oldScene);
 			movement.UpdateHUD();
-			movement.UpdateInventory(this.inventory);
+			movement.updateInventory(this.inventory);
 		}
 		else // Si se han matado a todos los enemigos...
 		{
@@ -575,7 +576,10 @@ export class FightScene extends Phaser.Scene {
 		this.ToggleButtons(false); // se deshabilitan los botones
 	}
 
-	
+	CurrentScene(Currentscene)
+	{
+		this.oldScene=Currentscene
+	}
 
 	//···RAUL PRUEBAS···
 	attack=-1;

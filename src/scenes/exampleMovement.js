@@ -81,6 +81,7 @@ export default class MovementExample extends Phaser.Scene {
 
 		// creamos a manín
 		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'),"PLAZA");
+		
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -167,7 +168,7 @@ export default class MovementExample extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		for(let i = 0; i < 1; i++){
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this, 64*i,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this, 64*i+800,200 + 64 *o, 'fria',2.5,2.5));
 			}
 		}
 		// añadimos la zona de colisión
@@ -215,22 +216,26 @@ export default class MovementExample extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
+		this.scene.get('fightscene').CurrentScene('movement');
         this.scene.sleep('movement');
     }
 
 	Park(){
+		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.scene.launch('park');
+        this.scene.wake('park');
 		this.scene.get('park').LoadInventory(this.inventory);
-		this.scene.get('park').LoadManin(this.manin);
+		this.scene.get('park').LoadManin();
         this.scene.sleep('movement');
     }
 
 	LoadInventory(inv){
 		this.inventory = inv;
 	}
-	LoadManin(man){
-		delete this.manin;
-		this.manin=man;
+	LoadManin(){
+		
+		this.manin.x=this.frias[1].x-50
+		this.manin.y=this.frias[1].y
+		this.manin.touchingFria = false;
 	}
 }
