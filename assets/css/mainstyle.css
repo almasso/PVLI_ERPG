@@ -10,7 +10,7 @@ body {
     background-color: var(--blue);
     text-align: center;
 }
-#navegacion {
+#navegacion, #botones_index {
     list-style-type: none;
     margin: 0;
     padding: 0;
