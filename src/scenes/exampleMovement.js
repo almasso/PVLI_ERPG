@@ -1,5 +1,3 @@
-
-
 import {Manin, AllyTEST} from '../obj/manin.js';
 import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
@@ -198,31 +196,8 @@ export default class MovementExample extends Phaser.Scene {
     Fight(){
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
-		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('movement');
+		//this.scene.get('fightscene').LoadInventory(this.inventory);
         this.scene.sleep('movement');
 		this.scene.get('hud').Fight();
     }
-
-	// pasamos a la escena de pelea
-    
-
-	Park(){
-		this.manin.touchingFria = false;
-		this.manin.touchingGrass = false;
-        this.scene.wake('park');
-		this.scene.get('park').LoadInventory(this.inventory);
-		this.scene.get('park').LoadManin();
-        this.scene.sleep('movement');
-    }
-
-	LoadInventory(inv){
-		this.inventory = inv;
-	}
-	LoadManin(){
-		
-		this.manin.x=this.frias[1].x-50
-		this.manin.y=this.frias[1].y
-		this.manin.touchingFria = false;
-	}
 }

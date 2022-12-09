@@ -188,6 +188,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 
 
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
+
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
@@ -217,4 +218,13 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			console.log("A VE");
 		}
 	}
+
+	increaseSteps(){
+		if(this.touchingGrass) 
+		{
+			this.stepsWalked++;
+			console.log("A VE");
+		}
+	}
+	
 }

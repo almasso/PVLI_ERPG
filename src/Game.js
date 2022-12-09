@@ -3,7 +3,7 @@ import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
 import DialogScene from './ui/dialogues.js'
-import ParkScene from './scenes/Park.js'
+import HUDScene from './scenes/HUDScene.js'
 
 
 /**
@@ -31,12 +31,12 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene,ParkScene],
+    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene, HUDScene],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false
+            debug: true
         },
         checkCollision: {
             up: true,

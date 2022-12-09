@@ -12,28 +12,44 @@ export class Party{
 					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
 					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+						[attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
 						attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+						characterInfo('Artista','artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						  [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+						  [attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
 						  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						  characterInfo(EnviromentInfo.character2.name,EnviromentInfo.character2.imgID,EnviromentInfo.character2.actualHp,EnviromentInfo.character2.maxHp,EnviromentInfo.character2.actualMp,EnviromentInfo.character2.maxMp
-							,EnviromentInfo.character.rP,EnviromentInfo.character2.rR,EnviromentInfo.character2.rF,EnviromentInfo.character2.rE,EnviromentInfo.character2.rT,EnviromentInfo.character2.acurracy,EnviromentInfo.character2.speed,
-							[attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
-							attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60, 4)])];
+						  characterInfo('Juan Pedro',EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+							,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
+							[attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
+							attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
+							characterInfo('Jaime',EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+							  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
+							  [attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
+							  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
+							  characterInfo('Pinga',EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+								,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
+								[attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
+								attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
+								characterInfo('preguntiña',EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+								  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
+								  [attackInfo("A Rango 1 Target", 1, 250, 0, 4), attackInfo("A Rango 2 Target", 1, 200, 30, 1), 
+								  attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])
+						];
 		this.party[0].index = 0;
 		this.party[1].index = 1;
 		this.party[2].index = 2;
 		this.party[3].index = 3;
+		this.party[4].index = 4;
+		this.party[5].index = 5;
+		this.party[6].index = 6;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
+		if(this.alliesNum > 4) this.alliesNum = 4;
 	}
 
 	swapAllies(newOrder){
 		let self = this
 		this.party.forEach(function(ally, index) {
-			console.log(newOrder[index].index, ally.index);
 			if(newOrder[index].index != ally.index){
 				let num = 0;
 				while(index != newOrder[num].index)
@@ -47,19 +63,20 @@ export class Party{
 
 		this.party.forEach(function(ally, index) {
 			ally.index = index;
+			console.log(index, ally.name);
 		});
 	}
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
+		console.log("PINGA");
 		this.party.push(character);
 		if(this.alliesNum < 4) this.alliesNum++;
 		else this.alliesNum = 4;
+		this.party[this.party.length-1].index = this.party.length - 1;
 	}
 
-
 	// Llevamos la party al estado original (TEMPORAL)
-
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
@@ -74,7 +91,7 @@ export class Party{
 };
 
 // función que devuvelve un objeto con información de un personaje
-function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
+export function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
 	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0}
 }
 
