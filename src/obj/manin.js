@@ -16,6 +16,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.trigger.body.onOverlap = true;
         this.trigger.setScale(7,7);
 		this.info = info;
+		this.isInteracting = false;
 	}
 	generateTrigger() {
         this.scene.physics.add.collider(this.manin, this);
@@ -44,6 +45,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		this.detectEvents();
 
 		// añadimos físicas
 		scene.physics.add.existing(this);
@@ -101,10 +103,10 @@ export class Manin extends Phaser.GameObjects.Sprite {
 
 	// interacción 
     interact(){
+		this.isInteracting = true;
 		if(this.collider instanceof NPC) {
 			this.collider.currentlyTalking = true;
 			this.collider.readDialogues();
-			console.log(this.collider);
 		}
 		else if(this.collider instanceof AllyTEST) 
 		{ 
@@ -112,6 +114,12 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.scene.scene.get('hud').Reset();
 		}
     }
+
+	detectEvents() {
+		this.scene.events.on('dialogWindowClosed', () => {
+			this.isInteracting = false;
+		})
+	}
 
 	/**
 	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
@@ -123,14 +131,14 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		// Es muy imporante llamar al preUpdate del padre (Sprite), sino no se ejecutará la animación
 		super.preUpdate(t, dt);
 
-		if(Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey))
+		if((Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey)) && !this.isInteracting)
 		{
 			this.play('move');
 			
 		}
 		this.dKey.isDown
 		// Mientras pulsemos la tecla 'A' movemos el personaje en -X
-		if(this.aKey.isDown){
+		if(this.aKey.isDown && !this.isInteracting){
 			//this.play('move');
 			this.setFlip(true, false)
 			//this.x -= this.speed*dt / 1000;
@@ -140,7 +148,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
-		if(this.dKey.isDown){
+		if(this.dKey.isDown && !this.isInteracting){
 			//this.play('move');	
 			this.setFlip(false, false)
 			//this.x += this.speed*dt / 1000;
@@ -156,7 +164,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		
 		}
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
-		if(this.sKey.isDown){
+		if(this.sKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
@@ -164,7 +172,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
-		if(this.wKey.isDown){
+		if(this.wKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
