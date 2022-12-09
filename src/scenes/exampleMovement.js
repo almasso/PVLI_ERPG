@@ -27,7 +27,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
 		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
-		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
+		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png')
 		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png');
 		this.load.image('menuPartyButton', 'assets/textures/HUD/explore/menuPartyButton.png');
 		this.load.image('menuOrderButton', 'assets/textures/HUD/explore/menuOrderButton.png');

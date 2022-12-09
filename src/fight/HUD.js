@@ -333,7 +333,7 @@ class HealthBar {
 		this.type = type; // tipo: VIDA / MANÁ
 		this.maxValue = maxValue; // valor máximo
 		this.height = height; // altura
-		scene.add.existing(this.bar); // añadimos la barra a la escena
+		scene.add.existing(this.bar).setScrollFactor(0); // añadimos la barra a la escena
 		this.hasText = hasText; // tiene texto?
 		this.bar.depth = 3;
 		if(this.hasText){ // si lo tiene, se crea
@@ -415,7 +415,7 @@ export class walkingHUD {
 		this.y = y;
 		this.scene = scene; // escena
 		this.imgID = img; // id imagen
-		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
+		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0).setScrollFactor(0);; // imagen como tal
 		bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
 		this.characters = []; // array de objetos de información
 		this.GenerateImages(); // generamos las imágenes de cada bichito
@@ -432,7 +432,7 @@ export class walkingHUD {
 			let offset = 28; // offset que cuadra bien 
 			let x = self.x+ offset + index * 50; // x para las imágenes
 			let barX = x - offset/2; // x para las barras
-			self.characters[index].image = self.scene.add.image(x, self.y + 25, ally.imgID + 'Head'); // generar imagen
+			self.characters[index].image = self.scene.add.image(x, self.y + 25, ally.imgID + 'Head').setScrollFactor(0);; // generar imagen
 			self.characters[index].image.setScale(2); // escalarla
 			// generar barras de vida
 			// usamos la allyParty para acceder a los valores de vida de cada PJ
@@ -482,7 +482,7 @@ export class ExploreMenu {
         this.y = y;
         this.scene = scene; // escena
 		this.imgID = imgID; // imagen
-		this.bImage = this.scene.add.image(x,y,imgID).setOrigin(0,0);
+		this.bImage = this.scene.add.image(x,y,imgID).setOrigin(0,0).setScrollFactor(0);
 		this.bImage.setScale(1.5);
 		this.bImage.depth = 5;
 		this.pointer = pointer;
@@ -506,8 +506,8 @@ export class ExploreMenu {
 			if(index < allyParty.alliesNum){
 				let scale = 1.5;
 				let newX = x+98 * scale *index;
-				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
-						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
+				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale).setScrollFactor(0), 
+						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale).setScrollFactor(0),
 						  index: index};				
 				images.bgIMG.depth = 7;
 				images.charIMG.depth = 8;
@@ -543,7 +543,7 @@ export class ExploreMenu {
 		let buttonY = this.y+60;
 		//#region MAIN MENU BUTTONS
 		// PARTY STATE BUTTONS
-		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
+		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0).setScrollFactor(0); // botón para ver el estado de la party
 		this.viewPartyButton.setInteractive();
 		this.viewPartyButton.setScale(1.5);
 		this.viewPartyButton.depth = 6;
@@ -569,7 +569,7 @@ export class ExploreMenu {
 		});
 
 		// PARTY MANAGER BUTTON
-		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(1.5);
+		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(1.5).setScrollFactor(0);
 		this.managePartyButton.depth = 6;
 		this.managePartyButton.visible = false;
 		this.managePartyButton.on("pointerup", function(){
