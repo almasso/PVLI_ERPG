@@ -94,7 +94,9 @@ export class FightScene extends Phaser.Scene {
 		this.objectButton.setScale(1.5);
 		this.objectButton.setInteractive(); // Hacemos el sprite interactivo para que lance eventos
 		this.inventoryUp = this.add.image(590, 200, 'logButton');
+		this.inventoryUp.setScale(1.5);
 		this.inventoryDown = this.add.image(590, 200 + this.inventoryUp.displayHeight, 'logButton');
+		this.inventoryDown.setScale(1.5);
 		this.inventoryUp.setInteractive();
 		this.inventoryDown.setInteractive();
 		this.inventoryDown.angle = 180;
@@ -154,11 +156,11 @@ export class FightScene extends Phaser.Scene {
 			this.objectButtonHover.visible = false;
 		});
 
-		this.inventoryUp.on('pointover', () => {
+		this.inventoryUp.on('pointerup', () => {
 			this.inventoryHUD.Up();
 		})
 
-		this.inventoryDown.on('pointover', () => {
+		this.inventoryDown.on('pointerup', () => {
 			this.inventoryHUD.Down();
 		})
 

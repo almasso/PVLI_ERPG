@@ -261,7 +261,7 @@ export class InventoryHUD{
 	}
 
 	DisplayItems(){
-		let i;
+		let i = 0;
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
 			console.log('A');
@@ -278,7 +278,7 @@ export class InventoryHUD{
 	// vamos hacia arriba
 	Up(){
 		if(this.initialItem !== 0){
-			this.DisableItems()
+			this.DisplayItems();
 			this.initialItem--;
 			this.finalItem--;
 			this.DisplayItems();
@@ -288,33 +288,26 @@ export class InventoryHUD{
 	// vamos hacia abajo
 	Down(){
 		if(this.finalItem < this.itemsText.length - 1){
-			this.DisableItems();
+			this.DisplayItems();
 			this.initialItem++;
 			this.finalItem++;
 			this.DisplayItems();
 		}
 	}
 
-	// Hacemos invisibles los objetos del inventario
-	DisableItems(){
-		for(i = this.initialItem; i <= this.finalItem; i++){
-			this.itemsText[i].visible = false;
-		}
-	}
-
+	//Le damos funcionalidad a cada objeto del inventario
 	ItemButtom(itemText, index){
 		let self = this;
-		itemText.text.on('pointerup', () =>{
-			self.scene.selectedItem = self.inventory.inv[index];
-			console.log(itemText);
-			console.log(index);
-			self.scene.inventoryUp.visible = !self.scene.inventoryUp.visible
-			self.scene.inventoryDown.visible = !self.scene.inventoryDown.visible
-			self.DisplayItems();
-			self.scene.RequestChangeState(true);
+		itemText.text.on('pointerup', () =>{ //Cuando se pulsa:
+			self.scene.selectedItem = self.inventory.inv[index]; //Se selecciona el objeto que queremos usar
+			self.scene.inventoryUp.visible = !self.scene.inventoryUp.visible //Hacemos invisible las flechas de navegación 
+			self.scene.inventoryDown.visible = !self.scene.inventoryDown.visible //del inventario
+			self.DisplayItems(); //Quitamos el inventario
+			self.scene.RequestChangeState(true); //Se cambia el estado de combate al uso de objetos
 		})
 	}
 
+	//Se cambia el inventario en caso de que haya sido usado
 	UpdateItem(inv){
 		this.inventory = inv;
 		this.CreateItems(this.scene);
