@@ -217,21 +217,24 @@ export class AllyHUD{
 }
 
 export class InventoryHUD{
-	constructor(scene, inv, allyHud){
-		this.inventoryBlock = scene.add.image(allyHud.attackBlock.x, allyHud.attackBlock.y, 'attackBlock');
+	constructor(scene, inv, x, y){
+		this.inventoryBlock = scene.add.image(x, y, 'attackBlock').setOrigin(0,0);
 		this.inventoryBlock.setScale(1.5,1);
 		this.inventoryBlock.visible = false;
 
 		this.initialItem = 0;
-		this.finalItem = 4;
+		this.finalItem = 3;
 
 		this.inventory = inv;
+		this.scene = scene;
+
+		this.CreateItems(scene)
 	}
 
 	CreateItems(scene){
 		this.itemsText = [];
 		let self = this;
-		this.inventory.forEach(function(item, index){
+		this.inventory.inv.forEach(function(item, index){
 			self.itemsText[index] = {
 				text: scene.add.text(self.inventoryBlock.x + self.inventoryBlock.displayWidth / 14, self.inventoryBlock.y + index * self.inventoryBlock.displayHeight / 4 + self.inventoryBlock.displayHeight / 16, item.name,
 				{
@@ -250,28 +253,28 @@ export class InventoryHUD{
 
 			self.itemsText[index].text.setInteractive();
 		});
+		if(this.inventory.inv.length < 4) this.finalItem = this.inventory.inv.length - 1;
 	}
 
 	DisplayItems(){
+		let i = 0;
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
-			this.itemsText[i].text.x = this.inventoryBlock.x + self.inventoryBlock.displayWidth/14;
-			this.itemsText[i].text.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
+			console.log('A');
+			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth / 14;
+			this.itemsText[i].text.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
-			this.itemsText[i].quantity.y = this.inventoryBlock.y + index * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
-			this.itemsText[i].visible = true;
+			this.itemsText[i].quantity.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight / 4 + this.inventoryBlock.displayHeight / 16
+			this.itemsText[i].text.visible = this.inventoryBlock.visible;
+			this.itemsText[i].quantity.visible = this.inventoryBlock.visible;
+			this.ItemButtom(this.itemsText[i], i)
 		}
 	}
-	// actualizamos el texto
-	/*UpdateLog(){
-		this.currentText++; // movemos el índice
-		this.ShowLog(); // mostramos esto
-	}*/
 
 	// vamos hacia arriba
 	Up(){
 		if(this.initialItem !== 0){
-			this.DisableItems()
+			this.DisplayItems();
 			this.initialItem--;
 			this.finalItem--;
 			this.DisplayItems();
@@ -281,18 +284,29 @@ export class InventoryHUD{
 	// vamos hacia abajo
 	Down(){
 		if(this.finalItem < this.itemsText.length - 1){
-			this.DisableItems();
+			this.DisplayItems();
 			this.initialItem++;
 			this.finalItem++;
 			this.DisplayItems();
 		}
 	}
 
-	// Hacemos invisibles los objetos del inventario
-	DisableItems(){
-		for(i = this.initialItem; i <= this.finalItem; i++){
-			this.itemsText[i].visible = false;
-		}
+	//Le damos funcionalidad a cada objeto del inventario
+	ItemButtom(itemText, index){
+		let self = this;
+		itemText.text.on('pointerup', () =>{ //Cuando se pulsa:
+			self.scene.selectedItem = self.inventory.inv[index]; //Se selecciona el objeto que queremos usar
+			self.scene.inventoryUp.visible = !self.scene.inventoryUp.visible //Hacemos invisible las flechas de navegación 
+			self.scene.inventoryDown.visible = !self.scene.inventoryDown.visible //del inventario
+			self.DisplayItems(); //Quitamos el inventario
+			self.scene.RequestChangeState(true); //Se cambia el estado de combate al uso de objetos
+		})
+	}
+
+	//Se cambia el inventario en caso de que haya sido usado
+	UpdateItem(inv){
+		this.inventory = inv;
+		this.CreateItems(this.scene);
 	}
 }
 
