@@ -19,10 +19,8 @@ export class QuestNPC extends NPC {
     }
 
     advanceQuest(){
-        console.log("TERMINO ?: " + this.quest.finished);
-        console.log("Stages ?: " + this.quest.stages);
-        console.log("stage act ?: " + this.quest.stage);
         this.quest.advanceQuest(this.quest.id);
+        this.manin.questLog.actualQuest = this.manin.questLog.GetQuest(this.quest.id).index; 
         this.scene.questHud.Update();
     }
 }
@@ -52,6 +50,7 @@ export class QuestLog {
         for(let i = 0; i < this.quests.length; i++){
             if(this.quests[i].id == id){
                 this.quests[i].actualObjectiveCompleted = true;
+                this.actualQuest = i;
                 break;
             }
         }
@@ -59,7 +58,9 @@ export class QuestLog {
 
     ShowQuest(){
         if(this.actualQuest !== -1){
-            return {text: this.quests[this.actualQuest].objectives[this.quests[this.actualQuest].stage], yellowColor: this.quests[this.actualQuest].actualObjectiveCompleted};
+            return {name: this.quests[this.actualQuest].name,
+                text: this.quests[this.actualQuest].objectives[this.quests[this.actualQuest].stage], 
+                yellowColor: this.quests[this.actualQuest].actualObjectiveCompleted};
         }
         else{
             return {text: this.noQuests, yellowColor: false};
@@ -69,18 +70,19 @@ export class QuestLog {
     GetQuest(id){
         for(let i = 0; i < this.quests.length; i++){
             if(this.quests[i].id == id){
-                return this.quests[i];
+                return {quest: this.quests[i], index: i};
             }
         }
     }
 }
 
 export class Quest {
-    constructor(npc, stages, id, objectives){
+    constructor(npc, stages, id, name, objectives){
         this.npc = npc;
         this.stages = stages;
         this.stage = 0;
         this.id = id;
+        this.name = name;
         this.objectives = objectives;
         this.actualObjectiveCompleted = false;
         this.finished = false;

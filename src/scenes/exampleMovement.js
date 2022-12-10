@@ -111,13 +111,16 @@ export default class MovementExample extends Phaser.Scene {
 		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
 		
 		
-		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', ["Recupera la guitarra"
+		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"
 		,"Pelea contra melendi"]));
 
-		this.npcs = [npc1, npc2, npc3, npc4, npc5,qNpc];
+		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
+		,"Pelea contra melendi2"]));
+
+		this.npcs = [npc1, npc2, npc3, npc4, npc5,qNpc, qNpc2];
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
-			let quest = self.manin.questLog.GetQuest('guitarQuest');
+			let quest = self.manin.questLog.GetQuest('guitarQuest').quest;
 			if(quest !== undefined && !quest.actualObjectiveCompleted){
 				self.manin.questLog.advanceQuest('guitarQuest'); 
 				self.questHud.Update();
@@ -125,7 +128,10 @@ export default class MovementExample extends Phaser.Scene {
 				self.guitar.destroy();
 			}
 		}, this.manin);
+
 		qNpc.scale = 2.5;
+		qNpc2.scale = 2.5;
+
 		npc2.scale = 2.5;
 		npc3.scale = 2.5;
 		npc4.scale = 2.5;
