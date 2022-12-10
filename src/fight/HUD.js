@@ -233,7 +233,7 @@ export class QuestHUD{
 		this.questName.depth = 9;
 
 
-		this.text = scene.add.text(50, 60, "",{
+		this.text = scene.add.text(40, 60, "",{
 			font: 'Arial"',
 			color: '#ffffff',
 			align: 'left',});
@@ -255,9 +255,13 @@ export class QuestHUD{
 	Update(){
 		let aux = this.manin.questLog.ShowQuest();
 		console.log(aux.name);
-		if(aux.name !== undefined)
+		if(aux.name !== undefined){
 			this.questName.text = aux.name + ":";
-		this.text.text = aux.text;
+			this.text.text = "-" +aux.text;
+		}
+		else{
+			this.text.text = aux.text;
+		}
 		if(aux.yellowColor) this.text.setStyle({
 			font: 'Arial"',
 			color: '#ffff00',
