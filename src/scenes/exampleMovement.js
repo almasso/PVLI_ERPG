@@ -1,8 +1,10 @@
 import {Manin, AllyTEST} from '../obj/manin.js';
-import enviromentObj from '../obj/enviromentObj.js';
+import {enviromentObj, interactuableObj } from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
+import { Quest, QuestNPC, QuestLog } from '../Quest.js';
+import { QuestHUD } from '../fight/HUD.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -18,6 +20,7 @@ export default class MovementExample extends Phaser.Scene {
 	// cargamos todas las imágenes
 	preload(){
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
+		this.load.image('guitar','assets/guitar.jpg');
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
@@ -86,7 +89,10 @@ export default class MovementExample extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), this.questLog);
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog());
+		this.questHud = new QuestHUD(this, this.manin);
+		this.manin.questLog.setQuestHUD(this.questHud);
+		this.questHud.Update();
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -98,17 +104,26 @@ export default class MovementExample extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
 		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		this.npcs = [npc1, npc2, npc3, npc4, npc5];
+
+		
+		
+		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', ["Recupera la guitarra"
+		,"Pelea contra manin"]));
+		let self = this;
+		let guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
+			let quest = self.manin.questLog.GetQuest('guitarQuest');
+			if(quest !== undefined && !quest.actualObjectiveCompleted){
+				self.manin.questLog.advanceQuest('guitarQuest'); 
+				console.log("PILLADO");
+				delete this;
+			}
+		}, this.manin);
+		qNpc.scale = 2.5;
+
+		this.npcs = [npc1, qNpc];
+		this.interactuableObjects = [guitar];
 		npc1.scale = 2.5;
-		npc2.scale = 2.5;
-		npc3.scale = 2.5;
-		npc4.scale = 2.5;
-		npc5.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
@@ -176,6 +191,13 @@ export default class MovementExample extends Phaser.Scene {
 		});
 
 		for(let i of this.npcs) {
+			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+				console.log("overlap")
+				this.manin.collider = i;
+			}
+		}
+
+		for(let i of this.interactuableObjects) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
 				console.log("overlap")
 				this.manin.collider = i;

@@ -216,6 +216,28 @@ export class AllyHUD{
 	}
 }
 
+export class QuestHUD{
+	constructor(scene, manin){
+		this.scene = scene;
+		this.manin = manin;
+		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
+		this.questBlock.setScale(3,1.5);
+		this.text = scene.add.text(40, 35, "",{
+			font: 'Arial"',
+			color: '#ffffff',
+			align: 'left',});
+
+		this.text.setFontSize(20);
+	}
+
+	Update(){
+		console.log(this.text.text);
+		this.text.text = this.manin.questLog.ShowQuest();
+		console.log(this.text.text);
+
+	}
+}
+
 export class InventoryHUD{
 	constructor(scene, inv, allyHud){
 		this.inventoryBlock = scene.add.image(allyHud.attackBlock.x, allyHud.attackBlock.y, 'attackBlock');

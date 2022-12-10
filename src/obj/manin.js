@@ -1,5 +1,7 @@
 import NPC from "./npc.js";
 import { allyParty } from "../fight/Party.js";
+import { QuestNPC } from "../Quest.js";
+import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info) {
@@ -26,7 +28,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
 
 export class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene, questLog) {
+	constructor(scene, x, y, uiScene, questLog, questHud) {
 		super(scene, x, y, 'manin_move');
 		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
@@ -46,6 +48,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
 
 		this.questLog = questLog;
+		this.questHud = questHud;
+
 		
 		// añadimos físicas
 		scene.physics.add.existing(this);
@@ -104,14 +108,29 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	// interacción 
     interact(){
 		if(this.collider instanceof NPC) {
-			this.collider.currentlyTalking = true;
-			this.collider.readDialogues();
-			console.log(this.collider);
+			if(!this.collider instanceof QuestNPC){
+				this.collider.currentlyTalking = true;
+				this.collider.readDialogues();
+				console.log(this.collider);
+			}
+			else{
+				if(!this.collider.quest.acquired){
+					this.collider.activateQuest();
+				}
+				else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
+					console.log("OBJETIVO COMPLETADO")
+					this.collider.advanceQuest();
+				}
+			}
 		}
 		else if(this.collider instanceof AllyTEST) 
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
+		}
+		else if(this.collider instanceof interactuableObj){
+			console.log("AAA GUITARRA")
+			this.collider.Interact();
 		}
     }
 
