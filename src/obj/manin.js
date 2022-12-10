@@ -107,21 +107,19 @@ export class Manin extends Phaser.GameObjects.Sprite {
 
 	// interacción 
     interact(){
-		if(this.collider instanceof NPC) {
-			if(!this.collider instanceof QuestNPC){
-				this.collider.currentlyTalking = true;
-				this.collider.readDialogues();
-				console.log(this.collider);
+		if(this.collider instanceof QuestNPC){
+			if(!this.collider.quest.acquired){
+				this.collider.activateQuest();
 			}
-			else{
-				if(!this.collider.quest.acquired){
-					this.collider.activateQuest();
-				}
-				else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
-					console.log("OBJETIVO COMPLETADO")
-					this.collider.advanceQuest();
-				}
+			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
+				console.log("OBJETIVO COMPLETADO")
+				this.collider.advanceQuest();
 			}
+		}
+		else if(this.collider instanceof NPC) {
+			this.collider.currentlyTalking = true;
+			this.collider.readDialogues();
+			console.log(this.collider);
 		}
 		else if(this.collider instanceof AllyTEST) 
 		{ 

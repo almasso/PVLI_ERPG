@@ -59,10 +59,10 @@ export class QuestLog {
 
     ShowQuest(){
         if(this.actualQuest !== -1){
-            return this.quests[this.actualQuest].objectives[this.quests[this.actualQuest].stage];
+            return {text: this.quests[this.actualQuest].objectives[this.quests[this.actualQuest].stage], yellowColor: this.quests[this.actualQuest].actualObjectiveCompleted};
         }
         else{
-            return this.noQuests;
+            return {text: this.noQuests, yellowColor: false};
         }
     }
 

@@ -231,10 +231,18 @@ export class QuestHUD{
 	}
 
 	Update(){
-		console.log(this.text.text);
-		this.text.text = this.manin.questLog.ShowQuest();
-		console.log(this.text.text);
+		let aux = this.manin.questLog.ShowQuest();
+		this.text.text = aux.text;
+		if(aux.yellowColor) this.text.setStyle({
+			font: 'Arial"',
+			color: '#ffff00',
+			align: 'left',});
 
+		else this.text.setStyle({
+			font: 'Arial"',
+			color: '#ffffff',
+			align: 'left',});
+		this.text.setFontSize(20);
 	}
 }
 

@@ -105,25 +105,34 @@ export default class MovementExample extends Phaser.Scene {
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
 		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-
+		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
+		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
+		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
 		
 		
 		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', ["Recupera la guitarra"
-		,"Pelea contra manin"]));
+		,"Pelea contra melendi"]));
+
+		this.npcs = [npc1, npc2, npc3, npc4, npc5,qNpc];
 		let self = this;
-		let guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
+		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
 			let quest = self.manin.questLog.GetQuest('guitarQuest');
 			if(quest !== undefined && !quest.actualObjectiveCompleted){
 				self.manin.questLog.advanceQuest('guitarQuest'); 
+				self.questHud.Update();
 				console.log("PILLADO");
-				delete this;
+				self.guitar.destroy();
 			}
 		}, this.manin);
 		qNpc.scale = 2.5;
-
-		this.npcs = [npc1, qNpc];
-		this.interactuableObjects = [guitar];
+		npc2.scale = 2.5;
+		npc3.scale = 2.5;
+		npc4.scale = 2.5;
+		npc5.scale = 2.5;
 		npc1.scale = 2.5;
+
+		this.interactuableObjects = [this.guitar];
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
