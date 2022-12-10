@@ -115,7 +115,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			if(this.anims.currentAnim.key === this.mon+'_daño' || this.anims.currentAnim.key === this.mon+'_wow' || 
 			this.anims.currentAnim.key === this.mon+'_burn' || this.anims.currentAnim.key === this.mon+'_shock'
 			 || this.anims.currentAnim.key === this.mon+'_poison'){ //comprobamos si la animación que ha terminado es 'attack'
-				this.play(this.mon+'_idle'); //ejecutamos la animación 'idle'
+				if(!this.dead)this.play(this.mon+'_idle'); //ejecutamos la animación 'idle'
+				else this.play(this.mon+'_dead')
 			}
 			
 		});
