@@ -172,14 +172,14 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		console.log(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]);
 		let self = this;
 		this.targets.forEach(function (enemy) {
-			effective.push(enemy.Damage(attack, self.alteredStates[typeOfAttack.Fire - elementalAttackDifference]));
+			effective.push(enemy.Damage(attack, self.alteredStates[typeOfAttack.Fire - elementalAttackDifference], false));
 		})
 		this.actualMp -= attack.requiredMps;
 		return effective; // devuelve la efectividad de un ataque frente a un target
 	}
 
 	// recibir daño
-	Damage(attack, burned)
+	Damage(attack, burned, isAlteredState)
 	{
 		// animación
 		let currentHP=this.actualHp;
@@ -193,13 +193,13 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
 		// Hacer que reciba daño
 		let attackProbability = Math.floor(Math.random()*100 + 1);
-		if(attackProbability <= this.acurracy || attackType === typeOfAttack.Support) // Los ataques de tipo Support no pueden fallar
+		if(attackProbability <= this.acurracy || attackType === typeOfAttack.Support || isAlteredState) // Los ataques de tipo Support no pueden fallar
 		{
 			
-			let stateProbability = Math.floor(Math.random()*100 + 1);
+			let stateProbability = 0//Math.floor(Math.random()*100 + 1);
 
 			// Las dos primeras resistencias no tienen estado alterado 
-			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && stateProbability < this.actualResistances[attackType] * 10){
+			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && (stateProbability < this.actualResistances[attackType] * 10)){
 				let i = 0;
 				if(this.alteredStates[attackType - elementalAttackDifference] === false){ // Si no tenía el estado alterado correspondiente
 					this.alteredStates[attackType - elementalAttackDifference] = true; // Se aplica el estado alterado 
@@ -237,6 +237,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Die()
 	{
 		this.play(this.mon+'_dead');
+		console.log(" ANIMACION MUERTE");
 		this.dead = true; // se muere
 	}
 
@@ -251,7 +252,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		console.log("this.actualHp");
 
 		console.log(this.actualHp);
-		this.Damage(burned);
+		this.Damage(burned, false, true);
 		console.log(this.actualHp);
 	}
 
@@ -262,7 +263,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Poisoned(){
 		console.log("this.actualHp");
 
-		this.Damage(poisoned);
+		this.Damage(poisoned, false, true);
 		console.log(this.actualHp);
 
 	}
