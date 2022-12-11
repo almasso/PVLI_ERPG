@@ -72,11 +72,6 @@ export default class CementeryScene extends Phaser.Scene {
 		this.eKey = this.input.keyboard.addKey('E'); //chose
 		this.qKey = this.input.keyboard.addKey('Q');  //attack
 		//#endregion	
-		// ponemos a dormir la escena que controla la UI
-		this.scene.sleep('uimanager');
-		 this.scene.launch('hud');
-        
-
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, 'bg3').setOrigin(0, 0);
 
@@ -258,6 +253,7 @@ export default class CementeryScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.wake('movement');
 		this.scene.get('movement').LoadInventory(this.inventory);
+
         this.scene.sleep('cementery');
     }
 
