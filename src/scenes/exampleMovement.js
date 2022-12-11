@@ -120,12 +120,14 @@ export default class MovementExample extends Phaser.Scene {
 		this.npcs = [npc1, npc2, npc3, npc4, npc5,qNpc, qNpc2];
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
-			let quest = self.manin.questLog.GetQuest('guitarQuest').quest;
-			if(quest !== undefined && !quest.actualObjectiveCompleted){
+			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
+			console.log(guitarQuest);
+			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
 				self.manin.questLog.advanceQuest('guitarQuest'); 
 				self.questHud.Update();
 				console.log("PILLADO");
 				self.guitar.destroy();
+				this.Interacted();
 			}
 		}, this.manin);
 

@@ -39,9 +39,8 @@ export class interactuableObj extends enviromentObj{
 	Interact(){
 		if(!this.interacted){
 			this.function();
-			this.interacted = true;
 		}
 	}
 
-	
+	Interacted(){ this.interacted = true; }
 }
