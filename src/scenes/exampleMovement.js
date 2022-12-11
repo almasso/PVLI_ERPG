@@ -50,6 +50,7 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
 		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')
 		this.load.image('partyStats', 'assets/textures/HUD/explore/partyStats.png')
+		this.load.image('log', 'assets/textures/HUD/log.png');
 
 		this.load.image('resP', 'assets/textures/HUD/explore/resP.png')
 		this.load.image('resR', 'assets/textures/HUD/explore/resR.png')

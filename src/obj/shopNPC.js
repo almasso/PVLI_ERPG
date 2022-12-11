@@ -3,10 +3,12 @@ import Object from './Object.js';
 import { shopHUD } from '../fight/HUD.js';
 
 export class shopNPC extends NPC{
-    constructor(scene, x, y, imageID, npcID, dialogues){
+    constructor(scene, x, y, imageID, npcID, dialogues, inv){
         super(scene, x, y, imageID, npcID, dialogues);
         this.createItems()
         this.shopHUD = new shopHUD(scene, 400, 0, this.items);
+        this.currentItem = -1;
+        this.inventory = inv;
     }
 
     createItems(){
@@ -21,5 +23,9 @@ export class shopNPC extends NPC{
         this.items.push(new Object('Ibuprofeno 200mg', 15, 0, 15));
         this.items.push(new Object('Ibuprofeno 600mg', 30, 0, 30));
         this.items.push(new Object('Ibuprofeno 1g', 45, 0, 45));
+    }
+
+    loadInventory(inv){
+        this.inventory = inv;
     }
 }

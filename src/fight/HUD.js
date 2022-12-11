@@ -313,8 +313,18 @@ export class shopHUD{
 	constructor(scene, x, y, items){
 		this.scene = scene;
 		this.shopBlock = scene.add.image(x, y, 'log').setOrigin(0, 0);
+		this.shopBlock.setScale(1.5);
+		this.shopBlock.visible = false;
+
+		this.buyButton; //Botón de comprar
+
+		this.naoButton //Botón de no comprar
+
+		this.upButton;
+
+		this.downButton;
+
 		this.currentItem = 0;
-		this.verticalOffset = 25;
 		this.items = items;
 		this.createItems();
 	}
@@ -324,17 +334,62 @@ export class shopHUD{
 		let self = this;
 		this.items.forEach(function(item, index){
 			self.itemsText[index] = {
-				name: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + index * self.shopBlock.displayHeight / 2 + self.shopBlock.displayHeight / 16, item.name,
+				name: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.shopBlock.displayHeight / 16, item.name,
 				{
 					font: '12px "Press Start 2P"',
 					color: '#ffffff',
 					align: 'left',}),
-				}
+				price: scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.displayHeight / 16, item.price + ' euro(s)',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				hp: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.shopBlock.displayHeight / 16, item.hp + ' hp',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				mp: scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.DisplayHeight / 16, item.mp + ' mp',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',})}
 			self.itemsText[index].name.visible = false;
 
 			self.itemsText[index].name.setInteractive();
 		});
 	}
+
+	displayItems(){
+		this.shopBlock.visible = !this.shopBlock.visible;
+		this.itemsText[this.currentItem].visible = !this.itemsText[this.currentItem].visible;
+		if(this.itemsText[this.currentItem].visible)
+			this.itemButton(this.itemText);
+	}
+
+	Down(){
+		if(this.currentItem < this.items.length){
+			this.displayItems();
+			this.currentItem++;
+			this.displayItems();
+		}
+	}
+
+	Up(){
+		if(this.currentItem !== 0){
+			this.displayItems();
+			this.currentItem--;
+			this.displayItems();
+		}
+	}
+
+	itemButton(itemText){
+		let self = this;
+		itemText.text.on('pointerup', () => {
+			self.scene.currentItem = self.items[self.currentItem];
+		})
+	}
+
 }
 
 // ENEMIGOS EN COMBATE
