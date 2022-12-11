@@ -36,6 +36,7 @@ export default class InitialScene extends Phaser.Scene {
 			this.scene.launch('movement');
 			this.scene.launch('hud');
 
+
             this.scene.stop('initial');
 		})
     }

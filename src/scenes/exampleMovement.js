@@ -71,6 +71,7 @@ export default class MovementExample extends Phaser.Scene {
 
 	// inicializamos la escena
 	create() {
+
 		//#region input
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
 		this.wKey = this.input.keyboard.addKey('W'); // move up
@@ -134,8 +135,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
 		//#endregion
-		this.GenerateHostileGround(600, 200, 3 ,3 ,2);
-
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -319,7 +318,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.scene.get('fightscene').LoadInventory(this.inventory);
 		this.scene.get('fightscene').CurrentScene('movement');
         this.scene.sleep('movement');
+		this.scene.get('hud').Fight();
     }
+
 
 	// pasamos a la escena de pelea
     

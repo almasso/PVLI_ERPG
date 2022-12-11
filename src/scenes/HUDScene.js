@@ -40,6 +40,7 @@ export default class HUDScene extends Phaser.Scene {
 
 	Fight(){
 		this.state = State.Fight;
+		this.showMenu = false;
 		this.walkingHUD.Hide(true);
 		this.menu.Hide(true);
 	}
