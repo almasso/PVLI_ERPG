@@ -28,7 +28,7 @@ export default class InitialScene extends Phaser.Scene {
 			this.scene.launch('cementery');
 			this.scene.sleep('cementery');
 			
-			this.scene.launch('movement');
+			this.scene.launch('square');
 			this.scene.launch('hud');
 
 

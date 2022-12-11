@@ -204,8 +204,8 @@ export default class PortScene extends Phaser.Scene {
 	Plaza(){
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.scene.wake('movement');
-		this.scene.get('movement').LoadInventory(this.inventory);
+        this.scene.wake('square');
+		this.scene.get('square').LoadInventory(this.inventory);
 
         this.scene.sleep('port');
     }

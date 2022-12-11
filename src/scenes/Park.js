@@ -1,5 +1,5 @@
 import {Manin, AllyTEST} from '../obj/manin.js';
-import {enviromentObj} from '../obj/enviromentObj.js';
+import {enviromentObj, interactuableObj} from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
@@ -205,8 +205,8 @@ export default class ParkScene extends Phaser.Scene {
 	Plaza(){
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.scene.wake('movement');
-		this.scene.get('movement').LoadInventory(this.inventory);
+        this.scene.wake('square');
+		this.scene.get('square').LoadInventory(this.inventory);
 
         this.scene.sleep('park');
     }

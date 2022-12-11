@@ -234,6 +234,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
         }
 		if(this.touchingFria )
 		{
+			
 			if(this.nameScene==="PLAZA")
 			{
 				if(this.moveRight&& this.dKey.isDown)

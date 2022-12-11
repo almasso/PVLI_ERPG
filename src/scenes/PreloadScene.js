@@ -59,7 +59,7 @@ export default class Preload extends Phaser.Scene {
 		
         //FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
-        this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
+        this.load.image('square', 'assets/textures/Backgrounds/plaza.png');
         this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png'); // BORRAR
         this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');

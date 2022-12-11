@@ -8,6 +8,7 @@ import ParkScene from './scenes/Park.js'
 import CementeryScene from './scenes/Cementery.js'
 import PortScene from './scenes/Port.js'
 import Preload from './scenes/PreloadScene.js'
+import Square from './scenes/Square.js'
 
 
 /**
@@ -35,7 +36,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [Preload, InitialScene, MovementExample, FightScene, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene],
+    scene: [Preload, InitialScene, Square, FightScene, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene],
     physics: {
         default: 'arcade',
         arcade: {
