@@ -104,6 +104,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	// interacción 
     interact(){
 		this.isInteracting = true;
+		this.scene.scene.sleep('hud');
 		if(this.collider instanceof NPC) {
 			this.collider.currentlyTalking = true;
 			this.collider.readDialogues();
@@ -118,6 +119,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	detectEvents() {
 		this.scene.events.on('dialogWindowClosed', () => {
 			this.isInteracting = false;
+			this.scene.scene.launch('hud');
 		})
 	}
 
