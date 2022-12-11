@@ -125,9 +125,8 @@ export default class MovementExample extends Phaser.Scene {
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
 				self.manin.questLog.advanceQuest('guitarQuest'); 
 				self.questHud.Update();
-				console.log("PILLADO");
+				self.guitar.trigger.destroy();
 				self.guitar.destroy();
-				this.Interacted();
 			}
 		}, this.manin);
 

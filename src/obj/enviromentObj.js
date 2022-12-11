@@ -43,4 +43,6 @@ export class interactuableObj extends enviromentObj{
 	}
 
 	Interacted(){ this.interacted = true; }
+
+	
 }

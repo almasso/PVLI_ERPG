@@ -256,7 +256,7 @@ export class QuestHUD{
 		let aux = this.manin.questLog.ShowQuest();
 		console.log(aux.name);
 		if(aux.name !== undefined){
-			this.questName.text = aux.name + ":";
+			this.questName.text = "Misión: " + aux.name;
 			this.text.text = "-" +aux.text;
 		}
 		else{
