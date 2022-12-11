@@ -1,3 +1,4 @@
+import { attackInfo } from "./Attack.js";
 import { allyParty } from "./Party.js";
 
 // LOG DE COMBATE
@@ -73,7 +74,6 @@ export class Log {
 
 	// mostramos el log en función de la posición del currentText
 	ShowLog(){
-		console.log(this.currentText);
 		this.text1.text = this.log[this.currentText];
 		if(this.currentText - 1 < 0){
 			this.text2.text = "---";
@@ -165,16 +165,12 @@ export class AllyHUD{
 					this.scene.choseA=true;
 					this.scene.cursor=false;
 					this.scene.allaySelected=0;
-					console.log(this.scene.allaySelected);
-					console.log(this.scene.allies.length);
 				}
 				else {
 					//···RAUL PRUEBAS···
 					this.scene.choseE=true;
 					this.scene.cursor=false;
 					this.scene.enemyselected=0;
-					console.log(this.scene.enemyselected);
-					console.log(this.scene.enemies.length);
 				}
 				this.scene.RequestChangeState();
 				this.DisplayAttacks(false);
@@ -388,7 +384,6 @@ class HealthBar {
 
 	// actualizamos la barra
 	Update(newValue){
-		console.log(newValue + this.type);
 		this.updateValue(newValue); // actualizamos su valor
 		this.draw(); // dibujado
 	}
@@ -402,6 +397,17 @@ class HealthBar {
 	hide(bool){
 		this.hidden = bool;
 		this.draw();
+	}
+
+	// cambio de posición
+	setPos(x,y){
+		this.x = x;
+		this.y = y;
+		if(this.texto !== undefined){
+			this.texto.x = x + this.width/3.2;		
+			this.texto.y = y + this.height;		
+		}
+		this.draw()
 	}
 
 	// dibujado
@@ -456,14 +462,44 @@ export class walkingHUD {
 		this.y = y;
 		this.scene = scene; // escena
 		this.imgID = img; // id imagen
-		let bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
-		bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
+		this.bgIMG = this.scene.add.image(this.x, this.y, this.imgID).setOrigin(0,0); // imagen como tal
+		this.bgIMG.setScale(0.4 * allyParty.party.length,1) // setteamos la escala en función del tamaño de la party
 		this.characters = []; // array de objetos de información
 		this.GenerateImages(); // generamos las imágenes de cada bichito
+		this.imagesToSwap = [];
 	}
 
 	charInfo(){
 		return {image: "", health: "", mana: ""};	// objeto de información del HUD
+	}
+
+	swapAllies(index){
+		this.imagesToSwap.push(index);
+		console.log(index)
+		if(this.imagesToSwap.length > 1){
+			[this.characters[this.imagesToSwap[0]].image.x,this.characters[this.imagesToSwap[1]].image.x] = 
+			[this.characters[this.imagesToSwap[1]].image.x,this.characters[this.imagesToSwap[0]].image.x];
+			
+			let newPos1 = this.characters[this.imagesToSwap[0]].health.x;
+			let newPos2 = this.characters[this.imagesToSwap[1]].health.x;
+			
+			let newPos3 = this.characters[this.imagesToSwap[0]].mana.x;
+			let newPos4 = this.characters[this.imagesToSwap[1]].mana.x;
+			
+			this.characters[this.imagesToSwap[0]].health.setPos(newPos2, this.characters[this.imagesToSwap[0]].health.y);
+			this.characters[this.imagesToSwap[1]].health.setPos(newPos1, this.characters[this.imagesToSwap[1]].health.y);
+			
+			this.characters[this.imagesToSwap[0]].mana.setPos(newPos4, this.characters[this.imagesToSwap[0]].mana.y);
+			this.characters[this.imagesToSwap[1]].mana.setPos(newPos3, this.characters[this.imagesToSwap[1]].mana.y);
+
+			[this.characters[this.imagesToSwap[0]].index,this.characters[this.imagesToSwap[1]].index] = 
+			[this.characters[this.imagesToSwap[1]].index,this.characters[this.imagesToSwap[0]].index];
+
+			[this.characters[this.imagesToSwap[0]],this.characters[this.imagesToSwap[1]]] = 
+			[this.characters[this.imagesToSwap[1]],this.characters[this.imagesToSwap[0]]];
+
+			this.imagesToSwap = [];
+		}
 	}
 
 	GenerateImages(){
@@ -479,30 +515,33 @@ export class walkingHUD {
 			// usamos la allyParty para acceder a los valores de vida de cada PJ
 			self.characters[index].health = new HealthBar(self.scene,barX,self.y + 35,30,"HP",ally.actualHp, ally.maxHp, false);
 			self.characters[index].mana = new HealthBar(self.scene,barX,self.y + 45,30,"MP",ally.actualMp, ally.maxMp, false);
+			self.characters[index].name = ally.name;
+			self.characters[index].index = index;
 		});
 	}
 
 	// actualización de valores
-	// AHORA MISMO NO FUNCIONA PARA EL PRIMERO DEL ARRAY DE PARTY NO SÉ POR QUÉ
 	Update(){
 		// guardamos referencia al this
 		let self = this;
 		allyParty.party.forEach(function(ally, index){ // recorremos toda la party
-			// console.log(ally.actualHp, ally.actualMp); // DEBUG que no entiendo por qué no actualiza a manín
-			// actualizamos las barras de vida y maná
-			console.log("COSAS:");
-			console.log(self.characters[index].health.x, self.characters[index].health.y)
-			console.log(self.characters[index].health.renderingValue);
-			console.log(self.characters[index].mana.renderingValue);
 
 			self.characters[index].health.renderingValue = ally.actualHp;
 			self.characters[index].mana.renderingValue = ally.actualMp;
 
-			console.log(self.characters[index].health.renderingValue);
-			console.log(self.characters[index].mana.renderingValue);
-
 			self.characters[index].health.Update(ally.actualHp); 
 			self.characters[index].mana.Update(ally.actualMp);
+		});
+	}
+
+	// esconder menú
+	Hide(bool){
+		let self = this;
+		this.characters.forEach(function(char){
+			char.image.visible = !bool;
+			char.health.hide(bool);
+			char.mana.hide(bool);
+			self.bgIMG.visible = !bool;
 		});
 	}
 }
@@ -518,15 +557,22 @@ const typeOfAttack = {
 };
 
 export class ExploreMenu {
-	constructor(x,y,scene, imgID, pointer){
+	constructor(x,y,scene, imgID, pointer, walkingHUD){
+		this.scale = 1.5;
+		this.blockSize = 98;
+		this.attOffset = 20;
+		this.attOffsetBetween = 30;
+		this.attHoverOffset = 15;
+		this.resOffset = 90;
 		this.x = x; // posición
         this.y = y;
         this.scene = scene; // escena
 		this.imgID = imgID; // imagen
 		this.bImage = this.scene.add.image(x,y,imgID).setOrigin(0,0);
-		this.bImage.setScale(1.5);
+		this.bImage.setScale(this.scale);
 		this.bImage.depth = 5;
 		this.pointer = pointer;
+		this.alliesShownIndex = 0;
 		this.AddPartyMenu(); // añadir el submenú de la party
 		this.AddPartyManagementMenu()
 		this.AddButtons(); // añadir botones para los submenús
@@ -534,42 +580,43 @@ export class ExploreMenu {
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
 		this.objectButton;
 		this.alliesToSwap = [];
+		this.walingHUD = walkingHUD;
 	}
 
 	AddPartyManagementMenu(){
 		let x = 0;
 		let y = 2;
-		this.managerImages = [];
 		let self = this;
+		this.managerImages = [];
 		allyParty.party.forEach(function(ally, index){
 			// declaración de variables
 			let images = self.managerImages[index];
-			if(index < allyParty.alliesNum){
-				let scale = 1.5;
-				let newX = x+98 * scale *index;
-				images = {bgIMG: self.scene.add.image(newX,y,'partyStateBG').setOrigin(0,0).setScale(scale), 
-						  charIMG: self.scene.add.image(newX + 49 * scale,y +49 * scale,ally.imgID).setScale(2*scale),
-						  index: index};				
-				images.bgIMG.depth = 7;
-				images.charIMG.depth = 8;
-				images.bgIMG.visible = false;
-				images.charIMG.visible = false;
+			let newX = x+self.blockSize * self.scale * (index % 4), newY = y + self.blockSize/2*self.scale;
+			if(index >= allyParty.alliesNum){
+				newY += (self.blockSize *self.scale * (~~(index/4)));
 			}
-			else{
-
-			}
-			self.managerImages[index] = images;
+			images = {bgIMG: self.scene.add.image(newX,newY - self.blockSize/2*self.scale,'partyStateBG').setOrigin(0,0).setScale(self.scale), 
+						charIMG: self.scene.add.image(newX + self.blockSize/2 * self.scale,newY,ally.imgID).setScale(2*self.scale),
+						index: index};				
+			images.bgIMG.depth = 7;
+			images.charIMG.depth = 8;
+			images.bgIMG.visible = false;
+			images.charIMG.visible = false;
+			self.managerImages.push(images);
 		})
 	}
-	SwapAllies(images, index){
-		this.alliesToSwap.push(images[index]); // acordarse de borrar el array cuando quites el menú
-		if(this.alliesToSwap.length == 2){
-			console.log("2 selected");
+
+	SwapAllies(ally){
+		this.alliesToSwap.push(ally); // acordarse de borrar el array cuando quites el menú
+		if(this.alliesToSwap.length > 1){
 			[this.alliesToSwap[0].charIMG,this.alliesToSwap[1].charIMG] = 
 			[this.alliesToSwap[1].charIMG,this.alliesToSwap[0].charIMG];
 
 			[this.alliesToSwap[0].charIMG.x,this.alliesToSwap[1].charIMG.x] =
 			[this.alliesToSwap[1].charIMG.x,this.alliesToSwap[0].charIMG.x];
+
+			[this.alliesToSwap[0].charIMG.y,this.alliesToSwap[1].charIMG.y] =
+			[this.alliesToSwap[1].charIMG.y,this.alliesToSwap[0].charIMG.y];
 
 			[this.alliesToSwap[0].index, this.alliesToSwap[1].index] =
 			[this.alliesToSwap[1].index, this.alliesToSwap[0].index];
@@ -586,7 +633,7 @@ export class ExploreMenu {
 		// PARTY STATE BUTTONS
 		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
 		this.viewPartyButton.setInteractive();
-		this.viewPartyButton.setScale(1.5);
+		this.viewPartyButton.setScale(this.scale);
 		this.viewPartyButton.depth = 6;
 		this.pointer.depth = 6;
 		let self = this;
@@ -609,8 +656,22 @@ export class ExploreMenu {
 			self.pointer.visible = false;
 		});
 
+		this.upArrowParty.on("pointerup", function(){ 
+			if(self.alliesShownIndex > 0 && self.alliesShownIndex <= self.partyImages.length - 4){
+				self.alliesShownIndex--;
+				self.ShowParty(true);
+			}
+		});
+
+		this.downArrowParty.on("pointerup", function(){
+			if(self.alliesShownIndex >= 0 && self.alliesShownIndex < self.partyImages.length - 4){
+				self.alliesShownIndex++;
+				self.ShowParty(true);
+			}
+		});
+
 		// PARTY MANAGER BUTTON
-		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(1.5);
+		this.managePartyButton = this.scene.add.image(buttonX, buttonY + 60, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
 		this.managePartyButton.depth = 6;
 		this.managePartyButton.visible = false;
 		this.managePartyButton.on("pointerup", function(){
@@ -633,21 +694,18 @@ export class ExploreMenu {
 		
 		//#endregion
 		//#region MANAGE PARTY MENU BUTTONS
-		console.log("NAJS D");
 		this.managerImages.forEach(function(image, index){
 			image.bgIMG.setInteractive();
 
 			image.bgIMG.on("pointerover", function(){
-				console.log("HOVER ON PARTY BUTTON")
 			})
 
 			image.bgIMG.on("pointerout", function(){
-				console.log("NOT HOVER")
 			})
 			
 			image.bgIMG.on("pointerup", function(){
-				console.log("INTERACTUASDS");
-				self.SwapAllies(self.managerImages, index);
+				self.walingHUD.swapAllies(index);
+				self.SwapAllies(image);
 			})
 		});
 
@@ -676,39 +734,40 @@ export class ExploreMenu {
 		let self = this;
 		allyParty.party.forEach(function(ally, index){
 			// declaración de variables
-			let scale = 1.5;
-			let newY = y+98 * scale *index;
+			let newY = y+self.blockSize * self.scale *index;
 			let images = self.partyImages[index];
 			
 			// imágenes de fondo
 			images = self.imageInfo(self.scene.add.image(x,newY,'partyStateBG').setOrigin(0,0),
-			self.scene.add.image(x + 49*scale, newY + 49*scale, ally.imgID), self.scene.add.image(x + 100 * scale, newY, 'partyStats').setOrigin(0,0));
+			self.scene.add.image(x + self.blockSize/2*self.scale, newY + self.blockSize/2*self.scale, ally.imgID), self.scene.add.image(x + self.blockSize * self.scale, newY, 'partyStats').setOrigin(0,0));
 
 			// cambiar escala
-			images.bImage.setScale(scale);
-			images.charIMG.setScale(scale*2);
+			images.bImage.setScale(self.scale);
+			images.charIMG.setScale(self.scale*2);
 			images.statIMG.setScale(0.72,1);
+			images.partyX = x;
+			images.partyY = newY;
 			
 			// generación de textos
 			let resOffset = 63;
 			let resOffset1 = 35;
 			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
-			images.stats.rP = self.scene.add.image(x+ 100*scale + resOffset, newY +90, 'resP');
-			images.stats.rR = self.scene.add.image(x+ 100*scale + resOffset + resOffset1, newY +90, 'resR');
-			images.stats.rE = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 2, newY +90, 'resE');
-			images.stats.rF = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 3, newY +90, 'resF');
-			images.stats.rT = self.scene.add.image(x+ 100*scale + resOffset + resOffset1 * 4, newY +90, 'resT');
-			images.stats.resistances = self.scene.add.text(x+ 100*scale + 50, newY + 115, res,{font: "30px Courier New"});
-			images.stats.hp = new HealthBar(self.scene, x+100*scale + 50, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
-			images.stats.mp = new HealthBar(self.scene, x+100*scale + 50, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
+			images.stats.rP = self.scene.add.image(x+ self.blockSize*self.scale + resOffset, newY +self.resOffset, 'resP');
+			images.stats.rR = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1, newY +self.resOffset, 'resR');
+			images.stats.rE = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 2, newY +self.resOffset, 'resE');
+			images.stats.rF = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 3, newY +self.resOffset, 'resF');
+			images.stats.rT = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 4, newY +self.resOffset, 'resT');
+			images.stats.resistances = self.scene.add.text(x+ self.blockSize*self.scale + self.blockSize/ 2, newY + 115, res,{font: "30px Courier New"});
+			images.stats.hp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
+			images.stats.mp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
 
 			images.stats.speed = ally.speed;
-			images.stats.attacks[0] = self.scene.add.text(x + 200 * scale + 100, newY + 20, ally.attack[0].name +" "+ ally.attack[0].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[0].type]} );
-			images.stats.attacks[1] = self.scene.add.text(x + 200 * scale + 100, newY + 50, ally.attack[1].name +" "+ ally.attack[1].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[1].type]} );
-			images.stats.attacks[2] = self.scene.add.text(x + 200 * scale + 100, newY + 80, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[2].type]} );
-			images.stats.attacks[3] = self.scene.add.text(x + 200 * scale + 100, newY + 110, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[3].type]} );
+			images.stats.attacks[0] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset, ally.attack[0].name +" "+ ally.attack[0].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[0].type]} );
+			images.stats.attacks[1] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween, ally.attack[1].name +" "+ ally.attack[1].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[1].type]} );
+			images.stats.attacks[2] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 2, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[2].type]} );
+			images.stats.attacks[3] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 3, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[3].type]} );
 			
-			self.SetAttackInfo(images.stats.attacks, index, ally.attack);
+			images.attackInfo = self.SetAttackInfo(images.stats.attacks, index, ally.attack);
 
 			// cambio de depth
 			images.stats.rP.depth = 7;
@@ -720,7 +779,6 @@ export class ExploreMenu {
 			images.bImage.depth = 5;
 			images.statIMG.depth = 5;
 			images.stats.resistances.depth = 7;
-			//images.stats.maxHp.depth = 7;
 			images.stats.hp.depth = 7;
 			images.stats.attacks[0].depth = 7;
 			images.stats.attacks[1].depth = 7;
@@ -743,28 +801,34 @@ export class ExploreMenu {
 			images.stats.attacks[1].visible = false;
 			images.stats.attacks[2].visible = false;
 			images.stats.attacks[3].visible = false;
-
 			self.partyImages[index] = images;
 		})
+		this.upArrowParty = this.scene.add.image(650, 50, 'logButton').setScale(this.scale);
+		this.downArrowParty = this.scene.add.image(650, 50 + this.upArrowParty.displayHeight, 'logButton').setScale(this.scale);
+		this.downArrowParty.angle = 180;
+		this.upArrowParty.visible = false;
+		this.downArrowParty.visible = false;		
+		this.upArrowParty.depth = 8;
+		this.downArrowParty.depth = 8;
 	}
 
 	// Crear la información de los ataques
 	SetAttackInfo(attacks,oldIndex, srcAttack){
-		this.attackInfo = [];
+		let attackInfo = [];
 		let self = this;
 		attacks.forEach(function(attack, index) {
 			attack.setInteractive();
 			let newIndex = (oldIndex +1)* (index+1) + index;
-			let info = self.attackInfo[newIndex];
+			let info = attackInfo[newIndex];
 			let attType = "Tipo: " + typeOfAttack[srcAttack[index].type];
 			let attDmg = srcAttack[index].dmg;
 			if(attType === "Tipo: " + typeOfAttack[5]) attDmg = 'Cura: ' + (-attDmg);
 			else attDmg = 'Daño: ' + attDmg;
 			info = {
 				bgIMG: self.scene.add.image(attack.x, attack.y, 'partyStateBG').setOrigin(0,0),
-				type: self.scene.add.text(attack.x + 15, attack.y + 15, attType, {font: "12px Courier New"}).setOrigin(0,0),
-				dmg: self.scene.add.text(attack.x+15, attack.y + 30, attDmg, {font: "12px Courier New"}).setOrigin(0,0),
-				targets: self.scene.add.text(attack.x+15, attack.y + 45, 'Nº Obj.: ' + srcAttack[index].targets, {font: "12px Courier New"}).setOrigin(0,0)
+				type: self.scene.add.text(attack.x + self.attHoverOffset, attack.y + self.attHoverOffset, attType, {font: "12px Courier New"}).setOrigin(0,0),
+				dmg: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 2, attDmg, {font: "12px Courier New"}).setOrigin(0,0),
+				targets: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 3, 'Nº Obj.: ' + srcAttack[index].targets, {font: "12px Courier New"}).setOrigin(0,0)
 			};
 
 			info.bgIMG.setScale(1.2,0.8);
@@ -791,7 +855,9 @@ export class ExploreMenu {
 				info.type.visible = false;
 				info.targets.visible = false;
 			})
+			attackInfo[index] = info;
 		});
+		return attackInfo;
 	}
 
 	Show(bool){ // mostrar/ocultar el menú
@@ -815,42 +881,123 @@ export class ExploreMenu {
 
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
 		// aquí se podrán seleccionar los diferentes integrantes de la party para ver sus stats.
-		this.partyImages.forEach(function(images){
-			images.charIMG.visible = bool;
-			images.bImage.visible = bool;
-			images.statIMG.visible = bool;
-			images.stats.resistances.visible = bool;
-			//images.stats.maxHp.visible = bool;
-			images.stats.rP.visible = bool;
-			images.stats.rR.visible = bool;
-			images.stats.rE.visible = bool;
-			images.stats.rF.visible = bool;
-			images.stats.rT.visible = bool;
-			images.stats.hp.hide(!bool);
-			images.stats.mp.hide(!bool);
-			images.stats.attacks[0].visible = bool;
-			images.stats.attacks[1].visible = bool;
-			images.stats.attacks[2].visible = bool;
-			images.stats.attacks[3].visible = bool;
+		let self = this;
+		this.upArrowParty.visible = bool;
+		this.downArrowParty.visible = bool;
+		if(bool){
+			this.upArrowParty.setInteractive();
+			this.downArrowParty.setInteractive();
+		}
+		else{
+			this.upArrowParty.disableInteractive();
+			this.downArrowParty.disableInteractive();
+		}
+		this.partyImages.forEach(function(images, index){
+			let i = 0;
+			if(index >= self.alliesShownIndex && index < self.alliesShownIndex + 4){
+				let posY = (self.blockSize*self.scale * (index - (self.alliesShownIndex + i)));
+				images.charIMG.y = self.blockSize/2*self.scale + posY;
+				images.bImage.y = posY;
+				images.statIMG.y = posY;
+				
+				images.stats.resistances.y =110+ posY;
+
+				images.stats.rP.y = self.resOffset + posY;
+				images.stats.rR.y = self.resOffset+ posY;
+				images.stats.rE.y = self.resOffset+ posY;
+				images.stats.rF.y = self.resOffset+ posY;
+				images.stats.rT.y = self.resOffset+ posY;
+
+				images.stats.hp.setPos(images.stats.hp.x, 10+posY);
+				images.stats.mp.setPos(images.stats.hp.x, 40+posY);
+
+				images.stats.attacks[0].y = self.attOffset + posY;
+				images.stats.attacks[1].y = self.attOffset + self.attOffsetBetween + posY;
+				images.stats.attacks[2].y = self.attOffset + self.attOffsetBetween * 2 + posY;
+				images.stats.attacks[3].y = self.attOffset + self.attOffsetBetween * 3 + posY;
+
+				images.attackInfo[0].bgIMG.y = self.attOffset + posY;
+				images.attackInfo[0].type.y = self.attOffset + posY + self.attHoverOffset;
+				images.attackInfo[0].dmg.y = self.attOffset + posY + self.attHoverOffset * 2;
+				images.attackInfo[0].targets.y = self.attOffset + posY + self.attHoverOffset * 3;
+				
+				images.attackInfo[1].bgIMG.y = self.attOffset + self.attOffsetBetween + posY;
+				images.attackInfo[1].type.y = self.attOffset + self.attOffsetBetween + posY + self.attHoverOffset;
+				images.attackInfo[1].dmg.y = self.attOffset + self.attOffsetBetween + posY + self.attHoverOffset * 2;
+				images.attackInfo[1].targets.y = self.attOffset + self.attOffsetBetween + posY + self.attHoverOffset * 3;
+				
+				images.attackInfo[2].bgIMG.y = self.attOffset + self.attOffsetBetween*2 + posY;
+				images.attackInfo[2].type.y = self.attOffset + self.attOffsetBetween * 2 + posY + self.attHoverOffset;
+				images.attackInfo[2].dmg.y = self.attOffset + self.attOffsetBetween * 2 + posY + self.attHoverOffset * 2;
+				images.attackInfo[2].targets.y = self.attOffset + self.attOffsetBetween * 2 + posY + self.attHoverOffset * 3;
+				
+				images.attackInfo[3].bgIMG.y = self.attOffset + self.attOffsetBetween*3 + posY;
+				images.attackInfo[3].type.y = self.attOffset + self.attOffsetBetween * 3 + posY + self.attHoverOffset;
+				images.attackInfo[3].dmg.y = self.attOffset + self.attOffsetBetween * 3 + posY + self.attHoverOffset * 2;
+				images.attackInfo[3].targets.y = self.attOffset + self.attOffsetBetween * 3 + posY + self.attHoverOffset * 3;
+				
+				
+				images.charIMG.visible = bool;
+				images.bImage.visible = bool;
+				images.statIMG.visible = bool;
+
+				images.stats.resistances.visible = bool;
+
+				images.stats.rP.visible = bool;
+				images.stats.rR.visible = bool;
+				images.stats.rE.visible = bool;
+				images.stats.rF.visible = bool;
+				images.stats.rT.visible = bool;
+
+				images.stats.hp.hide(!bool);
+				images.stats.mp.hide(!bool);
+
+				images.stats.attacks[0].visible = bool;
+				images.stats.attacks[1].visible = bool;
+				images.stats.attacks[2].visible = bool;
+				images.stats.attacks[3].visible = bool;
+				i++;
+			}
+			else{
+				images.charIMG.visible = false;
+				images.bImage.visible = false;
+				images.statIMG.visible = false;
+				images.stats.resistances.visible = false;
+				//images.stats.maxHp.visible = bool;
+				images.stats.rP.visible = false;
+				images.stats.rR.visible = false;
+				images.stats.rE.visible = false;
+				images.stats.rF.visible = false;
+				images.stats.rT.visible = false;
+				images.stats.hp.hide(true);
+				images.stats.mp.hide(true);
+				images.stats.attacks[0].visible = false;
+				images.stats.attacks[1].visible = false;
+				images.stats.attacks[2].visible = false;
+				images.stats.attacks[3].visible = false;
+			}
 		})
 	}
 
 	ManageParty(bool){
-		this.managerImages.forEach(function(image){
-			image.bgIMG.visible = bool;
-			image.charIMG.visible = bool;
+		this.managerImages.forEach(function(images){
+			images.bgIMG.visible = bool;
+			if(bool) images.bgIMG.setInteractive();
+			else images.bgIMG.disableInteractive();
+			images.charIMG.visible = bool;
 		});
 		if(!bool){
 			allyParty.swapAllies(this.managerImages);
+			this.managerImages.forEach(function(image, index){
+				image.index = index;
+			})
 		}
 	}
 
-	ShowChangeParty(bool){ // activamos/desactivamos el submenú de cambiar integrantes y orden en la party
-		// se mostrarán los personajes activmos en grande en el centro de la pantalla y debajo
-		// los personajes disponibles para intercambiar
+	Hide(bool){
+		this.ShowParty(!bool);
+		this.ManageParty(!bool);
+		this.Show(!bool);
 	}
 
-	Back(){ // ejecutado al pulsar el botón back
-		// en función del menú actual, se irá a uno anterior
-	}
 }

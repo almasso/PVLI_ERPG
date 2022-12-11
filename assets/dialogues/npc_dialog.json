@@ -1,46 +1,228 @@
 {"texts" : [
     {
         "npcID" : 0,
-        "text" : "VOY"
+        "unique" : true,
+        "text" : "No temas a quien haya practicado 10000 patadas diferentes, teme a quien haya practicado una misma patada 10000 veces."
     },
     {
         "npcID": 0,
-        "text": "CAMINANDO POR LA VIDA"
+        "unique" : true,
+        "text": "He hecho kárate mucho tiempo mientras crecía, pero nada gana a un buen escopetazo."
     },
     {
         "npcID": 0,
-        "text": "SIN PAUSA PERO SIN PRISA"
-    },
-    {
-        "npcID": 0,
-        "text": "PROCURANDO NO HACER RUIDO, VESTÍO"
-    },
-    {
-        "npcID": 0,
-        "text": "CON UNA SONRISA"
+        "unique" : true,
+        "text": "Hacer mudanzas es horrible."
     },
     {
         "npcID": 1,
-        "text": "01001000 01100001 01110011 00100000 01110100 01101111 01101101 01100001 01100100 01101111 00100000 01110100 01101001 01100101 01101101 01110000 01101111 00100000 01100100 01100101 00100000 01110100 01110101 00100000 01110000 01110010 01100101 01100011 01101001 01100001 01100100 01100001 00100000 01110110 01101001 01100100 01100001 00100000 01100101 01101110 00100000 01100101 01110011 01110000 01100101 01110010 01100001 01110010 00100000 01100001 00100000 01110001 01110101 01100101 00100000 01100101 01110011 01110100 01100101 00100000 01110100 01100101 01111000 01110100 01101111 00100000 01110011 01100101 00100000 01101101 01101111 01110011" 
+        "unique" : true,
+        "text": "Mi habilidad es ser capaz de decir 'aaaaa' ante un ventilador. En verano lo hago 3 veces a la semana, aunque en invierno tan solo 2. Y por cierto, en el campeonato de este año quedé en un digno 2º puesto."
+    },
+    {
+        "npcID": 1,
+        "unique" : true,
+        "text": "¡Por el poder del cabello nasal!"
+    },
+    {
+        "npcID": 1,
+        "unique" : true,
+        "text": "Por favor, haga el favor de mirar hacia otro lado... Me estoy cambiando de ropa. No vaya tan deprisa por favor, así no conseguirá nada."
+    },
+    {
+        "npcID": 1,
+        "unique" : true,
+        "text": "No se puede vivir ya en esta triste sociedad, mi espíritu ha adquirido la social enemistad. ¡Toma ya! ¡Toma ya!"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "*vocaloid noises*"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "*blushes* >w<"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "uwu"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "To become god is the loneliest achievement of them all"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "owo"
+    },
+    {
+        "npcID": 2,
+        "unique" : true,
+        "text": "M-Manin kun...*blushes again*"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "text": "Bueno."
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "text": "¿Y?"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "text": "Me **** en la **** de oros. (Este he sido yo haciendo que este texto se muestre en pantalla tal y como tú lo estás viendo ahora mismo)"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "text": "¡Toma mango!"
+    },
+    {
+        "npcID": 3,
+        "unique" : true,
+        "text": "Sí, sí, sí Pedrerol, sí, sí."
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "text": "¿Dónde está mi súpertraje?"
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "text": "Pongan bachata."
+    },
+    {
+        "npcID": 4,
+        "unique" : true,
+        "text": "Me has dejado helado."
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "text": "Hola a mis fans"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "text": "jeje"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "text": "¿Karnaugh? Es un buen amigo, jeje"
+    },
+    {
+        "npcID": 5,
+        "unique" : true,
+        "text": "Esto se acabó. Kisses."
+    },
+    {
+        "npcID": 6,
+        "unique" : true,
+        "text": "ª"
+    },
+    {
+        "npcID": 7,
+        "unique" : true,
+        "text": "Ey, completo undefined."
+    },
+    {
+        "npcID": 7,
+        "unique" : false,
+        "text": "Mira, acabo de terminar this insignia."
+    },
+    {
+        "npcID": 7,
+        "unique" : false,
+        "text": "Se la he copiado al tal 'Musck' ese."
+    },
+    {
+        "npcID": 7,
+        "unique" : false,
+        "text": "¿Tú tienes alguna insignia?."
+    },
+    {
+        "npcID": 7,
+        "unique" : false,
+        "text": "Traeme 30 y te invito a una cerveza en la posada más cercana."
+    },
+    {
+        "npcID": 8,
+        "unique" : true,
+        "text": "Ha llegado la época de los sobornos."
+    },
+    {
+        "npcID": 8,
+        "unique" : false,
+        "text": "Llevo una semana cenando pimientos de Pliego."
+    },
+    {
+        "npcID": 8,
+        "unique" : false,
+        "text": "Con un buen filetón están tremendos."
+    }
+],
+"attributes" : [
+    {
+        "npcID" : 0,
+        "npcName" : "Elmo Tivao",
+        "verified" : false,
+        "developer" : false
     },
     {
         "npcID" : 1,
-        "text": "01110100 01110010 01100001 01110011 01100101 00100000 01100101 01101110 00100000 01110000 01100001 01101110 01110100 01100001 01101100 01101100 01100001 00100000 01101111 00100000 01100101 01101110 00100000 01110011 01110101 00100000 01100100 01100101 01100110 01100101 01100011 01110100 01101111 00100000 01100001 00100000 01100110 01101001 01110011 01100111 01100001 01110010 00100000 01110000 01101111 01110010 00100000 01101100 01101111 01110011 00100000 01100001 01110010 01100011 01101000 01101001 01110110 01101111 01110011 00100000 01100100 01100101 01101100 00100000 01101010 01110101 01100101 01100111 01101111 00100000 01101111 00100000"
+        "npcName" : "Vovovo",
+        "verified" : false,
+        "developer" : false
     },
     {
-        "npcID" : 1,
-        "text": "01100100 01100101 00100000 01101110 01110101 01100101 01110011 01110100 01110010 01101111 00100000 01100111 01101001 01110100 01101000 01110101 01100010 00100000 00101000 01101100 01101111 00100000 01100011 01110101 01100001 01101100 00100000 01100101 01110011 01110100 11000011 10100001 00100000 01110101 01101110 00100000 01110000 01101111 01100011 01101111 00100000 01100110 01100101 01101111 00101100 00100000 01101110 01101111 00100000 01110110 01100001 01101101 01101111 01110011 00100000 01100001 00100000 01100101 01101110 01100111 01100001 11000011 10110001 01100001 01110010 01101110 01101111 01110011 00101001 00100000 01110011 01101111"
+        "npcID" : 2,
+        "npcName" : "Jatsune Micu",
+        "verified" : false,
+        "developer" : false
     },
     {
-        "npcID" : 1,
-        "text": "01101100 01101111 00100000 01110000 01100001 01110010 01100001 00100000 01110100 01110010 01100001 01100100 01110101 01100011 01101001 01110010 00100000 01100101 01110011 01110100 01100101 00100000 01110100 01100101 01111000 01110100 01101111 00100000 01110001 01110101 01100101 00100000 01100010 11000011 10100001 01110011 01101001 01100011 01100001 01101101 01100101 01101110 01110100 01100101 00100000 01101110 01101111 00100000 01100011 01101111 01101110 01110100 01101001 01100101 01101110 01100101 00100000 01101110 01100001 01100100 01100001 00100000 01100110 01110101 01101110 01100100 01100001 01101101 01100101 01101110 01110100 01100001"
+        "npcID" : 3,
+        "npcName" : "Alex",
+        "verified" : false,
+        "developer" : true
     },
     {
-        "npcID" : 1,
-        "text": "01101100 00100000 01111001 00100000 01100101 01110011 00100000 01110011 01101001 01101101 01110000 01101100 01100101 01101101 01100101 01101110 01110100 01100101 00100000 01110101 01101110 01100001 00100000 01110000 11000011 10101001 01110010 01100100 01101001 01100100 01100001 00100000 01100100 01100101 00100000 01110100 01101001 01100101 01101101 01110000 01101111 00101110 00100000 01010010 01100101 01110000 01101100 01100001 01101110 01110100 11000011 10101001 01100001 01110100 01100101 00100000 01110100 01110101 01110011 00100000 01100100 01100101 01100011 01101001 01110011 01101001 01101111 01101110 01100101 01110011 00100000 01111001"
+        "npcID" : 4,
+        "npcName" : "Frozono",
+        "verified" : false,
+        "developer" : false
     },
     {
-        "npcID" : 1,
-        "text": "00100000 01110000 01101111 01110010 00100000 01110001 01110101 11000011 10101001 00100000 01100101 01110011 01110100 11000011 10100001 01110011 00100000 01110100 01110010 01100001 01100100 01110101 01100011 01101001 01100101 01101110 01100100 01101111 00100000 01100101 01110011 01110100 01101111 00101110"
+        "npcID" : 5,
+        "npcName" : "Compuman",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 6,
+        "npcName" : "Toni",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 7,
+        "npcName" : "Toni ✔",
+        "verified" : true,
+        "developer" : false
+    },
+    {
+        "npcID" : 8,
+        "npcName" : "Pepperboy",
+        "verified" : false,
+        "developer" : false
     }
 ]}

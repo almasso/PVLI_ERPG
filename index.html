@@ -23,27 +23,54 @@
         <header>
             <a href="index.html" id="titulo"><h1><span class="rojo">Ñ</span><span class="amarillo">RP</span><span class="rojo">G</span>
                 <span> - ESPAÑA: RONDANDO POR </span><span class="blanco">GA</span><span class="azul">LIC</span><span class="blanco">IA</span></h1></a>
-            <p>AHORA CON UN 1611% MÁS DE MELENDI POR PÍXEL</p>
+            <p>LA PRIMERA GRAN ENTREGA DE VUESTRA DESARROLLADORA MENOS PREFERIDA: <s>ACTIVISION - BLIZZARD</s> MANÍN INTERACTIVE</p>
         </header>
         <hr>
         <nav>
             <ul id="navegacion">
                 <li class="enlacesNAV currentLink"><a href="index.html" class="enlacesNAV">Inicio</a></li>
-                <li class="enlacesNAVJuego" id="objetivoNAV"><a class="enlacesNAV" onclick="openPopupObjetivo()">Descripción y Objetivo</a></li>
-                <li class="enlacesNAVJuego" id="controlNAV"><a class="enlacesNAV" onclick="openPopupControles()">Controles</a></li>
                 <li class="enlacesNAV"><a href="./html/manin.html" class="enlacesNAV">Manín Interactive</a></li>
             </ul>
         </nav>
         <hr>
-        <!--<script src="./src/game.js" type="module"></script>-->
         <section>
-            <div id="popupControles" style="display:none;">
-                <img src="./assets/textures/HUD/Controls.png" style="height:35%;width:35%;">
+            <nav>
+                <ul id="botones_index">
+                    <li class="enlacesNAVJuego" id="objetivoNAV"><a class="enlacesNAV" data-open="descripcion">Descripción y Objetivo</a></li>
+                    <li class="enlacesNAVJuego" id="controlNAV"><a class="enlacesNAV" data-open="controles">Controles</a></li>
+                </ul>
+            </nav>
+        </section>
+        <hr>
+        <section>
+            <div class="modal" id="controles">
+                <div class="modal-dialog">
+                  <header class="modal-header">
+                    Controles
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                  </header>
+                  <section class="modal-content">
+                    <p><img src="./assets/textures/HUD/NewControls.png" style="height:90%;width:90%;"></p>
+                  </section>
+                </div>
             </div>
-            <div id="popupObjetivo" style="display:none;">
-                <h3>LITERALMENTE ESTO ES UN RPG. NO LE DES MÁS VUELTAS PORQUE ES LO QUE HAY, NO VAS A VER NADA NUEVO NI INNOVADOR, SIMPLEMENTE UN RPG PERO LOS PERSONAJES CUTRES BASADOS EN DEIDADES AHORA SON MELENDI Y OTROS ENGENDROS DE LA VIDA COTIDIANA ESPAÑOLA</h3>
-                <h3>AH SÍ, TU OBJETIVO ES PELEAR, ASÍ QUE MÉTETE EN LOS ARBUSTOS. YA ESTÁ. NO TE VAMOS A DECIR CÓMO JUGAR A ESTO, APRÉNDETE TÚ QUE ERES EL MAESTRO FILOSÓFOFO.</h3>
+            
+            <div class="modal" id="descripcion">
+                <div class="modal-dialog">
+                  <header class="modal-header">
+                    Descripción y Objetivo
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                  </header>
+                  <section class="modal-content">
+                    <p>Literalmente esto es un RPG. No le des más vueltas porque es lo que hay, no vas a ver nada nuevo ni innovador, simplemente un RPG pero los personajes cutres basados en deidades ahora son Melendi y otros engendros de la vida cotidiana española</p>
+                    <p></p>Ah sí, tu objetivo es pelear, así que métete en los arbustos. Ya está. No te vamos a decir cómo jugar a esto, <a id="filosofofo" href="https://youtu.be/wS9R4mVmFZY" target="_blank">apréndete tú que eres el maestro filosófofo.</a></p>
+                  </section>
+                  <section class="modal-footer">
+                    <p>Bueno, me han hecho explicaros este juego de una manera un poco más formal so pena de suspenso así que me tocará explicároslo:</p>
+                  </section>
+                </div>
             </div>
+
 
             <div id="divcanvas">
                 <canvas id='game' style="image-rendering: pixelated; width: 800px; height: 600px"></canvas>
@@ -62,38 +89,29 @@
     </body>
 
     <script>
-        function openPopupControles() {
-            var divControls = document.getElementById('popupControles');
-            var controlNav = document.getElementById('controlNAV');
-            var link = controlNav.querySelector('a');
-            divControls.style.display = "block";
-            controlNav.classList.add('currentLinkJuego');
-            link.onclick = function() {closePopupControles();};
+        const openEls = document.querySelectorAll("[data-open]");
+        const closeEls = document.querySelectorAll("[data-close]");
+        const isVisible = "is-visible";
+ 
+        for(const el of openEls) {
+            el.addEventListener("click", function() {
+                const modalId = this.dataset.open;
+                document.getElementById(modalId).classList.add(isVisible);
+            });
         }
-        function closePopupControles() {
-            var divControls = document.getElementById('popupControles');
-            var controlNav = document.getElementById('controlNAV');
-            var link = controlNav.querySelector('a');
-            divControls.style.display = "none";
-            controlNav.classList.remove('currentLinkJuego');
-            link.onclick = function() {openPopupControles();};
+
+        for (const el of closeEls) {
+            el.addEventListener("click", function() {
+                this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+            });
         }
-        function openPopupObjetivo() {
-            var divControls = document.getElementById('popupObjetivo');
-            var controlNav = document.getElementById('objetivoNAV');
-            var link = controlNav.querySelector('a');
-            divControls.style.display = "block";
-            controlNav.classList.add('currentLinkJuego');
-            link.onclick = function() {closePopupObjetivo();};
-        }
-        function closePopupObjetivo() {
-            var divControls = document.getElementById('popupObjetivo');
-            var controlNav = document.getElementById('objetivoNAV');
-            var link = controlNav.querySelector('a');
-            divControls.style.display = "none";
-            controlNav.classList.remove('currentLinkJuego');
-            link.onclick = function() {openPopupObjetivo();};
-        }
+
+        document.addEventListener("click", e => {
+            if (e.target == document.querySelector(".modal.is-visible")) {
+                document.querySelector(".modal.is-visible").classList.remove(isVisible);
+            }
+        });
+
     </script>
 
 </html>

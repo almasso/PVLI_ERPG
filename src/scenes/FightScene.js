@@ -252,6 +252,8 @@ export class FightScene extends Phaser.Scene {
 		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
 			this.scene.wake('movement');
+			this.scene.get('hud').Walk();
+			this.scene.get('hud').UpdateHUD();
 			let movement = this.scene.get('movement');
 			movement.UpdateHUD();
 			movement.updateInventory(this.inventory);
@@ -272,22 +274,26 @@ export class FightScene extends Phaser.Scene {
 
 	// cargamos a los aliados
 	LoadParty(){
+		console.log("LOAD PARTY");
 		this.allies = []; // incializamos el array de aliados
 		let self = this; 
 		allyParty.party.forEach(function (ally, index){ // recorremos todo el array de objetos con info de la party
 			// creamos al character en función de su información
-			self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.party.length+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
-			self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
-			self.allies[index].dead = ally.dead;
-			let scene = self;
-			ally.attack.forEach(function (attack) { // setteamos sus ataques
-				scene.allies[index].SetAttacks(attack);
-			})
-			// añadimos un nuevo HUD
-			self.alliesHud.push(new AllyHUD(self,self.allies[index]));
-			self.allies[index].scale = 2;
-			self.allies[index].depth = 1;
-			self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
+			if(index < allyParty.alliesNum){
+				self.allies[index] = new Character(self,ally.name,(index+1)*self.sys.game.canvas.width/(allyParty.alliesNum+1), 38, ally.imgID, ally.actualHp, ally.maxHp, ally.actualMp, ally.maxMp);
+				self.allies[index].SetStats(ally.rP, ally.rR, ally.rF, ally.rE,ally.rT, ally.acurracy, ally.speed);
+				self.allies[index].dead = ally.dead;
+				let scene = self;
+				ally.attack.forEach(function (attack) { // setteamos sus ataques
+					scene.allies[index].SetAttacks(attack);
+				})
+				// añadimos un nuevo HUD
+				self.alliesHud.push(new AllyHUD(self,self.allies[index]));
+				self.allies[index].scale = 2;
+				self.allies[index].depth = 1;
+				self.AddPartySelector(self.allies[index]); // añadimos un selector para este personaje
+			}
+			else return;
 		})
 		this.inventoryHUD = new InventoryHUD(this, this.inventory, 600, 180);
 	}
@@ -344,9 +350,12 @@ export class FightScene extends Phaser.Scene {
 		let self = this;
 		allyParty.party.forEach(function (ally, index)
 		{
-			ally.actualHp = self.allies[index].actualHp;
-			ally.actualMp = self.allies[index].actualMp;
-			ally.dead = self.allies[index].dead;
+			if(index < allyParty.alliesNum){
+				console.log(index);
+				ally.actualHp = self.allies[index].actualHp;
+				ally.actualMp = self.allies[index].actualMp;
+				ally.dead = self.allies[index].dead;
+			} else return;
 		})
 	}
 
@@ -355,7 +364,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360; 
-		let enemiesNumber = this.GetRandom(5, false); // número de enemigos
+		let enemiesNumber = this.GetRandom(1, false); // número de enemigos
 
 		for(let i = 0; i < enemiesNumber; i++){
 			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo

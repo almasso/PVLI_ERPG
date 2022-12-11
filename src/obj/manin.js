@@ -1,35 +1,59 @@
 import NPC from "./npc.js";
+import { allyParty } from "../fight/Party.js";
 
-export default class Manin extends Phaser.GameObjects.Sprite {
+export class AllyTEST extends Phaser.GameObjects.Sprite {
+	constructor(scene, x, y, manin, info) {
+		super(scene, x, y, 'manin');
+        
+        this.scene.add.existing(this);
+        this.setScale(0.15,0.15);
+        scene.physics.add.existing(this, true);
+        this.manin = manin;
+
+        this.trigger = this.scene.add.zone(x, y, this.body.width + 7, this.body.height + 7);
+        this.generateTrigger();
+        this.scene.physics.world.enable(this.trigger);
+        this.trigger.body.onOverlap = true;
+        this.trigger.setScale(7,7);
+		this.info = info;
+		this.isInteracting = false;
+	}
+	generateTrigger() {
+        this.scene.physics.add.collider(this.manin, this);
+		this.scene.physics.add.overlap(this.manin, this.trigger);
+    }
+
+}
+
+export class Manin extends Phaser.GameObjects.Sprite {
 
 	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin_move');
+		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
         this.setScale(3,3);
 		this.depth = 2;
 		this.scene.add.existing(this); //Añadimos a Manín a la escena
+		this.zone = this.scene.add.zone(x, y + this.displayHeight / 3).setSize(this.displayWidth / 2,this.displayHeight / 4);
+		this.scene.physics.world.enable(this.zone);
         this.stepsWalked = 0;
         this.touchingGrass = false;
 		this.collider = null;
 		this.uiScene = uiScene;
-
-		// Seteamos las teclas para mover al personaje
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
 		this.aKey = this.scene.input.keyboard.addKey('A'); // move left
 		this.sKey = this.scene.input.keyboard.addKey('S'); // move down
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
+		this.detectEvents();
 
 		// añadimos físicas
 		scene.physics.add.existing(this);
 
 		// Ajustamos el "collider" de manín
-		this.bodyOffset = this.body.height/5;
+		this.bodyOffset = this.body.height/10;
 		this.bodyWidth = this.body.width/2;
-		this.body.setOffset(0, -this.bodyOffset);
-		this.body.height *= 2;
-
-
+		//#region animaciones
 		this.scene.anims.create({
 			key: 'move', //identificador de la animación
 			frames: scene.anims.generateFrameNumbers('manin_move', 
@@ -72,54 +96,65 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 			else{
 				this.play('pose');
 			}
-			
 		});
-
-		this.play('pose');
-
-		
+		this.play('pose');	
+		//#endregion
 	}
 
 	// interacción 
     interact(){
+		this.isInteracting = true;
 		if(this.collider instanceof NPC) {
-			this.collider.readDialogues(this.uiScene);
+			this.collider.currentlyTalking = true;
+			this.collider.readDialogues();
 		}
-		else { /*Aquí interactuaremos en el futuro con otras cosas*/}
+		else if(this.collider instanceof AllyTEST) 
+		{ 
+			allyParty.Add(this.collider.info);
+			this.scene.scene.get('hud').Reset();
+		}
     }
 
-	// quitamos collider
-	clearCollider() {
-		this.collider = null;
+	detectEvents() {
+		this.scene.events.on('dialogWindowClosed', () => {
+			this.isInteracting = false;
+		})
 	}
-	
+
+	/**
+	 * Bucle principal del personaje, actualizamos su posición y ejecutamos acciones según el Input
+	 * @param {number} t - Tiempo total
+	 * @param {number} dt - Tiempo entre frames
+	 */
+
 	preUpdate(t, dt) {
 		// Es muy imporante llamar al preUpdate del padre (Sprite), sino no se ejecutará la animación
 		super.preUpdate(t, dt);
 
-		
-		if(Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey))
+		if((Phaser.Input.Keyboard.JustDown(this.wKey)||Phaser.Input.Keyboard.JustDown(this.sKey)||Phaser.Input.Keyboard.JustDown(this.dKey)||Phaser.Input.Keyboard.JustDown(this.aKey)) && !this.isInteracting)
 		{
 			this.play('move');
 			
 		}
 		this.dKey.isDown
 		// Mientras pulsemos la tecla 'A' movemos el personaje en -X
-		if(this.aKey.isDown){
+		if(this.aKey.isDown && !this.isInteracting){
 			//this.play('move');
 			this.setFlip(true, false)
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.x = this.body.x + this.displayWidth/2;
+            this.increaseSteps()
 		}
 
 		// Mientras pulsemos la tecla 'D' movemos el personaje en +X
-		if(this.dKey.isDown){
+		if(this.dKey.isDown && !this.isInteracting){
 			//this.play('move');	
 			this.setFlip(false, false)
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
-			if(this.touchingGrass) this.stepsWalked++;
+			this.zone.x = this.body.x + this.displayWidth/2;
+			this.increaseSteps()
 			
 		}
 
@@ -129,17 +164,19 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		
 		}
 		// Mientras pulsemos la tecla 'S' movemos el personaje en -Y
-		if(this.sKey.isDown){
+		if(this.sKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
+            this.increaseSteps()
 		}
 
 		// Mientnras pulsemos la tecla 'W' movemos el personaje en -Y
-		if(this.wKey.isDown){
+		if(this.wKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
-            if(this.touchingGrass)this.stepsWalked++;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
+            this.increaseSteps()
 		}
 
         if(Phaser.Input.Keyboard.JustUp(this.wKey) || Phaser.Input.Keyboard.JustUp(this.sKey)){
@@ -152,6 +189,7 @@ export default class Manin extends Phaser.GameObjects.Sprite {
 		}
 
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
+
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
@@ -159,4 +197,13 @@ export default class Manin extends Phaser.GameObjects.Sprite {
             this.scene.Fight()
         }
 	}
+
+	increaseSteps(){
+		if(this.touchingGrass) 
+		{
+			this.stepsWalked++;
+			console.log("A VE");
+		}
+	}
+	
 }

@@ -20,23 +20,29 @@ export class DialogBox {
      * @param {number} opts.windowHeight Altura de la caja de texto
      * @param {number} opts.padding Padding del texto
      * @param {number} opts.dialogSpeed Velocidad de aparición de los textos
+     * @param {number} opts.x Posición en X de la caja de texto
+     * @param {number} opts.y Posición en Y de la caja de texto
+     * @param {boolean} opts.visible Color del texto en la caja de texto
      */
     init(opts) {
         if (!opts) opts = {}; 
         this.borderThickness = opts.borderThickness || 3;
-        this.borderColor = opts.borderColor || 0x907748;
+        this.borderColor = opts.borderColor || 0x000000;
         this.borderAlpha = opts.borderAlpha || 1; 
         this.windowAlpha = opts.windowAlpha || 0.8; 
         this.windowColor = opts.windowColor || 0x303030;
         this.windowHeight = opts.windowHeight || 150; 
         this.padding = opts.padding || 32; 
-        this.dialogSpeed = opts.dialogSpeed || 10; 
+        this.dialogSpeed = opts.dialogSpeed || 10;
+        this.x = opts.x || this.padding;
+        this.y = opts.y;
         this.eventCounter = 0; //Contador de eventos
         this.visible = true; //Variable que dice si el cuadro de texto es visible o no
         this.text; //Referencia a Phaser.Text
+        this.textColor = opts.textColor;
         this.dialog; //Referencia a Phaser.Dialog
         this.graphics; //Referencia a Phaser.Graphics
-        this.isCurrentlyBeingAnimated = false; //Variable que dice si el cuadro de texto está en medio de una animación o no
+        this.beingAnimated; //Nos dice si el texto está siendo o no activado
         this.createWindow(); //Crear la ventana
     }
 
@@ -63,8 +69,8 @@ export class DialogBox {
      * @returns {Object.<number, number, number, number>} Objeto con el rectángulo con las dimensiones de la caja de texto
      */
     calculateWindowDimensions(width, height) {
-        var x = this.padding;
-        var y = height - this.windowHeight - this.padding;
+        var x = this.x;
+        var y = this.y || height - this.windowHeight - this.padding;
         var rectWidth = width - (this.padding * 2);
         var rectHeight = this.windowHeight;
         return {
@@ -136,6 +142,8 @@ export class DialogBox {
         var tempText = animate ? '' : text;
 
         this.textPosition(tempText);
+        this.text.setColor(this.textColor);
+        this.text.setFontFamily('Silkscreen');
         if (animate) {
             this.timedEvent = this.scene.time.addEvent({
             delay: 150 - (this.dialogSpeed * 30),
@@ -150,11 +158,22 @@ export class DialogBox {
      * Anima el texto
      */
     animateText() {
+        this.beingAnimated = true;
         this.eventCounter++;
         this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
         if (this.eventCounter === this.dialog.length) {
           this.timedEvent.remove();
+          this.scene.time.addEvent({
+            delay: 180,
+            callback: this.endTextAnimation,
+            callbackScope: this,
+            loop: false
+        });
         }
+    }
+
+    endTextAnimation() {
+        this.beingAnimated = false;
     }
 
     /**
@@ -163,12 +182,13 @@ export class DialogBox {
      */
     textPosition(text) {
         if (this.text) this.text.destroy();
-        var x = this.padding + 10;
-        var y = this.getGameHeight() - this.windowHeight - this.padding + 10;
+        var x = this.x + 10|| this.padding + 10;
+        var y = this.y + 10|| this.getGameHeight() - this.windowHeight - this.padding + 10;
         this.text = this.scene.make.text({
             x,
             y,
             text,
+            color : this.textColor,
             style: {
               wordWrap: { width: this.getGameWidth() - (this.padding * 2) - 25 }
             }
@@ -184,27 +204,76 @@ export default class DialogScene extends Phaser.Scene {
     constructor() {
         super({key: 'dialog', active: true, visible: true});
         this.dialogBox = new DialogBox(this);
+        this.nameBox = new DialogBox(this);
+        this.verifiedBox = new DialogBox(this);
+        this.developerBox = new DialogBox(this);
         this.hasCreatedWindow = false;
         this.isToggled = true;
+        this.event = false;
     }
 
-    preload() {
+    update() {
+        if(this.dialogBox.beingAnimated && !this.event) {
+            this.events.emit("isBeingAnimated");
+            this.event = true;
+        }
+        else if (!this.dialogBox.beingAnimated && this.event) {
+            this.events.emit("isNotBeingAnimated");
+            this.event = false;
+        }
     }
 
-    create() {
-    }
-
-    createWindow() {
-        this.dialogBox.init();
+    createWindow(verified, developer) {
+        this.dialogBox.init({
+            textColor : "#FFFFFF",
+            windowColor: 0x292929
+        });
+        this.nameBox.init({
+            borderThickness : 3,
+            windowColor: 0xE3BE39,
+            windowHeight: 35,
+            padding: 290,
+            x:20,
+            y:380,
+            textColor: "#FFFFFF"
+        });
+        this.verifiedBox.init({
+            borderThickness : 2,
+            windowColor: 0xE1E8ED,
+            borderColor: 0x1DA1F2,
+            windowHeight: 35,
+            padding: 340,
+            x:245,
+            y:380,
+            textColor: "#1DA1F2"
+        });
+        this.developerBox.init({
+            borderThickness : 2,
+            windowColor: 0xE1E8ED,
+            borderColor: 0x42B93C,
+            windowHeight: 35,
+            padding: 290,
+            x:245,
+            y:380,
+            textColor: "#42B93C"
+        })
+        if(!verified) this.verifiedBox.toggleWindow();
+        if(!developer) this.developerBox.toggleWindow();
         this.hasCreatedWindow = true;
     }
 
-    setText(text) {
-        this.dialogBox.setText(text, true);
+    setText(character, text, animate, verified, developer) {
+        this.dialogBox.setText(text, animate);
+        this.nameBox.setText(character, false);
+        if(verified) this.verifiedBox.setText("✔ Oficial", false);
+        else if(developer) this.developerBox.setText("</> Desarrollador", false);
     }
 
-    toggleWindow() {
+    toggleWindow(verified, developer) {
         this.dialogBox.toggleWindow();
+        this.nameBox.toggleWindow();
+        if(verified) this.verifiedBox.toggleWindow();
+        else if(developer) this.developerBox.toggleWindow();
         this.isToggled = !this.isToggled;
     }
 }
