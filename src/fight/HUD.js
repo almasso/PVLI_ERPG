@@ -327,12 +327,10 @@ export class shopHUD{
 		this.buyButton = scene.add.image(x, y - 10, 'buy').setOrigin(0, 0); //Botón de comprar
 		this.buyButton.setScale(1.5);
 		this.buyButton.setInteractive();
-		this.buyButton.visible = false;
 
 		this.naoButton = scene.add.image(x + this.buyButton.displayWidth + 1, y - 10, 'noBuy').setOrigin(0, 0); //Botón de no comprar
 		this.naoButton.setScale(1.5);
 		this.naoButton.setInteractive();
-		this.naoButton.visible = false;
 
 		this.upButton = scene.add.image(x + this.shopBlock.displayWidth + 1, y, 'logArrow');
 		this.upButton = setScale(1.5);
@@ -347,6 +345,7 @@ export class shopHUD{
 
 		this.buyButton.on('pointerup', () => {
 			this.displayItems();
+			this.buyButton.visible = false;
 		})
 
 		this.naoButton.on('pointerup', () => {
