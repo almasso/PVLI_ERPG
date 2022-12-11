@@ -83,6 +83,7 @@ export default class Square extends Phaser.Scene {
 
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
+		
 		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
 
 		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
@@ -101,7 +102,7 @@ export default class Square extends Phaser.Scene {
 		}, this.manin);
 
 		this.interactuableObjects = [this.guitar];
-        this.npcs = [];
+        //this.npcs = [];
         this.interactuableObjects = [];
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.

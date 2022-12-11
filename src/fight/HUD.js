@@ -419,13 +419,13 @@ export class shopHUD{
 		this.naoButton.setInteractive();
 		this.naoButton.visible = false;
 
-		this.upButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1,  this.shopBlock.y - this.shopBlock.displayHeight / 2, 'logArrow');
+		this.upButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1,  this.shopBlock.y - this.shopBlock.displayHeight / 2, 'logButton');
 		this.upButton.setScale(1.5);
 		this.upButton.depth = 4;
 		this.upButton.setInteractive();
 		this.upButton.visible = false;
 
-		this.downButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1, this.upButton.y + this.upButton.displayHeight, 'logArrow');
+		this.downButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1, this.upButton.y + this.upButton.displayHeight, 'logButton');
 		this.downButton.setScale(1.5);
 		this.downButton.depth = 4;
 		this.downButton.angle = 180;

@@ -28,13 +28,14 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('retryButton', 'assets/textures/HUD/Retry.png'); 
         this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
         this.load.image('log','assets/textures/HUD/log.png');
-		this.load.image('logButton','assets/textures/HUD/logButton.png');
 		this.load.image('attackButton','assets/textures/HUD/attackButton.png');
 		this.load.image('attackButtonHover','assets/textures/HUD/attackButtonHover.png');
 		this.load.image('objectButton','assets/textures/HUD/objectButton.png');
 		this.load.image('objectButtonHover','assets/textures/HUD/objectButtonHover.png');
         this.load.image('AllyBlock','assets/textures/HUD/AllyBlock.png');
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
+		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
+		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
 
 
         //PERSONAJES Y NPCS
