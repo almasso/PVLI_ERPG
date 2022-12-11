@@ -216,6 +216,87 @@ export class AllyHUD{
 	}
 }
 
+export class QuestHUD{
+	constructor(scene, manin){
+		this.scene = scene;
+		this.manin = manin;
+		this.scale = 2.5;
+		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
+		this.questBlock.setScale(this.scale, this.scale / 2);
+		this.questBlock.depth = 8;
+
+		this.questName = scene.add.text(40, 35, "",{
+			font: 'Arial"',
+			color: '#ffffff',
+			align: 'left',});
+		this.questName.setFontSize(20);
+		this.questName.depth = 9;
+
+
+		this.text = scene.add.text(40, 60, "",{
+			font: 'Arial"',
+			color: '#ffffff',
+			align: 'left',});
+
+		this.text.setFontSize(20);
+		this.text.depth = 9;
+
+		let offset = 35;
+		this.upArrowParty = this.scene.add.image(this.questBlock.width * this.scale + offset, this.questBlock.height * this.scale / 2 - offset , 'logButton').setScale(this.scale / 2);
+		this.downArrowParty = this.scene.add.image(0, 0 , 'logButton').setScale(this.scale / 2);
+		this.downArrowParty.x = this.upArrowParty.x;
+		this.downArrowParty.y = this.upArrowParty.y + this.upArrowParty.height * 3 / 2; 
+		this.downArrowParty.angle = 180;
+		this.upArrowParty.depth = 8;
+		this.downArrowParty.depth = 8;
+		this.AddButtons();
+	}
+
+	Update(){
+		let aux = this.manin.questLog.ShowQuest();
+		console.log(aux.name);
+		if(aux.name !== undefined){
+			this.questName.text = "Misión: " + aux.name;
+			this.text.text = "-" +aux.text;
+		}
+		else{
+			this.text.text = aux.text;
+		}
+		if(aux.yellowColor) this.text.setStyle({
+			font: 'Arial"',
+			color: '#ffff00',
+			align: 'left',});
+
+		else this.text.setStyle({
+			font: 'Arial"',
+			color: '#ffffff',
+			align: 'left',});
+		this.text.setFontSize(20);
+	}
+
+	AddButtons(){
+		this.upArrowParty.setInteractive();
+		this.downArrowParty.setInteractive();
+
+		let self = this;
+		this.upArrowParty.on("pointerup", function(){ 
+			if(0 < self.manin.questLog.actualQuest){
+				self.manin.questLog.actualQuest--;
+				self.Update();
+				console.log("ARRIBA " + self.manin.questLog.actualQuest );
+			}
+		});
+
+		this.downArrowParty.on("pointerup", function(){
+			if(self.manin.questLog.quests.length - 1 !== self.manin.questLog.actualQuest && 0 <= self.manin.questLog.actualQuest){
+				self.manin.questLog.actualQuest++;
+				self.Update();
+				console.log("ABAJO " + self.manin.questLog.actualQuest );
+			}
+		});
+	}
+}
+
 export class InventoryHUD{
 	constructor(scene, inv, x, y){
 		this.inventoryBlock = scene.add.image(x, y, 'attackBlock').setOrigin(0,0);
