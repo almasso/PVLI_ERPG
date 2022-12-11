@@ -1,4 +1,5 @@
 import Character from '../fight/Character.js'
+import {elementalAttackDifference, typeOfAttack} from '../fight/Attack.js'
 import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
@@ -15,7 +16,9 @@ const FightState = {
 	ExecuteAttack: 5,
 	TimeUntilNextTurn: 6,
 	Finish: 7,
-	Item: 8
+	Item: 8,
+	AlteratedStatesFire: 9,
+	AlteratedStatesToxic: 10
 };
 
 export class FightScene extends Phaser.Scene {
@@ -34,6 +37,7 @@ export class FightScene extends Phaser.Scene {
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
 		this.load.image('melendi','assets/textures/Characters/Melendi.png')
+		this.load.image('jarfaiter','assets/textures/Characters/Jarfaiter.png')
 		//this.load.image('artista','assets/textures/Artista.png')
 		this.load.image('artista2','assets/textures/Characters/Artista2.png')
 		this.load.image('culturista','assets/textures/Characters/Culturista.png')
@@ -51,21 +55,35 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('artist_idle','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
 		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_burn','assets/textures/Characters/artist_burn.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_shock','assets/textures/Characters/artist_shock.png',{frameWidth:24, frameHeight:32});
+		this.load.spritesheet('artist_poison','assets/textures/Characters/artist_poison.png',{frameWidth:24, frameHeight:32});
 
 		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_burn','assets/textures/Characters/manin_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_poison','assets/textures/Characters/manin_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('manin_shock','assets/textures/Characters/manin_shock.png',{frameWidth:19, frameHeight:26});
 
 		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
 		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_burn','assets/textures/Characters/melendi_burn.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_shock','assets/textures/Characters/melendi_shock.png',{frameWidth:22, frameHeight:27});
+		this.load.spritesheet('melendi_poison','assets/textures/Characters/melendi_poison.png',{frameWidth:22, frameHeight:27});
 
 
-		this.load.spritesheet('jarfaiter', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:24, frameHeight:32})
+		this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_dead', 'assets/textures/Characters/Jarfaiter_dead.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_burn', 'assets/textures/Characters/Jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_shock', 'assets/textures/Characters/Jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_poison', 'assets/textures/Characters/Jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
+
 		// cargar los botones
 		this.load.image('log','assets/textures/HUD/log.png');
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
@@ -287,6 +305,8 @@ export class FightScene extends Phaser.Scene {
 				ally.attack.forEach(function (attack) { // setteamos sus ataques
 					scene.allies[index].SetAttacks(attack);
 				})
+
+				self.allies[index].SetAlteredStates(ally.alteredStates);
 				// añadimos un nuevo HUD
 				self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 				self.allies[index].scale = 2;
@@ -331,17 +351,131 @@ export class FightScene extends Phaser.Scene {
 
 	// construimos una nueva frase para el Log
 	BuildLog(chName,attackInfo, effective,enemy, index){
-		let text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		let text;
 		// dependiendo del valor que recibamos ponemos un texto u otro
-		if(effective[index] === -1) {text+="¡Es super efectivo!";}
-		else if (effective[index] === 1) {text+= "No es muy efectivo..."}
-		else if(effective[index] === 2){text+="Pero no tuvo efecto."}
+		console.log(effective);
 		if(attackInfo.type === 5) // Si el ataque es de tipo support
 		{
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
 		}
+		else{
+			text = chName+" atacó con "+attackInfo.name+" a "+enemy.name+". ";
+		}
+		if(effective[index].hit === -1) {text+="¡Es super efectivo!";}
+		else if (effective[index].hit === 1) {text+= "No es muy efectivo..."}
+		else if(effective[index].hit === 2){text+="Pero no tuvo efecto."}
 		this.log.AddText(text); // añadimos el texto al log
 		this.log.UpdateLog(); // y lo mostramos (quizá esto podría hacerlo el propio log cuando se añade un texto?)
+		this.BuildLogState(enemy, effective, index);
+	}
+
+	BuildLogState(enemy, effective, index){
+		if(effective[index].state != -1){ // Creo que se puede hacer solo un update, pero por ahora no lo he hecho
+			let text;
+			if(effective[index].state == 2){
+				text = enemy.name +" fue quemado.";
+			}
+			else if (effective[index].state == 3){
+				text = enemy.name +" fue paralizado.";
+			}
+			else{
+				text = enemy.name +" fue envenenado.";
+			}
+			this.log.AddText(text);
+			this.log.UpdateLog();
+		}
+	}
+
+	BuildEndTurnLog(text){
+		this.log.AddText(text);
+		this.log.UpdateLog();
+	}
+
+	CheckBurnState(){
+		let self = this;
+		let areAlteredStates = false; // Variable para no esperar si no hay ningun estado alterado
+		this.turns.forEach(function (character){
+			let hasAlteredStates = false; // variable para mantener las animaciones coordinadas
+			if(character.type) // ALIADO
+			{
+				let ally = self.allies[character.index];
+				if(!ally.dead){
+					if(ally.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
+						console.log(ally);
+						areAlteredStates = true;
+						let text = ally.name + " sufrio daño por estar quemado.";
+						ally.Burned();
+						ally.play(ally.imageId+'_burn');
+						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+					} 
+					if(!hasAlteredStates) ally.play(ally.imageId + '_wow'); 
+					self.alliesHud[character.index].Update();
+				}
+
+			}
+			else{
+				let enemy= self.enemies[character.index];
+				if(!enemy.dead){
+					if(enemy.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
+						let text = enemy.name + " sufrio daño por estar quemado.";
+						areAlteredStates = true;
+						enemy.Burned();
+						enemy.play(enemy.imageId+'_burn');
+
+						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+
+					} 
+					if(!hasAlteredStates) enemy.play(enemy.imageId + '_wow')
+					self.enemiesHud[character.index].Update();
+				}
+			}
+		});
+		return areAlteredStates;
+	}
+
+	CheckToxicState(){
+		let self = this;
+		let areAlteredStates = false; // Variable para no esperar si no hay ningun estado alterado
+		this.turns.forEach(function (character){
+			let hasAlteredStates = false; // variable para mantener las animaciones coordinadas
+			if(character.type) // ALIADO
+			{
+				let ally = self.allies[character.index];
+				if(!ally.dead){
+					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+						console.log(ally);
+						areAlteredStates = true;
+						let text = ally.name + " sufrio daño por estar envenenado.";
+						ally.Poisoned();
+						ally.play(ally.imageId+'_poison');
+						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+					}
+					if(!hasAlteredStates) ally.play(ally.imageId + '_wow'); 
+					self.alliesHud[character.index].Update();
+				}
+
+			}
+			else{
+				let enemy= self.enemies[character.index];
+				if(!enemy.dead){
+					if(enemy.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+						let text = enemy.name + " sufrio daño por estar envenenado.";
+						areAlteredStates = true;
+						enemy.Poisoned();
+						enemy.play(enemy.imageId+'_poison');
+						self.BuildEndTurnLog(text);
+						hasAlteredStates = true;
+
+					}
+					if(!hasAlteredStates) enemy.play(enemy.imageId + '_wow')
+					self.enemiesHud[character.index].Update();
+				}
+			}
+		});
+		return areAlteredStates;
 	}
 
 	// actualizamos el objeto con info de la party
@@ -355,6 +489,7 @@ export class FightScene extends Phaser.Scene {
 				ally.actualHp = self.allies[index].actualHp;
 				ally.actualMp = self.allies[index].actualMp;
 				ally.dead = self.allies[index].dead;
+				ally.alteredStates = self.allies[index].alteredStates;
 			} else return;
 		})
 	}
@@ -367,7 +502,7 @@ export class FightScene extends Phaser.Scene {
 		let enemiesNumber = this.GetRandom(1, false); // número de enemigos
 
 		for(let i = 0; i < enemiesNumber; i++){
-			let enemyType = this.GetRandom(this.enemiesInfo.length, true); // tipo de enemigo
+			let enemyType = this.GetRandom(1,true);//this.enemiesInfo.length, true); // tipo de enemigo
 			if(i === 0) {
 				// primer enemigo colocado con una posición específica
 				this.enemies[0] = new Character(this,this.enemiesInfo[enemyType].name,this.sys.game.canvas.width/2-(75*enemiesNumber/2) +50, height, this.enemiesInfo[enemyType].imgID, this.enemiesInfo[enemyType].actualHp, this.enemiesInfo[enemyType].maxHp, this.enemiesInfo[enemyType].actualMp, this.enemiesInfo[enemyType].maxMp);
@@ -431,7 +566,7 @@ export class FightScene extends Phaser.Scene {
 		
 		// construimos el log
 		for(let j = 0; j < this.enemies[i].targets.length; j++){
-			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]])
+			this.BuildLog(this.enemies[i].name,this.enemies[i].GetAttack(selectedAttack), effective, this.allies[selectedTarget[j]], j)
 		}
 		
 		
@@ -482,9 +617,20 @@ export class FightScene extends Phaser.Scene {
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
 				this.ToggleButtons(true);
-				this.state = FightState.ChooseAttack;
 				// cambiamos el aliado actual
 				this.currentAlly = this.turns[this.currentTurn].index;
+				if(!this.allies[this.currentAlly].alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){ // Paralizado
+					this.state = FightState.ChooseAttack;
+				}
+				else{
+					this.state = FightState.TimeUntilNextTurn;
+					this.BuildEndTurnLog(this.allies[this.currentAlly].name + " no se pudo mover.");
+					this.allies.forEach(function(ally){
+						ally.play(ally.imageId + '_wow');  
+					})
+					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_shock');// Insertar animación paralizado
+				}
+
 
 				//···RAUL PRUEBAS···
 				// Input teclado
@@ -494,7 +640,18 @@ export class FightScene extends Phaser.Scene {
 			}
 			else    // ENEMIGOS
 			{   
-				this.state = FightState.ExecuteAttack;
+				if(!this.enemies[this.turns[this.currentTurn].index].alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){ // Paralizado
+					this.state = FightState.ExecuteAttack;
+				}
+				else{
+					this.state = FightState.TimeUntilNextTurn;
+					this.BuildEndTurnLog(this.enemies[this.turns[this.currentTurn].index].name + " no se pudo mover.");
+					this.enemies.forEach(function(enemy){
+						enemy.play(enemy.imageId + '_wow');
+					})
+					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_shock');// Insertar animación paralizado
+
+				}
 			}
 		}
 	}
@@ -672,6 +829,23 @@ export class FightScene extends Phaser.Scene {
 			this.state = FightState.TimeUntilNextTurn;
 		}
 		else if(this.state === FightState.TimeUntilNextTurn){
+			if(this.currentTurn === this.turns.length - 1) {
+				let areAlteredStates = this.CheckBurnState();
+				this.state = FightState.AlteratedStatesFire;
+				if(!areAlteredStates) {
+					this.BuildEndTurnLog("Nadie ha sido quemado");
+				}
+			}
+			else this.state = FightState.SelectTurn;	
+		}
+		else if(this.state === FightState.AlteratedStatesFire){
+			let areAlteredStates = this.CheckToxicState();
+			this.state = FightState.AlteratedStatesToxic;
+			if(!areAlteredStates) {
+				this.BuildEndTurnLog("Nadie ha sido envenenado");
+			}
+		}
+		else if(this.state === FightState.AlteratedStatesToxic){
 			this.state = FightState.SelectTurn;
 		}
 		else if(this.state === FightState.Item){
@@ -834,6 +1008,10 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.y = this.enemies[this.enemyselected].y - 75;
 				this.pointer.angle = 90;
 			}
+			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
+				console.log("entre");
+				this.state = FightState.ChooseAttack;
+			}
 		}
 		
 		else if(this.state === FightState.ChooseAlly || this.state === FightState.Item){
@@ -864,6 +1042,10 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.y = this.allies[this.allaySelected].y;
 				this.pointer.angle = 0;
 			}
+			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
+				console.log("entre");
+				this.state = FightState.ChooseAttack;
+			}
 		}
 		else if(this.state === FightState.ExecuteAttack){
 
@@ -885,7 +1067,23 @@ export class FightScene extends Phaser.Scene {
 			}
 		}
 		else if(this.state === FightState.Item){
-
+		
+		}
+		else if(this.state === FightState.AlteratedStatesFire){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
+		}
+		else if(this.state === FightState.AlteratedStatesToxic){
+			this.count += dt;
+			if(this.count > this.timeBetweenAttacks)
+			{
+				this.RequestChangeState();
+				this.count = 0;
+			}
 		}
 		else{
 			this.EndCombat();

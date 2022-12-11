@@ -19,14 +19,14 @@ export class Log {
 		// creamos los textos con vlaor base ---
 		this.text3 = this.scene.add.text(this.img.x + 25, this.img.y + 15, "---", 
 			{
-			font: '20px "Press Start 2P"',
+			font: '18px "Arial"',
 			color: '#ffffff',
 			align: 'left',
 			});
 	
 		this.text2 = this.scene.add.text(this.text3.x, this.text3.y + this.verticalOffset, "---", 
 			{
-			font: '20px "Press Start 2P"',
+			font: '18px "Arial"',
 			color: '#ffffff',
 			align: 'left',
 			});
@@ -34,7 +34,7 @@ export class Log {
 		// este texto se crea con el valor que tenga el array en la posición 0. será el primero que se cree
 		this.text1 = this.scene.add.text(this.text2.x, this.text2.y + this.verticalOffset, this.log[this.currentText], 
 			{
-			font: '20px "Press Start 2P"',
+			font: '18px "Arial"',
 			color: '#ffffff',
 			align: 'left',
 			});
@@ -117,13 +117,13 @@ export class AllyHUD{
 			self.attackText[index] = { // creamos el texto
 				text: scene.add.text(self.attackBlock.x + self.attackBlock.displayWidth / 14, self.attackBlock.y + index * self.attackBlock.displayHeight / 4 + self.attackBlock.displayHeight/16, attack.name, 
 				{
-				font: '12px "Press Start 2P"',
+				font: '12px "Arial"',
 				color: '#ffffff',
 				align: 'left',}), 
 
 				mp: scene.add.text(self.attackBlock.x + 7.5*self.attackBlock.displayWidth/10, self.attackBlock.y + index * self.attackBlock.displayHeight / 4 + self.attackBlock.displayHeight/16, attack.requiredMps + " MP", 
 				{ // puntos de mana
-				font: '12px "Press Start 2P"',
+				font: '12px "Arial"',
 				fontStyle: 'bold',
 				color: colors[attack.type], // color en función de tipo
 				align: 'left',
@@ -347,7 +347,7 @@ class HealthBar {
 		this.hasText = hasText; // tiene texto?
 		this.bar.depth = 3;
 		if(this.hasText){ // si lo tiene, se crea
-			this.texto = scene.add.text(x + this.width/3.2, y + this.height, this.value + ' / '+maxValue + ' ' + type, { font: '"Press Start 2P"' });
+			this.texto = scene.add.text(x + this.width/3.2, y + this.height, this.value + ' / '+maxValue + ' ' + type, { font: '"Arial"' });
 			this.texto.depth = 7;
 			this.bar.depth = 7;
 		}
@@ -730,15 +730,15 @@ export class ExploreMenu {
 			images.stats.rE = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 2, newY +self.resOffset, 'resE');
 			images.stats.rF = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 3, newY +self.resOffset, 'resF');
 			images.stats.rT = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 4, newY +self.resOffset, 'resT');
-			images.stats.resistances = self.scene.add.text(x+ self.blockSize*self.scale + self.blockSize/ 2, newY + 115, res,{font: "30px Courier New"});
+			images.stats.resistances = self.scene.add.text(x+ self.blockSize*self.scale + self.blockSize/ 2, newY + 115, res,{font: "30px Arial"});
 			images.stats.hp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
 			images.stats.mp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
 
 			images.stats.speed = ally.speed;
-			images.stats.attacks[0] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset, ally.attack[0].name +" "+ ally.attack[0].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[0].type]} );
-			images.stats.attacks[1] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween, ally.attack[1].name +" "+ ally.attack[1].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[1].type]} );
-			images.stats.attacks[2] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 2, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[2].type]} );
-			images.stats.attacks[3] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 3, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Courier New", color: colors[ally.attack[3].type]} );
+			images.stats.attacks[0] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset, ally.attack[0].name +" "+ ally.attack[0].requiredMps+" MP",{font: "14px Arial", color: colors[ally.attack[0].type]} );
+			images.stats.attacks[1] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween, ally.attack[1].name +" "+ ally.attack[1].requiredMps+" MP",{font: "14px Arial", color: colors[ally.attack[1].type]} );
+			images.stats.attacks[2] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 2, ally.attack[2].name +" "+ ally.attack[2].requiredMps+" MP",{font: "14px Arial", color: colors[ally.attack[2].type]} );
+			images.stats.attacks[3] = self.scene.add.text(x + 2*self.blockSize * self.scale + self.blockSize, newY + self.attOffset + self.attOffsetBetween * 3, ally.attack[3].name +" "+ ally.attack[3].requiredMps+" MP",{font: "14px Arial", color: colors[ally.attack[3].type]} );
 			
 			images.attackInfo = self.SetAttackInfo(images.stats.attacks, index, ally.attack);
 
@@ -799,9 +799,9 @@ export class ExploreMenu {
 			else attDmg = 'Daño: ' + attDmg;
 			info = {
 				bgIMG: self.scene.add.image(attack.x, attack.y, 'partyStateBG').setOrigin(0,0),
-				type: self.scene.add.text(attack.x + self.attHoverOffset, attack.y + self.attHoverOffset, attType, {font: "12px Courier New"}).setOrigin(0,0),
-				dmg: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 2, attDmg, {font: "12px Courier New"}).setOrigin(0,0),
-				targets: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 3, 'Nº Obj.: ' + srcAttack[index].targets, {font: "12px Courier New"}).setOrigin(0,0)
+				type: self.scene.add.text(attack.x + self.attHoverOffset, attack.y + self.attHoverOffset, attType, {font: "12px Arial"}).setOrigin(0,0),
+				dmg: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 2, attDmg, {font: "12px Arial"}).setOrigin(0,0),
+				targets: self.scene.add.text(attack.x+self.attHoverOffset, attack.y + self.attHoverOffset * 3, 'Nº Obj.: ' + srcAttack[index].targets, {font: "12px Arial"}).setOrigin(0,0)
 			};
 
 			info.bgIMG.setScale(1.2,0.8);

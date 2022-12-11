@@ -163,9 +163,9 @@ export default class MovementExample extends Phaser.Scene {
 		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
 
-	/*updateInventory(inv){
+	UpdateInventory(inv){
 		this.inventory = inv;
-	}*/
+	}
 	
 	// comprobación de colisiones y apertura de menús
 	update(){
