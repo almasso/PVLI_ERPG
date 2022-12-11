@@ -7,7 +7,7 @@ import {walkingHUD, ExploreMenu} from '../fight/HUD.js'
 import {InputMan} from '../fight/InputManager.js'
 import Object from '../obj/Object.js'
 import Inventory from '../obj/Inventory.js'
-import { shopNPC } from '../obj/shopNPC.js';
+import shopNPC from '../obj/shopNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -51,10 +51,11 @@ export default class MovementExample extends Phaser.Scene {
 		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
 		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')
 		this.load.image('partyStats', 'assets/textures/HUD/explore/partyStats.png')
+		
 		this.load.image('log', 'assets/textures/HUD/log.png');
-		this.load.image('logArrow', 'assets/textures/HUD/logButton');
-		this.load.image('buy', 'assets/textures/HUD/buyButton');
-		this.load.image('noBuy', 'assets/textures/HUD/noButton');
+		this.load.image('logArrow', 'assets/textures/HUD/logButton.png');
+		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
+		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
 
 		this.load.image('resP', 'assets/textures/HUD/explore/resP.png')
 		this.load.image('resR', 'assets/textures/HUD/explore/resR.png')
@@ -123,7 +124,7 @@ export default class MovementExample extends Phaser.Scene {
 		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
 		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
 		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9];
-		this.shop = new shopNPC(this, 300, 100, 'alex', 999, npc_dialogues, this.manin, this.inventory);
+		this.shop = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
 		for(let e of this.npcs) e.scale = 2.5;
 		this.shop.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.

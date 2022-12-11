@@ -2,9 +2,11 @@ import NPC from '../obj/npc.js';
 import Object from './Object.js';
 import { shopHUD } from '../fight/HUD.js';
 
-export class shopNPC extends NPC{
+export default class shopNPC extends NPC {
     constructor(scene, x, y, imageID, npcID, dialogues, manin, inv){
         super(scene, x, y, imageID, npcID, dialogues, manin);
+        
+        this.items = [];
         this.scene = scene;
         this.createItems()
         this.currentItem = -1;
@@ -12,9 +14,7 @@ export class shopNPC extends NPC{
         this.shopHUD = new shopHUD(scene, 400, 0, this.items, this);
     }
 
-    createItems(){
-        this.items = [];
-        
+    createItems(){        
         this.items.push(new Object('Cigarro', -5, 10, 10));
         this.items.push(new Object('Kebab', 10, -5, 10));
         this.items.push(new Object('Fría', 20, -5, 20));

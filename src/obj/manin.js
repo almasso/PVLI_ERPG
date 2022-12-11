@@ -1,6 +1,6 @@
 import NPC from "./npc.js";
 import { allyParty } from "../fight/Party.js";
-import { shopNPC } from "./shopNPC.js";
+import shopNPC from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info) {

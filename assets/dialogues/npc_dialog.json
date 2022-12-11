@@ -170,7 +170,7 @@
         "text": "Con un buen filetón están tremendos."
     },
     {
-        "npcID": 999,
+        "npcID": 9,
         "unique" : true,
         "text" : "¿Quieres comprar?"
     }
@@ -231,9 +231,9 @@
         "developer" : false
     },
     {
-        "npcID" : 999,
+        "npcID" : 9,
         "npcName" : "Tienda",
-        "verified": false,
+        "verified" : false,
         "developer" : false
     }
 ]}

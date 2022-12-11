@@ -312,7 +312,7 @@ export class InventoryHUD{
 export class shopHUD{
 	constructor(scene, x, y, items, npc){
 		this.scene = scene;
-		this.shopBlock = scene.add.image(x, y, 'log').setOrigin(0, 0);
+		this.shopBlock = this.scene.add.image(x, y, 'log').setOrigin(0, 0);
 		this.shopBlock.setScale(1.5);
 		this.shopBlock.visible = false;
 
@@ -370,22 +370,22 @@ export class shopHUD{
 		let self = this;
 		this.items.forEach(function(item, index){
 			self.itemsText[index] = {
-				name: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.shopBlock.displayHeight / 16, item.name,
+				name: self.scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.shopBlock.displayHeight / 16, item.name,
 				{
 					font: '12px "Press Start 2P"',
 					color: '#ffffff',
 					align: 'left',}),
-				price: scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.displayHeight / 16, item.price + ' euro(s)',
+				price: self.scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 2 + self.displayHeight / 16, item.price + ' euro(s)',
 				{
 					font: '12px "Press Start 2P"',
 					color: '#ffffff',
 					align: 'left',}),
-				hp: scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.shopBlock.displayHeight / 16, item.hp + ' hp',
+				hp: self.scene.add.text(self.shopBlock.x + self.shopBlock.displayWidth / 14, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.shopBlock.displayHeight / 16, item.hp + ' hp',
 				{
 					font: '12px "Press Start 2P"',
 					color: '#ffffff',
 					align: 'left',}),
-				mp: scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.DisplayHeight / 16, item.mp + ' mp',
+				mp: self.scene.add.text(self.shopBlock.x + 7.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y + self.shopBlock.displayHeight / 3.5 + self.DisplayHeight / 16, item.mp + ' mp',
 				{
 					font: '12px "Press Start 2P"',
 					color: '#ffffff',
