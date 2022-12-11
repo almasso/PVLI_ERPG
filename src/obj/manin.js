@@ -113,8 +113,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
-			this.isInteracting = false;
 		}
+		else if(this.collider === null) this.isInteracting = false;
     }
 
 	detectEvents() {

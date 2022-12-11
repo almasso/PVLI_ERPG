@@ -24,9 +24,7 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png');
 		this.load.image('partyStats', 'assets/textures/HUD/explore/partyStats.png');
         this.load.image('artistHead','assets/textures/HUD/explore/artista2Head.png');
-        this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
 		this.load.image('startButton', 'assets/textures/HUD/StartInicio.png');
-        this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 		this.load.image('retryButton', 'assets/textures/HUD/Retry.png'); 
         this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
         this.load.image('log','assets/textures/HUD/log.png');
@@ -60,8 +58,10 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		
         //FONDOS
+        this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
         this.load.image('bg', 'assets/textures/Backgrounds/bg.png');
         this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
+        this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 
         //PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
@@ -99,7 +99,9 @@ export default class Preload extends Phaser.Scene {
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
-
-        this.scene.launch('initial');
     }
+
+	create() {
+		this.scene.launch('initial');
+	}
 }
