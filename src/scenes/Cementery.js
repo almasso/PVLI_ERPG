@@ -44,7 +44,7 @@ export default class CementeryScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 1350, 200, this.scene.get('dialog'), this.questLog,"CEMENTERY");
+		this.manin = new Manin(this, 1150, 200, this.scene.get('dialog'), this.questLog,"CEMENTERY");
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -125,7 +125,7 @@ export default class CementeryScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,1350,200 + 64 *o, 'pixel',2.5,2.5));
+				this.frias.push(new enviromentObj(this,1175,200 + 64 *o, 'pixel',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión
