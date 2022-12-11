@@ -269,7 +269,7 @@ export class FightScene extends Phaser.Scene {
 		//#endregion
 		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
 		{
-			this.scene.wake('movement');
+			this.scene.wake(this.oldScene);
 			this.scene.get('hud').Walk();
 			this.scene.get('hud').UpdateHUD();
 			let movement = this.scene.get('movement');
@@ -761,6 +761,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.CreateButtons(); // creamos los botones
 		this.ToggleButtons(false); // se deshabilitan los botones
+
 	}
 
 	UseItem(){
@@ -782,6 +783,14 @@ export class FightScene extends Phaser.Scene {
 		this.allaySelected = -1;
 		this.selectedItem = -1;
 	}
+	CurrentScene(sceneName)
+	{
+		this.oldScene=sceneName;
+	}
+
+
+
+
 
 	//···RAUL PRUEBAS···
 	attack=-1;

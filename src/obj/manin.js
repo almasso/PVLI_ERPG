@@ -1,8 +1,10 @@
+
+
 import NPC from "./npc.js";
 import { allyParty } from "../fight/Party.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, manin, info) {
+	constructor(scene, x, y, manin, info,) {
 		super(scene, x, y, 'manin');
         
         this.scene.add.existing(this);
@@ -27,7 +29,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
 
 export class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene) {
+	constructor(scene, x, y, uiScene, questLog,name) {
 		super(scene, x, y, 'manin_move');
 		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
@@ -38,6 +40,15 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.physics.world.enable(this.zone);
         this.stepsWalked = 0;
         this.touchingGrass = false;
+
+		this.touchingFria=false;
+		this.moveLeft=false;
+		this.moveDown=false;
+		this.moveRight=false;
+		this.moveUp=false;
+
+
+		this.nameScene=name
 		this.collider = null;
 		this.uiScene = uiScene;
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
@@ -47,6 +58,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
 		this.detectEvents();
 
+		this.questLog = questLog;
+		
 		// añadimos físicas
 		scene.physics.add.existing(this);
 
@@ -188,16 +201,61 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.interact();
 		}
 
+		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL
+
+
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
 
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
-            this.scene.Fight()
+            this.scene.Fight();
         }
+		if(this.touchingFria )
+		{
+			if(this.nameScene==="PLAZA")
+			{
+				if(this.moveRight&& this.dKey.isDown)
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Park();
+				}
+				else if(this.moveLeft&& this.aKey.isDown )
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Cementery();
+				}
+				else if(this.moveDown&& this.sKey.isDown )
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Port();
+				}
+			}
+			else if (this.nameScene==="PARK"&&this.aKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
+			else if (this.nameScene==="CEMENTERY"&&this.dKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
+			else if (this.nameScene==="PORT"&&this.wKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
+			
+		}
 	}
-
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
@@ -205,5 +263,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			console.log("A VE");
 		}
 	}
+
+	
 	
 }

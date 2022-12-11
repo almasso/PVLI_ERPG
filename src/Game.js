@@ -4,6 +4,9 @@ import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
 import DialogScene from './ui/dialogues.js'
 import HUDScene from './scenes/HUDScene.js'
+import ParkScene from './scenes/Park.js'
+import CementeryScene from './scenes/Cementery.js'
+import PortScene from './scenes/Port.js'
 
 
 /**
@@ -31,7 +34,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene, HUDScene],
+    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene,ParkScene,CementeryScene,PortScene, HUDScene],
     physics: {
         default: 'arcade',
         arcade: {
