@@ -536,7 +536,7 @@ export class ExploreMenu {
 		this.attOffset = 20;
 		this.attOffsetBetween = 30;
 		this.attHoverOffset = 15;
-		this.resOffset = 90;
+		this.resOffset = 90;  
 		this.x = x; // posición
         this.y = y;
         this.scene = scene; // escena
@@ -554,6 +554,8 @@ export class ExploreMenu {
 		this.objectButton;
 		this.alliesToSwap = [];
 		this.walingHUD = walkingHUD;
+		this.viewParty = false;
+		this.manageParty = false;
 	}
 
 	AddPartyManagementMenu(){
@@ -610,13 +612,11 @@ export class ExploreMenu {
 		this.viewPartyButton.depth = 6;
 		this.pointer.depth = 6;
 		let self = this;
-		let viewParty = false;
-		let manageParty = false;
 		this.viewPartyButton.on("pointerup", function(){
-			viewParty = !viewParty;
-			manageParty = false;
-			self.ManageParty(manageParty);
-			self.ShowParty(viewParty);
+			self.viewParty = !self.viewParty;
+			self.manageParty = false;
+			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
 		});
 
 		this.viewPartyButton.on("pointerover", function(){
@@ -648,10 +648,10 @@ export class ExploreMenu {
 		this.managePartyButton.depth = 6;
 		this.managePartyButton.visible = false;
 		this.managePartyButton.on("pointerup", function(){
-			manageParty = !manageParty;
-			viewParty = false;
-			self.ShowParty(viewParty);
-			self.ManageParty(manageParty);
+			self.manageParty = !self.manageParty;
+			self.viewParty = false;
+			self.ShowParty(self.viewParty);
+			self.ManageParty(self.manageParty);
 		});
 		this.managePartyButton.on("pointerover", function(){
 			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;

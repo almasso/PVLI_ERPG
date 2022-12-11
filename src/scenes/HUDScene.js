@@ -30,7 +30,15 @@ export default class HUDScene extends Phaser.Scene {
     
     update(){ // checkeo de variables e input
 		if(this.state === State.Walk){ // mostramos menú a la Q
-			if(Phaser.Input.Keyboard.JustDown(this.inputMan.qKey)) {this.showMenu = !this.showMenu; this.menu.Show(this.showMenu); }
+			if(Phaser.Input.Keyboard.JustDown(this.inputMan.qKey)) {
+				this.showMenu = !this.showMenu; 
+				if(this.showMenu) this.menu.Show(this.showMenu);
+				else {
+					this.menu.Hide(!this.showMenu);
+					this.menu.viewParty = false;
+					this.menu.manageParty = false;
+				} 
+			}
 		}
 	}
 
