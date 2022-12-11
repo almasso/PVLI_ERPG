@@ -4,12 +4,6 @@ export default class InitialScene extends Phaser.Scene {
 		super({ key: 'initial' });
 	}
 	
-	// cargamos imágenes
-	preload(){
-		this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
-		this.load.image('startButton', 'assets/textures/HUD/StartInicio.png');
-	}
-
 	// incializamos la escena	
 	create() {
 		// fondo
@@ -25,6 +19,7 @@ export default class InitialScene extends Phaser.Scene {
         this.startButton.setInteractive();
 
         this.startButton.on('pointerup',()=>{
+			this.scene.launch('preload');
 			this.scene.launch('movement');
             this.scene.stop('initial');
 		})

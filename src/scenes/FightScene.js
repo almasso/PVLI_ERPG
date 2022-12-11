@@ -29,54 +29,14 @@ export class FightScene extends Phaser.Scene {
 		this.state = FightState.SelectTurn;
 	}
 
-	preload(){
+	/*preload(){
 		// cargar personajes
-		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
-		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
-		this.load.image('melendi','assets/textures/Characters/Melendi.png')
 		//this.load.image('artista','assets/textures/Artista.png')
-		this.load.image('artista2','assets/textures/Characters/Artista2.png')
-		this.load.image('culturista','assets/textures/Characters/Culturista.png')
-		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png')
-		this.load.image('angel','assets/textures/Characters/AngelCaido.png')
-		this.load.image('attackPointer','assets/textures/HUD/attackPointer.png');
-
-		//ANIMACON
-		this.load.spritesheet('people_daño','assets/textures/Characters/people_daño.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people_idle','assets/textures/Characters/people_idle.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people_wow','assets/textures/Characters/people_wow.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('people_dead','assets/textures/Characters/people_dead.png',{frameWidth:19, frameHeight:26});
-
-		this.load.spritesheet('artist_daño','assets/textures/Characters/artist_daño.png',{frameWidth:24, frameHeight:32});
-		this.load.spritesheet('artist_idle','assets/textures/Characters/artist_idle.png',{frameWidth:24, frameHeight:32});
-		this.load.spritesheet('artist_wow','assets/textures/Characters/artist_wow.png',{frameWidth:24, frameHeight:32});
-		this.load.spritesheet('artist_dead','assets/textures/Characters/artist_dead.png',{frameWidth:24, frameHeight:32});
-
-		this.load.spritesheet('manin_daño','assets/textures/Characters/manin_daño.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('manin_idle','assets/textures/Characters/manin_idle.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('manin_wow','assets/textures/Characters/manin_wow.png',{frameWidth:19, frameHeight:26});
-		this.load.spritesheet('manin_dead','assets/textures/Characters/manin_dead.png',{frameWidth:19, frameHeight:26});
-
-		this.load.spritesheet('melendi_daño','assets/textures/Characters/melendi_daño.png',{frameWidth:22, frameHeight:27});
-		this.load.spritesheet('melendi_idle','assets/textures/Characters/melendi_idle.png',{frameWidth:22, frameHeight:27});
-		this.load.spritesheet('melendi_wow','assets/textures/Characters/melendi_wow.png',{frameWidth:22, frameHeight:27});
-		this.load.spritesheet('melendi_dead','assets/textures/Characters/melendi_dead.png',{frameWidth:22, frameHeight:27});
-
-
-		this.load.spritesheet('jarfaiter', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:24, frameHeight:32})
-		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/Jarfaiter_daño.png',{frameWidth:24, frameHeight:32})
+		//this.load.image('artista2','assets/textures/Characters/Artista2.png')
 		// cargar los botones
-		this.load.image('log','assets/textures/HUD/log.png');
-		this.load.image('logButton','assets/textures/HUD/logButton.png');
-		this.load.image('attackButton','assets/textures/HUD/attackButton.png');
-		this.load.image('attackButtonHover','assets/textures/HUD/attackButtonHover.png');
-		this.load.image('objectButton','assets/textures/HUD/objectButton.png');
-		this.load.image('objectButtonHover','assets/textures/HUD/objectButtonHover.png');
 		//this.load.image('fleeButton','assets/textures/fleeButton.png');
-		this.load.image('AllyBlock','assets/textures/HUD/AllyBlock.png');
-		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
-	}
+
+	}*/
 
 	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
 	CreateButtons(){
