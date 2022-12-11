@@ -107,7 +107,13 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	// interacción 
     interact(){
 		this.isInteracting = true;
-		if(this.collider instanceof NPC) {
+		if(this.collider instanceof shopNPC){
+			this.shopping = true;
+			this.collider.currentlyTalking = true;
+			this.collider.loadInventory(this.scene.inventory);
+			this.collider.readDialogues();
+		}
+		else if(this.collider instanceof NPC) {
 			this.collider.currentlyTalking = true;
 			this.collider.readDialogues();
 		}
@@ -115,11 +121,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
-		}
-		else if(this.collider instanceof shopNPC){
-			this.shopping = true;
-			this.collider.currentlyTalking = true;
-			this.collider.loadInventory(this.scene.inventory);
 		}
     }
 
