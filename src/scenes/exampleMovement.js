@@ -83,11 +83,12 @@ export default class MovementExample extends Phaser.Scene {
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
 
-		this.shop = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
+		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
 
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2];
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
 		for(let e of this.npcs) e.scale = 2.5;
-		this.shop.scale = 2.5;
+		
+		//this.shop.scale = 2.5;
 
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
@@ -150,8 +151,8 @@ export default class MovementExample extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
-	ChangeScene()
-    {
+
+	ChangeScene() {
         this.frias = []; // array de hierbas
 		this.friasColliderDER; //collider del trozo de hierba hostil
 		this.friasColliderIZQ;
@@ -206,34 +207,34 @@ export default class MovementExample extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin, this.friasColliderIZQ);
 		
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-	// añadimos la zona de colisión
-	this.friasColliderABJ = this.add.zone(this.frias[8].x,this.frias[8].y ).setSize(this.frias[8].displayWidth+55,(this.frias[8].displayHeight) ).setOrigin(0,0);		
-	this.physics.world.enable(this.friasColliderABJ); // añadimos su collider
-	this.friasColliderABJ.body.setAllowGravity(false); // quitamos gravedad
-	this.friasColliderABJ.body.moves = false;
-	
-	// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
-	this.friasColliderABJ.on("overlapstart", () =>{
-		this.manin.touchingFria = true;
-		this.manin.moveDown=true;
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+		// añadimos la zona de colisión
+		this.friasColliderABJ = this.add.zone(this.frias[8].x,this.frias[8].y ).setSize(this.frias[8].displayWidth+55,(this.frias[8].displayHeight) ).setOrigin(0,0);		
+		this.physics.world.enable(this.friasColliderABJ); // añadimos su collider
+		this.friasColliderABJ.body.setAllowGravity(false); // quitamos gravedad
+		this.friasColliderABJ.body.moves = false;
 		
-	})
-	this.friasColliderABJ.on("overlapend", () =>{
-		this.manin.touchingFria = false;
-		this.manin.moveDown=false;
+		// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
+		this.friasColliderABJ.on("overlapstart", () =>{
+			this.manin.touchingFria = true;
+			this.manin.moveDown=true;
+			
+		})
+		this.friasColliderABJ.on("overlapend", () =>{
+			this.manin.touchingFria = false;
+			this.manin.moveDown=false;
 
-	})
-	// añadimos un overlap entre manín y esta nueva zona de colliders
-	this.physics.add.overlap(this.manin, this.friasColliderABJ);
+		})
+		// añadimos un overlap entre manín y esta nueva zona de colliders
+		this.physics.add.overlap(this.manin, this.friasColliderABJ);
 	}
 
-	updateInventory(inv){
+	updateInventory(inv) {
 		this.inventory = inv;
 	}
 	
 	// comprobación de colisiones y apertura de menús
-	update(){
+	update() {
 		let self = this;
 		
 		let hasCollidedGrass = false;
@@ -294,6 +295,7 @@ export default class MovementExample extends Phaser.Scene {
 		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 			this.manin.collider = null;
 		}
+		}
 	}
 
 	// pasamos a la escena de pelea
@@ -318,7 +320,7 @@ export default class MovementExample extends Phaser.Scene {
 	// pasamos a la escena de pelea
     
 
-	Park(){
+	Park() {
 		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
@@ -328,7 +330,7 @@ export default class MovementExample extends Phaser.Scene {
 		
         this.scene.sleep('movement');
     }
-	Cementery(){
+	Cementery() {
 		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
@@ -338,7 +340,7 @@ export default class MovementExample extends Phaser.Scene {
 		
         this.scene.sleep('movement');
     }
-	Port(){
+	Port() {
 		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
