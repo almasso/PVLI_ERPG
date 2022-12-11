@@ -15,45 +15,6 @@ export default class ParkScene extends Phaser.Scene {
 		this.hierbasColliders = [];
 	}
 	
-	// cargamos todas las imágenes
-	preload(){
-		this.load.image('logButton','assets/textures/HUD/logButton.png');
-		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
-		this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png');
-		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
-		this.load.image('hierba', 'assets/textures/Props/hierba.png');
-		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
-		this.load.image('artist','assets/textures/Characters/artista2.png'); 
-		this.load.image('artistHead','assets/textures/HUD/explore/artista2Head.png'); 
-		this.load.image('melendi','assets/textures/Characters/Melendi.png');
-		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
-		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
-		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
-		this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
-		this.load.image('maninHead', 'assets/textures/HUD/explore/maninHead.png');
-		this.load.image('melendiHead', 'assets/textures/HUD/explore/melendiHead.png');
-		this.load.image('miniHUD', 'assets/textures/HUD/explore/miniHUD.png');
-		this.load.image('menuBG', 'assets/textures/HUD/explore/menuBG.png');
-		this.load.image('menuPartyButton', 'assets/textures/HUD/explore/menuPartyButton.png');
-		this.load.image('menuOrderButton', 'assets/textures/HUD/explore/menuOrderButton.png');
-		this.load.image('pointer', 'assets/textures/HUD/explore/pointer.png')
-		this.load.image('partyStateBG', 'assets/textures/HUD/explore/partyStateBG.png')
-		this.load.image('resistancesText', 'assets/textures/HUD/explore/resistancesText.png')
-		this.load.image('partyStats', 'assets/textures/HUD/explore/partyStats.png')
-
-		this.load.image('resP', 'assets/textures/HUD/explore/resP.png')
-		this.load.image('resR', 'assets/textures/HUD/explore/resR.png')
-		this.load.image('resE', 'assets/textures/HUD/explore/resE.png')
-		this.load.image('resF', 'assets/textures/HUD/explore/resF.png')
-		this.load.image('resT', 'assets/textures/HUD/explore/resT.png')
-
-		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
-		this.load.spritesheet('manin_pop','assets/textures/Characters/manin_pop.png',{frameWidth:25, frameHeight:32});
-		this.load.spritesheet('manin_pose','assets/textures/Characters/manin_pose.png',{frameWidth:25, frameHeight:32});
-		this.load.image('kratos','assets/textures/NPC-RAUL/Kratos.png'); 
-		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
-		this.load.image('fria', 'assets/textures/Props/fria.png');
-	}
 	
 	/**
 	* Creación de los elementos de la escena principal de juego
