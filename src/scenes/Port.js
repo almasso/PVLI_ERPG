@@ -1,5 +1,5 @@
 import {Manin, AllyTEST} from '../obj/manin.js';
-import enviromentObj from '../obj/enviromentObj.js';
+import {enviromentObj, interactuableObj} from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
