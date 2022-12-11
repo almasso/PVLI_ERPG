@@ -31,7 +31,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
 
 export class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene, questLog, questHud, name) {
+	constructor(scene, x, y, uiScene, questLog, name) {
 		super(scene, x, y, 'manin_move');
 		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
@@ -50,7 +50,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.moveUp=false;
 
 
-		this.nameScene=name
+		this.nameScene=name;
 		this.collider = null;
 		this.uiScene = uiScene;
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
@@ -61,8 +61,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.detectEvents();
 
 		this.questLog = questLog;
-		this.questHud = questHud;
-
 		
 		// añadimos físicas
 		scene.physics.add.existing(this);

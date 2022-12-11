@@ -33,7 +33,7 @@ export default class CementeryScene extends Phaser.Scene {
 		this.qKey = this.input.keyboard.addKey('Q');  //attack
 		//#endregion	
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'square').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
