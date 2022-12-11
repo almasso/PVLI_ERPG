@@ -168,6 +168,11 @@
         "npcID": 8,
         "unique" : false,
         "text": "Con un buen filetón están tremendos."
+    },
+    {
+        "npcID": 9,
+        "unique" : true,
+        "text" : "¿Quieres comprar?"
     }
 ],
 "attributes" : [
@@ -222,6 +227,12 @@
     {
         "npcID" : 8,
         "npcName" : "Pepperboy",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 9,
+        "npcName" : "Tienda",
         "verified" : false,
         "developer" : false
     }
