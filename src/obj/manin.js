@@ -44,10 +44,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 
 		this.touchingFria=false;
-		this.moveLeft=false;
-		this.moveDown=false;
-		this.moveRight=false;
-		this.moveUp=false;
+		this.moves = [false, false, false, false] // DERECHA, IZQUIERDA, ARRIBA, ABAJO
 
 
 		this.nameScene=name;
@@ -235,19 +232,19 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			
 			if(this.nameScene==="PLAZA")
 			{
-				if(this.moveRight&& this.dKey.isDown)
+				if(this.moves[0]&& this.dKey.isDown)
 				{
 					this.body.setVelocityX(0);
 					this.body.setVelocityY(0);
 					this.scene.Park();
 				}
-				else if(this.moveLeft&& this.aKey.isDown )
+				else if(this.moves[1]&& this.aKey.isDown )
 				{
 					this.body.setVelocityX(0);
 					this.body.setVelocityY(0);
 					this.scene.Cementery();
 				}
-				else if(this.moveDown&& this.sKey.isDown )
+				else if(this.moves[2]&& this.wKey.isDown )
 				{
 					this.body.setVelocityX(0);
 					this.body.setVelocityY(0);
