@@ -310,23 +310,59 @@ export class InventoryHUD{
 }
 
 export class shopHUD{
-	constructor(scene, x, y, items){
+	constructor(scene, x, y, items, npc){
 		this.scene = scene;
 		this.shopBlock = scene.add.image(x, y, 'log').setOrigin(0, 0);
 		this.shopBlock.setScale(1.5);
 		this.shopBlock.visible = false;
 
-		this.buyButton; //Botón de comprar
-
-		this.naoButton //Botón de no comprar
-
-		this.upButton;
-
-		this.downButton;
+		this.npc = npc
 
 		this.currentItem = 0;
 		this.items = items;
 		this.createItems();
+	}
+
+	createButtons(){
+		this.buyButton = scene.add.image(x, y - 10, 'buy').setOrigin(0, 0); //Botón de comprar
+		this.buyButton.setScale(1.5);
+		this.buyButton.setInteractive();
+		this.buyButton.visible = false;
+
+		this.naoButton = scene.add.image(x + this.buyButton.displayWidth + 1, y - 10, 'noBuy').setOrigin(0, 0); //Botón de no comprar
+		this.naoButton.setScale(1.5);
+		this.naoButton.setInteractive();
+		this.naoButton.visible = false;
+
+		this.upButton = scene.add.image(x + this.shopBlock.displayWidth + 1, y, 'logArrow');
+		this.upButton = setScale(1.5);
+		this.upButton.setInteractve();
+		this.upButton.visible = false;
+
+		this.downButton = scene.add.image(x + this.shopBlock.displayWidth + 1, y, 'logArrow');
+		this.downButton.setScale(1.5);
+		this.downButton.angle = 180;
+		this.downButton.setInteractive();
+		this.downButton.visible = true;
+
+		this.buyButton.on('pointerup', () => {
+			this.displayItems();
+		})
+
+		this.naoButton.on('pointerup', () => {
+			if(this.shopBlock.visible)
+				this.displayItems();
+			this.naoButton.visible = false;
+			this.npc.close();
+		})
+
+		this.upButton.on('pointerup', () => {
+			this.Up();
+		})
+
+		this.downButton.on('pointerup', () => {
+			this.Down();
+		})
 	}
 
 	createItems(){
@@ -361,6 +397,8 @@ export class shopHUD{
 	}
 
 	displayItems(){
+		this.upButton.visible = !this.upButton.visible;
+		this.downButton.visible = !this.downButton.visible;
 		this.shopBlock.visible = !this.shopBlock.visible;
 		this.itemsText[this.currentItem].visible = !this.itemsText[this.currentItem].visible;
 		if(this.itemsText[this.currentItem].visible)
@@ -387,6 +425,7 @@ export class shopHUD{
 		let self = this;
 		itemText.text.on('pointerup', () => {
 			self.scene.currentItem = self.items[self.currentItem];
+			self.npc.buy();
 		})
 	}
 

@@ -3,12 +3,13 @@ import Object from './Object.js';
 import { shopHUD } from '../fight/HUD.js';
 
 export class shopNPC extends NPC{
-    constructor(scene, x, y, imageID, npcID, dialogues, inv){
-        super(scene, x, y, imageID, npcID, dialogues);
+    constructor(scene, x, y, imageID, npcID, dialogues, manin, inv){
+        super(scene, x, y, imageID, npcID, dialogues, manin);
+        this.scene = scene;
         this.createItems()
-        this.shopHUD = new shopHUD(scene, 400, 0, this.items);
         this.currentItem = -1;
         this.inventory = inv;
+        this.shopHUD = new shopHUD(scene, 400, 0, this.items, this);
     }
 
     createItems(){
@@ -27,5 +28,24 @@ export class shopNPC extends NPC{
 
     loadInventory(inv){
         this.inventory = inv;
+    }
+
+    buy(){
+        if(this.inventory.money >= this.currentItem.price){
+            this.inventory.money -= this.currentItem.price;
+            this.inventory.addItem(this.currentItem);
+            this.scene.updateInventory(this.inventory);
+            this.currentItem = -1;
+        }
+    }
+
+    readDialogues(){
+        super.readDialogues();
+
+    }
+
+    close(){
+        this.scene.events.emit('closeShopping');
+        super.closeWindow();
     }
 }

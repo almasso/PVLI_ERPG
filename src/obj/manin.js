@@ -1,5 +1,6 @@
 import NPC from "./npc.js";
 import { allyParty } from "../fight/Party.js";
+import { shopNPC } from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info) {
@@ -46,6 +47,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.dKey = this.scene.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.scene.input.keyboard.addKey('SPACE'); // interact
 		this.detectEvents();
+		this.isInteracting = false;
+		this.shopping = false;
 
 		// añadimos físicas
 		scene.physics.add.existing(this);
@@ -113,11 +116,19 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
 		}
+		else if(this.collider instanceof shopNPC){
+			this.shopping = true;
+			this.collider.currentlyTalking = true;
+			this.collider.loadInventory(this.scene.inventory);
+		}
     }
 
 	detectEvents() {
 		this.scene.events.on('dialogWindowClosed', () => {
 			this.isInteracting = false;
+		})
+		this.scene.events.on('closeShopping', () => {
+			this.shopping = false;
 		})
 	}
 
@@ -184,7 +195,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
         }
 
 		// Si pulsamos 'SPACE' interactuamos con nuestro entorno
-		if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
+		if(Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.shopping){
 			this.interact();
 		}
 
