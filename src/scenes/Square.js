@@ -8,6 +8,8 @@ import Object from '../obj/Object.js'
 import Inventory from '../obj/Inventory.js'
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
+import shopNPC from '../obj/shopNPC.js';
+
 
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
@@ -64,7 +66,7 @@ export default class Square extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		/*let npc1 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
+		let npc1 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
 		//let npc4 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
@@ -81,8 +83,11 @@ export default class Square extends Phaser.Scene {
 
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2];
+		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
+
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
 		for(let e of this.npcs) e.scale = 2.5;
+
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
 			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
@@ -95,7 +100,7 @@ export default class Square extends Phaser.Scene {
 			}
 		}, this.manin);
 
-		this.interactuableObjects = [this.guitar];*/
+		this.interactuableObjects = [this.guitar];
         this.npcs = [];
         this.interactuableObjects = [];
 
@@ -146,6 +151,7 @@ export default class Square extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
+
 	ChangeScene()
     {
         this.frias = []; // array de hierbas
@@ -180,8 +186,7 @@ export default class Square extends Phaser.Scene {
 		
     }
 
-
-	UpdateInventory(inv){
+	updateInventory(inv){
 		this.inventory = inv;
 	}
 	
