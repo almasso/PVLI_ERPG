@@ -5,11 +5,11 @@ import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 
 // Escena de exploración (temporal de momento)
-export default class ParkScene extends Phaser.Scene {
+export default class PortScene extends Phaser.Scene {
 	
 	// construimos la escena
 	constructor() {
-		super({ key: 'park' });
+		super({ key: 'port' });
 		this.manin; // protagonista
 		//this.inventory = new Inventory();
 		this.hierbasColliders = [];
@@ -19,7 +19,7 @@ export default class ParkScene extends Phaser.Scene {
 	preload(){
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
-		this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png');
+		this.load.image('bg4', 'assets/textures/Backgrounds/parqueLucha.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
@@ -74,9 +74,10 @@ export default class ParkScene extends Phaser.Scene {
 		// ponemos a dormir la escena que controla la UI
 		this.scene.sleep('uimanager');
 		this.scene.launch('hud');
+        
 
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg2').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'bg4').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -87,7 +88,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 50, 200, this.scene.get('dialog'), this.questLog,"PARK");
+		this.manin = new Manin(this, 300, 70, this.scene.get('dialog'), this.questLog,"PORT");
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -99,17 +100,17 @@ export default class ParkScene extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		this.npcs = [npc1, npc2, npc3, npc4, npc5];
-		npc1.scale = 2.5;
-		npc2.scale = 2.5;
-		npc3.scale = 2.5;
-		npc4.scale = 2.5;
-		npc5.scale = 2.5;
+		// let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
+		// let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
+		// let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
+		// let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
+		// let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
+		// this.npcs = [npc1, npc2, npc3, npc4, npc5];
+		// npc1.scale = 2.5;
+		// npc2.scale = 2.5;
+		// npc3.scale = 2.5;
+		// npc4.scale = 2.5;
+		// npc5.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
@@ -162,11 +163,11 @@ export default class ParkScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,0,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this,300+50*o,0, 'fria',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión
-		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
+		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth+100,(this.frias[0].displayHeight-50) ).setOrigin(0,0);		
 		this.physics.world.enable(this.friasCollider); // añadimos su collider
 		this.friasCollider.body.setAllowGravity(false); // quitamos gravedad
 		this.friasCollider.body.moves = false;
@@ -215,12 +216,12 @@ export default class ParkScene extends Phaser.Scene {
 		if(touchingFria && !wasTouchingFria) {this.friasCollider.emit("overlapstart");}
 		else if(!touchingFria && wasTouchingFria) this.friasCollider.emit("overlapend");
 
-		for(let i of this.npcs) {
-			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap")
-				this.manin.collider = i;
-			}
-		}
+		// for(let i of this.npcs) {
+		// 	if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+		// 		console.log("overlap")
+		// 		this.manin.collider = i;
+		// 	}
+		// }
 	
 		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
 			console.log("overlap con aliado")
@@ -237,8 +238,8 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('park');
-        this.scene.sleep('park');
+		this.scene.get('fightscene').CurrentScene('port');
+        this.scene.sleep('port');
 		this.scene.get('hud').Fight();
     }
 
@@ -250,11 +251,10 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.wake('movement');
 		this.scene.get('movement').LoadInventory(this.inventory);
-        this.scene.sleep('park');
+        this.scene.sleep('port');
     }
 
 	LoadInventory(inv){
-		
 		this.inventory = inv;
 	}
 	

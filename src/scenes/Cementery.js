@@ -3,13 +3,14 @@ import enviromentObj from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
+//import { walkingHUD} from '../fight/HUD.js';
 
 // Escena de exploración (temporal de momento)
-export default class ParkScene extends Phaser.Scene {
+export default class CementeryScene extends Phaser.Scene {
 	
 	// construimos la escena
 	constructor() {
-		super({ key: 'park' });
+		super({ key: 'cementery' });
 		this.manin; // protagonista
 		//this.inventory = new Inventory();
 		this.hierbasColliders = [];
@@ -19,7 +20,7 @@ export default class ParkScene extends Phaser.Scene {
 	preload(){
 		this.load.image('logButton','assets/textures/HUD/logButton.png');
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
-		this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png');
+		this.load.image('bg3', 'assets/textures/Backgrounds/bgFight.png');
 		this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('melendi','assets/textures/Characters/Melendi.png'); 
@@ -73,10 +74,11 @@ export default class ParkScene extends Phaser.Scene {
 		//#endregion	
 		// ponemos a dormir la escena que controla la UI
 		this.scene.sleep('uimanager');
-		this.scene.launch('hud');
+		 this.scene.launch('hud');
+        
 
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg2').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'bg3').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -87,7 +89,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 50, 200, this.scene.get('dialog'), this.questLog,"PARK");
+		this.manin = new Manin(this, 1350, 200, this.scene.get('dialog'), this.questLog,"CEMENTERY");
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -114,6 +116,12 @@ export default class ParkScene extends Phaser.Scene {
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
 		this.ChangeScene();
+
+
+        // //////////////////////
+        //     this.walkingHUD=new walkingHUD(40,500,this,'miniHUD')
+        //     this.walkingHUD.depth=3;
+        // //////////////////
 		
 		//this.physics.add.collider(this.manin, house);
 		this.physics.add.collider(this.manin, bg);
@@ -162,7 +170,7 @@ export default class ParkScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,0,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this,1350,200 + 64 *o, 'fria',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión
@@ -237,8 +245,8 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('park');
-        this.scene.sleep('park');
+		this.scene.get('fightscene').CurrentScene('cementery');
+        this.scene.sleep('cementery');
 		this.scene.get('hud').Fight();
     }
 
@@ -250,11 +258,10 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.wake('movement');
 		this.scene.get('movement').LoadInventory(this.inventory);
-        this.scene.sleep('park');
+        this.scene.sleep('cementery');
     }
 
 	LoadInventory(inv){
-		
 		this.inventory = inv;
 	}
 	

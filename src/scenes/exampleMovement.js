@@ -157,32 +157,79 @@ export default class MovementExample extends Phaser.Scene {
 	ChangeScene()
     {
         this.frias = []; // array de hierbas
-		this.friasCollider; //collider del trozo de hierba hostil
-
+		this.friasColliderDER; //collider del trozo de hierba hostil
+		this.friasColliderIZQ;
+		this.friasColliderABJ;
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
 				this.frias.push(new enviromentObj(this, 800,200 + 64 *o, 'fria',2.5,2.5));
 			}
+			for(let o = 0; o < 4; o++){
+				this.frias.push(new enviromentObj(this, 0,200 + 64 *o, 'fria',2.5,2.5));
+			}
+			for(let o = 0; o < 4; o++){
+				this.frias.push(new enviromentObj(this, 300+50*o,600, 'fria',2.5,2.5));
+			}
 		
 		// añadimos la zona de colisión
-		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
-		this.physics.world.enable(this.friasCollider); // añadimos su collider
-		this.friasCollider.body.setAllowGravity(false); // quitamos gravedad
-		this.friasCollider.body.moves = false;
+		this.friasColliderDER = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
+		this.physics.world.enable(this.friasColliderDER); // añadimos su collider
+		this.friasColliderDER.body.setAllowGravity(false); // quitamos gravedad
+		this.friasColliderDER.body.moves = false;
 		
 		// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
-		this.friasCollider.on("overlapstart", () =>{
+		this.friasColliderDER.on("overlapstart", () =>{
 			this.manin.touchingFria = true;
-			console.log("YA")
+			this.manin.moveRight=true;
+			
 		})
-		this.friasCollider.on("overlapend", () =>{
+		this.friasColliderDER.on("overlapend", () =>{
 			this.manin.touchingFria = false;
+			this.manin.moveRight=false;
+
 		})
 		// añadimos un overlap entre manín y esta nueva zona de colliders
-		this.physics.add.overlap(this.manin, this.friasCollider);
+		this.physics.add.overlap(this.manin, this.friasColliderDER);
+		//////////////////////////////////////////////////////////////////////////////////////
+
+		this.friasColliderIZQ = this.add.zone(this.frias[4].x,this.frias[4].y ).setSize(this.frias[4].displayWidth-55,(this.frias[4].displayHeight) ).setOrigin(0,0);		
+		this.physics.world.enable(this.friasColliderIZQ); // añadimos su collider
+		this.friasColliderIZQ.body.setAllowGravity(false); // quitamos gravedad
+		this.friasColliderIZQ.body.moves = false;
 		
-    
+		// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
+		this.friasColliderIZQ.on("overlapstart", () =>{
+			this.manin.touchingFria = true;
+			this.manin.moveLeft=true;
+		})
+		this.friasColliderIZQ.on("overlapend", () =>{
+			this.manin.touchingFria = false;
+			this.manin.moveLeft=false;
+		})
+		// añadimos un overlap entre manín y esta nueva zona de colliders
+		this.physics.add.overlap(this.manin, this.friasColliderIZQ);
+		
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+	// añadimos la zona de colisión
+	this.friasColliderABJ = this.add.zone(this.frias[8].x,this.frias[8].y ).setSize(this.frias[8].displayWidth+55,(this.frias[8].displayHeight) ).setOrigin(0,0);		
+	this.physics.world.enable(this.friasColliderABJ); // añadimos su collider
+	this.friasColliderABJ.body.setAllowGravity(false); // quitamos gravedad
+	this.friasColliderABJ.body.moves = false;
+	
+	// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
+	this.friasColliderABJ.on("overlapstart", () =>{
+		this.manin.touchingFria = true;
+		this.manin.moveDown=true;
+		
+	})
+	this.friasColliderABJ.on("overlapend", () =>{
+		this.manin.touchingFria = false;
+		this.manin.moveDown=false;
+
+	})
+	// añadimos un overlap entre manín y esta nueva zona de colliders
+	this.physics.add.overlap(this.manin, this.friasColliderABJ);
 	}
 
 	/*updateInventory(inv){
@@ -209,11 +256,23 @@ export default class MovementExample extends Phaser.Scene {
 			}
 		});
 
-		var touchingFria = !this.friasCollider.body.touching.none;
-		var wasTouchingFria = !this.friasCollider.body.wasTouching.none;
+		var touchingFriaDER = !this.friasColliderDER.body.touching.none;
+		var wasTouchingFriaDER = !this.friasColliderDER.body.wasTouching.none;
 		
-		if(touchingFria && !wasTouchingFria) {this.friasCollider.emit("overlapstart");}
-		else if(!touchingFria && wasTouchingFria) this.friasCollider.emit("overlapend");
+		if(touchingFriaDER && !wasTouchingFriaDER) {this.friasColliderDER.emit("overlapstart");}
+		else if(!touchingFriaDER && wasTouchingFriaDER) this.friasColliderDER.emit("overlapend");
+		
+		var touchingFriaIZQ = !this.friasColliderIZQ.body.touching.none;
+		var wasTouchingFriaIZQ = !this.friasColliderIZQ.body.wasTouching.none;
+		
+		if(touchingFriaIZQ && !wasTouchingFriaIZQ) {this.friasColliderIZQ.emit("overlapstart");}
+		else if(!touchingFriaIZQ && wasTouchingFriaIZQ) this.friasColliderIZQ.emit("overlapend");
+
+		var touchingFriaABJ = !this.friasColliderABJ.body.touching.none;
+		var wasTouchingFriaABJ = !this.friasColliderABJ.body.wasTouching.none;
+		
+		if(touchingFriaABJ && !wasTouchingFriaABJ) {this.friasColliderABJ.emit("overlapstart");}
+		else if(!touchingFriaABJ && wasTouchingFriaABJ) this.friasColliderABJ.emit("overlapend");
 
 		for(let i of this.npcs) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
@@ -239,7 +298,6 @@ export default class MovementExample extends Phaser.Scene {
 		this.scene.get('fightscene').LoadInventory(this.inventory);
 		this.scene.get('fightscene').CurrentScene('movement');
         this.scene.sleep('movement');
-		this.scene.get('hud').Fight();
     }
 
 	// pasamos a la escena de pelea
@@ -249,11 +307,32 @@ export default class MovementExample extends Phaser.Scene {
 		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.scene.launch('park');
+		this.manin.moveRight=false;
+        this.scene.wake('park');
 		this.scene.get('park').LoadInventory(this.inventory);
 		
         this.scene.sleep('movement');
     }
+	Cementery(){
+		console.log("par")
+		this.manin.touchingFria = false;
+		this.manin.touchingGrass = false;
+		this.manin.moveLeft=false;
+        this.scene.wake('cementery');
+		this.scene.get('cementery').LoadInventory(this.inventory);
+		
+        this.scene.sleep('movement');
+    }
+	Port(){
+		console.log("par")
+		this.manin.touchingFria = false;
+		this.manin.touchingGrass = false;
+		this.manin.moveDown=false;
+        this.scene.wake('port');
+		this.scene.get('port').LoadInventory(this.inventory);
+		
+        this.scene.sleep('movement');
+	}
 
 	LoadInventory(inv){
 		this.inventory = inv;

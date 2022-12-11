@@ -41,6 +41,12 @@ export class Manin extends Phaser.GameObjects.Sprite {
         this.touchingGrass = false;
 
 		this.touchingFria=false;
+		this.moveLeft=false;
+		this.moveDown=false;
+		this.moveRight=false;
+		this.moveUp=false;
+
+
 		this.nameScene=name
 		this.collider = null;
 		this.uiScene = uiScene;
@@ -200,11 +206,26 @@ export class Manin extends Phaser.GameObjects.Sprite {
         }
 		if(this.touchingFria )
 		{
-			if(this.nameScene==="PLAZA" &&this.dKey.isDown)
+			if(this.nameScene==="PLAZA")
 			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Park();
+				if(this.moveRight&& this.dKey.isDown)
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Park();
+				}
+				else if(this.moveLeft&& this.aKey.isDown )
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Cementery();
+				}
+				else if(this.moveDown&& this.sKey.isDown )
+				{
+					this.body.setVelocityX(0);
+					this.body.setVelocityY(0);
+					this.scene.Port();
+				}
 			}
 			else if (this.nameScene==="PARK"&&this.aKey.isDown )
 			{
@@ -212,6 +233,19 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.body.setVelocityY(0);
 				this.scene.Plaza();
 			}
+			else if (this.nameScene==="CEMENTERY"&&this.dKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
+			else if (this.nameScene==="PORT"&&this.wKey.isDown )
+			{
+				this.body.setVelocityX(0);
+				this.body.setVelocityY(0);
+				this.scene.Plaza();
+			}
+			
 		}
 	}
 	increaseSteps(){
