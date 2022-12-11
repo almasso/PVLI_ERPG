@@ -26,9 +26,6 @@ export class Party{
 		this.party[1].index = 1;
 		this.party[2].index = 2;
 		this.party[3].index = 3;
-		this.party[4].index = 4;
-		this.party[5].index = 5;
-		this.party[6].index = 6;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
