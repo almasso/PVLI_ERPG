@@ -1,4 +1,3 @@
-import MovementExample from './scenes/exampleMovement.js'
 import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
