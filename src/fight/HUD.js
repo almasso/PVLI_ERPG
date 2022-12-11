@@ -341,7 +341,6 @@ export class InventoryHUD{
 		let i = 0;
 		this.inventoryBlock.visible = !this.inventoryBlock.visible;
 		for(i = this.initialItem; i <= this.finalItem; i++){
-			console.log('A');
 			this.itemsText[i].text.x = this.inventoryBlock.x + this.inventoryBlock.displayWidth / 14;
 			this.itemsText[i].text.y = this.inventoryBlock.y + (i - this.initialItem) * this.inventoryBlock.displayHeight/4 + this.inventoryBlock.displayHeight / 16;
 			this.itemsText[i].quantity.x = this.inventoryBlock.x + 7.5 * this.inventoryBlock.displayWidth / 10;
@@ -389,6 +388,149 @@ export class InventoryHUD{
 		this.inventory = inv;
 		this.CreateItems(this.scene);
 	}
+}
+
+export class shopHUD{
+	constructor(scene, x, y, items, npc){
+		this.scene = scene;
+		this.shopBlock = this.scene.add.image(this.scene.sys.game.canvas.width / 2, this.scene.sys.game.canvas.height / 2, 'log');
+		this.shopBlock.setScale(1.5);
+		this.shopBlock.depth = 4;
+		this.shopBlock.visible = false;
+
+		this.npc = npc
+
+		this.currentItem = 0;
+		this.items = items;
+		this.createItems();
+		this.createButtons();
+	}
+
+	createButtons(){
+		this.buyButton = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - this.shopBlock.displayHeight / 2 - 10, 'buy'); //Botón de comprar
+		this.buyButton.setScale(1.5);
+		this.buyButton.depth = 4;
+		this.buyButton.setInteractive();
+		this.buyButton.visible = false;
+
+		this.naoButton = this.scene.add.image(this.buyButton.x + this.buyButton.displayWidth + 1, this.buyButton.y, 'noBuy'); //Botón de no comprar
+		this.naoButton.setScale(1.5);
+		this.naoButton.depth = 4;
+		this.naoButton.setInteractive();
+		this.naoButton.visible = false;
+
+		this.upButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1,  this.shopBlock.y - this.shopBlock.displayHeight / 2, 'logArrow');
+		this.upButton.setScale(1.5);
+		this.upButton.depth = 4;
+		this.upButton.setInteractive();
+		this.upButton.visible = false;
+
+		this.downButton = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 2 + 1, this.upButton.y + this.upButton.displayHeight, 'logArrow');
+		this.downButton.setScale(1.5);
+		this.downButton.depth = 4;
+		this.downButton.angle = 180;
+		this.downButton.setInteractive();
+		this.downButton.visible = false;
+
+		this.buyButton.on('pointerup', () => {
+			this.displayItems();
+			this.buyButton.visible = false;
+		})
+
+		this.naoButton.on('pointerup', () => {
+			if(this.shopBlock.visible)
+				this.displayItems();
+			this.naoButton.visible = false;
+			this.buyButton.visible = false;
+			this.npc.close();
+		})
+
+		this.upButton.on('pointerup', () => {
+			this.Up();
+		})
+
+		this.downButton.on('pointerup', () => {
+			this.Down();
+		})
+	}
+
+	createItems(){
+		this.itemsText = [];
+		let self = this;
+		this.items.forEach(function(item, index){
+			self.itemsText[index] = {
+				name: self.scene.add.text(self.shopBlock.x - 6 * self.shopBlock.displayWidth / 14, self.shopBlock.y - 7 * self.shopBlock.displayHeight / 16 + 5, item.name,
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				price: self.scene.add.text(self.shopBlock.x + 2.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y - 7 * self.shopBlock.displayHeight / 16 + 5, item.price + ' euro(s)',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				hp: self.scene.add.text(self.shopBlock.x - 6 * self.shopBlock.displayWidth / 14, self.shopBlock.y - 3 * self.shopBlock.displayHeight / 16 + 5, item.hp + ' hp',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',}),
+				mp: self.scene.add.text(self.shopBlock.x + 2.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y - 3 * self.shopBlock.displayHeight / 16 + 5, item.mp + ' mp',
+				{
+					font: '12px "Press Start 2P"',
+					color: '#ffffff',
+					align: 'left',})}
+
+			self.itemsText[index].name.depth = 4;
+			self.itemsText[index].price.depth = 4;
+			self.itemsText[index].hp.depth = 4;
+			self.itemsText[index].mp.depth = 4;
+
+			self.itemsText[index].name.visible = false;
+			self.itemsText[index].price.visible = false;
+			self.itemsText[index].hp.visible = false;
+			self.itemsText[index].mp.visible = false;
+
+			self.itemsText[index].name.setInteractive();
+		});
+	}
+
+	displayItems(){
+		this.upButton.visible = !this.upButton.visible;
+		this.downButton.visible = !this.downButton.visible;
+		this.shopBlock.visible = !this.shopBlock.visible;
+		this.itemsText[this.currentItem].visible = !this.itemsText[this.currentItem].visible;
+		this.itemsText[this.currentItem].name.visible = !this.itemsText[this.currentItem].name.visible;
+		this.itemsText[this.currentItem].price.visible = !this.itemsText[this.currentItem].price.visible;
+		this.itemsText[this.currentItem].hp.visible = !this.itemsText[this.currentItem].hp.visible;
+		this.itemsText[this.currentItem].mp.visible = !this.itemsText[this.currentItem].mp.visible;
+		if(this.itemsText[this.currentItem].visible)
+			this.itemButton();
+	}
+
+	Down(){
+		if(this.currentItem < this.items.length - 1){
+			this.displayItems();
+			this.currentItem++;
+			this.displayItems();
+		}
+	}
+
+	Up(){
+		if(this.currentItem !== 0){
+			this.displayItems();
+			this.currentItem--;
+			this.displayItems();
+		}
+	}
+
+	itemButton(){
+		let self = this;
+		this.itemsText[this.currentItem].name.on('pointerup', () => {
+			self.scene.currentItem = self.items[self.currentItem];
+			self.npc.buy();
+		})
+	}
+
 }
 
 // ENEMIGOS EN COMBATE

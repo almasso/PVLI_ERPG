@@ -8,6 +8,7 @@ import Object from '../obj/Object.js'
 import Inventory from '../obj/Inventory.js'
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
+import shopNPC from '../obj/shopNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -81,8 +82,13 @@ export default class MovementExample extends Phaser.Scene {
 
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
+
+		this.shop = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
+
 		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2];
 		for(let e of this.npcs) e.scale = 2.5;
+		this.shop.scale = 2.5;
+
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
 			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
@@ -96,6 +102,7 @@ export default class MovementExample extends Phaser.Scene {
 		}, this.manin);
 
 		this.interactuableObjects = [this.guitar];
+
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
@@ -221,7 +228,7 @@ export default class MovementExample extends Phaser.Scene {
 	this.physics.add.overlap(this.manin, this.friasColliderABJ);
 	}
 
-	UpdateInventory(inv){
+	updateInventory(inv){
 		this.inventory = inv;
 	}
 	
@@ -275,6 +282,8 @@ export default class MovementExample extends Phaser.Scene {
 				console.log("overlap")
 				this.manin.collider = i;
 			}
+		if(this.physics.world.overlap(this.manin, this.shop.trigger) && this.manin.collider == null){
+			this.manin.collider = this.shop;
 		}
 	
 		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
