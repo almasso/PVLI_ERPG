@@ -32,7 +32,7 @@ export class FightScene extends Phaser.Scene {
 		this.state = FightState.SelectTurn;
 	}
 
-	preload(){
+	/*preload(){
 		// cargar personajes
 		this.load.image('manin', 'assets/textures/Characters/manin_new.png');
 		this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
@@ -84,17 +84,12 @@ export class FightScene extends Phaser.Scene {
 		this.load.spritesheet('jarfaiter_shock', 'assets/textures/Characters/Jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_poison', 'assets/textures/Characters/Jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
 
+		//this.load.image('artista','assets/textures/Artista.png')
+		//this.load.image('artista2','assets/textures/Characters/Artista2.png')
 		// cargar los botones
-		this.load.image('log','assets/textures/HUD/log.png');
-		this.load.image('logButton','assets/textures/HUD/logButton.png');
-		this.load.image('attackButton','assets/textures/HUD/attackButton.png');
-		this.load.image('attackButtonHover','assets/textures/HUD/attackButtonHover.png');
-		this.load.image('objectButton','assets/textures/HUD/objectButton.png');
-		this.load.image('objectButtonHover','assets/textures/HUD/objectButtonHover.png');
 		//this.load.image('fleeButton','assets/textures/fleeButton.png');
-		this.load.image('AllyBlock','assets/textures/HUD/AllyBlock.png');
-		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
-	}
+
+	}*/
 
 	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
 	CreateButtons(){

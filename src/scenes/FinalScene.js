@@ -5,12 +5,6 @@ export default class FinalScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'final' });
 	}
-	
-	// cargamos imágenes
-	preload(){
-		this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
-		this.load.image('retryButton', 'assets/textures/HUD/Retry.png');
-	}
 
 	// inicializamos la escena
 	create() {

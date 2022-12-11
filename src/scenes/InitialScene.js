@@ -4,14 +4,9 @@ export default class InitialScene extends Phaser.Scene {
 		super({ key: 'initial' });
 	}
 	
-	// cargamos imágenes
-	preload(){
-		this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
-		this.load.image('startButton', 'assets/textures/HUD/StartInicio.png');
-	}
-
 	// incializamos la escena	
 	create() {
+
 		// fondo
         this.bg = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'initialBg');
         this.bg.scale = 4.71;
