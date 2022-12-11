@@ -118,7 +118,7 @@ export default class PortScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,300+50*o,0, 'pixel',2.5,2.5));
+				this.frias.push(new enviromentObj(this,300+50*o,50, 'pixel',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión
