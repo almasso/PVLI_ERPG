@@ -134,6 +134,8 @@ export default class MovementExample extends Phaser.Scene {
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
 		//#endregion
+		this.GenerateHostileGround(600, 200, 3 ,3 ,2);
+
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -142,11 +144,14 @@ export default class MovementExample extends Phaser.Scene {
 		// generamos las hierbas que se nos digan
 		for(let i = 0; i < fils; i++){
 			for(let o = 0; o < cols; o++){
-				hierbas.push(new enviromentObj(this,x + 64*i,y + 64 *o, 'hierba',scale,scale));
+				let h = new enviromentObj(this,x,y, 'hierba',scale,scale);
+				h.x += h.displayWidth * i;
+				h.y += h.displayHeight * o;
+				hierbas.push(h);
 			}
 		}
 		// añadimos la zona de colisión
-		this.hierbasColliders.push(this.add.zone(x - 44, y - 33).setSize((hierbas[hierbas.length-1].displayWidth - 11) * fils,(hierbas[hierbas.length-1].displayHeight - 11) * cols).setOrigin(0,0));		
+		this.hierbasColliders.push(this.add.zone(x - hierbas[0].displayWidth / 2, y - hierbas[0].displayHeight / 2).setSize((hierbas[0].displayWidth) * fils,(hierbas[0].displayHeight) * cols).setOrigin(0,0));		
 		this.physics.world.enable(this.hierbasColliders[this.hierbasColliders.length-1]); // añadimos su collider
 		this.hierbasColliders[this.hierbasColliders.length-1].body.setAllowGravity(false); // quitamos gravedad
 		this.hierbasColliders[this.hierbasColliders.length-1].body.moves = false;
@@ -204,12 +209,14 @@ export default class MovementExample extends Phaser.Scene {
 
 	// pasamos a la escena de pelea
     Fight(){
+		/*
 		this.inventory.addItem(new Object('Fría', 10, 0));
 		this.inventory.addItem(new Object('Fría', 10, 0));
 		this.inventory.addItem(new Object('1111111111', 10, 0));
 		this.inventory.addItem(new Object('2222222222', 10, 0));
 		this.inventory.addItem(new Object('3333333333', 10, 0));
 		this.inventory.addItem(new Object('4444444444', 10, 0));
+		*/
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		//this.scene.get('fightscene').LoadInventory(this.inventory);

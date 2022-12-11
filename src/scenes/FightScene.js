@@ -273,8 +273,7 @@ export class FightScene extends Phaser.Scene {
 			this.scene.get('hud').Walk();
 			this.scene.get('hud').UpdateHUD();
 			let movement = this.scene.get('movement');
-			movement.UpdateHUD();
-			movement.updateInventory(this.inventory);
+			//movement.updateInventory(this.inventory);
 		}
 		else // Si se han matado a todos los enemigos...
 		{
@@ -315,7 +314,7 @@ export class FightScene extends Phaser.Scene {
 			}
 			else return;
 		})
-		this.inventoryHUD = new InventoryHUD(this, this.inventory, 600, 180);
+		//this.inventoryHUD = new InventoryHUD(this, this.inventory, 600, 180);
 	}
 	
     k=0;//···RAUL PRUEBAS···
