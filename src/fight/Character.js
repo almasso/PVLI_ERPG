@@ -121,6 +121,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			
 		});
 
+		console.log(this.mon);
 		this.play(this.mon+'_idle');
 
      	//#endregion

@@ -1014,6 +1014,7 @@ export class FightScene extends Phaser.Scene {
 			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
 				console.log("entre");
 				this.state = FightState.ChooseAttack;
+				this.allies[this.currentAlly].targets = [];
 			}
 		}
 		

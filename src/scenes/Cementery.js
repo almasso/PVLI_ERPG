@@ -33,7 +33,7 @@ export default class CementeryScene extends Phaser.Scene {
 		this.qKey = this.input.keyboard.addKey('Q');  //attack
 		//#endregion	
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg3').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -125,7 +125,7 @@ export default class CementeryScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,1350,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this,1350,200 + 64 *o, 'pixel',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión

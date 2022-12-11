@@ -119,7 +119,7 @@ export default class ParkScene extends Phaser.Scene {
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
 			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,0,200 + 64 *o, 'fria',2.5,2.5));
+				this.frias.push(new enviromentObj(this,0,200 + 64 *o, 'pixel',2.5,2.5));
 			}
 		
 		// añadimos la zona de colisión
