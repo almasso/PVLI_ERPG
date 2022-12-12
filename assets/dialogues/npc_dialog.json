@@ -183,6 +183,11 @@
         "npcID": 10,
         "unique": true,
         "text": "Jueguen al Yakuza 0"
+    },
+    {
+        "npcID" : 11,
+        "unique": true,
+        "text": "Toma una fría para regular el pH, que estáis apollardaos"
     }
 ],
 "attributes" : [
@@ -251,5 +256,11 @@
         "npcName": "Patri aka la verdadera hermana de Pablo",
         "verified" : false,
         "developer" : true
+    },
+    {
+        "npcID" : 11,
+        "npcName" : "Healer",
+        "verified" : false,
+        "developer" : false
     }
 ]}

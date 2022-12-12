@@ -9,6 +9,7 @@ import Inventory from '../obj/Inventory.js'
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
 import shopNPC from '../obj/shopNPC.js';
+import healerNPC from '../obj/healerNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
@@ -82,7 +83,9 @@ export default class Square extends Phaser.Scene {
 		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
 		let sNpc2 = new shopNPC(this, 400, 200, 'frozono', 9, npc_dialogues, this.manin, this.inventory);
 
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc, sNpc2];
+		let hNpc = new healerNPC(this, 600, 100, 'patri', 11, npc_dialogues, this.manin);
+
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc, sNpc2, hNpc];
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;

@@ -3,6 +3,7 @@ import {enviromentObj, interactuableObj} from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
+import healerNPC from '../obj/healerNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class ParkScene extends Phaser.Scene {
