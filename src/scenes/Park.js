@@ -26,14 +26,14 @@ export default class ParkScene extends Phaser.Scene {
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
 		this.wKey = this.input.keyboard.addKey('W'); // move up
 		this.aKey = this.input.keyboard.addKey('A'); // move left
-		this.sKey = this.input.keyboard.addKey('S'); // move down
+		this.sKey = this.input.keyboard.addKey('S'); // move downas
 		this.dKey = this.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
 		this.eKey = this.input.keyboard.addKey('E'); //chose
 		this.qKey = this.input.keyboard.addKey('Q');  //attack
 		//#endregion	
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg2').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, 'park').setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -118,9 +118,9 @@ export default class ParkScene extends Phaser.Scene {
 
 		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
-			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,50,200 + 64 *o, 'pixel',2.5,2.5));
-			}
+			
+				this.frias.push(new enviromentObj(this,50,25, 'pixel',1,100));
+			
 		
 		// añadimos la zona de colisión
 		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
