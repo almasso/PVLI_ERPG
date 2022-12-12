@@ -44,7 +44,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 50, 200, this.scene.get('dialog'), this.questLog,"PARK");
+		this.manin = new Manin(this, 50, 50, this.scene.get('dialog'), this.questLog,"PARK");
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);

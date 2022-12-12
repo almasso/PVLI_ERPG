@@ -289,6 +289,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			console.log("A VE");
 		}
 	}
+	
 
 	
 	

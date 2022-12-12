@@ -77,6 +77,7 @@ export default class Square extends Phaser.Scene {
 		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
 		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
 		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
+		let npc10=new NPC(this,900,500,'kratos',10,npc_dialogues,this.manin);
 
 		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"
 		,"Pelea contra melendi"]));
@@ -86,7 +87,7 @@ export default class Square extends Phaser.Scene {
 		
 		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
 
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc,npc10];
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;
@@ -121,6 +122,10 @@ export default class Square extends Phaser.Scene {
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
 		//#endregion
+
+
+		this.kratos=false;
+		this.count=0;
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -192,7 +197,7 @@ export default class Square extends Phaser.Scene {
 	}
 	
 	// comprobación de colisiones y apertura de menús
-	update(){
+	update(t,dt){
 		let self = this;
 		
 		let hasCollidedGrass = false;
@@ -241,6 +246,25 @@ export default class Square extends Phaser.Scene {
 
 		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 			this.manin.collider = null;
+		}
+
+		if(this.kratos)
+		{
+			this.count += dt;
+			if(this.count > 2)
+			{
+				this.npcs[12].y+=1.5;
+				
+				
+				this.count = 0;
+			}
+			if( this.npcs[12].y>=1000)
+			{
+				this.kratos=false;
+				this.npcs[12].trigger.destroy();	
+				this.npcs[12].destroy();	
+						
+			}
 		}
 	}
 
@@ -299,6 +323,13 @@ export default class Square extends Phaser.Scene {
 
 	LoadInventory(inv){
 		this.inventory = inv;
+	}
+	Kratos()
+	{
+		console.log("HAAAAAAAAAAAAA")
+		this.kratos=true;
+		this.npcs[12].setFlip(false, true);
+		
 	}
 	
 }

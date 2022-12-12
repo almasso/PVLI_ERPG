@@ -173,6 +173,31 @@
         "npcID": 9,
         "unique" : true,
         "text" : "¿Quieres comprar?"
+    },
+    {
+        "npcID":10,
+        "unique":true,
+        "text":"¡Vamos chico!"
+    },
+    {
+        "npcID":10,
+        "unique":true,
+        "text":"¡Zeus! ¡Tu hijo ha regresado, y trae consigo la destrucción del Olimpo!"
+    },
+    {
+        "npcID":10,
+        "unique":true,
+        "text":"Los dioses del Olimpo me han abandonado,...ya no queda esperanza."
+    },
+    {
+        "npcID":10,
+        "unique":true,
+        "text":"Yeah, sing with me, sing for the year. Sing for the laughter, and sing for the tear. Sing it with me, if it's just for today.Maybe tomorrow, the good Lord will take you away."
+    },
+    {
+        "npcID":10,
+        "unique":true,
+        "text":"Dream on!...Dream on!...Dream on!....."
     }
 ],
 "attributes" : [
@@ -235,5 +260,12 @@
         "npcName" : "Tienda",
         "verified" : false,
         "developer" : false
+    },
+    {
+        "npcID":10,
+        "npcName": "Kratos",
+        "verified":false,
+        "developer": false
+
     }
 ]}
