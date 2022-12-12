@@ -58,31 +58,25 @@ export default class Square extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		//let npc4 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		//let npc5 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		let npc4 = new NPC(this, 500, 100, 'alex', 3, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 100, 100, 'frozono', 4, npc_dialogues, this.manin);
-		let npc6 = new NPC(this, 100, 200, 'compuman', 5, npc_dialogues, this.manin);
-		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
-		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
-		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
-		let npANc = new NPC(this, 700, 500, 'compuman', 12, npc_dialogues, this.manin)
 
-		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"
-		,"Pelea contra melendi"]));
-
-		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
-		,"Pelea contra melendi2"]));
-		
-		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
-		let sNpc2 = new shopNPC(this, 400, 200, 'frozono', 9, npc_dialogues, this.manin, this.inventory);
-
-		let hNpc = new healerNPC(this, 600, 100, 'patri', 11, npc_dialogues, this.manin);
-
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc, sNpc2, hNpc, npANc];
+		this.npcs = [];
+		for(let i of EnviromentInfo.npcs){
+			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.qNpcs){
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, npc_dialogues, 
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj));
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.sNpcs){
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, this.inventory);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.hNpcs){
+			let newNpc = new healerNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;

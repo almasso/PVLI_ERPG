@@ -74,8 +74,7 @@ export class QuestLog {
 }
 
 export class Quest {
-    constructor(npc, stages, id, name, objectives){
-        this.npc = npc;
+    constructor(stages, id, name, objectives){
         this.stages = stages;
         this.stage = 0;
         this.id = id;

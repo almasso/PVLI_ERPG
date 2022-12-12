@@ -6,26 +6,17 @@ import {EnviromentInfo} from "../fight/EnviromentInfo.js"
 export class Party{
 	constructor()
 	{
+		let char = EnviromentInfo.info.character;
 		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
 					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",4,40,15,1),
 					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
+					  characterInfo(char.name,char.imgID,char.actualHp,char.maxHp,char.actualMp,char.maxMp
+						,char.rP,char.rR,char.rF,char.rE,char.rT,char.acurracy,char.speed,
 						[attackInfo("PUM a distancia", 1, 25, 0, 1), attackInfo("PUM a distancia 2", 3, 20, 30, 1), 
-						attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						  [attackInfo("PUM a distancia", 2, 25, 0, 1), attackInfo("PUM a distancia 2", 4, 20, 30, 1), 
-						  attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						  characterInfo(EnviromentInfo.character2.name,EnviromentInfo.character2.imgID,EnviromentInfo.character2.actualHp,EnviromentInfo.character2.maxHp,EnviromentInfo.character2.actualMp,EnviromentInfo.character2.maxMp
-							,EnviromentInfo.character.rP,EnviromentInfo.character2.rR,EnviromentInfo.character2.rF,EnviromentInfo.character2.rE,EnviromentInfo.character2.rT,EnviromentInfo.character2.acurracy,EnviromentInfo.character2.speed,
-							[attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
-							attackInfo("Ven a 4k", 3, 20, 25, 2), attackInfo("Humito",4,50,60, 4)])];
+						attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
 		this.party[0].index = 0;
 		this.party[1].index = 1;
-		this.party[2].index = 2;
-		this.party[3].index = 3;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;

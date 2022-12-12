@@ -11,6 +11,10 @@ class EnviromentManager{
 
 // información de los personajes que se encuentran en el parque
 let park = {
+	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
+	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	sNpcs: [npcInfo(300, 100, 'alex', 9)],
+	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
 	info: {character: {name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
@@ -28,6 +32,16 @@ let park = {
 	shop: []
 }
 
+
+
+function npcInfo(x, y, img, id){
+	return {x: x, y: y, img: img, id: id};
+}
+
+function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj){
+	return {x: x, y: y, img: img, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj};
+}
+
 // variables exportadas
-let EnviromentInfo = park.info;
+let EnviromentInfo = park;
 let EnemiesInfo = park.enemies;
