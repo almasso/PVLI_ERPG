@@ -20,21 +20,22 @@ export default class HUDScene extends Phaser.Scene {
 		this.inputMan = new InputMan(this); // input manager
 		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD') // HUD de cabezas pequeñas
 
-		this.pointer = this.add.image(0,0,'pointer').setOrigin(0,0); // puntero para apuntar a las diferentes opciones
+		this.pointer = this.add.image(0, 0, 'pointer').setOrigin(0,0); // puntero para apuntar a las diferentes opciones
 		this.pointer.visible = false;
 		this.pointer.depth = 3;
 		// generamos el Menú general
-		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer, this.walkingHUD);
+		this.menu = new ExploreMenu(620, 100, this,'menuBG', this.pointer, this.walkingHUD);
 		this.showMenu = false;
 		this.menu.Show(this.showMenu);
 		this.Fight();
+
     }
     
     update(){ // checkeo de variables e input
 		if(this.state === State.Walk){ // mostramos menú a la Q
 			if(Phaser.Input.Keyboard.JustDown(this.inputMan.qKey)) {
 				this.showMenu = !this.showMenu; 
-				if(this.showMenu) this.menu.Show(this.showMenu);
+				if(this.showMenu) { this.menu.Show(this.showMenu); }
 				else {
 					this.menu.Hide(!this.showMenu);
 					this.menu.viewParty = false;
@@ -67,14 +68,15 @@ export default class HUDScene extends Phaser.Scene {
 	Hide(boolean){
 		this.showMenu = !boolean;
 		this.walkingHUD.Hide(boolean);
-		this.menu.Hide(boolean);
-		console.log("HIDE: " + boolean);
+		if(!boolean) this.menu.Hide(boolean);
+		if(this.questHud !== undefined) this.questHud.Hide(boolean);
 	}
 
 	Walk(){
-		console.log("UNHIDE");
 		this.state = State.Walk;
+		this.menu.Hide(true);
 		this.walkingHUD.Hide(false);
+		if(this.questHud !== undefined) this.questHud.Hide(false);
 	}
 
 	Reset(){

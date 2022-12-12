@@ -223,14 +223,14 @@ export class QuestHUD{
 		this.scale = 2.5;
 		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
 		this.questBlock.setScale(this.scale, this.scale / 2);
-		this.questBlock.depth = 8;
+		this.questBlock.depth = 4;
 
 		this.questName = scene.add.text(40, 35, "",{
 			font: 'Arial"',
 			color: '#ffffff',
 			align: 'left',});
 		this.questName.setFontSize(20);
-		this.questName.depth = 9;
+		this.questName.depth = 5;
 
 		this.text = scene.add.text(40, 60, "",{
 			font: 'Arial"',
@@ -238,7 +238,7 @@ export class QuestHUD{
 			align: 'left',});
 
 		this.text.setFontSize(20);
-		this.text.depth = 9;
+		this.text.depth = 4;
 
 		let offset = 35;
 		this.upArrowParty = this.scene.add.image(this.questBlock.width * this.scale + offset, this.questBlock.height * this.scale / 2 - offset , 'logButton').setScale(this.scale / 2);
@@ -246,9 +246,10 @@ export class QuestHUD{
 		this.downArrowParty.x = this.upArrowParty.x;
 		this.downArrowParty.y = this.upArrowParty.y + this.upArrowParty.height * 3 / 2; 
 		this.downArrowParty.angle = 180;
-		this.upArrowParty.depth = 8;
-		this.downArrowParty.depth = 8;
+		this.upArrowParty.depth = 4;
+		this.downArrowParty.depth = 4;
 		this.AddButtons();
+		
 	}
 
 	Update(){
@@ -294,6 +295,15 @@ export class QuestHUD{
 			}
 		});
 	}
+
+	Hide(bool){
+		this.upArrowParty.visible = !bool;
+		this.downArrowParty.visible = !bool;
+		this.questName.visible = !bool;
+		this.questBlock.visible = !bool;
+		this.text.visible = !bool;
+	}
+	
 }
 
 export class InventoryHUD{
@@ -825,8 +835,8 @@ export class ExploreMenu {
 
 	// usado solo para crear los botones
 	AddButtons(){
-		let buttonX = this.x+20;
-		let buttonY = this.y+60;
+		let buttonX = this.x + 20;
+		let buttonY = this.y + 60;
 		//#region MAIN MENU BUTTONS
 		// PARTY STATE BUTTONS
 		this.viewPartyButton = this.scene.add.image(buttonX, buttonY, 'menuPartyButton').setOrigin(0,0); // botón para ver el estado de la party
@@ -852,7 +862,7 @@ export class ExploreMenu {
 			self.pointer.visible = false;
 		});
 
-		this.upArrowParty.on("pointerup", function(){ 
+		this.upArrowParty.on("pointerup", function(){
 			if(self.alliesShownIndex > 0 && self.alliesShownIndex <= self.partyImages.length - 4){
 				self.alliesShownIndex--;
 				self.ShowParty(true);
