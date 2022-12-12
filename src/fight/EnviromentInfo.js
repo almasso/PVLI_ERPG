@@ -4,7 +4,8 @@ import {attackInfo} from "../fight/Attack.js"
 class EnviromentManager{
 
 	constructor(){
-		// leer de archivo todos los enviroments.
+		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
+
 	}
 }
 

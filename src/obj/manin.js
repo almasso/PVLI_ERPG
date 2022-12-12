@@ -124,6 +124,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				console.log("OBJETIVO COMPLETADO")
 				this.collider.advanceQuest();
 			}
+			this.isInteracting = false;
 		}
 		else if(this.collider instanceof shopNPC){
 			this.shopping = true;
@@ -140,10 +141,12 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
+			this.isInteracting = false;
 		}
 		else if(this.collider instanceof interactuableObj){
 			console.log("AAA GUITARRA")
 			this.collider.Interact();
+			this.isInteracting = false;
 		}
 		else if(this.collider === null) this.isInteracting = false;
     }

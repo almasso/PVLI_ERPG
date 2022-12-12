@@ -1,7 +1,5 @@
 import NPC from './obj/npc.js'
 
-
-
 export class QuestNPC extends NPC {
     constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
         super(scene, x, y, imageID, npcID, dialogues, manin);
@@ -12,8 +10,7 @@ export class QuestNPC extends NPC {
         if(!this.quest.acquired){
             this.manin.questLog.addQuest(this.quest);
             this.manin.questLog.actualQuest = this.manin.questLog.numQuests - 1; 
-            this.scene.questHud.Update();
-            console.log(this.quest);
+            this.scene.scene.get('hud').UpdateHUD();
             this.quest.acquired = true;   
         }
     }
@@ -21,7 +18,7 @@ export class QuestNPC extends NPC {
     advanceQuest(){
         this.quest.advanceQuest(this.quest.id);
         this.manin.questLog.actualQuest = this.manin.questLog.GetQuest(this.quest.id).index; 
-        this.scene.questHud.Update();
+        this.scene.scene.get('hud').UpdateHUD();
     }
 }
 
@@ -93,17 +90,7 @@ export class Quest {
         if(!this.finished){
             this.stage++;
             if(this.stage >= this.stages) this.finished = true;
-            this.setCurrentObjectives();
             this.actualObjectiveCompleted = false;
-        }
-    }
-
-    setCurrentObjectives(){
-        if(!this.finished){
-            this.currentObjectives = this.objectives[this.stage];
-        }
-        else{
-            this.currentObjectives = "QUEST COMPLETE";
         }
     }
 }

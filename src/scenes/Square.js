@@ -3,11 +3,7 @@ import {enviromentObj, interactuableObj } from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
-import {InputMan} from '../fight/InputManager.js'
-import Object from '../obj/Object.js'
-import Inventory from '../obj/Inventory.js'
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
-import { QuestHUD } from '../fight/HUD.js';
 import shopNPC from '../obj/shopNPC.js';
 import healerNPC from '../obj/healerNPC.js';
 
@@ -90,20 +86,19 @@ export default class Square extends Phaser.Scene {
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;
-		this.guitar = new interactuableObj(this, 700, 100, 'guitar', 0.3, 0.3, function(){
+		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
 			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
 			console.log(guitarQuest);
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
 				self.manin.questLog.advanceQuest('guitarQuest'); 
-				self.questHud.Update();
+				self.scene.get('hud').UpdateHUD();
 				self.guitar.trigger.destroy();
 				self.guitar.destroy();
 			}
 		}, this.manin);
+		this.guitar.setScale(3);
 
 		this.interactuableObjects = [this.guitar];
-        //this.npcs = [];
-        this.interactuableObjects = [];
 
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(900, 200, 4, 4, 2.5);
