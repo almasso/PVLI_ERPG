@@ -23,7 +23,8 @@ let park = {
 		attack: [attackInfo("Pincelada",2,20,0,1),attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),attackInfo("Xilografía en el pecho", 3, 30, 0, 1)]},
 	{name: "Culturista", imgID:'artist', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
 	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-	attackInfo("Poñetaso", 0, 30, 0, 1)]}]
+	attackInfo("Poñetaso", 0, 30, 0, 1)]}],
+	shop: []
 }
 
 // variables exportadas

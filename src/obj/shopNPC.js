@@ -9,12 +9,11 @@ export default class shopNPC extends NPC{
         this.createItems()
         this.currentItem = -1;
         this.inventory = inv;
-        this.shopHUD = new shopHUD(scene, 0, 0, this.items, this);
+        this.shopHUD = this.scene.scene.get('hud').addShop(this);
     }
 
     createItems(){
         this.items = [];
-        
         this.items.push(new Object('Cigarro', -5, 10, 10));
         this.items.push(new Object('Kebab', 10, -5, 10));
         this.items.push(new Object('Fría', 20, -5, 20));

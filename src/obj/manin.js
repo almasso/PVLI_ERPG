@@ -45,7 +45,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.touchingFria=false;
 		this.moves = [false, false, false, false] // DERECHA, IZQUIERDA, ARRIBA, ABAJO
 
-
 		this.nameScene=name;
 		this.collider = null;
 		this.uiScene = uiScene;
@@ -152,9 +151,10 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	detectEvents() {
 		this.scene.events.on('dialogWindowClosed', () => {
 			this.isInteracting = false;
-			this.scene.scene.launch('hud');
+			this.scene.scene.wake('hud');
 		})
 		this.scene.events.on('closeShopping', () => {
+			this.scene.scene.wake('hud');
 			this.shopping = false;
 		})
 	}
@@ -282,6 +282,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			
 		}
 	}
+
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
@@ -289,7 +290,4 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			console.log("A VE");
 		}
 	}
-
-	
-	
 }

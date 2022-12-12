@@ -10,7 +10,6 @@ import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
 import shopNPC from '../obj/shopNPC.js';
 
-
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
 	
@@ -22,10 +21,6 @@ export default class Square extends Phaser.Scene {
 		this.hierbasColliders = [];
 	}
 	
-	/**
-	* Creación de los elementos de la escena principal de juego
-	*/
-
 	// inicializamos la escena
 	create() {
 
@@ -52,9 +47,9 @@ export default class Square extends Phaser.Scene {
 
 		// creamos a manín
 		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
-		this.questHud = new QuestHUD(this, this.manin);
-		this.manin.questLog.setQuestHUD(this.questHud);
-		this.questHud.Update();
+		this.scene.get('hud').createQuests(this.manin);
+		this.manin.questLog.setQuestHUD(this.scene.get('hud').questHud);
+		this.scene.get('hud').questHud.Update();
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -85,8 +80,9 @@ export default class Square extends Phaser.Scene {
 		,"Pelea contra melendi2"]));
 		
 		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
+		let sNpc2 = new shopNPC(this, 400, 200, 'frozono', 9, npc_dialogues, this.manin, this.inventory);
 
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc, sNpc2];
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;
@@ -219,23 +215,22 @@ export default class Square extends Phaser.Scene {
             else if(!touchingFria && wasTouchingFria) this.colliders[i].emit("overlapend");
         }
 		
-
 		for(let i of this.npcs) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap")
+				console.log("overlap");
 				this.manin.collider = i;
 			}
 		}
 
 		for(let i of this.interactuableObjects) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap")
+				console.log("overlap");
 				this.manin.collider = i;
 			}
 		}
 	
 		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
-			console.log("overlap con aliado")
+			console.log("overlap con aliado");
 			this.manin.collider = this.ally;
 		}
 
@@ -261,11 +256,8 @@ export default class Square extends Phaser.Scene {
         this.scene.sleep('square');
 		this.scene.get('hud').Fight();
     }
-
-
+	
 	// pasamos a la escena de pelea
-    
-
 	Park(){
 		console.log("par")
 		this.manin.touchingFria = false;

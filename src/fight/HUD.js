@@ -232,7 +232,6 @@ export class QuestHUD{
 		this.questName.setFontSize(20);
 		this.questName.depth = 9;
 
-
 		this.text = scene.add.text(40, 60, "",{
 			font: 'Arial"',
 			color: '#ffffff',
@@ -391,7 +390,7 @@ export class InventoryHUD{
 }
 
 export class shopHUD{
-	constructor(scene, x, y, items, npc){
+	constructor(scene, items, npc){
 		this.scene = scene;
 		this.shopBlock = this.scene.add.image(this.scene.sys.game.canvas.width / 2, this.scene.sys.game.canvas.height / 2, 'log');
 		this.shopBlock.setScale(1.5);
@@ -433,24 +432,26 @@ export class shopHUD{
 		this.downButton.visible = false;
 
 		this.buyButton.on('pointerup', () => {
-			this.displayItems();
-			this.buyButton.visible = false;
-		})
+			self.displayItems();
+			self.buyButton.visible = false;
+		});
+
+		let self = this;
 
 		this.naoButton.on('pointerup', () => {
-			if(this.shopBlock.visible)
-				this.displayItems();
-			this.naoButton.visible = false;
-			this.buyButton.visible = false;
-			this.npc.close();
+			if(self.shopBlock.visible)
+				self.displayItems();
+			self.naoButton.visible = false;
+			self.buyButton.visible = false;
+			self.npc.close();
 		})
 
 		this.upButton.on('pointerup', () => {
-			this.Up();
+			self.Up();
 		})
 
 		this.downButton.on('pointerup', () => {
-			this.Down();
+			self.Down();
 		})
 	}
 
@@ -530,7 +531,6 @@ export class shopHUD{
 			self.npc.buy();
 		})
 	}
-
 }
 
 // ENEMIGOS EN COMBATE

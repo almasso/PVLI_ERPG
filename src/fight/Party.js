@@ -47,13 +47,11 @@ export class Party{
 
 		this.party.forEach(function(ally, index) {
 			ally.index = index;
-			console.log(index, ally.name);
 		});
 	}
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
-		console.log("PINGA");
 		this.party.push(character);
 		if(this.alliesNum < 4) this.alliesNum++;
 		else this.alliesNum = 4;

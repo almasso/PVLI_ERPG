@@ -18,7 +18,6 @@ export default class InitialScene extends Phaser.Scene {
         this.startButton.y -= this.startButton.displayHeight * 2/ 5 - 2;
 
         this.startButton.setInteractive();
-
         this.startButton.on('pointerup',()=>{
 
 			this.scene.launch('park');
@@ -29,10 +28,9 @@ export default class InitialScene extends Phaser.Scene {
 			this.scene.sleep('cementery');
 			
 			this.scene.launch('square');
-			this.scene.launch('hud');
-
-
+			this.scene.get('hud').Walk();
             this.scene.stop('initial');
+
 		})
     }
 }

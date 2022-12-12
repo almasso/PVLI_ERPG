@@ -1,21 +1,22 @@
-import { walkingHUD, ExploreMenu } from "../fight/HUD.js";
+import { walkingHUD, ExploreMenu, QuestHUD, shopHUD } from "../fight/HUD.js";
 import { InputMan } from "../fight/InputManager.js";
-
 
 const State = {
     Fight: 0,
-    Walk: 1
+    Walk: 1,
+	Init: 2
 }
 
 export default class HUDScene extends Phaser.Scene {
 
     constructor() { // constructora
 		super({ key: 'hud'});
-		this.state = State.Walk;
+		this.shops = [];
 	}
 
     create(){
         // generamos HUD de estado de party
+		this.questHud = undefined;
 		this.inputMan = new InputMan(this); // input manager
 		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD') // HUD de cabezas pequeñas
 
@@ -26,6 +27,7 @@ export default class HUDScene extends Phaser.Scene {
 		this.menu = new ExploreMenu(620,100,this,'menuBG', this.pointer, this.walkingHUD);
 		this.showMenu = false;
 		this.menu.Show(this.showMenu);
+		this.Fight();
     }
     
     update(){ // checkeo de variables e input
@@ -44,16 +46,33 @@ export default class HUDScene extends Phaser.Scene {
 
 	UpdateHUD(){ // updateamos el HUD
 		this.walkingHUD.Update();
+		this.questHud.Update();
+	}
+
+	addShop(npc){
+		let newShop = new shopHUD(this, npc.items, npc);
+		this.shops.push(newShop);
+		return newShop;
+	}
+
+	createQuests(manin){
+		this.questHud = new QuestHUD(this,manin);
 	}
 
 	Fight(){
 		this.state = State.Fight;
-		this.showMenu = false;
-		this.walkingHUD.Hide(true);
-		this.menu.Hide(true);
+		this.Hide(true);
+	}
+
+	Hide(boolean){
+		this.showMenu = !boolean;
+		this.walkingHUD.Hide(boolean);
+		this.menu.Hide(boolean);
+		console.log("HIDE: " + boolean);
 	}
 
 	Walk(){
+		console.log("UNHIDE");
 		this.state = State.Walk;
 		this.walkingHUD.Hide(false);
 	}
