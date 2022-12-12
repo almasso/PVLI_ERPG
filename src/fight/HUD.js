@@ -260,6 +260,7 @@ export class QuestHUD{
 			this.text.text = "-" +aux.text;
 		}
 		else{
+			this.questName.text = "";
 			this.text.text = aux.text;
 		}
 		if(aux.yellowColor) this.text.setStyle({

@@ -71,8 +71,7 @@ export default class Square extends Phaser.Scene {
 		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
 		let npANc = new NPC(this, 700, 500, 'compuman', 12, npc_dialogues, this.manin)
 
-		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"
-		,"Pelea contra melendi"]));
+		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 1, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"]));
 
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
