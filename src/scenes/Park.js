@@ -61,12 +61,14 @@ export default class ParkScene extends Phaser.Scene {
 		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
 		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
 		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		this.npcs = [npc1, npc2, npc3, npc4, npc5];
+		let npc6 = new NPC (this, 100, 300, 'patri', 10, npc_dialogues, this.manin);
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6];
 		npc1.scale = 2.5;
 		npc2.scale = 2.5;
 		npc3.scale = 2.5;
 		npc4.scale = 2.5;
 		npc5.scale = 2.5;
+		npc6.scale = 2.5;
 		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
 		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
 		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
