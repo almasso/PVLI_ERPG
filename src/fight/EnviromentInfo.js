@@ -18,7 +18,7 @@ class EnviromentManager extends Phaser.Scene{
 		super({key: 'EnvManager'});
 		this.coreScene = scenes.square;
 		this.currentScene = scenes.square;
-		this.info = sceneInfo[this.initialScene];
+		this.info = sceneInfo[this.coreScene];
 	}
 
 	create(){
@@ -44,25 +44,30 @@ class EnviromentManager extends Phaser.Scene{
 	changeScene(index){
 		this.startTransition();
 		this.endTransition();
-		if(sceneInfo[index].launched) 
-			this.scene.get(sceneInfo[index].key).wake();
+		let sleepKey = this.info.key;
+		this.info = sceneInfo[index];
+		if(sceneInfo[index].launched) {
+			this.scene.wake(sceneInfo[index].key);
+		}
 		else {
-			this.scene.get(sceneInfo[index].key).launch();
+			this.scene.launch(sceneInfo[index].key);
 			sceneInfo[index].launched = true;
 		}
-		this.scene.get(this.info.key).sleep();
+		this.scene.sleep(sleepKey);
 	}
 
 	goToPlaza(){
 		this.startTransition();
 		this.endTransition();
-		this.scene.get(scenceInfo[this.coreScene].key).wake();
-		this.scene.get(this.info.key).sleep();
+		let sleepKey = this.info.key;
+		this.info = sceneInfo[this.coreScene];
+		this.scene.wake(sceneInfo[this.coreScene].key);
+		this.scene.sleep(sleepKey);
 	}
 }
 
 let square = {
-	launched: false,
+	launched: true,
 	key: 'square',
 	bg: 'square',
 	character: {name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
@@ -79,10 +84,11 @@ let square = {
 let park = {
 	launched: false,
 	key: 'park',
-	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
-	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	bag: 'park',
+	npcs: [npcInfo(400,300, 'alex', 0), npcInfo(200, 200, 'alex', 1), npcInfo(300, 200, 'alex', 2)],
+	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [npcInfo(300, 100, 'alex', 9)],
-	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
+	hNpcs:  [npcInfo(600, 100, 'verifiedtoni', 11)],
 	info: {character: {name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 

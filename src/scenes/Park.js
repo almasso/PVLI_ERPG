@@ -1,43 +1,38 @@
 import {Manin, AllyTEST} from '../obj/manin.js';
-import {enviromentObj, interactuableObj} from '../obj/enviromentObj.js';
+import {enviromentObj, interactuableObj } from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
+import { Quest, QuestNPC, QuestLog } from '../Quest.js';
+import shopNPC from '../obj/shopNPC.js';
 import healerNPC from '../obj/healerNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class ParkScene extends Phaser.Scene {
-	
 	// construimos la escena
 	constructor() {
 		super({ key: 'park' });
 		this.manin; // protagonista
-		//this.inventory = new Inventory();
+		this.inventory;
 		this.hierbasColliders = [];
 	}
-	
-	
-	/**
-	* Creación de los elementos de la escena principal de juego
-	*/
+
+	//#region input
+	generateInput(){
+		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
+		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
+	}
+	//#endregion	
 
 	// inicializamos la escena
 	create() {
-		//#region input
-		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
-		this.wKey = this.input.keyboard.addKey('W'); // move up
-		this.aKey = this.input.keyboard.addKey('A'); // move left
-		this.sKey = this.input.keyboard.addKey('S'); // move down
-		this.dKey = this.input.keyboard.addKey('D'); // move right
-		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
-		this.eKey = this.input.keyboard.addKey('E'); //chose
-		this.qKey = this.input.keyboard.addKey('Q');  //attack
-		//#endregion	
+		this.generateInput();
+
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'bg2').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, EnviromentInfo.bg).setOrigin(0, 0);
 
 		// bounds del mundo
-        this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
+		this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
 		// Offset para el fondo
 		let upperBackgroundOffset = 20;
@@ -45,34 +40,62 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 50, 200, this.scene.get('dialog'), this.questLog,"PARK");
-		//#region  creamos los bordes del mundo
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
+
+		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
 		//#endregion
+
 		// la cámara sigue a manín
-        this.cameras.main.startFollow(this.manin);
+		this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		let npc1 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		let npc6 = new NPC (this, 100, 300, 'patri', 10, npc_dialogues, this.manin);
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6];
-		npc1.scale = 2.5;
-		npc2.scale = 2.5;
-		npc3.scale = 2.5;
-		npc4.scale = 2.5;
-		npc5.scale = 2.5;
-		npc6.scale = 2.5;
-		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
-		this.GenerateHostileGround(120, 400, 2, 1, 2.5);
-		this.GenerateHostileGround(500, 200, 4, 4, 2.5);
+
+		this.npcs = [];
+		for(let i of EnviromentInfo.npcs){
+			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.qNpcs){
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, npc_dialogues, 
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj));
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.sNpcs){
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, this.inventory);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.hNpcs){
+			let newNpc = new healerNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
+		for(let e of this.npcs) e.scale = 2.5;
+		//#endregion
+		
+		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
+		let self = this;
+		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
+			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
+			console.log(guitarQuest);
+			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
+				self.manin.questLog.advanceQuest('guitarQuest'); 
+				self.scene.get('hud').UpdateHUD();
+				self.guitar.trigger.destroy();
+				self.guitar.destroy();
+			}
+		}, this.manin);
+		this.guitar.setScale(3);
+
+		this.interactuableObjects = [this.guitar];
+		//#endregion
+
+		// genera la hierba y su collider
+		// this.GenerateHostileGround(900, 200, 4, 4, 2.5);
+
 		this.ChangeScene();
 		
 		//this.physics.add.collider(this.manin, house);
@@ -83,22 +106,29 @@ export default class ParkScene extends Phaser.Scene {
 		this.physics.add.collider(this.manin, bUp);
 		this.manin.body.onCollide = true;
 
+		this.justAwaken = false;
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
-		//#endregion
+		this.events.on(Phaser.Scenes.Events.WAKE, () => {
+			self.manin.body.x = 600;
+			self.manin.body.y = 400;
+		});
 	}
-	
+
 	// generación de la hierba hostil (TEMPORAL)
 	GenerateHostileGround(x, y, fils, cols, scale){
 		let hierbas = []; // array de hierbas
 		// generamos las hierbas que se nos digan
 		for(let i = 0; i < fils; i++){
 			for(let o = 0; o < cols; o++){
-				hierbas.push(new enviromentObj(this,x + 64*i,y + 64 *o, 'hierba',scale,scale));
+				let h = new enviromentObj(this,x,y, 'hierba',scale,scale);
+				h.x += h.displayWidth * i;
+				h.y += h.displayHeight * o;
+				hierbas.push(h);
 			}
 		}
 		// añadimos la zona de colisión
-		this.hierbasColliders.push(this.add.zone(x - 44, y - 33).setSize((hierbas[hierbas.length-1].displayWidth - 11) * fils,(hierbas[hierbas.length-1].displayHeight - 11) * cols).setOrigin(0,0));		
+		this.hierbasColliders.push(this.add.zone(x - hierbas[0].displayWidth / 2, y - hierbas[0].displayHeight / 2).setSize((hierbas[0].displayWidth) * fils,(hierbas[0].displayHeight) * cols).setOrigin(0,0));		
 		this.physics.world.enable(this.hierbasColliders[this.hierbasColliders.length-1]); // añadimos su collider
 		this.hierbasColliders[this.hierbasColliders.length-1].body.setAllowGravity(false); // quitamos gravedad
 		this.hierbasColliders[this.hierbasColliders.length-1].body.moves = false;
@@ -114,41 +144,65 @@ export default class ParkScene extends Phaser.Scene {
 		// añadimos un overlap entre manín y esta nueva zona de colliders
 		this.physics.add.overlap(this.manin.zone, this.hierbasColliders[this.hierbasColliders.length-1]);
 	}
-	ChangeScene()
-    {
-        this.frias = []; // array de hierbas
-		this.friasCollider; //collider del trozo de hierba hostil
 
-		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
+	ChangeScene()
+	{
+		this.sceneChangerCoords = [];
+		this.changeCol = [];
+
+		this.sceneChangerCoords.push(new enviromentObj(this, 100, 100, 'pixel',100,100));
 		
-			for(let o = 0; o < 4; o++){
-				this.frias.push(new enviromentObj(this,50,200 + 64 *o, 'pixel',2.5,2.5));
-			}
-		
-		// añadimos la zona de colisión
-		this.friasCollider = this.add.zone(this.frias[0].x,this.frias[0].y ).setSize(this.frias[0].displayWidth-55,(this.frias[0].displayHeight) ).setOrigin(0,0);		
-		this.physics.world.enable(this.friasCollider); // añadimos su collider
-		this.friasCollider.body.setAllowGravity(false); // quitamos gravedad
-		this.friasCollider.body.moves = false;
-		
-		// creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
-		this.friasCollider.on("overlapstart", () =>{
-			this.manin.touchingFria = true;
-			console.log("YA")
-		})
-		this.friasCollider.on("overlapend", () =>{
-			this.manin.touchingFria = false;
-		})
-		// añadimos un overlap entre manín y esta nueva zona de colliders
-		this.physics.add.overlap(this.manin, this.friasCollider);
-		
-    
+		let self = this;
+		let o = 0;
+
+		for(let i of this.sceneChangerCoords){
+			this.changeCol.push(this.add.zone(i.x, i.y).setSize(i.displayWidth, i.displayHeight).setOrigin(0,0));
+			this.physics.world.enable(this.changeCol[o]);
+			this.changeCol[o].body.setAllowGravity(false);
+			this.changeCol[o].body.moves = false;
+
+			this.changeCol[o].on("overlapstart", () => {
+				if(self.spaceKey.isDown)
+					self.scene.get('EnvManager').goToPlaza();
+			});
+			o++;
+		}
 	}
 
-	/*updateInventory(inv){
+		/*
+		this.frias = [];
+		this.colliders = [];
+		
+		this.frias.push(new enviromentObj(this, 1195, 775, 'pixel',1,100));
+		this.frias.push(new enviromentObj(this, 50, 775 , 'pixel',1,100));
+		this.frias.push(new enviromentObj(this, 500, 15, 'pixel',100,1));
+
+		// añadimos la zona de colisión
+		for(let i = 0; i < 3; i++){
+			this.colliders.push(this.add.zone(this.frias[i].x,this.frias[i].y ).setSize(this.frias[i].displayWidth-55,(this.frias[i].displayHeight) ).setOrigin(0,0));		
+			this.physics.world.enable(this.colliders[i]); // añadimos su collider
+			this.colliders[i].body.setAllowGravity(false); // quitamos gravedad
+			this.colliders[i].body.moves = false;
+			
+			// creamos eventos
+			this.colliders[i].on("overlapstart", () =>{
+				this.manin.touchingFria = true;
+				this.manin.moves[i]=true;
+				
+			})
+			this.colliders[i].on("overlapend", () =>{
+				this.manin.touchingFria = false;
+				this.manin.moves[i]=false;
+
+			})
+			this.physics.add.overlap(this.manin, this.colliders[i]);
+		}
+		*/
+
+	updateInventory(inv){
 		this.inventory = inv;
-	}*/
-	
+	}
+
 	// comprobación de colisiones y apertura de menús
 	update(){
 		let self = this;
@@ -169,21 +223,32 @@ export default class ParkScene extends Phaser.Scene {
 			}
 		});
 
-		var touchingFria = !this.friasCollider.body.touching.none;
-		var wasTouchingFria = !this.friasCollider.body.wasTouching.none;
+		for(let i of this.changeCol){
+			let maninBounds = self.manin.getBounds();
+			let changeZoneBounds = i.getBounds();
+			
+			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
+				if(!this.justAwaken)
+					i.emit("overlapstart");
+			}
+		}
 		
-		if(touchingFria && !wasTouchingFria) {this.friasCollider.emit("overlapstart");}
-		else if(!touchingFria && wasTouchingFria) this.friasCollider.emit("overlapend");
-
 		for(let i of this.npcs) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap")
+				console.log("overlap");
 				this.manin.collider = i;
 			}
 		}
-	
+
+		for(let i of this.interactuableObjects) {
+			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
+				console.log("overlap");
+				this.manin.collider = i;
+			}
+		}
+
 		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
-			console.log("overlap con aliado")
+			console.log("overlap con aliado");
 			this.manin.collider = this.ally;
 		}
 
@@ -193,30 +258,45 @@ export default class ParkScene extends Phaser.Scene {
 	}
 
 	// pasamos a la escena de pelea
-    Fight(){
+	Fight(){
 		this.manin.touchingGrass = false;
-        this.scene.launch('fightscene');
+		this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('park');
-        this.scene.sleep('park');
+		this.scene.get('fightscene').CurrentScene(this.key);
+		this.scene.sleep('square');
 		this.scene.get('hud').Fight();
-    }
+	}
 
-	// pasamos a la escena de pelea
-    
-
-	Plaza(){
+	Park(){
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
-        this.scene.wake('square');
-		this.scene.get('square').LoadInventory(this.inventory);
+		this.manin.moveRight=false;
+		this.scene.wake('park');
+		this.scene.get('park').LoadInventory(this.inventory);
+		
+		this.scene.sleep('square');
+	}
+	Cementery(){
+		this.manin.touchingFria = false;
+		this.manin.touchingGrass = false;
+		this.manin.moveLeft=false;
+		this.scene.wake('cementery');
+		this.scene.get('cementery').LoadInventory(this.inventory);
+		
+		this.scene.sleep('square');
+	}
+	Port(){
+		this.manin.touchingFria = false;
+		this.manin.touchingGrass = false;
+		this.manin.moveDown=false;
+		this.scene.wake('port');
+		this.scene.get('port').LoadInventory(this.inventory);
 
-        this.scene.sleep('park');
-    }
+		this.scene.sleep('square');
+	}
 
 	LoadInventory(inv){
-		
 		this.inventory = inv;
 	}
-	
+
 }

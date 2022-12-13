@@ -18,20 +18,15 @@ export default class Square extends Phaser.Scene {
 	}
 	
 	//#region input
-	input(){
+	generateInput(){
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
-		this.wKey = this.input.keyboard.addKey('W'); // move up
-		this.aKey = this.input.keyboard.addKey('A'); // move left
-		this.sKey = this.input.keyboard.addKey('S'); // move down
-		this.dKey = this.input.keyboard.addKey('D'); // move right
 		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
-		this.eKey = this.input.keyboard.addKey('E'); //chose
-		this.qKey = this.input.keyboard.addKey('Q');  //attack
 	}
 	//#endregion	
 
 	// inicializamos la escena
 	create() {
+		this.generateInput();
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, EnviromentInfo.bg).setOrigin(0, 0);
 
@@ -149,9 +144,33 @@ export default class Square extends Phaser.Scene {
 
 	ChangeScene()
     {
-        this.frias = []; // array de hierbas
+		this.sceneChangerCoords = [];
+		this.changeCol = [];
+
+		this.sceneChangerCoords.push(new enviromentObj(this, 1195, 775, 'pixel',100,100));
+		this.sceneChangerCoords.push(new enviromentObj(this, 50, 775, 'pixel',100,100));
+		this.sceneChangerCoords.push(new enviromentObj(this, 500, 15, 'pixel',100,100));
+		
+		let self = this;
+		let o = 0;
+
+		for(let i of this.sceneChangerCoords){
+			this.changeCol.push(this.add.zone(i.x, i.y).setSize(i.displayWidth, i.displayHeight).setOrigin(0,0));
+			this.physics.world.enable(this.changeCol[o]);
+			this.changeCol[o].body.setAllowGravity(false);
+			this.changeCol[o].body.moves = false;
+
+			this.changeCol[o].on("overlapstart", () => {
+				if(self.spaceKey.isDown)
+					self.scene.get('EnvManager').changeScene(1);
+			});
+			o++;
+		}
+	}
+
+		/*
+        this.frias = [];
         this.colliders = [];
-		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
 		
         this.frias.push(new enviromentObj(this, 1195, 775, 'pixel',1,100));
         this.frias.push(new enviromentObj(this, 50, 775 , 'pixel',1,100));
@@ -177,7 +196,8 @@ export default class Square extends Phaser.Scene {
             })
 		    this.physics.add.overlap(this.manin, this.colliders[i]);
         }
-    }
+		*/
+    
 
 	updateInventory(inv){
 		this.inventory = inv;
@@ -203,12 +223,13 @@ export default class Square extends Phaser.Scene {
 			}
 		});
 
-        for(let i = 0; i < 3; i++){
-            var touchingFria = !this.colliders[i].body.touching.none;
-            var wasTouchingFria = !this.colliders[i].body.wasTouching.none;
-            
-            if(touchingFria && !wasTouchingFria) {this.colliders[i].emit("overlapstart"); }
-            else if(!touchingFria && wasTouchingFria) this.colliders[i].emit("overlapend");
+        for(let i of this.changeCol){
+			let maninBounds = self.manin.zone.getBounds();
+			let changeZoneBounds = i.getBounds();
+			
+			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
+				i.emit("overlapstart");
+			}
         }
 		
 		for(let i of this.npcs) {

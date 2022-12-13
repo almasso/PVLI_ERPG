@@ -241,9 +241,9 @@ export class Manin extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
             this.scene.Fight();
         }
+		/* cosa de Raúl para cambio de escenas
 		if(this.touchingFria )
 		{
-			
 			if(this.nameScene==="PLAZA")
 			{
 				if(this.moves[0]&& this.dKey.isDown)
@@ -284,7 +284,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.scene.Plaza();
 			}
 			
-		}
+		}*/
 	}
 
 	increaseSteps(){

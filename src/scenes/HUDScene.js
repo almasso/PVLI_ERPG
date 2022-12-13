@@ -56,9 +56,7 @@ export default class HUDScene extends Phaser.Scene {
 	}
 
 	createQuests(manin){
-		console.log("ASDA");
 		this.questHud = new QuestHUD(this,manin);
-		console.log(this.questHud);
 	}
 
 	Fight(){
