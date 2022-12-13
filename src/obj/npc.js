@@ -77,7 +77,12 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.uiScene.events.emit('isNotBeingAnimated');
                 if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
             }
-           
+            if(this.currentDialog==39)
+            {
+                console.log("SI")
+                this.scene.Kratos(true);
+               
+            }
         }
         else {
             this.closeWindow();
@@ -97,12 +102,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.canCloseWindow = true;
                 this.uiScene.events.emit('isNotBeingAnimated');
             }
-            if(this.currentDialog==38)
-            {
-                console.log("SI")
-                this.scene.Kratos();
-               
-            }
+           
         }
         else {
             this.currentDialog++;
@@ -121,6 +121,13 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.canCloseWindow = false;
         this.currentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
+        console.log(this.currentDialog)
+        if(this.currentDialog==35)
+        {
+            console.log("No")
+            this.scene.Kratos(false);
+           
+        }
 
        
         return;

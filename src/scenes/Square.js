@@ -253,18 +253,11 @@ export default class Square extends Phaser.Scene {
 			this.count += dt;
 			if(this.count > 2)
 			{
-				this.npcs[12].y+=1.5;
-				
+				this.npcs[12].y+=1.5;		
 				
 				this.count = 0;
 			}
-			if( this.npcs[12].y>=1000)
-			{
-				this.kratos=false;
-				this.npcs[12].trigger.destroy();	
-				this.npcs[12].destroy();	
-						
-			}
+			
 		}
 	}
 
@@ -324,11 +317,18 @@ export default class Square extends Phaser.Scene {
 	LoadInventory(inv){
 		this.inventory = inv;
 	}
-	Kratos()
+	Kratos(bool)
 	{
+		if(bool){
 		console.log("HAAAAAAAAAAAAA")
 		this.kratos=true;
 		this.npcs[12].setFlip(false, true);
+		}
+		else{
+			this.npcs[12].trigger.destroy();	
+			this.npcs[12].destroy();
+			this.kratos=false;
+		}
 		
 	}
 	
