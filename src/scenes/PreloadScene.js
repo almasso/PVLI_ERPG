@@ -117,6 +117,9 @@ export default class Preload extends Phaser.Scene {
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
+
+		//MÚSICA
+		this.load.audio('dreamon', ['assets/sounds/dreamon.ogg', 'assets/sounds/dreamon.mp3',]);
     }
 
 	create() {

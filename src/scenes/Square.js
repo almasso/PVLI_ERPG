@@ -126,6 +126,17 @@ export default class Square extends Phaser.Scene {
 
 		this.kratos=false;
 		this.count=0;
+
+		const config = {
+			mute: false,
+			volume: 1,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: false,
+			delay: 0,
+		  };
+		this.dreamon = this.sound.add('dreamon', config);
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -317,9 +328,11 @@ export default class Square extends Phaser.Scene {
 	LoadInventory(inv){
 		this.inventory = inv;
 	}
+
 	Kratos(bool)
 	{
 		if(bool){
+		this.dreamon.play();
 		console.log("HAAAAAAAAAAAAA")
 		this.kratos=true;
 		this.npcs[12].setFlip(false, true);
