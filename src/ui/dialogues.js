@@ -196,10 +196,6 @@ export class DialogBox {
     }
 }
 
-/**
- * 
- * @extends Phaser.Scene
- */
 export default class DialogScene extends Phaser.Scene {
     constructor() {
         super({key: 'dialog', active: true, visible: true});

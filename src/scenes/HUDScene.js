@@ -12,23 +12,21 @@ export default class HUDScene extends Phaser.Scene {
     constructor() { // constructora
 		super({ key: 'hud'});
 		this.shops = [];
+		this.state = State.Init;
 	}
 
     create(){
         // generamos HUD de estado de party
-		this.questHud = undefined;
 		this.inputMan = new InputMan(this); // input manager
 		this.walkingHUD = new walkingHUD(40, 500, this, 'miniHUD') // HUD de cabezas pequeñas
-
 		this.pointer = this.add.image(0, 0, 'pointer').setOrigin(0,0); // puntero para apuntar a las diferentes opciones
 		this.pointer.visible = false;
 		this.pointer.depth = 3;
 		// generamos el Menú general
 		this.menu = new ExploreMenu(620, 100, this,'menuBG', this.pointer, this.walkingHUD);
 		this.showMenu = false;
-		this.menu.Show(this.showMenu);
-		this.Fight();
-
+		this.menu.Show(false);
+		this.state = State.Walk;
     }
     
     update(){ // checkeo de variables e input
@@ -48,6 +46,7 @@ export default class HUDScene extends Phaser.Scene {
 	UpdateHUD(){ // updateamos el HUD
 		this.walkingHUD.Update();
 		this.questHud.Update();
+		console.log(this.questHud);
 	}
 
 	addShop(npc){
@@ -57,7 +56,9 @@ export default class HUDScene extends Phaser.Scene {
 	}
 
 	createQuests(manin){
+		console.log("ASDA");
 		this.questHud = new QuestHUD(this,manin);
+		console.log(this.questHud);
 	}
 
 	Fight(){
@@ -74,9 +75,7 @@ export default class HUDScene extends Phaser.Scene {
 
 	Walk(){
 		this.state = State.Walk;
-		this.menu.Hide(true);
-		this.walkingHUD.Hide(false);
-		if(this.questHud !== undefined) this.questHud.Hide(false);
+		this.Hide(false);
 	}
 
 	Reset(){

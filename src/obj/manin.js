@@ -5,7 +5,7 @@ import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 import shopNPC from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, manin, info,) {
+	constructor(scene, x, y, manin, info) {
 		super(scene, x, y, 'manin');
         
         this.scene.add.existing(this);
@@ -17,7 +17,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7,7);
+        this.trigger.setScale(7);
 		this.info = info;
 		this.isInteracting = false;
 	}
@@ -25,7 +25,6 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
-
 }
 
 export class Manin extends Phaser.GameObjects.Sprite {
@@ -141,6 +140,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
+			this.collider.trigger.destroy();
+			this.collider.destroy();
 			this.isInteracting = false;
 		}
 		else if(this.collider instanceof interactuableObj){
@@ -290,7 +291,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.touchingGrass) 
 		{
 			this.stepsWalked++;
-			console.log("A VE");
 		}
 	}
 }

@@ -6,17 +6,11 @@ import {EnviromentInfo} from "../fight/EnviromentInfo.js"
 export class Party{
 	constructor()
 	{
-		let char = EnviromentInfo.info.character;
 		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
 					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",4,40,15,1),
-					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(char.name,char.imgID,char.actualHp,char.maxHp,char.actualMp,char.maxMp
-						,char.rP,char.rR,char.rF,char.rE,char.rT,char.acurracy,char.speed,
-						[attackInfo("PUM a distancia", 1, 25, 0, 1), attackInfo("PUM a distancia 2", 3, 20, 30, 1), 
-						attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
+					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)])];
 		this.party[0].index = 0;
-		this.party[1].index = 1;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;

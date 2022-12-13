@@ -1,16 +1,84 @@
-export {EnviromentInfo, EnemiesInfo};
+export {EnviromentInfo, EnemiesInfo, EnviromentManager};
 import {attackInfo} from "../fight/Attack.js"
+
+const scenes = {
+	square: 0,
+	park: 1,
+	cementery: 2,
+	port: 3
+};
+
+let hudKey = 'hud';
+
 // esta clase gestionará el cambio entre escenarios y escenas.
-class EnviromentManager{
+class EnviromentManager extends Phaser.Scene{
 
 	constructor(){
 		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
-
+		super({key: 'EnvManager'});
+		this.coreScene = scenes.square;
+		this.currentScene = scenes.square;
+		this.info = sceneInfo[this.initialScene];
 	}
+
+	create(){
+		this.initializeGame();
+	}
+
+	initializeGame(){
+		this.startTransition();
+		this.endTransition();
+		this.scene.launch(sceneInfo[this.coreScene].key);
+		this.scene.launch(hudKey);
+		this.hudScene = this.scene.get(hudKey);	
+	}
+
+	startTransition(){
+		
+	}
+
+	endTransition(){
+		
+	}
+
+	changeScene(index){
+		this.startTransition();
+		this.endTransition();
+		if(sceneInfo[index].launched) 
+			this.scene.get(sceneInfo[index].key).wake();
+		else {
+			this.scene.get(sceneInfo[index].key).launch();
+			sceneInfo[index].launched = true;
+		}
+		this.scene.get(this.info.key).sleep();
+	}
+
+	goToPlaza(){
+		this.startTransition();
+		this.endTransition();
+		this.scene.get(scenceInfo[this.coreScene].key).wake();
+		this.scene.get(this.info.key).sleep();
+	}
+}
+
+let square = {
+	launched: false,
+	key: 'square',
+	bg: 'square',
+	character: {name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
+	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
+	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]},
+	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
+	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	sNpcs: [npcInfo(300, 100, 'alex', 9)],
+	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
 }
 
 // información de los personajes que se encuentran en el parque
 let park = {
+	launched: false,
+	key: 'park',
 	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [npcInfo(300, 100, 'alex', 9)],
@@ -29,10 +97,17 @@ let park = {
 	{name: "Culturista", imgID:'artist', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
 	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 	attackInfo("Poñetaso", 0, 30, 0, 1)]}],
-	shop: []
 }
 
+let cementery = {
+	launched: false,
+	key : 'cementery'
+}
 
+let port = {
+	launched: false,
+	key: 'port'
+}
 
 function npcInfo(x, y, img, id){
 	return {x: x, y: y, img: img, id: id};
@@ -42,6 +117,9 @@ function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj){
 	return {x: x, y: y, img: img, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj};
 }
 
+let sceneInfo = [square, park, cementery, port];
+
+
 // variables exportadas
-let EnviromentInfo = park;
+let EnviromentInfo = square;
 let EnemiesInfo = park.enemies;

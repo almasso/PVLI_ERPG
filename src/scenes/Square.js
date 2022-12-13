@@ -9,7 +9,6 @@ import healerNPC from '../obj/healerNPC.js';
 
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
-	
 	// construimos la escena
 	constructor() {
 		super({ key: 'square' });
@@ -18,10 +17,8 @@ export default class Square extends Phaser.Scene {
 		this.hierbasColliders = [];
 	}
 	
-	// inicializamos la escena
-	create() {
-
-		//#region input
+	//#region input
+	input(){
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
 		this.wKey = this.input.keyboard.addKey('W'); // move up
 		this.aKey = this.input.keyboard.addKey('A'); // move left
@@ -30,9 +27,13 @@ export default class Square extends Phaser.Scene {
 		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
 		this.eKey = this.input.keyboard.addKey('E'); //chose
 		this.qKey = this.input.keyboard.addKey('Q');  //attack
-		//#endregion	
+	}
+	//#endregion	
+
+	// inicializamos la escena
+	create() {
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'square').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, EnviromentInfo.bg).setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -47,12 +48,14 @@ export default class Square extends Phaser.Scene {
 		this.scene.get('hud').createQuests(this.manin);
 		this.manin.questLog.setQuestHUD(this.scene.get('hud').questHud);
 		this.scene.get('hud').questHud.Update();
-		//#region  creamos los bordes del mundo
+
+		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
 		//#endregion
+
 		// la cámara sigue a manín
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
@@ -78,7 +81,9 @@ export default class Square extends Phaser.Scene {
 			this.npcs.push(newNpc);
 		}
 		for(let e of this.npcs) e.scale = 2.5;
-
+		//#endregion
+		
+		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
 			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
@@ -93,10 +98,11 @@ export default class Square extends Phaser.Scene {
 		this.guitar.setScale(3);
 
 		this.interactuableObjects = [this.guitar];
+		//#endregion
 
-		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
-		this.GenerateHostileGround(900, 200, 4, 4, 2.5);
-		//this.GenerateHostileGround(500, 200, 4, 4, 2.5);
+		// genera la hierba y su collider
+		// this.GenerateHostileGround(900, 200, 4, 4, 2.5);
+
 		this.ChangeScene();
 		
 		//this.physics.add.collider(this.manin, house);
@@ -109,7 +115,6 @@ export default class Square extends Phaser.Scene {
 
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
-		//#endregion
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -159,7 +164,7 @@ export default class Square extends Phaser.Scene {
             this.colliders[i].body.setAllowGravity(false); // quitamos gravedad
             this.colliders[i].body.moves = false;
             
-            // creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
+            // creamos eventos
             this.colliders[i].on("overlapstart", () =>{
                 this.manin.touchingFria = true;
                 this.manin.moves[i]=true;
@@ -171,9 +176,7 @@ export default class Square extends Phaser.Scene {
     
             })
 		    this.physics.add.overlap(this.manin, this.colliders[i]);
-
         }
-		
     }
 
 	updateInventory(inv){
@@ -234,25 +237,15 @@ export default class Square extends Phaser.Scene {
 
 	// pasamos a la escena de pelea
     Fight(){
-		/*
-		this.inventory.addItem(new Object('Fría', 10, 0));
-		this.inventory.addItem(new Object('Fría', 10, 0));
-		this.inventory.addItem(new Object('1111111111', 10, 0));
-		this.inventory.addItem(new Object('2222222222', 10, 0));
-		this.inventory.addItem(new Object('3333333333', 10, 0));
-		this.inventory.addItem(new Object('4444444444', 10, 0));
-		*/
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('square');
+		this.scene.get('fightscene').CurrentScene(this.key);
         this.scene.sleep('square');
 		this.scene.get('hud').Fight();
     }
 	
-	// pasamos a la escena de pelea
 	Park(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveRight=false;
@@ -262,7 +255,6 @@ export default class Square extends Phaser.Scene {
         this.scene.sleep('square');
     }
 	Cementery(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveLeft=false;
@@ -272,7 +264,6 @@ export default class Square extends Phaser.Scene {
         this.scene.sleep('square');
     }
 	Port(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveDown=false;
