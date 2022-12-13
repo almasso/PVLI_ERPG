@@ -57,6 +57,7 @@ export default class Preload extends Phaser.Scene {
         this.load.image('culturista','assets/textures/Characters/Culturista.png');
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
+		this.load.image('tienda','assets/textures/Characters/tienda.png');
 		
         //FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
@@ -70,6 +71,9 @@ export default class Preload extends Phaser.Scene {
         //PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
+		this.load.image('insignia', 'assets/textures/Props/insignia.png');
+		this.load.image('valla', 'assets/textures/Props/valla.png');
+
 
         //ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});

@@ -22,6 +22,16 @@ export default class CementeryScene extends Phaser.Scene {
 
 	// inicializamos la escena
 	create() {
+		const config = {
+			mute: false,
+			volume: 1,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: false,
+			delay: 0,
+		  };
+		this.dreamon = this.sound.add('dreamon', config);
 		//#region input
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
 		this.wKey = this.input.keyboard.addKey('W'); // move up
@@ -49,13 +59,15 @@ export default class CementeryScene extends Phaser.Scene {
 		//#region  creamos los bordes del mundo
 		let bLeft = new Bound(this, 480, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
-		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
+		let bUp = new Bound(this, 0, 95 - upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, 150 + upperBackgroundOffset,bg.displayWidth,1);
 		//#endregion
 		// la cámara sigue a manín
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
+		this.insignia=new enviromentObj(this, 200, 200, 'insignia',0.5,0.5);
+		this.insignia.setVisible(false);
 		// #region generamos a los NPCs
 		// let npc4 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
 		// let npc5 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
@@ -163,9 +175,10 @@ export default class CementeryScene extends Phaser.Scene {
 		let self = this;
 
 		
-
+		if(!this.kratos){
 		var touchingFria = !this.friasCollider.body.touching.none;
 		var wasTouchingFria = !this.friasCollider.body.wasTouching.none;
+		}
 
 		if(touchingFria && !wasTouchingFria) {this.friasCollider.emit("overlapstart");}
 		else if(!touchingFria && wasTouchingFria) this.friasCollider.emit("overlapend");
@@ -185,16 +198,30 @@ export default class CementeryScene extends Phaser.Scene {
 		{
 			console.log("E")
 			this.count += dt;
-			if(this.count > 2)
+			if(this.count > 1)
 			{
-				this.npcs[0].y+=1.5;
+				if(this.npcs[0].x!=440)
+				{
+					this.npcs[0].x-=1;					
 
+					if(this.npcs[0].x==440)
+					{
+						this.npcs[0].y+=45;
+						this.npcs[0].setFlip(false, true);
+					}
+				}
+				else
+				{
+					this.npcs[0].y+=0.75;
+				}
 				this.count = 0;
 			}
-			if(this.npcs[0].y>=600 && this.end)
+			if(this.npcs[0].y>=650)
 			{
 				this.kratos=false;
 				this.npcs[0].destroy();
+				this.dreamon.stop();
+				this.insignia.setVisible(true);
 			}
 
 		}
@@ -203,6 +230,7 @@ export default class CementeryScene extends Phaser.Scene {
 	Plaza(){
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
+		this.dreamon.stop();
         this.scene.wake('square');
 		this.scene.get('square').LoadInventory(this.inventory);
 
@@ -215,18 +243,16 @@ export default class CementeryScene extends Phaser.Scene {
 
 	Kratos(bool)
 	{
-		if(bool && !this.kratos){
+		
+			this.dreamon.play();
 		console.log("HAAAAAAAAAAAAA")
 		this.kratos=true;
-		this.npcs[0].x-=45;
-		this.npcs[0].y+=20;
-		this.npcs[0].setFlip(false, true);
-		}
-		else if(!bool){
-			 this.npcs[0].trigger.destroy();
-			 this.end=true;
-			
-		}
+
+		
+		
+		
+		this.npcs[0].trigger.destroy();
+			 
 
 	}
 

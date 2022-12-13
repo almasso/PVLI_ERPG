@@ -50,6 +50,9 @@ export default class Square extends Phaser.Scene {
 
 		this.questLog = "test"; 
 
+
+       
+
 		// creamos a manín
 		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
 		this.questHud = new QuestHUD(this, this.manin);
@@ -63,6 +66,14 @@ export default class Square extends Phaser.Scene {
 		//#endregion
 		// la cámara sigue a manín
         this.cameras.main.startFollow(this.manin);
+
+
+		this.valla=new enviromentObj(this, 600, 50, 'valla',3,2);
+		this.physics.add.collider(this.manin, this.valla);
+		
+
+
+
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
@@ -77,17 +88,16 @@ export default class Square extends Phaser.Scene {
 		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
 		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
 		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
-		let npc10=new NPC(this,900,500,'kratos',10,npc_dialogues,this.manin);
-
+		
 		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"
 		,"Pelea contra melendi"]));
 
 		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
 		,"Pelea contra melendi2"]));
 		
-		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
-
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc,npc10];
+		let sNpc = new shopNPC(this, 800, 700, 'tienda', 9, npc_dialogues, this.manin, this.inventory);
+     
+		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc];
 		for(let e of this.npcs) e.scale = 2.5;
 
 		let self = this;
@@ -127,16 +137,7 @@ export default class Square extends Phaser.Scene {
 		this.kratos=false;
 		this.count=0;
 
-		const config = {
-			mute: false,
-			volume: 1,
-			rate: 1,
-			detune: 0,
-			seek: 0,
-			loop: false,
-			delay: 0,
-		  };
-		this.dreamon = this.sound.add('dreamon', config);
+		
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -177,10 +178,10 @@ export default class Square extends Phaser.Scene {
 		
         this.frias.push(new enviromentObj(this, 1195, 775, 'pixel',1,100));
         this.frias.push(new enviromentObj(this, 50, 775 , 'pixel',1,100));
-        this.frias.push(new enviromentObj(this, 500, 15, 'pixel',100,1));
+       // this.frias.push(new enviromentObj(this, 500, 15, 'pixel',100,1));
 
 		// añadimos la zona de colisión
-        for(let i = 0; i < 3; i++){
+        for(let i = 0; i < 2; i++){
             this.colliders.push(this.add.zone(this.frias[i].x,this.frias[i].y ).setSize(this.frias[i].displayWidth-55,(this.frias[i].displayHeight) ).setOrigin(0,0));		
             this.physics.world.enable(this.colliders[i]); // añadimos su collider
             this.colliders[i].body.setAllowGravity(false); // quitamos gravedad
@@ -227,7 +228,7 @@ export default class Square extends Phaser.Scene {
 			}
 		});
 
-        for(let i = 0; i < 3; i++){
+        for(let i = 0; i < 2; i++){
             var touchingFria = !this.colliders[i].body.touching.none;
             var wasTouchingFria = !this.colliders[i].body.wasTouching.none;
             
@@ -259,17 +260,7 @@ export default class Square extends Phaser.Scene {
 			this.manin.collider = null;
 		}
 
-		if(this.kratos)
-		{
-			this.count += dt;
-			if(this.count > 2)
-			{
-				this.npcs[12].y+=1.5;		
-				
-				this.count = 0;
-			}
-			
-		}
+		
 	}
 
 	// pasamos a la escena de pelea
@@ -328,21 +319,6 @@ export default class Square extends Phaser.Scene {
 	LoadInventory(inv){
 		this.inventory = inv;
 	}
-
-	Kratos(bool)
-	{
-		if(bool){
-		this.dreamon.play();
-		console.log("HAAAAAAAAAAAAA")
-		this.kratos=true;
-		this.npcs[12].setFlip(false, true);
-		}
-		else{
-			this.npcs[12].trigger.destroy();	
-			this.npcs[12].destroy();
-			this.kratos=false;
-		}
-		
-	}
+	
 	
 }
