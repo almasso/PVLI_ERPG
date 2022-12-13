@@ -6,14 +6,14 @@ import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import shopNPC from '../obj/shopNPC.js';
 import healerNPC from '../obj/healerNPC.js';
-
+import {allyParty} from '../fight/Party.js'
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
 	// construimos la escena
 	constructor() {
 		super({ key: 'square' });
 		this.manin; // protagonista
-		this.inventory;
+		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
 	}
 	
@@ -39,11 +39,7 @@ export default class Square extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
-		this.scene.get('hud').createQuests(this.manin);
-		this.manin.questLog.setQuestHUD(this.scene.get('hud').questHud);
-		this.scene.get('hud').questHud.Update();
-
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), "PLAZA");
 		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -81,11 +77,10 @@ export default class Square extends Phaser.Scene {
 		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
-			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
-			console.log(guitarQuest);
+			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest');
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
-				self.manin.questLog.advanceQuest('guitarQuest'); 
-				self.scene.get('hud').UpdateHUD();
+				allyParty.questLog.advanceQuest('guitarQuest'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
 				self.guitar.trigger.destroy();
 				self.guitar.destroy();
 			}
@@ -98,6 +93,7 @@ export default class Square extends Phaser.Scene {
 		// genera la hierba y su collider
 		// this.GenerateHostileGround(900, 200, 4, 4, 2.5);
 
+		this.GenerateHostileGround(900, 200, 4, 4, 2.5);
 		this.ChangeScene();
 		
 		//this.physics.add.collider(this.manin, house);
@@ -167,37 +163,6 @@ export default class Square extends Phaser.Scene {
 			o++;
 		}
 	}
-
-		/*
-        this.frias = [];
-        this.colliders = [];
-		
-        this.frias.push(new enviromentObj(this, 1195, 775, 'pixel',1,100));
-        this.frias.push(new enviromentObj(this, 50, 775 , 'pixel',1,100));
-        this.frias.push(new enviromentObj(this, 500, 15, 'pixel',100,1));
-
-		// añadimos la zona de colisión
-        for(let i = 0; i < 3; i++){
-            this.colliders.push(this.add.zone(this.frias[i].x,this.frias[i].y ).setSize(this.frias[i].displayWidth-55,(this.frias[i].displayHeight) ).setOrigin(0,0));		
-            this.physics.world.enable(this.colliders[i]); // añadimos su collider
-            this.colliders[i].body.setAllowGravity(false); // quitamos gravedad
-            this.colliders[i].body.moves = false;
-            
-            // creamos eventos
-            this.colliders[i].on("overlapstart", () =>{
-                this.manin.touchingFria = true;
-                this.manin.moves[i]=true;
-                
-            })
-            this.colliders[i].on("overlapend", () =>{
-                this.manin.touchingFria = false;
-                this.manin.moves[i]=false;
-    
-            })
-		    this.physics.add.overlap(this.manin, this.colliders[i]);
-        }
-		*/
-    
 
 	updateInventory(inv){
 		this.inventory = inv;
@@ -293,9 +258,4 @@ export default class Square extends Phaser.Scene {
 
         this.scene.sleep('square');
 	}
-
-	LoadInventory(inv){
-		this.inventory = inv;
-	}
-	
 }

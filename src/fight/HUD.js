@@ -217,9 +217,9 @@ export class AllyHUD{
 }
 
 export class QuestHUD{
-	constructor(scene, manin){
+	constructor(scene){
 		this.scene = scene;
-		this.manin = manin;
+		this.questLog = allyParty.questLog;
 		this.scale = 2.5;
 		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
 		this.questBlock.setScale(this.scale, this.scale / 2);
@@ -252,7 +252,7 @@ export class QuestHUD{
 	}
 
 	Update(){
-		let aux = this.manin.questLog.ShowQuest();
+		let aux = this.questLog.ShowQuest();
 		console.log(aux.name);
 		if(aux.name !== undefined){
 			this.questName.text = "Misión: " + aux.name;
@@ -279,18 +279,18 @@ export class QuestHUD{
 
 		let self = this;
 		this.upArrowParty.on("pointerup", function(){ 
-			if(0 < self.manin.questLog.actualQuest){
-				self.manin.questLog.actualQuest--;
+			if(0 < self.questLog.actualQuest){
+				self.questLog.actualQuest--;
 				self.Update();
-				console.log("ARRIBA " + self.manin.questLog.actualQuest );
+				console.log("ARRIBA " + self.questLog.actualQuest );
 			}
 		});
 
 		this.downArrowParty.on("pointerup", function(){
-			if(self.manin.questLog.quests.length - 1 !== self.manin.questLog.actualQuest && 0 <= self.manin.questLog.actualQuest){
-				self.manin.questLog.actualQuest++;
+			if(self.questLog.quests.length - 1 !== self.questLog.actualQuest && 0 <= self.questLog.actualQuest){
+				self.questLog.actualQuest++;
 				self.Update();
-				console.log("ABAJO " + self.manin.questLog.actualQuest );
+				console.log("ABAJO " + self.questLog.actualQuest );
 			}
 		});
 	}

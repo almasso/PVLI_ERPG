@@ -6,6 +6,7 @@ import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import shopNPC from '../obj/shopNPC.js';
 import healerNPC from '../obj/healerNPC.js';
+import { allyParty } from '../fight/Party.js';
 
 // Escena de exploración (temporal de momento)
 export default class ParkScene extends Phaser.Scene {
@@ -13,7 +14,7 @@ export default class ParkScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'park' });
 		this.manin; // protagonista
-		this.inventory;
+		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
 	}
 
@@ -40,8 +41,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
-
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), allyParty.QuestLog, "PLAZA");
 		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -79,11 +79,10 @@ export default class ParkScene extends Phaser.Scene {
 		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
-			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
-			console.log(guitarQuest);
+			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest2');
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
-				self.manin.questLog.advanceQuest('guitarQuest'); 
-				self.scene.get('hud').UpdateHUD();
+				allyParty.questLog.advanceQuest('guitarQuest2'); 
+				self.scene.get('hud').events.emit('updateQuestHUD');
 				self.guitar.trigger.destroy();
 				self.guitar.destroy();
 			}
@@ -109,10 +108,6 @@ export default class ParkScene extends Phaser.Scene {
 		this.justAwaken = false;
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
-		this.events.on(Phaser.Scenes.Events.WAKE, () => {
-			self.manin.body.x = 600;
-			self.manin.body.y = 400;
-		});
 	}
 
 	// generación de la hierba hostil (TEMPORAL)
@@ -294,9 +289,4 @@ export default class ParkScene extends Phaser.Scene {
 
 		this.scene.sleep('square');
 	}
-
-	LoadInventory(inv){
-		this.inventory = inv;
-	}
-
 }

@@ -24,8 +24,14 @@ export default class HUDScene extends Phaser.Scene {
 		this.pointer.depth = 3;
 		// generamos el Menú general
 		this.menu = new ExploreMenu(620, 100, this,'menuBG', this.pointer, this.walkingHUD);
+		this.questHud = new QuestHUD(this);
+		this.questHud.Update();
 		this.showMenu = false;
 		this.menu.Show(false);
+		this.events.on("updateQuestHUD", () => {
+			console.log("O23");
+			this.questHud.Update();
+		});
 		this.state = State.Walk;
     }
     
@@ -53,10 +59,6 @@ export default class HUDScene extends Phaser.Scene {
 		let newShop = new shopHUD(this, npc.items, npc);
 		this.shops.push(newShop);
 		return newShop;
-	}
-
-	createQuests(manin){
-		this.questHud = new QuestHUD(this,manin);
 	}
 
 	Fight(){

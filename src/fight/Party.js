@@ -1,6 +1,8 @@
 import Character from './Character.js'
 import {attackInfo} from "../fight/Attack.js"
 import {EnviromentInfo} from "../fight/EnviromentInfo.js"
+import { QuestLog } from '../Quest.js';
+import Inventory from '../obj/Inventory.js';
 
 // Esta clase gestionará todo lo que tenga que ver con aliados
 export class Party{
@@ -14,6 +16,8 @@ export class Party{
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 
 	swapAllies(newOrder){
@@ -40,6 +44,7 @@ export class Party{
 		this.party.push(character);
 		if(this.alliesNum < 4) this.alliesNum++;
 		else this.alliesNum = 4;
+		console.log(this.party.length-1);
 		this.party[this.party.length-1].index = this.party.length - 1;
 	}
 

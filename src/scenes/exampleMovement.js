@@ -6,6 +6,7 @@ import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
 import shopNPC from '../obj/shopNPC.js';
+import { allyParty } from '../fight/Party.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -14,7 +15,7 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
-		this.inventory;
+		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
 	}
 
