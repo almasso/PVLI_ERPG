@@ -403,8 +403,8 @@ export class shopHUD{
 		this.scene = scene;
 		this.shopBlock = this.scene.add.image(this.scene.sys.game.canvas.width / 2, this.scene.sys.game.canvas.height / 2, 'log');
 		this.moneyBlock = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - 100, 'log').setScale(0.5);
-		this.moneyText = this.scene.add.text(this.moneyBlock.x - this.moneyBlock.displayWidth / 3, this.moneyBlock.y - this.moneyBlock.displayHeight /5, 
-		allyParty.inventory.money, {font: '20px "Arial"'});
+		this.moneyText = this.scene.add.text(this.moneyBlock.x - this.moneyBlock.displayWidth / 2.5, this.moneyBlock.y - this.moneyBlock.displayHeight /5, 
+		"Dinero: " + allyParty.inventory.money, {font: '20px "Arial"'});
 		this.shopBlock.setScale(1.5);
 		this.shopBlock.depth = 4;
 		this.moneyBlock.depth = 4;
@@ -422,13 +422,13 @@ export class shopHUD{
 	}
 
 	createButtons(){
-		this.buyButton = this.scene.add.image(400, 475, 'buy'); //Botón de comprar
+		this.buyButton = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth/2 + this.moneyBlock.displayWidth*1.3, this.shopBlock.y - this.shopBlock.displayHeight/2 - this.moneyBlock.displayHeight / 2 + 3, 'buy'); //Botón de comprar
 		this.buyButton.setScale(1.5);
 		this.buyButton.depth = 4;
 		this.buyButton.setInteractive();
 		this.buyButton.visible = false;
 
-		this.naoButton = this.scene.add.image(500, 475, 'noBuy'); //Botón de no comprar
+		this.naoButton = this.scene.add.image(this.buyButton.x + this.buyButton.displayWidth - 5, this.buyButton.y, 'noBuy'); //Botón de no comprar
 		this.naoButton.setScale(1.5);
 		this.naoButton.depth = 4;
 		this.naoButton.setInteractive();
@@ -447,7 +447,7 @@ export class shopHUD{
 		this.downButton.setInteractive();
 		this.downButton.visible = false;
 
-		this.buyItem = this.scene.add.image(this.shopBlock.x, this.shopBlock.y + this.shopBlock.displayHeight, 'manin').setScale(3);
+		this.buyItem = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 4, this.shopBlock.y + this.shopBlock.displayHeight / 2, 'buyItem').setScale(2).setOrigin(0,0);
 		this.buyItem.depth = 4;
 		this.buyItem.setInteractive();
 		this.buyItem.visible = false;
@@ -456,12 +456,11 @@ export class shopHUD{
 
 		this.buyItem.on('pointerup', () => {
 			self.npc.buy(self.items[self.currentItem]);
-			self.moneyText.setText(allyParty.inventory.money);
+			self.moneyText.setText("Dinero: " + allyParty.inventory.money);
 		});
 
 		this.buyButton.on('pointerup', () => {
 			self.displayItems();
-			self.buyButton.visible = false;
 		});
 
 		this.naoButton.on('pointerup', () => {
@@ -524,8 +523,6 @@ export class shopHUD{
 			self.itemsText[index].name.setInteractive();
 
 		});
-
-		this.itemButton();
 	}
 
 	displayItems(){
@@ -556,16 +553,6 @@ export class shopHUD{
 			this.displayItems();
 			this.currentItem--;
 			this.displayItems();
-		}
-	}
-
-	itemButton(){
-		let self = this;
-		for(let i of this.itemsText){
-			i.name.on('pointerup', () => {
-				self.npc.buy(self.items[self.currentItem]);
-				self.moneyText.setText(allyParty.inventory.money);
-			})
 		}
 	}
 }
