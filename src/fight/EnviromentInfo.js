@@ -21,10 +21,11 @@ let park = {
 	attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60,Math.random() * 4)]}},
 
 	enemies: [{name: "Artista", imgID:'artist', actualHp: 70, maxHp: 70, actualMp: 0, maxMp: 0, rP: 5, rR: 5, rF: 5, rE: 5, rT: 5, acurracy: 90, speed: 40,
-		attack: [attackInfo("Pincelada",2,20,0,1),attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),attackInfo("Xilografía en el pecho", 3, 30, 0, 1)]},
+		attack: [attackInfo("Pincelada",2,20,0,1),attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),attackInfo("Xilografía en el pecho", 3, 30, 0, 1)],
+		money: 500},
 	{name: "Culturista", imgID:'artist', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
 	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-	attackInfo("Poñetaso", 0, 30, 0, 1)]}],
+	attackInfo("Poñetaso", 0, 30, 0, 1)], money: 1000}],
 	shop: []
 }
 

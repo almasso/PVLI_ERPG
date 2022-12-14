@@ -29,6 +29,7 @@ export class Party{
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.money = 0;
 	}
 
 	swapAllies(newOrder){

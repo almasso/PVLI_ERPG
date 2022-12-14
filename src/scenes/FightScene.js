@@ -18,7 +18,8 @@ const FightState = {
 	Finish: 7,
 	Item: 8,
 	AlteratedStatesFire: 9,
-	AlteratedStatesToxic: 10
+	AlteratedStatesToxic: 10,
+	EndCombat: 11
 };
 
 export class FightScene extends Phaser.Scene {
@@ -29,7 +30,6 @@ export class FightScene extends Phaser.Scene {
 		this.selectedAttack; // ataque seleccionado actualmente con el puntero
 		this.selectedItem;
 		this.timeBetweenAttacks = 2000;
-		this.state = FightState.SelectTurn;
 	}
 
 	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
@@ -242,6 +242,9 @@ export class FightScene extends Phaser.Scene {
 				})
 
 				self.allies[index].SetAlteredStates(ally.alteredStates);
+				console.log(self.allies[index].actualResistances);
+				console.log(self.allies[index].resistances);
+
 				// añadimos un nuevo HUD
 				self.alliesHud.push(new AllyHUD(self,self.allies[index]));
 				self.allies[index].scale = 2;
@@ -417,6 +420,8 @@ export class FightScene extends Phaser.Scene {
 	ReturnParty()
 	{
 		let self = this;
+		allyParty.money += this.winMoney;
+		console.log("DINERO PARTY: " + allyParty.money);
 		allyParty.party.forEach(function (ally, index)
 		{
 			if(index < allyParty.alliesNum){
@@ -460,6 +465,8 @@ export class FightScene extends Phaser.Scene {
 			}
 			this.enemies[i].scale = 4;
 			this.AddEnemySelector(this.enemies[i]); // escuchamos eventos para seleccionar al enemigo
+			
+			this.winMoney += this.enemiesInfo[enemyType].money;
 		}
 	}
 
@@ -664,25 +671,30 @@ export class FightScene extends Phaser.Scene {
 
 	// Creación de la escena
 	create(){
+		// ESTADO INICIAL
+		this.state = FightState.SelectTurn;
+		this.end = false;
+		this.alreadyDone = false;
 
 		// INPUT
 		this.aux = new InputMan(this);
 		
-		this.count = 0
-
+		this.count = 0;
+		
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
-
+		
 		// Creación de Party
 		this.alliesHud = []; // huds de aliados
 		this.LoadParty(); // cargamos la party
 		// Creación de enemigos
 		this.enemiesHud = []; // huds de enemigos
-
-
+		
+		
+		this.winMoney = 0;
 		// escoger entre random o batalla dada según el EnviromentInfo
 		this.GenerateRandomEncounter(); // generamos a los enemigos
-
+		
 		// Creación de gestión de Turnos
 		this.turns = []; // creamos un array para ordenar a aliados y enemigos por velocidad 
 		this.currentTurn = -1; // turno actual
@@ -743,8 +755,20 @@ export class FightScene extends Phaser.Scene {
 
 	RequestChangeState(item){
 		if(this.state === FightState.SelectTurn){ // Roi
-			if(this.CheckState(this.enemies) || this.CheckState(this.allies)){ console.log("aaa"); this.state = FightState.Finish;}
+			if(this.CheckState(this.enemies) || this.CheckState(this.allies)){
+				 this.end = true;
+				 this.count = this.timeBetweenAttacks;
+				 if(this.alreadyDone) {  // Terminar partida si ya se han hecho los estados alterados (el ultimo que atacó vencio,
+					// se hicieron los estados alterados y no se tienen que volver a repetir)
+					this.state = FightState.AlteratedStatesToxic; 
+				 }
+				 else { // Terminar partida si no se han hecho
+					this.state = FightState.TimeUntilNextTurn;
+					this.currentTurn = this.turns.length - 1; 
+				 }
+				}
 			else this.NextTurn();
+			this.alreadyDone = false;
 		}
 		else if(this.state === FightState.ChooseAttack){
 			this.ToggleButtons(false);
@@ -754,14 +778,14 @@ export class FightScene extends Phaser.Scene {
 			}
 			else{
 				if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
-								{
-									this.state = FightState.ChooseAlly;			
-									this.EnableTargetting(this.allies);
-								}
-								else {
-									this.state = FightState.ChooseEnemy;
-									this.EnableTargetting(this.enemies);
-								}
+				{
+					this.state = FightState.ChooseAlly;			
+					this.EnableTargetting(this.allies);
+				}
+				else {
+					this.state = FightState.ChooseEnemy;
+					this.EnableTargetting(this.enemies);
+				}
 			}		
 		}
 		else if(this.state === FightState.ChooseEnemy){
@@ -782,6 +806,7 @@ export class FightScene extends Phaser.Scene {
 				if(!areAlteredStates) {
 					this.BuildEndTurnLog("Nadie ha sido quemado");
 				}
+				this.alreadyDone = true;
 			}
 			else this.state = FightState.SelectTurn;	
 		}
@@ -793,7 +818,11 @@ export class FightScene extends Phaser.Scene {
 			}
 		}
 		else if(this.state === FightState.AlteratedStatesToxic){
-			this.state = FightState.SelectTurn;
+			if(this.end){
+				this.BuildEndTurnLog("Has ganado " + this.winMoney + " (insertar nombre de moneda xD)"); 
+				this.state = FightState.EndCombat;
+			}
+			else this.state = FightState.SelectTurn;
 		}
 		else if(this.state === FightState.Item){
 			this.UseItem();
@@ -803,10 +832,13 @@ export class FightScene extends Phaser.Scene {
 			this.DisableTargetting(this.allies);
 			console.log(this.state);
 		}
+		else if(this.state === FightState.EndCombat){
+			this.state = FightState.Finish;
+		}
 	}
 
 	update(t,dt){
-
+		
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
@@ -1006,7 +1038,8 @@ export class FightScene extends Phaser.Scene {
 				this.EnemyAttacks(this.turns[this.currentTurn].index);
 			}
 		}
-		else if(this.state === FightState.TimeUntilNextTurn){
+		else if(this.state === FightState.TimeUntilNextTurn || this.state === FightState.AlteratedStatesFire 
+			|| this.state === FightState.AlteratedStatesToxic ||this.state == FightState.EndCombat){
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{
@@ -1017,23 +1050,7 @@ export class FightScene extends Phaser.Scene {
 		else if(this.state === FightState.Item){
 		
 		}
-		else if(this.state === FightState.AlteratedStatesFire){
-			this.count += dt;
-			if(this.count > this.timeBetweenAttacks)
-			{
-				this.RequestChangeState();
-				this.count = 0;
-			}
-		}
-		else if(this.state === FightState.AlteratedStatesToxic){
-			this.count += dt;
-			if(this.count > this.timeBetweenAttacks)
-			{
-				this.RequestChangeState();
-				this.count = 0;
-			}
-		}
-		else{
+		else{	
 			this.EndCombat();
 		}
 
