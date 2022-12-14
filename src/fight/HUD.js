@@ -1124,10 +1124,11 @@ export class ExploreMenu {
 	}
 
 	AddItemsMenu(){
-		let x = 100;
+		let x = 50;
 		let y = 100;
 		this.bItem = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
 		this.bItem.visible = false;
+		x = 100;
 		this.itemImages = [];
 		
 		let i = 0;
@@ -1138,6 +1139,11 @@ export class ExploreMenu {
 				mp: this.scene.add.text(x, y + 180, i.mp, {font:'20px "Arial"'}),
 				desc: this.scene.add.text(x, y + 220, "testo", {font: '20px "Arial"'})
 			}
+			this.itemImages[i].img.depth = 3;
+			this.itemImages[i].hp.depth = 3;
+			this.itemImages[i].mp.depth = 3;
+			this.itemImages[i].desc.depth = 3;
+
 			this.itemImages[i].img.visible = false;
 			this.itemImages[i].hp.visible = false;
 			this.itemImages[i].mp.visible = false;
@@ -1147,15 +1153,31 @@ export class ExploreMenu {
 	}
 
 	AddItem(item){
-		let x = 200;
-		let y = 200;
+		let x = 100;
+		let y = 100;
+		let descripcion = "MAKSIDOBUVYIOASGIUPDOHÑIBJLvfdsvfouadsfvfsghkfvljasdvfadsgjlfclhasdcgfhsdlcghfclghsadlcfgsadclghlcsadg";
+		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(5);
+		let descX = x + image.displayWidth + 10;
+		let descY = y + image.displayHeight + 10;
+		let desc = this.scene.make.text({
+            x : descX,
+            y : descY,
+            descripcion,
+            style: {
+				padding : {
+					right : 20
+				},
+              wordWrap: { width : 200}
+            }
+        });
+		desc.setText(descripcion);
+
 		this.itemImages.push({
-			img: this.scene.add.image(x,y,item.imgID),
-			hp: this.scene.add.text(x,y + 140, item.hp, {font:'20px "Arial"'}),
-			mp: this.scene.add.text(x,y + 180, item.mp, {font:'20px "Arial"'}),
-			desc: this.scene.add.text(x, y +220, "testo", {font: '20px "Arial"'})
-		}
-		)
+			img: image,
+			hp: this.scene.add.text(x,y + 140, item.hp, {font:'20px "Arial"'}).setOrigin(0,0),
+			mp: this.scene.add.text(x,y + 180, item.mp, {font:'20px "Arial"'}).setOrigin(0,0),
+			desc: desc
+		});
 		this.itemImages[this.itemImages.length - 1].img.visible = false;
 		this.itemImages[this.itemImages.length - 1].hp.visible = false;
 		this.itemImages[this.itemImages.length - 1].mp.visible = false;
