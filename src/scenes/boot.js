@@ -77,6 +77,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
 		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
 		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
+		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
 
         // NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
