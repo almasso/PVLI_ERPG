@@ -785,7 +785,7 @@ export class FightScene extends Phaser.Scene {
 				let areAlteredStates = this.CheckBurnState();
 				this.state = FightState.AlteratedStatesFire;
 				if(!areAlteredStates) {
-					this.BuildEndTurnLog("Nadie ha sido quemado");
+					this.count = this.timeBetweenAttacks;
 				}
 				this.alreadyDone = true;
 			}
@@ -795,7 +795,17 @@ export class FightScene extends Phaser.Scene {
 			let areAlteredStates = this.CheckToxicState();
 			this.state = FightState.AlteratedStatesToxic;
 			if(!areAlteredStates) {
-				this.BuildEndTurnLog("Nadie ha sido envenenado");
+				console.log("AAAA");
+				this.count = this.timeBetweenAttacks;
+				console.log(this.count > this.timeBetweenAttacks);
+				this.allies.forEach(function (ally){
+					if(!ally.dead)
+						ally.play(ally.imageId + '_idle');
+				})
+				this.enemies.forEach(function (enemy){
+					if(!enemy.dead)
+						enemy.play(enemy.imageId + '_idle');
+				})
 			}
 		}
 		else if(this.state === FightState.AlteratedStatesToxic){
@@ -819,7 +829,9 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	update(t,dt){
-		
+		console.log(this.state);
+		console.log(this.count);
+
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');
@@ -1021,11 +1033,13 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn || this.state === FightState.AlteratedStatesFire 
 			|| this.state === FightState.AlteratedStatesToxic ||this.state == FightState.EndCombat){
+				console.log(this.count > this.timeBetweenAttacks);
+
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{
-				this.RequestChangeState(false);
 				this.count = 0;
+				this.RequestChangeState(false);
 			}
 		}
 		else if(this.state === FightState.Item){
