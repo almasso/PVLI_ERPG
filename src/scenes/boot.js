@@ -78,6 +78,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
 		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
 		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
+		
 
         // NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
@@ -95,6 +96,9 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.load.image('patri', 'assets/textures/Characters/patri.png');
+		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
+		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.image('andrea', 'assets/textures/Characters/Andrea.png');
 		
         // FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
