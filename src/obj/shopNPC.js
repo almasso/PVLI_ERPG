@@ -1,7 +1,6 @@
 import NPC from '../obj/npc.js';
 import Object from './Object.js';
 import { shopHUD } from '../fight/HUD.js';
-import { allyParty } from '../fight/Party.js';
 
 export default class shopNPC extends NPC{
     constructor(scene, x, y, imageID, npcID, dialogues, manin, inv){
@@ -31,8 +30,8 @@ export default class shopNPC extends NPC{
     }
 
     buy(){
-        if(allyParty.money >= this.currentItem.price){
-            allyParty.money -= this.currentItem.price;
+        if(this.inventory.money >= this.currentItem.price){
+            this.inventory.money -= this.currentItem.price;
             this.inventory.addItem(this.currentItem);
             this.scene.updateInventory(this.inventory);
             this.currentItem = -1;

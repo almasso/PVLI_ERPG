@@ -420,7 +420,7 @@ export class FightScene extends Phaser.Scene {
 	ReturnParty()
 	{
 		let self = this;
-		allyParty.money += this.winMoney;
+		allyParty.inventory.money += this.winMoney;
 		console.log("DINERO PARTY: " + allyParty.money);
 		allyParty.party.forEach(function (ally, index)
 		{
