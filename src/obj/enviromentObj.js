@@ -1,10 +1,11 @@
 export class enviromentObj extends Phaser.GameObjects.Sprite {
 	// construimos el objeto de entorno
-	constructor(scene, x, y, imageID, sX, sY) {
+	constructor(scene, x, y, imageID, sX, sY, manin) {
 		super(scene, x, y, imageID);
 		this.setScale(sX,sY);
 		this.scene.add.existing(this); 
 		scene.physics.add.existing(this, true);
+		this.scene.physics.add.collider(this, manin);
 	}
 
 	// le quitamos velocidad al objeto

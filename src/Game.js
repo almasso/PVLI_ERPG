@@ -35,7 +35,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [boot, EnviromentManager, InitialScene, Square, FightScene, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene],
+    scene: [boot, EnviromentManager, InitialScene, Square, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene, FightScene],
     physics: {
         default: 'arcade',
         arcade: {

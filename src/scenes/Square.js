@@ -39,7 +39,7 @@ export default class Square extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), "PLAZA");
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
 		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -52,8 +52,20 @@ export default class Square extends Phaser.Scene {
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-
+		
+		let self = this;
 		this.npcs = [];
+		this.eObjs = [];
+		this.interactuableObjects = [];
+		this.iFunctions = [function(){
+			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest');
+			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('guitarQuest'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
+				self.interactuableObjects[0].trigger.destroy();
+				self.interactuableObjects[0].destroy();
+			}
+		}, function(){}];
 		for(let i of EnviromentInfo.npcs){
 			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
 			this.npcs.push(newNpc);
@@ -73,23 +85,23 @@ export default class Square extends Phaser.Scene {
 		}
 		for(let e of this.npcs) e.scale = 2.5;
 		//#endregion
+
+		for(let e of EnviromentInfo.hostile){
+			this.GenerateHostileGround(e.x,e.y,e.fils,e.cols,e.scale, e.img)
+		}
+
+		for(let e of EnviromentInfo.eObj){
+			let newObj = new enviromentObj(this, e.x, e.y, e.img, e.sX, e.sY, this.manin);
+			this.eObjs.push(newObj);
+		}
+		let i = 0;
+		for(let e of EnviromentInfo.iObj){
+			let newObj = new interactuableObj(this, e.x, e.y, e.img, e.sX, e.sY, this.iFunctions[i], this.manin);
+			this.interactuableObjects.push(newObj);
+			newObj.setScale(3);
+			i++;
+		}
 		
-		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
-		let self = this;
-		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
-			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest');
-			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
-				allyParty.questLog.advanceQuest('guitarQuest'); 
-				self.scene.get('hud').events.emit("updateQuestHUD");
-				self.guitar.trigger.destroy();
-				self.guitar.destroy();
-			}
-		}, this.manin);
-		this.guitar.setScale(3);
-
-		this.interactuableObjects = [this.guitar];
-		//#endregion
-
 		// genera la hierba y su collider
 		// this.GenerateHostileGround(900, 200, 4, 4, 2.5);
 
@@ -109,12 +121,12 @@ export default class Square extends Phaser.Scene {
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
-	GenerateHostileGround(x, y, fils, cols, scale){
+	GenerateHostileGround(x, y, fils, cols, scale, img){
 		let hierbas = []; // array de hierbas
 		// generamos las hierbas que se nos digan
 		for(let i = 0; i < fils; i++){
 			for(let o = 0; o < cols; o++){
-				let h = new enviromentObj(this,x,y, 'hierba',scale,scale);
+				let h = new enviromentObj(this,x,y, img,scale,scale);
 				h.x += h.displayWidth * i;
 				h.y += h.displayHeight * o;
 				hierbas.push(h);
@@ -226,7 +238,6 @@ export default class Square extends Phaser.Scene {
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene(this.key);
         this.scene.sleep('square');
 		this.scene.get('hud').Fight();
     }

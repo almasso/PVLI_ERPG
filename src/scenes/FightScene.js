@@ -193,6 +193,7 @@ export class FightScene extends Phaser.Scene {
 
 	// Acabamos el combate
 	EndCombat(){
+		console.log("ola");
 		this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
 		// ponemos las variables usadas para input por teclado a valores no válidos
@@ -203,20 +204,8 @@ export class FightScene extends Phaser.Scene {
 		this.choseE=false;
 		this.combat=false;
 		//#endregion
-		if(!this.CheckState(this.allies)) // Si se ha acabado el combate porque el jugador ha perdido...
-		{
-			this.scene.wake(this.oldScene);
-			this.scene.get('hud').Walk();
-			this.scene.get('hud').UpdateHUD();
-			let movement = this.scene.get('movement');
-			//movement.updateInventory(this.inventory);
-		}
-		else // Si se han matado a todos los enemigos...
-		{
-			this.scene.launch('final');
-			this.scene.stop('movement');
-		}
 		this.state = FightState.SelectTurn;
+		this.scene.get('EnvManager').walk(this.CheckState(this.allies));
 		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
 	}
 
@@ -722,14 +711,6 @@ export class FightScene extends Phaser.Scene {
 		this.allaySelected = -1;
 		this.selectedItem = -1;
 	}
-	CurrentScene(sceneName)
-	{
-		this.oldScene=sceneName;
-	}
-
-
-
-
 
 	//···RAUL PRUEBAS···
 	attack=-1;

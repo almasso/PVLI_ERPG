@@ -69,7 +69,7 @@ export default class HUDScene extends Phaser.Scene {
 	Hide(boolean){
 		this.showMenu = !boolean;
 		this.walkingHUD.Hide(boolean);
-		if(!boolean) this.menu.Hide(boolean);
+		if(!boolean) {this.menu.Hide(true); this.showMenu = false;}
 		if(this.questHud !== undefined) this.questHud.Hide(boolean);
 	}
 

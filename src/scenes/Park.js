@@ -41,7 +41,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), allyParty.QuestLog, "PLAZA");
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), allyParty.QuestLog);
 		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
@@ -75,6 +75,10 @@ export default class ParkScene extends Phaser.Scene {
 		}
 		for(let e of this.npcs) e.scale = 2.5;
 		//#endregion
+
+		for(let e of EnviromentInfo.hostile){
+			this.GenerateHostileGround(e.x,e.y,e.fils,e.cols,e.scale, e.img)
+		}
 		
 		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
 		let self = this;
@@ -111,12 +115,12 @@ export default class ParkScene extends Phaser.Scene {
 	}
 
 	// generación de la hierba hostil (TEMPORAL)
-	GenerateHostileGround(x, y, fils, cols, scale){
+	GenerateHostileGround(x, y, fils, cols, scale, img){
 		let hierbas = []; // array de hierbas
 		// generamos las hierbas que se nos digan
 		for(let i = 0; i < fils; i++){
 			for(let o = 0; o < cols; o++){
-				let h = new enviromentObj(this,x,y, 'hierba',scale,scale);
+				let h = new enviromentObj(this,x,y, img,scale,scale);
 				h.x += h.displayWidth * i;
 				h.y += h.displayHeight * o;
 				hierbas.push(h);
@@ -257,7 +261,6 @@ export default class ParkScene extends Phaser.Scene {
 		this.manin.touchingGrass = false;
 		this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene(this.key);
 		this.scene.sleep('square');
 		this.scene.get('hud').Fight();
 	}
