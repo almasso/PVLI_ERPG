@@ -97,16 +97,17 @@ let square = {
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
-	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2),npcInfo(800,500, 'kratos', 13)],
+	npcs: [npcInfo(400,900, 'verifiedtoni', 0), npcInfo(200, 900, 'pepperboy', 1), npcInfo(300, 900, 'jatsune', 2),npcInfo(500,900, 'frozono', 0),
+	npcInfo(100,225, 'homero', 0),npcInfo(700,900, 'spider', 0),npcInfo(800,900, 'patrik', 0),npcInfo(900,900, 'bob', 0)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [npcInfo(300, 100, 'alex', 9)],
-	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
+	hNpcs:  [npcInfo(200, 250, 'tienda', 10)],
 	hostile: [hostileInfo(900,200,'hierba', 4, 4, 2.5), 
 			  hostileInfo(700, 500, 'hierba', 1, 1, 2)],
-	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
-	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
-	travel: [travelInfo(1195, 775, 'pixel', 100, 100, scenes.park),
-			 travelInfo(50, 775, 'pixel', 100, 100, scenes.cementery),
+	eObj: [eObjInfo(500, 100, 'valla', 0.5, 0.5)],
+	iObj: [],
+	travel: [travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
+			 travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
 			 travelInfo(500, 150, 'pixel', 100, 100, scenes.park)]
 }
 
@@ -115,10 +116,11 @@ let park = {
 	launched: false,
 	key: 'park',
 	bg: 'park',
-	npcs: [npcInfo(400,300, 'alex', 0), npcInfo(200, 200, 'alex', 1), npcInfo(300, 200, 'alex', 2)],
-	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
-	sNpcs: [npcInfo(300, 100, 'alex', 9)],
-	hNpcs:  [npcInfo(600, 100, 'verifiedtoni', 11)],
+	npcs: [npcInfo(1300,400, 'patri', 10),npcInfo(830,50, 'compuman', 5),npcInfo(100,300, 'unverifiedtoni', 6),npcInfo(800,700, 'elmotivao', 0),
+	npcInfo(950,900, 'vovovo', 1),npcInfo(250,950, 'joker', 0),npcInfo(1500,850, 'aloy', 0),npcInfo(1550,150, 'sirenita', 0)],
+	qNpcs: [qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	sNpcs: [],
+	hNpcs:  [],
 	character: [{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
@@ -131,13 +133,13 @@ let park = {
 	{name: "Culturista", imgID:'people', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
 	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 	attackInfo("Poñetaso", 0, 30, 0, 1)]}],
-	hostile: [hostileInfo(900,200,'hierba', 4, 4, 2.5), 
-	hostileInfo(700, 500, 'hierba', 1, 1, 2)],
-	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
-	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
-	travel: [travelInfo(1195, 775, 'pixel', 100, 100, scenes.square),
-	travelInfo(50, 775, 'pixel', 100, 100, scenes.square),
-	travelInfo(500, 15, 'pixel', 100, 100, scenes.square)]
+	hostile: [hostileInfo(900,300,'hierba', 2, 4, 2.5),hostileInfo(300, 50, 'hierba', 3, 2, 2),hostileInfo(335, 180, 'hierba', 2, 1, 2),
+	hostileInfo(700, 500, 'hierba', 1, 1, 2),hostileInfo(700, 500, 'hierba', 1, 1, 2),hostileInfo(700, 300, 'hierba', 1, 1, 2),
+	hostileInfo(800, 500, 'hierba', 1, 1, 2),hostileInfo(700, 500, 'hierba', 1, 1, 2)],
+	eObj: [eObjInfo(0, 265, 'tree', 6.5, 6.5),eObjInfo(126, 900, 'tree', 7, 7),eObjInfo(693, 25, 'tree', 7, 7),eObjInfo(1575, 640, 'tree', 7, 7)
+	,eObjInfo(1388, 785, 'ten', 4, 4),eObjInfo(1500, 20, 'pixel', 300, 300),eObjInfo(1200, 20, 'pixel', 400, 100)],
+	iObj: [],
+	travel: [travelInfo(10, 60, 'pixel', 100, 100, scenes.square)]
 }
 
 let cementery = {
@@ -151,9 +153,9 @@ let cementery = {
 	 character: [],
 	enemies: [],
 	hostile: [],
-	eObj: [eObjInfo(200, 300, 'insignia', 0.5, 0.5)],
+	eObj: [eObjInfo(200, 300, 'insignia', 0.5, 0.5),eObjInfo(650, 170, 'pixel', 320, 0.5),eObjInfo(460, 0, 'pixel', 0.5, 500),eObjInfo(650, 74, 'pixel', 320, 0.5)],
 	iObj: [],
-	travel: [travelInfo(700, 100, 'pixel', 100, 100, scenes.square)]
+	travel: [travelInfo(800, 120, 'pixel', 70, 70, scenes.square)]
 }
 
 let port = {

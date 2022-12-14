@@ -94,6 +94,15 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.load.image('patri', 'assets/textures/Characters/patri.png');
+		this.load.image('joker','assets/textures/NPC-RAUL/Joker2.png'); 
+		this.load.image('homero','assets/textures/NPC-RAUL/Homero.png'); 
+		this.load.image('spider','assets/textures/NPC-RAUL/spiderMan.png'); 
+		this.load.image('patrik','assets/textures/NPC-RAUL/patrik.png'); 
+		this.load.image('bob','assets/textures/NPC-RAUL/bob.png'); 
+		this.load.image('tienda', 'assets/textures/Characters/tienda.png');
+		this.load.image('sirenita','assets/textures/NPC-RAUL/sirenita.png'); 
+		
+
 		
         // FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
@@ -108,6 +117,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('insignia', 'assets/textures/Props/insignia.png');
+		this.load.image('tree', 'assets/textures/Props/tree.png');
+		this.load.image('valla', 'assets/textures/Props/valla.png');
+		this.load.image('ten', 'assets/textures/Props/ten.png');
 
         // ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});

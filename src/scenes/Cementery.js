@@ -23,6 +23,14 @@ export default class CementeryScene extends FatherScene {
 		this.eObjs[0].setVisible(false);
 		this.kratos=false;
 		this.count=0;
+		this.manin.x=750;
+		this.manin.y=122;
+		for(let i=1;i<this.eObjs.length;i++)
+		{
+			this.eObjs[i].setVisible(false);
+		}
+		
+		
 	}
 
 	// comprobación de colisiones y apertura de menús
