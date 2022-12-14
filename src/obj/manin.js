@@ -6,7 +6,7 @@ import shopNPC from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info) {
-		super(scene, x, y, 'manin');
+		super(scene, x, y, info.imgID);
         
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
@@ -228,61 +228,13 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.interact();
 		}
 
-		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL
-
-
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
-
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
-            this.scene.Fight();
+            this.scene.scene.get('EnvManager').fight();
         }
-		/* cosa de Raúl para cambio de escenas
-		if(this.touchingFria )
-		{
-			if(this.nameScene==="PLAZA")
-			{
-				if(this.moves[0]&& this.dKey.isDown)
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Park();
-				}
-				else if(this.moves[1]&& this.aKey.isDown )
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Cementery();
-				}
-				else if(this.moves[2]&& this.wKey.isDown )
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Port();
-				}
-			}
-			else if (this.nameScene==="PARK"&&this.aKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			else if (this.nameScene==="CEMENTERY"&&this.dKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			else if (this.nameScene==="PORT"&&this.wKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			
-		}*/
 	}
 
 	increaseSteps(){
