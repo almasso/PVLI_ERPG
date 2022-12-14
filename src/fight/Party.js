@@ -1,4 +1,3 @@
-import Character from './Character.js'
 import {attackInfo} from "../fight/Attack.js"
 import {EnviromentInfo} from "../fight/EnviromentInfo.js"
 import { QuestLog } from '../Quest.js';
