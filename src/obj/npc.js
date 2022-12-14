@@ -25,7 +25,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7,7);
+        this.trigger.setScale(7);
         this.create();
     }
 
@@ -110,7 +110,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
         this.beingAnimated = false;
         this.canCloseWindow = false;
-        this.currentlyTalking = false;
+        this.ºurrentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
         return;
     }

@@ -217,9 +217,9 @@ export class AllyHUD{
 }
 
 export class QuestHUD{
-	constructor(scene, manin){
+	constructor(scene){
 		this.scene = scene;
-		this.manin = manin;
+		this.questLog = allyParty.questLog;
 		this.scale = 2.5;
 		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
 		this.questBlock.setScale(this.scale, this.scale / 2);
@@ -242,18 +242,17 @@ export class QuestHUD{
 
 		let offset = 35;
 		this.upArrowParty = this.scene.add.image(this.questBlock.width * this.scale + offset, this.questBlock.height * this.scale / 2 - offset , 'logButton').setScale(this.scale / 2);
-		this.downArrowParty = this.scene.add.image(0, 0 , 'logButton').setScale(this.scale / 2);
+		this.downArrowParty = this.scene.add.image(0, 0, 'logButton').setScale(this.scale / 2);
 		this.downArrowParty.x = this.upArrowParty.x;
 		this.downArrowParty.y = this.upArrowParty.y + this.upArrowParty.height * 3 / 2; 
 		this.downArrowParty.angle = 180;
 		this.upArrowParty.depth = 4;
 		this.downArrowParty.depth = 4;
 		this.AddButtons();
-		
 	}
 
 	Update(){
-		let aux = this.manin.questLog.ShowQuest();
+		let aux = this.questLog.ShowQuest();
 		console.log(aux.name);
 		if(aux.name !== undefined){
 			this.questName.text = "Misión: " + aux.name;
@@ -280,18 +279,18 @@ export class QuestHUD{
 
 		let self = this;
 		this.upArrowParty.on("pointerup", function(){ 
-			if(0 < self.manin.questLog.actualQuest){
-				self.manin.questLog.actualQuest--;
+			if(0 < self.questLog.actualQuest){
+				self.questLog.actualQuest--;
 				self.Update();
-				console.log("ARRIBA " + self.manin.questLog.actualQuest );
+				console.log("ARRIBA " + self.questLog.actualQuest );
 			}
 		});
 
 		this.downArrowParty.on("pointerup", function(){
-			if(self.manin.questLog.quests.length - 1 !== self.manin.questLog.actualQuest && 0 <= self.manin.questLog.actualQuest){
-				self.manin.questLog.actualQuest++;
+			if(self.questLog.quests.length - 1 !== self.questLog.actualQuest && 0 <= self.questLog.actualQuest){
+				self.questLog.actualQuest++;
 				self.Update();
-				console.log("ABAJO " + self.manin.questLog.actualQuest );
+				console.log("ABAJO " + self.questLog.actualQuest );
 			}
 		});
 	}
@@ -959,13 +958,13 @@ export class ExploreMenu {
 			// generación de textos
 			let resOffset = 63;
 			let resOffset1 = 35;
-			let res = ally.rP + " " + ally.rR + " "+ ally.rE + " " + ally.rF + " " + ally.rT;
+			let res = ally.rP + "  " + ally.rR + "  "+ ally.rE + "  " + ally.rF + "  " + ally.rT;
 			images.stats.rP = self.scene.add.image(x+ self.blockSize*self.scale + resOffset, newY +self.resOffset, 'resP');
 			images.stats.rR = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1, newY +self.resOffset, 'resR');
 			images.stats.rE = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 2, newY +self.resOffset, 'resE');
 			images.stats.rF = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 3, newY +self.resOffset, 'resF');
 			images.stats.rT = self.scene.add.image(x+ self.blockSize*self.scale + resOffset + resOffset1 * 4, newY +self.resOffset, 'resT');
-			images.stats.resistances = self.scene.add.text(x+ self.blockSize*self.scale + self.blockSize/ 2, newY + 115, res,{font: "30px Arial"});
+			images.stats.resistances = self.scene.add.text(x+ self.blockSize*self.scale + self.blockSize/ 2, newY + 115, res,{font: "32px Arial"});
 			images.stats.hp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +10, 170, 'HP', ally.actualHp, ally.maxHp, true, 15);
 			images.stats.mp = new HealthBar(self.scene, x+self.blockSize*self.scale + self.blockSize/ 2, newY +40, 170, 'MP', ally.actualMp, ally.maxMp, true, 15);
 

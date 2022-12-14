@@ -1,6 +1,6 @@
 import NPC from './obj/npc.js'
-
-
+import { allyParty } from './fight/Party.js';
+import { AllyTEST } from './obj/manin.js';
 
 export class QuestNPC extends NPC {
     constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
@@ -10,18 +10,17 @@ export class QuestNPC extends NPC {
 
     activateQuest(){
         if(!this.quest.acquired){
-            this.manin.questLog.addQuest(this.quest);
-            this.manin.questLog.actualQuest = this.manin.questLog.numQuests - 1; 
-            this.scene.questHud.Update();
-            console.log(this.quest);
+            allyParty.questLog.addQuest(this.quest);
+            allyParty.questLog.actualQuest = allyParty.questLog.numQuests - 1; 
+            this.scene.scene.get('hud').UpdateHUD();
             this.quest.acquired = true;   
         }
     }
 
     advanceQuest(){
         this.quest.advanceQuest(this.quest.id);
-        this.manin.questLog.actualQuest = this.manin.questLog.GetQuest(this.quest.id).index; 
-        this.scene.questHud.Update();
+        allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
+        this.scene.scene.get('hud').UpdateHUD();
     }
 }
 
@@ -34,14 +33,9 @@ export class QuestLog {
         this.actualQuest = -1;
     }
 
-    setQuestHUD(questHud){
-        this.questHud = questHud;
-    }
-
     addQuest(quest){
         this.quests.push(quest);
         this.numQuests++;
-        this.questHud.Update();
         console.log(this.quests);
         // añadir todos los textos y eso
     }
@@ -77,8 +71,7 @@ export class QuestLog {
 }
 
 export class Quest {
-    constructor(npc, stages, id, name, objectives){
-        this.npc = npc;
+    constructor(stages, id, name, objectives){
         this.stages = stages;
         this.stage = 0;
         this.id = id;
@@ -93,17 +86,7 @@ export class Quest {
         if(!this.finished){
             this.stage++;
             if(this.stage >= this.stages) this.finished = true;
-            this.setCurrentObjectives();
             this.actualObjectiveCompleted = false;
-        }
-    }
-
-    setCurrentObjectives(){
-        if(!this.finished){
-            this.currentObjectives = this.objectives[this.stage];
-        }
-        else{
-            this.currentObjectives = "QUEST COMPLETE";
         }
     }
 }

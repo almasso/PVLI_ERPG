@@ -172,7 +172,6 @@ export default class Boot extends Phaser.Scene {
     }
 
 	create() {
-        this.scene.launch('hud');
 		this.scene.launch('initial');
 	}
 }

@@ -6,7 +6,6 @@ export default class InitialScene extends Phaser.Scene {
 	
 	// incializamos la escena	
 	create() {
-
 		// fondo
         this.bg = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'initialBg');
         this.bg.scale = 4.71;
@@ -20,6 +19,9 @@ export default class InitialScene extends Phaser.Scene {
         this.startButton.setInteractive();
         this.startButton.on('pointerup',()=>{
 
+			// DAVID PRUEBAS C:
+			this.scene.launch('EnvManager');
+			/*
 			this.scene.launch('park');
 			this.scene.sleep('park');
 			this.scene.launch('port');
@@ -29,6 +31,7 @@ export default class InitialScene extends Phaser.Scene {
 			
 			this.scene.launch('square');
 			this.scene.get('hud').Walk();
+			*/
             this.scene.stop('initial');
 
 		})
