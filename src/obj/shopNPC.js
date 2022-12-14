@@ -13,7 +13,7 @@ export default class shopNPC extends NPC{
     }
 
     buy(item){
-        this.inventory.buy(item);
+        this.shopDialog(item, this.inventory.buy(item));
     }
 
     readDialogues(){

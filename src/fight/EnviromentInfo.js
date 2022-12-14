@@ -96,27 +96,83 @@ let square = {
 	launched: true,
 	key: 'square',
 	bg: 'square',
-	character: [{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
-	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
-	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
-	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
-	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
-	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [itemInfo("Cigarro", -5, 10, 10, 'cigarro')
-	, itemInfo('Kebab', 10, -5, 10,'kebab'), itemInfo('Fría', 20, -5, 20, 'fria'), 
-		itemInfo('Porro', -5, 20, 20, 'porro'), itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN'),
-		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF'),
-		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200'),
-		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600'),
-		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1')])],
-	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
-	hostile: [hostileInfo(900,200,'hierba', 4, 4, 2.5), 
-			  hostileInfo(700, 500, 'hierba', 1, 1, 2)],
-	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
-	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
-	travel: [travelInfo(1195, 775, 'pixel', 100, 100, scenes.park),
-			 travelInfo(50, 775, 'pixel', 100, 100, scenes.park),
-			 travelInfo(500, 150, 'pixel', 100, 100, scenes.park)]
+	character: [{
+		x: 300,
+		y:300, 
+		name: "Melendi", 
+		imgID: 'melendi', 
+		actualHp: 75, 
+		maxHp: 75, 
+		actualMp: 115, 
+		maxMp: 115,
+		rP: 4, 
+		rR: 6, 
+		F: 3, 
+		rE: 7, 
+		rT: 5, 
+		acurracy: 90, 
+		speed: 60,
+		attack: [
+			attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
+			attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+			attackInfo("Support 1 Target", 5, -20, 25, 1), 
+			attackInfo("Camina por la Vida",5,-70,60,1)
+		]
+	}],
+	npcs: [
+		npcInfo(400,300, 'elmotivao', 0), 
+		npcInfo(200, 200, 'vovovo', 1), 
+		npcInfo(300, 200, 'jatsune', 2)
+	],
+	qNpcs: [
+		qNpcInfo(
+			400, 
+			500, 
+			'melendi', 
+			5, 
+			"guitarQuest",
+			"Mi Guitarra", 
+			2, 
+			["Recupera la Guitarra", "Pelea contra Melendi"]
+			)
+		],
+	sNpcs: [
+		sNpcInfo(
+			300, 
+			100, 
+			'alex', 
+			9, 
+			[
+				itemInfo("Cigarro", -5, 10, 10, 'cigarro'), 		
+				itemInfo('Kebab', 10, -5, 10,'kebab'), 
+				itemInfo('Fría', 20, -5, 20, 'fria'), 
+				itemInfo('Porro', -5, 20, 20, 'porro'), 
+				itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN'),
+				itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF'),
+				itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200'),
+				itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600'),
+				itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1')
+			]
+			)
+		],
+	hNpcs:  [
+		npcInfo(600, 100, 'patri', 11)
+	],
+	hostile: [
+		hostileInfo(900,200,'hierba', 4, 4, 2.5), 
+		hostileInfo(700, 500, 'hierba', 1, 1, 2)
+	],
+	eObj: [
+		eObjInfo(200, 400, 'kratos', 2, 2)
+	],
+	iObj: [
+		eObjInfo(700, 100, 'manin', 0.7, 0.7)
+	],
+	travel: [
+		travelInfo(1195, 775, 'pixel', 100, 100, scenes.park),
+		travelInfo(50, 775, 'pixel', 100, 100, scenes.park),
+		travelInfo(500, 150, 'pixel', 100, 100, scenes.park)
+	]
 }
 
 let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
