@@ -184,8 +184,14 @@ let park = {
 	launched: false,
 	key: 'park',
 	bg: 'square',
-	npcs: [npcInfo(400,300, 'alex', 0), npcInfo(200, 200, 'alex', 1), npcInfo(300, 200, 'alex', 2)],
-	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	npcs: [
+		npcInfo(400,300, 'alex', 0), 
+		npcInfo(200, 200, 'alex', 1), 
+		npcInfo(300, 200, 'alex', 2),
+		npcInfo(300, 400, 'tiolavara', 22)
+	],
+	qNpcs: [
+		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [itemInfo("Cigarro", -5, 10, 10, 'cigarro')
 	, itemInfo('Kebab', 10, -5, 10,'kebab'), itemInfo('Fría', 20, -5, 20, 'fria'), 
 		itemInfo('Porro', -5, 20, 20, 'porro'), itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN'),
