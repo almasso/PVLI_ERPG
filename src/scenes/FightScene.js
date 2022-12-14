@@ -5,6 +5,7 @@ import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
 import {Log, AllyHUD, EnemyHUD, InventoryHUD} from '../fight/HUD.js'
 import Inventory from '../obj/Inventory.js'
+import { EnviromentInfo } from '../fight/EnviromentInfo.js'
 
 
 const FightState = {
@@ -30,6 +31,11 @@ export class FightScene extends Phaser.Scene {
 		this.selectedItem;
 		this.timeBetweenAttacks = 2000;
 		this.state = FightState.SelectTurn;
+	}
+
+	init(parameters){
+		this.loadFromEnviroment = parameters.loadFromEnviroment;
+		this.specialEncounterIndex = parameters.index;
 	}
 
 	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
@@ -418,6 +424,42 @@ export class FightScene extends Phaser.Scene {
 		})
 	}
 
+	GenerateSpecialEncounter(){
+		this.enemies = []; // inicializamos el array de enemigos
+		let height = 360;
+		let info = EnviromentInfo.specialEncounter[this.specialEncounterIndex]; 
+		let enemiesNumber = info.numEnemies; // número de enemigos
+
+		for(let i = 0; i < enemiesNumber; i++){
+			if(i === 0) {
+				// primer enemigo colocado con una posición específica
+				this.enemies[0] = new Character(this,info.enemies[i].name,this.sys.game.canvas.width/2-(75*enemiesNumber/2) +50, height, info.enemies[i].imgID, info.enemies[i].actualHp, info.enemies[i].maxHp, info.enemies[i].actualMp, info.enemies[i].maxMp);
+			}
+			else{
+				// resto de enemigos colocados en función de los enemigos anteriores
+				this.enemies[i] = new Character(this,info.enemies[i].name,this.enemies[i-1].x +100, height, info.enemies[i].imgID, info.enemies[i].actualHp, info.enemies[i].maxHp, info.enemies[i].actualMp, info.enemies[i].maxMp);
+			}
+			// setteamos sus stats
+			this.enemies[i].SetStats(info.enemies[i].rP, info.enemies[i].rR, info.enemies[i].rF, info.enemies[i].rE,
+				info.enemies[i].rT, info.enemies[i].acurracy, info.enemies[i].speed);
+
+			// creamos el nuevo HUD para enemigo
+			this.enemiesHud.push(new EnemyHUD(this,this.enemies[i]));
+			
+			// creamos sus ataques
+			for(let o = 0; o < info.enemies[i].attack.length; o++)
+			{
+				this.enemies[i].SetAttacks(info.enemies[i].attack[o]);
+			}
+			this.enemies[i].scale = 4;
+			this.AddEnemySelector(this.enemies[i]); // escuchamos eventos para seleccionar al enemigo
+		}
+		console.log(this.enemies);
+		console.log(enemiesNumber);
+
+	}
+
+
 	// generamos a los enemigos en función de la información que nos llega desde enemiesInfo
 	GenerateRandomEncounter(){
 
@@ -668,9 +710,14 @@ export class FightScene extends Phaser.Scene {
 		// Creación de enemigos
 		this.enemiesHud = []; // huds de enemigos
 
-
+		
 		// escoger entre random o batalla dada según el EnviromentInfo
-		this.GenerateRandomEncounter(); // generamos a los enemigos
+		if(this.loadFromEnviroment){
+			this.GenerateSpecialEncounter();
+		}
+		else{
+			this.GenerateRandomEncounter(); // generamos a los enemigos
+		}
 
 		// Creación de gestión de Turnos
 		this.turns = []; // creamos un array para ordenar a aliados y enemigos por velocidad 

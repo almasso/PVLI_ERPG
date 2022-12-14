@@ -38,7 +38,7 @@ class EnviromentManager extends Phaser.Scene{
 		console.log(sceneInfo[this.currentScene].key);
 		this.scene.sleep(sceneInfo[this.currentScene].key);
 		this.scene.sleep(hudKey);
-		this.scene.launch(fightKey);
+		this.scene.launch(fightKey, {loadFromEnviroment: false, specialEncounterIndex: 0});
 		this.scene.get(fightKey).LoadInventory(allyParty.inventory);
 	}
 
@@ -232,7 +232,13 @@ let park = {
 	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
 	travel: [travelInfo(1195, 775, 'pixel', 100, 100, scenes.square),
 	travelInfo(50, 775, 'pixel', 100, 100, scenes.square),
-	travelInfo(500, 15, 'pixel', 100, 100, scenes.square)]
+	travelInfo(500, 15, 'pixel', 100, 100, scenes.square)],
+	specialEncounter: [{numEnemies: 3, enemies: [{name: "Artista", imgID:'artist', actualHp: 70, maxHp: 70, actualMp: 0, maxMp: 0, rP: 5, rR: 5, rF: 5, rE: 5, rT: 5, acurracy: 90, speed: 40,
+	attack: [attackInfo("Pincelada",1,20,0,1),attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),attackInfo("Xilografía en el pecho", 1, 30, 0, 1)]},
+	{name: "Culturista", imgID:'people', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
+	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
+	attackInfo("Poñetaso", 0, 30, 0, 1)]},{name: "Artista", imgID:'artist', actualHp: 70, maxHp: 70, actualMp: 0, maxMp: 0, rP: 5, rR: 5, rF: 5, rE: 5, rT: 5, acurracy: 90, speed: 40,
+	attack: [attackInfo("Pincelada",1,20,0,1),attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),attackInfo("Xilografía en el pecho", 1, 30, 0, 1)]}]}]
 }
 
 let cementery = {

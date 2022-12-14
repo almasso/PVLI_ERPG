@@ -26,7 +26,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.scene.anims.create({
 			
 			key: this.mon+'_daño', //identificador de la animación
-			frames: scene.anims.generateFrameNumbers(this.mon+'_daño', 
+			frames: scene.anims.generateFrameNumbers(this.mon+'_dmg', 
 			{
 				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
 				end:2 // última imagen del Spritesheet que se ejecuta en la animación
