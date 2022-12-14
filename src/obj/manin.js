@@ -241,6 +241,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.touchingGrass) 
 		{
 			this.stepsWalked++;
-		}
+			}
 	}
 }

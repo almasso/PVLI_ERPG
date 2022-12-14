@@ -35,6 +35,7 @@ class EnviromentManager extends Phaser.Scene{
 	}
 
 	fight(){
+		console.log(sceneInfo[this.currentScene].key);
 		this.scene.sleep(sceneInfo[this.currentScene].key);
 		this.scene.sleep(hudKey);
 		this.scene.launch(fightKey);
@@ -50,6 +51,7 @@ class EnviromentManager extends Phaser.Scene{
 		}
 		else{
 			this.scene.wake(sceneInfo[this.currentScene].key);
+			this.scene.wake(hudKey);
 			this.hudScene.Walk();
 			this.hudScene.UpdateHUD();
 		}
@@ -77,6 +79,7 @@ class EnviromentManager extends Phaser.Scene{
 		}
 		this.scene.sleep(sleepKey);
 		EnviromentInfo = this.info;
+		this.currentScene = index;
 	}
 
 	goToPlaza(){
@@ -129,7 +132,7 @@ let park = {
 	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]},
 	{x:500, y:500, name: "Jarfaiter", imgID: 'jarfaiter', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60, attack: [attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
-	attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60,Math.random() * 4)]},
+	attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60,4)]},
 	{
 		name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
 		imgID: 'sanxe', 

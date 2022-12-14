@@ -151,6 +151,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('melendi_shock','assets/textures/Characters/melendi_shock.png',{frameWidth:22, frameHeight:27});
 
         // jarfaiter
+		this.load.image('jarfaiter','assets/textures/Characters/jarfaiter.png');
+		this.load.image('jarfaiterHead','assets/textures/HUD/explore/jarfaiterHead.png');
 		this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/jarfaiter_idle.png',{frameWidth:19, frameHeight:26})
 		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/jarfaiter_wow.png',{frameWidth:19, frameHeight:26})
 		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/jarfaiter_daño.png',{frameWidth:19, frameHeight:26})
