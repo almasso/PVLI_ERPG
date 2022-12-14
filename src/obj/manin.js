@@ -5,8 +5,8 @@ import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 import shopNPC from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, manin, info,) {
-		super(scene, x, y, 'manin');
+	constructor(scene, x, y, manin, info) {
+		super(scene, x, y, info.imgID);
         
         this.scene.add.existing(this);
         this.setScale(0.15,0.15);
@@ -17,7 +17,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7,7);
+        this.trigger.setScale(7);
 		this.info = info;
 		this.isInteracting = false;
 	}
@@ -25,12 +25,11 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
-
 }
 
 export class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene, questLog, name) {
+	constructor(scene, x, y, uiScene) {
 		super(scene, x, y, 'manin_move');
 		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
@@ -45,8 +44,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.touchingFria=false;
 		this.moves = [false, false, false, false] // DERECHA, IZQUIERDA, ARRIBA, ABAJO
 
-
-		this.nameScene=name;
 		this.collider = null;
 		this.uiScene = uiScene;
 		this.wKey = this.scene.input.keyboard.addKey('W'); // move up
@@ -58,8 +55,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.isInteracting = false;
 		this.shopping = false;
 
-		this.questLog = questLog;
-		
 		// añadimos físicas
 		scene.physics.add.existing(this);
 
@@ -110,7 +105,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.play('pose');
 			}
 		});
-		this.play('pose');	
+		this.play('pose');
 		//#endregion
 	}
 
@@ -120,16 +115,18 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
 				this.collider.activateQuest();
+				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
 				console.log("OBJETIVO COMPLETADO")
 				this.collider.advanceQuest();
+				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
+			this.isInteracting = false;
 		}
 		else if(this.collider instanceof shopNPC){
 			this.shopping = true;
 			this.collider.currentlyTalking = true;
-			this.collider.loadInventory(this.scene.inventory);
 			this.collider.readDialogues();
 		}
 		else if(this.collider instanceof NPC) {
@@ -141,10 +138,14 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
+			this.collider.trigger.destroy();
+			this.collider.destroy();
+			this.isInteracting = false;
 		}
 		else if(this.collider instanceof interactuableObj){
 			console.log("AAA GUITARRA")
 			this.collider.Interact();
+			this.isInteracting = false;
 		}
 		else if(this.collider === null) this.isInteracting = false;
     }
@@ -152,9 +153,10 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	detectEvents() {
 		this.scene.events.on('dialogWindowClosed', () => {
 			this.isInteracting = false;
-			this.scene.scene.launch('hud');
+			this.scene.scene.wake('hud');
 		})
 		this.scene.events.on('closeShopping', () => {
+			this.scene.scene.wake('hud');
 			this.shopping = false;
 		})
 	}
@@ -226,71 +228,19 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.interact();
 		}
 
-		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL
-
-
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
-
         if(this.stepsWalked > 100){
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
-            this.scene.Fight();
+            this.scene.scene.get('EnvManager').fight();
         }
-		if(this.touchingFria )
-		{
-			
-			if(this.nameScene==="PLAZA")
-			{
-				if(this.moves[0]&& this.dKey.isDown)
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Park();
-				}
-				else if(this.moves[1]&& this.aKey.isDown )
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Cementery();
-				}
-				else if(this.moves[2]&& this.wKey.isDown )
-				{
-					this.body.setVelocityX(0);
-					this.body.setVelocityY(0);
-					this.scene.Port();
-				}
-			}
-			else if (this.nameScene==="PARK"&&this.aKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			else if (this.nameScene==="CEMENTERY"&&this.dKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			else if (this.nameScene==="PORT"&&this.wKey.isDown )
-			{
-				this.body.setVelocityX(0);
-				this.body.setVelocityY(0);
-				this.scene.Plaza();
-			}
-			
-		}
 	}
+
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
 			this.stepsWalked++;
-			console.log("A VE");
 		}
 	}
-	
-
-	
-	
 }

@@ -174,18 +174,187 @@
         "unique" : true,
         "text" : "¿Quieres comprar?"
     },
+    {   "npcID": 10,
+        "unique": true,
+        "text": "A mí me han engañao', pensaba que esto era Moképon."
+    },
     {
-        "npcID":10,
+        "npcID": 10,
+        "unique": true,
+        "text": "Jueguen al Yakuza 0"
+    },
+    {
+        "npcID" : 11,
+        "unique": true,
+        "text": "Toma una fría para regular el pH, que estáis apollardaos"
+    },
+    {
+        "npcID" : 12,
+        "unique" : true,
+        "text" : "¿Te cuento un chiste?"
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Este es un pueblo en el que empiezan a aparecer carteles. En el ayuntamiento, el corcho de la plaza, etc. En el cartel se podía leer: \"GRAN GIRA NACIONAL. EL CIRCO DEL PAN QUE HABLA. ¡PRÓXIMA APERTURA EN UN AÑO EN ESTE MISMO PUEBLO!\""
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Al verlo, la gente se extrañó pero no le hizo demasiado caso."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Fueron pasando los meses y el pueblo cada vez se llenaba más de carteles de este circo, así que la curiosidad empezó a invadir a los habitantes de este gran pueblo de España."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Fue tanta la curiosidad que decidieron acercarse a otros pueblos para preguntarles si sabían lo que era ese circo, a lo que todos les respondieron lo mismo: \"!¿VA EL CIRCO DEL PAN QUE HABLA A VUESTRO PUEBLO?! ES IMPRESIONANTE, NO OS LO PODÉIS PERDER. LITERALMENTE HA CAMBIADO MI VIDA\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "A partir de ese momento el pueblo se llenó de emoción. Empezaron a aparecer carteles, hicieron merchandising del pan que habla, se enteraron incluso Pedro Sánchez y el rey ,el alcalde se vistió de él para hacer propaganda electoral (que perdió, porque a casi nadie le caía bien)."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Llegó el mes de la apertura y todo el pueblo empezó a acampar en el recinto ferial. Todas las casas se quedaron vacías y abrieron y baños portátiles tiendas ahí en medio."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Un día llegaron los camiones que traían los materiales para construir la carpa y TODO el pueblo decidió ayudar a construirlo. Tardaron entre todos tan solo 30 minutos."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Llegó el día de la apertura, y la gente estaba como loca. Tuvo que ir el ejército a controlar la cola porque intentaban entrar todo el rato de la emoción que tenían por ver el pan que habla."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "También había ambulancias todo el rato porque cada dos por tres a la gente le daban ataques de ansiedad de los nervios."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Finalmente llega la apertura. La gente entró como un terremoto, tanto los de el pueblo como otros de al lado que querían volver a vivir la experiencia."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Fue tan bestial que varias personas murieron aplastadas, y la gente que no entró se suicidó en la puerta por no haber podido acudir al espectáculo."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : " En total ese día murieron 6 personas."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Ya finalmente la gente estaba dentro, incluidos el presidente y el rey, que tampoco se lo querían perder."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "En un momento, llega el presentador: \"¡BUENAS NOCHES [nombre del pueblo], ¿CÓMO ESTÁN USTEDES?!\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "La gente empezó a gritar con emoción, y el presentador vuelve a decir: \"VEO QUE ESTÁN MUY EMOCIONADOS, ¡QUE EMPIECE ENTONCES EL ESPECTÁCULO CON NUESTRO PRIMER NÚMERO: EL ÁGUILA QUE HACE MALABARES!\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "El pueblo respondió con abucheos: \"BUUUUU, FUERA, QUE ENTRE EL PAN QUE HABLA\""
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "El presentador respondió a los abucheos: \"BUENO, BUENO, PARECE QUE NO QUERÉIS VERLO. PUES PASEMOS AL SIGUIENTE ESPECTÁCULO: ¡EL TIGRE QUE HACE PIRUETAS!\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "El público volvió a abuchear y a pedir que entre el pan que habla, a lo que el presentador respondió: \"BUENO, VEO QUE USTEDES VAN A LO QUE VAN. PUES VAYAMOS AL ÚLTIMO ESPECTÁCULO: ¡QUE ENTRE EL PAN QUE HABLA!\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "De repente un hombre entra empujando un carrito que tiene una bandejita de plata tapada. El presentador dice: \"PARA ESTE ESPECTÁCULO NECESITO UN VOLUNTARIO\"."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Todo el pueblo se emocionó. Empezaron a seguir el foco de luz, a lanzar a sus hijos y a pegarse."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Finalmente, el foco se para y señala a un hombre. Ese hombre bajó al escenario llorando, todo el pueblo le empezó a aplaudir y el alcalde le cedió su puesto."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Finalmente llega al escenario, y el presentador le pregunta su nombre."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "\"As-Astolfo...\" respondió él entre sollozos."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "\"Bueno Astolfo, tranquilícese que le necesito para este espectáculo\" le tranquilizó el presentador, y acto seguido destapa la bandeja."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Se ve entonces un pan de molde normal y corriente a simple vista."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "El presentador pide a Astolfo que toque el pan. Astolfo acerca su mano, tembloroso y a punto del ataque de ansiedad."
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "Finalmente Astolfo logra tocar el pan, y el presentador le dice: "
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "\"Astolfo, ¿podría decirme cómo está el pan?\", a lo que Astolfo responde:"
+    },
+    {
+        "npcID" : 12,
+        "unique" : false,
+        "text" : "\"Está blando.\""
+    },
+    {
+        "npcID" : 12,
+        "unique" : true,
+        "text" : ":)"
+    },
+    {
+        "npcID":13,
         "unique":true,
         "text":"¡Vamos chico!"
     },
     {
-        "npcID":10,
+        "npcID":13,
         "unique":true,
         "text":"¡Zeus! ¡Tu hijo ha regresado, y trae consigo la destrucción del Olimpo!"
     },
     {
-        "npcID":10,
+        "npcID":13,
         "unique":true,
         "text":"Los dioses del Olimpo me han abandonado,...ya no queda esperanza."
     }
@@ -252,11 +421,29 @@
         "verified" : false,
         "developer" : false
     },
+    
     {
-        "npcID":10,
+        "npcID" : 10,
+        "npcName": "Patri",
+        "verified" : false,
+        "developer" : true
+    },
+    {
+        "npcID" : 11,
+        "npcName" : "Healer",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 12,
+        "npcName" : "Don Comedia", 
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID":13,
         "npcName": "Kratos",
         "verified":false,
         "developer": false
-
     }
 ]}

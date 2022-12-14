@@ -115,7 +115,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
         this.beingAnimated = false;
         this.canCloseWindow = false;
-        this.currentlyTalking = false;
+        this.ºurrentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
         console.log(this.currentDialog)
             if(this.currentDialog==35)

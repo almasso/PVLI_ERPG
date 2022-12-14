@@ -1,6 +1,8 @@
 import Character from './Character.js'
 import {attackInfo} from "../fight/Attack.js"
 import {EnviromentInfo} from "../fight/EnviromentInfo.js"
+import { QuestLog } from '../Quest.js';
+import Inventory from '../obj/Inventory.js';
 
 // Esta clase gestionará todo lo que tenga que ver con aliados
 export class Party{
@@ -9,26 +11,13 @@ export class Party{
 		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
 					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",4,40,15,1),
-					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("PUM a distancia", 1, 25, 0, 1), attackInfo("PUM a distancia 2", 3, 20, 30, 1), 
-						attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						characterInfo(EnviromentInfo.character.name,'artist',EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						  ,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						  [attackInfo("PUM a distancia", 2, 25, 0, 1), attackInfo("PUM a distancia 2", 4, 20, 30, 1), 
-						  attackInfo("te curo uwu", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]),
-						  characterInfo(EnviromentInfo.character2.name,EnviromentInfo.character2.imgID,EnviromentInfo.character2.actualHp,EnviromentInfo.character2.maxHp,EnviromentInfo.character2.actualMp,EnviromentInfo.character2.maxMp
-							,EnviromentInfo.character.rP,EnviromentInfo.character2.rR,EnviromentInfo.character2.rF,EnviromentInfo.character2.rE,EnviromentInfo.character2.rT,EnviromentInfo.character2.acurracy,EnviromentInfo.character2.speed,
-							[attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
-							attackInfo("Ven a 4k", 3, 20, 25, 2), attackInfo("Humito",4,50,60, 4)])];
+					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)])];
 		this.party[0].index = 0;
-		this.party[1].index = 1;
-		this.party[2].index = 2;
-		this.party[3].index = 3;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 
 	swapAllies(newOrder){
@@ -47,24 +36,24 @@ export class Party{
 
 		this.party.forEach(function(ally, index) {
 			ally.index = index;
-			console.log(index, ally.name);
 		});
 	}
 
 	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
-		console.log("PINGA");
 		this.party.push(character);
 		if(this.alliesNum < 4) this.alliesNum++;
 		else this.alliesNum = 4;
+		console.log(this.party.length-1);
 		this.party[this.party.length-1].index = this.party.length - 1;
+		this.party[this.party.length-1].alteredStates = [false,false,false];
 	}
 
 	// Llevamos la party al estado original (TEMPORAL)
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
+					 [attackInfo("Churrazo",0,300,0,2),attackInfo("Podación",0,40,15,1),
 					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
 					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,

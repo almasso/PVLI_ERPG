@@ -3,12 +3,10 @@ import {enviromentObj, interactuableObj } from '../obj/enviromentObj.js';
 import Bound from '../obj/bound.js';
 import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
-import {InputMan} from '../fight/InputManager.js'
-import Object from '../obj/Object.js'
-import Inventory from '../obj/Inventory.js'
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import { QuestHUD } from '../fight/HUD.js';
 import shopNPC from '../obj/shopNPC.js';
+import { allyParty } from '../fight/Party.js';
 
 // Escena de exploración (temporal de momento)
 export default class MovementExample extends Phaser.Scene {
@@ -17,13 +15,9 @@ export default class MovementExample extends Phaser.Scene {
 	constructor() {
 		super({ key: 'movement' });
 		this.manin; // protagonista
-		this.inventory;
+		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
 	}
-	
-	/**
-	* Creación de los elementos de la escena principal de juego
-	*/
 
 	// inicializamos la escena
 	create() {
@@ -315,7 +309,6 @@ export default class MovementExample extends Phaser.Scene {
         this.scene.sleep('movement');
 		this.scene.get('hud').Fight();
     }
-
 
 	// pasamos a la escena de pelea
     

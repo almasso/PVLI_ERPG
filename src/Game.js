@@ -6,9 +6,9 @@ import HUDScene from './scenes/HUDScene.js'
 import ParkScene from './scenes/Park.js'
 import CementeryScene from './scenes/Cementery.js'
 import PortScene from './scenes/Port.js'
-import Preload from './scenes/PreloadScene.js'
+import boot from './scenes/boot.js'
 import Square from './scenes/Square.js'
-
+import {EnviromentManager} from './fight/EnviromentInfo.js'
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -35,7 +35,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [Preload, InitialScene, Square, FightScene, FinalScene,  ParkScene,CementeryScene,PortScene, HUDScene,DialogScene],
+    scene: [boot, EnviromentManager, InitialScene, Square, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene, FightScene],
     physics: {
         default: 'arcade',
         arcade: {
