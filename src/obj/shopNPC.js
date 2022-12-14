@@ -13,7 +13,9 @@ export default class shopNPC extends NPC{
     }
 
     buy(item){
-        this.shopDialog(item, this.inventory.buy(item));
+        let bool = this.inventory.buy(item);
+        if(bool) this.scene.scene.get('hud').addItem(item);
+        this.shopDialog(item, bool);
     }
 
     readDialogues(){
