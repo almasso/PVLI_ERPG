@@ -60,6 +60,8 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.laod.image('patri', 'assets/textures/Characters/patri.png');
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
+		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.image('andrea', 'assets/textures/Characters/Andrea.png');
 		
         //FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');

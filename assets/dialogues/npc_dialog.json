@@ -418,6 +418,16 @@
         "npcID" : 21,
         "unique" : true,
         "text" : "¿Cómo voy a ser yo racista si Will Smith es mi pana? ¡Que pase la china!"
+    },
+    {
+        "npcID" : 22,
+        "unique" : true,
+        "text" : "Give me otra bandeja"
+    },
+    {
+        "npcID" : 22,
+        "unique" : true,
+        "text" : "Yo soy EL MANIN"
     }
 ],
 "attributes" : [
@@ -495,7 +505,7 @@
     },
     {
         "npcID" : 12,
-        "npcName" : "Don Comedia", 
+        "npcName" : "Doña Comedia", 
         "verified" : false,
         "developer" : false
     },
@@ -552,5 +562,11 @@
         "npcName" : "Pablo Motos",
         "verified" : false,
         "developer" : false
+    },
+    {
+        "npcID" : 22,
+        "npcName" : "Raúl",
+        "verified" : false,
+        "developer" : true
     }
 ]}
