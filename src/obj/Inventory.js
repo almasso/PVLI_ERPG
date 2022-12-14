@@ -4,6 +4,17 @@ export default class Inventory{
         this.money = 10000000;
     }
 
+    canBuy(money){
+        return this.money >= money;
+    }
+
+    buy(item){
+        if(this.canBuy(item.price)){
+            this.money -= item.price;
+            this.addItem(item);
+        }
+    }
+
     addItem(obj){
         console.log(this.inv.length);
         let i = this.isItem(obj.name, 0);

@@ -9,6 +9,7 @@ export default class ParkScene extends FatherScene {
 	// inicializamos la escena
 	create() {
 		super.create();
+		let self = this;
 	}
 
 	// comprobación de colisiones y apertura de menús

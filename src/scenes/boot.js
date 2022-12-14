@@ -172,6 +172,19 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
 
+		// objetos
+		this.load.image('cigarro', 'assets/textures/Props/cigarro.png');
+		this.load.image('dalsyF', 'assets/textures/Props/dalsyFresa.png');
+		this.load.image('dalsyN', 'assets/textures/Props/dalsyNaranja.png');
+		this.load.image('fria', 'assets/textures/Props/fria.png');
+		this.load.image('kebab', 'assets/textures/Props/kebab.png');
+		this.load.image('porro', 'assets/textures/Props/porro.png');
+		this.load.image('tartaS', 'assets/textures/Props/tartaSantiago.png');
+		this.load.image('i200', 'assets/textures/Props/cigarro.png');
+		this.load.image('i600', 'assets/textures/Props/cigarro.png');
+		this.load.image('i1', 'assets/textures/Props/cigarro.png');
+
+
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
