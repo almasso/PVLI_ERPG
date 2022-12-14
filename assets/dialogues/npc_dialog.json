@@ -343,6 +343,81 @@
         "npcID" : 12,
         "unique" : true,
         "text" : ":)"
+    },
+    {
+        "npcID" : 13,
+        "unique" : true,
+        "text" : "Yo solía ser un aventurero como tú. Pero un día me hirieron en la rodilla con una flecha..."
+    },
+    {
+        "npcID" : 13,
+        "unique" : true,
+        "text" : "Estaría mucho mas caliente y feliz con la panza bien llena de birra."
+    },
+    {
+        "npcID" : 14,
+        "unique" : true,
+        "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras gravida massa eget pretium pretium."
+    },
+    {
+        "npcID" : 15,
+        "unique" : true,
+        "text" : "Vivimos en una suciedad"
+    },
+    {
+        "npcID" : 15,
+        "unique" : true,
+        "text" : "JAJAJAJAJA"
+    },
+    {
+        "npcID" : 16,
+        "unique" : true,
+        "text" : "Tengo vello en la cara. Asústate, Gamer™"
+    },
+    {
+        "npcID" : 17,
+        "unique": true,
+        "text" : "Bob"
+    },
+    {
+        "npcID" : 18,
+        "unique" : true,
+        "text" : "Patricio"
+    },
+    {
+        "npcID" : 19,
+        "unique" : true,
+        "text" : "Tequila"
+    },
+    {
+        "npcID" : 20,
+        "unique" : false,
+        "text" : "Shura... Nunca pensé..."
+    },
+    {
+        "npcID" : 20,
+        "unique" : false,
+        "text" : "¡Qué habría de matar a otro como vos!"
+    },
+    {
+        "npcID" : 20,
+        "unique" : true,
+        "text" : "Ah, me equivoqué de persona..."
+    },
+    {
+        "npcID" : 21,
+        "unique" : true,
+        "text" : "Déjame mirar tus *censored*"
+    },
+    {
+        "npcID" : 21,
+        "unique" : true,
+        "text" : "Ni machismo, ni feminismo: igualdad"
+    },
+    {
+        "npcID" : 21,
+        "unique" : true,
+        "text" : "¿Cómo voy a ser yo racista si Will Smith es mi pana? ¡Que pase la china!"
     }
 ],
 "attributes" : [
@@ -421,6 +496,60 @@
     {
         "npcID" : 12,
         "npcName" : "Don Comedia", 
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 13,
+        "npcName" : "Guardia",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 14,
+        "npcName" : "Sirenita",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 15,
+        "npcName" : "El Guasón",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 16,
+        "npcName" : "Aloy",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 17,
+        "npcName" : "Bob Esponja",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 18,
+        "npcName" : "Patricio",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 19,
+        "npcName" : "Espáider Man",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 20,
+        "npcName" : "Isshin Ashina",
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 21,
+        "npcName" : "Pablo Motos",
         "verified" : false,
         "developer" : false
     }
