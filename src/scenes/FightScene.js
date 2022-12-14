@@ -818,8 +818,8 @@ export class FightScene extends Phaser.Scene {
 		else if(this.state === FightState.Item){
 			this.UseItem();
 			this.inventoryHUD.UpdateItem(this.inventory);
-			this.ToggleButtons(true);
-			this.state = FightState.ChooseAttack;
+			this.ToggleButtons(false);
+			this.state = FightState.TimeUntilNextTurn;
 			this.DisableTargetting(this.allies);
 			console.log(this.state);
 		}
@@ -878,9 +878,7 @@ export class FightScene extends Phaser.Scene {
 						this.alliesHud[this.currentAlly].DisplayAttacks();
 						this.pointer.visible = true;
 						
-					} else console.log("No hay maná ;-;");
-
-					
+					}
 				}
 				
 				if(Phaser.Input.Keyboard.JustDown(this.aux.sKey))

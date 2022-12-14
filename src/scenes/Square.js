@@ -10,7 +10,7 @@ export default class Square extends FatherScene {
 	// inicializamos la escena
 	create() {
 		super.create();
-
+		let self = this;
 		this.iFunctions = [function(){
 			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest');
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){

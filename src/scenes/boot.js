@@ -77,6 +77,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
 		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
 		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
+		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
 
         // NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
@@ -151,6 +152,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('melendi_shock','assets/textures/Characters/melendi_shock.png',{frameWidth:22, frameHeight:27});
 
         // jarfaiter
+		this.load.image('jarfaiter','assets/textures/Characters/jarfaiter.png');
+		this.load.image('jarfaiterHead','assets/textures/HUD/explore/jarfaiterHead.png');
 		this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/jarfaiter_idle.png',{frameWidth:19, frameHeight:26})
 		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/jarfaiter_wow.png',{frameWidth:19, frameHeight:26})
 		this.load.spritesheet('jarfaiter_daño', 'assets/textures/Characters/jarfaiter_daño.png',{frameWidth:19, frameHeight:26})
@@ -158,6 +161,30 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('jarfaiter_burn','assets/textures/Characters/jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_poison','assets/textures/Characters/jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_shock','assets/textures/Characters/jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
+
+		//pedro sanxe
+		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
+        this.load.image('sanxeHead', 'assets/textures/HUD/explore/sanxeHead.png');
+		this.load.spritesheet('sanxe_idle', 'assets/textures/Characters/sanxe_idle.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_wow', 'assets/textures/Characters/sanxe_wow.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_daño', 'assets/textures/Characters/sanxe_daño.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_dead', 'assets/textures/Characters/sanxe_dead.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_burn','assets/textures/Characters/sanxe_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
+
+		// objetos
+		this.load.image('cigarro', 'assets/textures/Props/cigarro.png');
+		this.load.image('dalsyF', 'assets/textures/Props/dalsyFresa.png');
+		this.load.image('dalsyN', 'assets/textures/Props/dalsyNaranja.png');
+		this.load.image('fria', 'assets/textures/Props/fria.png');
+		this.load.image('kebab', 'assets/textures/Props/kebab.png');
+		this.load.image('porro', 'assets/textures/Props/porro.png');
+		this.load.image('tartaS', 'assets/textures/Props/tartaSantiago.png');
+		this.load.image('i200', 'assets/textures/Props/cigarro.png');
+		this.load.image('i600', 'assets/textures/Props/cigarro.png');
+		this.load.image('i1', 'assets/textures/Props/cigarro.png');
+
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');

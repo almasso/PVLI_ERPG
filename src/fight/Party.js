@@ -4,6 +4,7 @@ import {EnviromentInfo} from "../fight/EnviromentInfo.js"
 import { QuestLog } from '../Quest.js';
 import Inventory from '../obj/Inventory.js';
 
+
 // Esta clase gestionará todo lo que tenga que ver con aliados
 export class Party{
 	constructor()

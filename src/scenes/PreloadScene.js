@@ -36,6 +36,7 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('attackBlock','assets/textures/HUD/AllyAttack.png');
 		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
 		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
+        this.load.image('sanxeHead', 'assets/textures/HUD/explore/sanxeHead.png');
 
 
         //PERSONAJES Y NPCS
@@ -58,6 +59,7 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.laod.image('patri', 'assets/textures/Characters/patri.png');
+		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
 		
         //FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
@@ -113,6 +115,14 @@ export default class Preload extends Phaser.Scene {
 		this.load.spritesheet('jarfaiter_burn','assets/textures/Characters/jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_poison','assets/textures/Characters/jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_shock','assets/textures/Characters/jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
+
+		this.load.spritesheet('sanxe_idle', 'assets/textures/Characters/sanxe_idle.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_wow', 'assets/textures/Characters/sanxe_wow.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_daño', 'assets/textures/Characters/sanxe_daño.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_dead', 'assets/textures/Characters/sanxe_dead.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_burn','assets/textures/Characters/sanxe_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
 
 
         //JSON

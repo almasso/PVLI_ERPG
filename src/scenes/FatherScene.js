@@ -13,7 +13,7 @@ export default class FatherScene extends Phaser.Scene {
     constructor(key){
         super({key: key});
         this.manin;
-        this.inventory = allyParty.inventory;
+        allyParty.inventory;
         this.grassColliders = [];
     }
 
@@ -69,7 +69,7 @@ export default class FatherScene extends Phaser.Scene {
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.sNpcs){
-			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, this.inventory);
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, allyParty.inventory);
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.hNpcs){
