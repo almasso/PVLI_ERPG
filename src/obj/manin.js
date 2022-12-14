@@ -4,6 +4,8 @@ import { QuestNPC } from "../Quest.js";
 import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 import shopNPC from "./shopNPC.js";
 
+const PROBABILIDAD_COMBATE = 5;
+
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info,) {
 		super(scene, x, y, 'manin');
@@ -41,6 +43,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.physics.world.enable(this.zone);
         this.stepsWalked = 0;
         this.touchingGrass = false;
+		this.random = 100;
 
 		this.touchingFria=false;
 		this.moves = [false, false, false, false] // DERECHA, IZQUIERDA, ARRIBA, ABAJO
@@ -233,12 +236,15 @@ export class Manin extends Phaser.GameObjects.Sprite {
 
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
 
-        if(this.stepsWalked > 100){
+        if(this.stepsWalked > 20 && (this.random < PROBABILIDAD_COMBATE)){
+			this.random = 100;
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
             this.scene.Fight();
         }
+		
+		
 		if(this.touchingFria )
 		{
 			
@@ -288,6 +294,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
+			this.random = Math.floor(Math.random() * 100);
 			this.stepsWalked++;
 			console.log("A VE");
 		}
