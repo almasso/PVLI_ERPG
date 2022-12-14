@@ -5,7 +5,7 @@ import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 import shopNPC from "./shopNPC.js";
 
 export class AllyTEST extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, manin, info,) {
+	constructor(scene, x, y, manin, info) {
 		super(scene, x, y, 'manin');
         
         this.scene.add.existing(this);
@@ -17,7 +17,7 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7,7);
+        this.trigger.setScale(7);
 		this.info = info;
 		this.isInteracting = false;
 	}
@@ -25,12 +25,11 @@ export class AllyTEST extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
-
 }
 
 export class Manin extends Phaser.GameObjects.Sprite {
 
-	constructor(scene, x, y, uiScene, questLog, name) {
+	constructor(scene, x, y, uiScene, name) {
 		super(scene, x, y, 'manin_move');
 		this.scene = scene;
 		this.speed = 300; // Nuestra velocidad de movimiento será 100
@@ -57,8 +56,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.isInteracting = false;
 		this.shopping = false;
 
-		this.questLog = questLog;
-		
 		// añadimos físicas
 		scene.physics.add.existing(this);
 
@@ -119,17 +116,18 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
 				this.collider.activateQuest();
+				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
 				console.log("OBJETIVO COMPLETADO")
 				this.collider.advanceQuest();
+				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
 			this.isInteracting = false;
 		}
 		else if(this.collider instanceof shopNPC){
 			this.shopping = true;
 			this.collider.currentlyTalking = true;
-			this.collider.loadInventory(this.scene.inventory);
 			this.collider.readDialogues();
 		}
 		else if(this.collider instanceof NPC) {
@@ -141,6 +139,8 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		{ 
 			allyParty.Add(this.collider.info);
 			this.scene.scene.get('hud').Reset();
+			this.collider.trigger.destroy();
+			this.collider.destroy();
 			this.isInteracting = false;
 		}
 		else if(this.collider instanceof interactuableObj){
@@ -240,9 +240,9 @@ export class Manin extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(0);
             this.scene.Fight();
         }
+		/* cosa de Raúl para cambio de escenas
 		if(this.touchingFria )
 		{
-			
 			if(this.nameScene==="PLAZA")
 			{
 				if(this.moves[0]&& this.dKey.isDown)
@@ -283,14 +283,13 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.scene.Plaza();
 			}
 			
-		}
+		}*/
 	}
 
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
 			this.stepsWalked++;
-			console.log("A VE");
 		}
 	}
 }

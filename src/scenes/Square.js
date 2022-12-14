@@ -6,33 +6,29 @@ import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import shopNPC from '../obj/shopNPC.js';
 import healerNPC from '../obj/healerNPC.js';
-
+import {allyParty} from '../fight/Party.js'
 // Escena de exploración (temporal de momento)
 export default class Square extends Phaser.Scene {
-	
 	// construimos la escena
 	constructor() {
 		super({ key: 'square' });
 		this.manin; // protagonista
-		this.inventory;
+		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
 	}
 	
+	//#region input
+	generateInput(){
+		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
+		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
+	}
+	//#endregion	
+
 	// inicializamos la escena
 	create() {
-
-		//#region input
-		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
-		this.wKey = this.input.keyboard.addKey('W'); // move up
-		this.aKey = this.input.keyboard.addKey('A'); // move left
-		this.sKey = this.input.keyboard.addKey('S'); // move down
-		this.dKey = this.input.keyboard.addKey('D'); // move right
-		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
-		this.eKey = this.input.keyboard.addKey('E'); //chose
-		this.qKey = this.input.keyboard.addKey('Q');  //attack
-		//#endregion	
+		this.generateInput();
 		//Imagen de fondo
-		var bg = this.add.image(0, 0, 'square').setOrigin(0, 0);
+		var bg = this.add.image(0, 0, EnviromentInfo.bg).setOrigin(0, 0);
 
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
@@ -43,54 +39,48 @@ export default class Square extends Phaser.Scene {
 		this.questLog = "test"; 
 
 		// creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), new QuestLog(), "PLAZA");
-		this.scene.get('hud').createQuests(this.manin);
-		this.manin.questLog.setQuestHUD(this.scene.get('hud').questHud);
-		this.scene.get('hud').questHud.Update();
-		//#region  creamos los bordes del mundo
+		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'), "PLAZA");
+		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);
 		let bUp = new Bound(this, 0, -1 - upperBackgroundOffset,bg.displayWidth,1);
 		let bDown = new Bound(this, 0, bg.displayHeight + upperBackgroundOffset,bg.displayWidth,1);
 		//#endregion
+
 		// la cámara sigue a manín
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		let npc_dialogues = this.cache.json.get('npc_dialogues');
 		// #region generamos a los NPCs
-		let npc1 = new NPC(this, 400, 300, 'elmotivao', 0, npc_dialogues, this.manin);
-		let npc2 = new NPC(this, 200, 200, 'vovovo', 1, npc_dialogues, this.manin);
-		let npc3 = new NPC(this, 300, 200, 'jatsune', 2, npc_dialogues,this.manin);
-		//let npc4 = new NPC(this, 500, 100, 'aloy', 3, npc_dialogues, this.manin);
-		//let npc5 = new NPC(this, 300, 100, 'kratos', 4, npc_dialogues, this.manin);
-		let npc4 = new NPC(this, 500, 100, 'alex', 3, npc_dialogues, this.manin);
-		let npc5 = new NPC(this, 100, 100, 'frozono', 4, npc_dialogues, this.manin);
-		let npc6 = new NPC(this, 100, 200, 'compuman', 5, npc_dialogues, this.manin);
-		let npc7 = new NPC(this, 100, 300, 'unverifiedtoni', 6, npc_dialogues, this.manin);
-		let npc8 = new NPC(this, 200, 400, 'verifiedtoni', 7, npc_dialogues, this.manin);
-		let npc9 = new NPC(this, 600, 400, 'pepperboy', 8, npc_dialogues, this.manin);
-		let npANc = new NPC(this, 700, 500, 'compuman', 12, npc_dialogues, this.manin)
 
-		let qNpc = new QuestNPC(this, 400, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 1, 'guitarQuest', "Mi Guitarra", ["Recupera la guitarra"]));
-
-		let qNpc2 = new QuestNPC(this, 200, 500, 'melendi', 5, npc_dialogues, this.manin, new Quest('manin', 2, 'guitarQuest2', "Prueba 2", ["Recupera la otra guitarra"
-		,"Pelea contra melendi2"]));
-		
-		let sNpc = new shopNPC(this, 300, 100, 'alex', 9, npc_dialogues, this.manin, this.inventory);
-		let sNpc2 = new shopNPC(this, 400, 200, 'frozono', 9, npc_dialogues, this.manin, this.inventory);
-
-		let hNpc = new healerNPC(this, 600, 100, 'patri', 11, npc_dialogues, this.manin);
-
-		this.npcs = [npc1, npc2, npc3, npc4, npc5, npc6, npc7, npc8, npc9, qNpc, qNpc2, sNpc, sNpc2, hNpc, npANc];
+		this.npcs = [];
+		for(let i of EnviromentInfo.npcs){
+			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.qNpcs){
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, npc_dialogues, 
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj));
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.sNpcs){
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, this.inventory);
+			this.npcs.push(newNpc);
+		}
+		for(let i of EnviromentInfo.hNpcs){
+			let newNpc = new healerNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			this.npcs.push(newNpc);
+		}
 		for(let e of this.npcs) e.scale = 2.5;
-
+		//#endregion
+		
+		// #region Obj. Interactivos (se podrían hacer desde EnvInfo? suena feo en general)
 		let self = this;
 		this.guitar = new interactuableObj(this, 700, 100, 'manin', 0.7, 0.7, function(){
-			let guitarQuest = self.manin.questLog.GetQuest('guitarQuest');
-			console.log(guitarQuest);
+			let guitarQuest = allyParty.questLog.GetQuest('guitarQuest');
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
-				self.manin.questLog.advanceQuest('guitarQuest'); 
-				self.scene.get('hud').UpdateHUD();
+				allyParty.questLog.advanceQuest('guitarQuest'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
 				self.guitar.trigger.destroy();
 				self.guitar.destroy();
 			}
@@ -98,10 +88,12 @@ export default class Square extends Phaser.Scene {
 		this.guitar.setScale(3);
 
 		this.interactuableObjects = [this.guitar];
+		//#endregion
 
-		// genera la hierba y su collider. estaría guay parametrizarlo uwu.
+		// genera la hierba y su collider
+		// this.GenerateHostileGround(900, 200, 4, 4, 2.5);
+
 		this.GenerateHostileGround(900, 200, 4, 4, 2.5);
-		//this.GenerateHostileGround(500, 200, 4, 4, 2.5);
 		this.ChangeScene();
 		
 		//this.physics.add.collider(this.manin, house);
@@ -114,7 +106,6 @@ export default class Square extends Phaser.Scene {
 
 		this.ally = new AllyTEST(this, 300, 300, this.manin, EnviromentInfo.character);
 		this.ally.scale = 2.5;
-		//#endregion
 	}
 	
 	// generación de la hierba hostil (TEMPORAL)
@@ -149,37 +140,29 @@ export default class Square extends Phaser.Scene {
 
 	ChangeScene()
     {
-        this.frias = []; // array de hierbas
-        this.colliders = [];
-		// generamos las hierbas que se nos digan (en este caso 16 porque, de nuevo, TEMPORAL)
-		
-        this.frias.push(new enviromentObj(this, 1195, 775, 'pixel',1,100));
-        this.frias.push(new enviromentObj(this, 50, 775 , 'pixel',1,100));
-        this.frias.push(new enviromentObj(this, 500, 15, 'pixel',100,1));
+		this.sceneChangerCoords = [];
+		this.changeCol = [];
 
-		// añadimos la zona de colisión
-        for(let i = 0; i < 3; i++){
-            this.colliders.push(this.add.zone(this.frias[i].x,this.frias[i].y ).setSize(this.frias[i].displayWidth-55,(this.frias[i].displayHeight) ).setOrigin(0,0));		
-            this.physics.world.enable(this.colliders[i]); // añadimos su collider
-            this.colliders[i].body.setAllowGravity(false); // quitamos gravedad
-            this.colliders[i].body.moves = false;
-            
-            // creamos eventos para decirle a manín cuándo está tocando o no suelo hostil
-            this.colliders[i].on("overlapstart", () =>{
-                this.manin.touchingFria = true;
-                this.manin.moves[i]=true;
-                
-            })
-            this.colliders[i].on("overlapend", () =>{
-                this.manin.touchingFria = false;
-                this.manin.moves[i]=false;
-    
-            })
-		    this.physics.add.overlap(this.manin, this.colliders[i]);
-
-        }
+		this.sceneChangerCoords.push(new enviromentObj(this, 1195, 775, 'pixel',100,100));
+		this.sceneChangerCoords.push(new enviromentObj(this, 50, 775, 'pixel',100,100));
+		this.sceneChangerCoords.push(new enviromentObj(this, 500, 15, 'pixel',100,100));
 		
-    }
+		let self = this;
+		let o = 0;
+
+		for(let i of this.sceneChangerCoords){
+			this.changeCol.push(this.add.zone(i.x, i.y).setSize(i.displayWidth, i.displayHeight).setOrigin(0,0));
+			this.physics.world.enable(this.changeCol[o]);
+			this.changeCol[o].body.setAllowGravity(false);
+			this.changeCol[o].body.moves = false;
+
+			this.changeCol[o].on("overlapstart", () => {
+				if(self.spaceKey.isDown)
+					self.scene.get('EnvManager').changeScene(1);
+			});
+			o++;
+		}
+	}
 
 	updateInventory(inv){
 		this.inventory = inv;
@@ -205,12 +188,13 @@ export default class Square extends Phaser.Scene {
 			}
 		});
 
-        for(let i = 0; i < 3; i++){
-            var touchingFria = !this.colliders[i].body.touching.none;
-            var wasTouchingFria = !this.colliders[i].body.wasTouching.none;
-            
-            if(touchingFria && !wasTouchingFria) {this.colliders[i].emit("overlapstart"); }
-            else if(!touchingFria && wasTouchingFria) this.colliders[i].emit("overlapend");
+        for(let i of this.changeCol){
+			let maninBounds = self.manin.zone.getBounds();
+			let changeZoneBounds = i.getBounds();
+			
+			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
+				i.emit("overlapstart");
+			}
         }
 		
 		for(let i of this.npcs) {
@@ -239,25 +223,15 @@ export default class Square extends Phaser.Scene {
 
 	// pasamos a la escena de pelea
     Fight(){
-		/*
-		this.inventory.addItem(new Object('Fría', 10, 0));
-		this.inventory.addItem(new Object('Fría', 10, 0));
-		this.inventory.addItem(new Object('1111111111', 10, 0));
-		this.inventory.addItem(new Object('2222222222', 10, 0));
-		this.inventory.addItem(new Object('3333333333', 10, 0));
-		this.inventory.addItem(new Object('4444444444', 10, 0));
-		*/
 		this.manin.touchingGrass = false;
         this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
-		this.scene.get('fightscene').CurrentScene('square');
+		this.scene.get('fightscene').CurrentScene(this.key);
         this.scene.sleep('square');
 		this.scene.get('hud').Fight();
     }
 	
-	// pasamos a la escena de pelea
 	Park(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveRight=false;
@@ -267,7 +241,6 @@ export default class Square extends Phaser.Scene {
         this.scene.sleep('square');
     }
 	Cementery(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveLeft=false;
@@ -277,7 +250,6 @@ export default class Square extends Phaser.Scene {
         this.scene.sleep('square');
     }
 	Port(){
-		console.log("par")
 		this.manin.touchingFria = false;
 		this.manin.touchingGrass = false;
 		this.manin.moveDown=false;
@@ -286,9 +258,4 @@ export default class Square extends Phaser.Scene {
 
         this.scene.sleep('square');
 	}
-
-	LoadInventory(inv){
-		this.inventory = inv;
-	}
-	
 }

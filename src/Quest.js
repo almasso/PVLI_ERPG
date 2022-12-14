@@ -1,4 +1,6 @@
 import NPC from './obj/npc.js'
+import { allyParty } from './fight/Party.js';
+import { AllyTEST } from './obj/manin.js';
 
 export class QuestNPC extends NPC {
     constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
@@ -8,7 +10,8 @@ export class QuestNPC extends NPC {
 
     activateQuest(){
         if(!this.quest.acquired){
-            this.manin.questLog.addQuest(this.quest);
+            allyParty.questLog.addQuest(this.quest);
+            allyParty.questLog.actualQuest = allyParty.questLog.numQuests - 1; 
             this.scene.scene.get('hud').UpdateHUD();
             this.quest.acquired = true;   
         }
@@ -16,10 +19,10 @@ export class QuestNPC extends NPC {
     
     advanceQuest(){
         this.quest.advanceQuest(this.quest.id);
-        this.manin.questLog.actualQuest = this.manin.questLog.GetQuest(this.quest.id).index; 
         //this.manin.questLog.CompleteQuest(this.quest.id);
+        allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
         if(this.quest.finished){
-            this.manin.questLog.CompleteQuest(this.quest.id);
+            allyParty.questLog.CompleteQuest(this.quest.id);
         }
         this.scene.scene.get('hud').UpdateHUD();
     }
@@ -36,18 +39,11 @@ export class QuestLog {
         this.actualQuest = -1;
     }
 
-    setQuestHUD(questHud){
-        this.questHud = questHud;
-    }
-
     addQuest(quest){
         console.log(this.actualQuest + "   " + this.numQuests);
         this.quests.push(quest);
         this.numQuests++;
         this.actualQuest = this.numQuests - 1; 
-        console.log(this.actualQuest + "   " + this.numQuests);
-        this.questHud.Update();
-        console.log(this.quests);
         // añadir todos los textos y eso
     }
 
@@ -98,8 +94,7 @@ export class QuestLog {
 }
 
 export class Quest {
-    constructor(npc, stages, id, name, objectives){
-        this.npc = npc;
+    constructor(stages, id, name, objectives){
         this.stages = stages;
         this.stage = 0;
         this.id = id;

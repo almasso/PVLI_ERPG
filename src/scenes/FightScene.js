@@ -253,10 +253,10 @@ export class FightScene extends Phaser.Scene {
 			}
 			else return;
 		})
-		//this.inventoryHUD = new InventoryHUD(this, this.inventory, 600, 180);
+		this.inventoryHUD = new InventoryHUD(this, this.inventory, 600, 180);
 	}
 	
-    k=0;//···RAUL PRUEBAS···
+    k=0; //···RAUL PRUEBAS···
 	// Añadimos eventos para seleccionar a aliados como objetivos
 	AddPartySelector(ally){
 		ally.on("pointerover",() => {
