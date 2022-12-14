@@ -102,7 +102,13 @@ let square = {
 	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
 	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
-	sNpcs: [npcInfo(300, 100, 'alex', 9)],
+	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [itemInfo("Cigarro", -5, 10, 10, 'cigarro')
+	, itemInfo('Kebab', 10, -5, 10,'kebab'), itemInfo('Fría', 20, -5, 20, 'fria'), 
+		itemInfo('Porro', -5, 20, 20, 'porro'), itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN'),
+		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF'),
+		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200'),
+		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600'),
+		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1')])],
 	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
 	hostile: [hostileInfo(900,200,'hierba', 4, 4, 2.5), 
 			  hostileInfo(700, 500, 'hierba', 1, 1, 2)],
@@ -124,7 +130,13 @@ let park = {
 	bg: 'square',
 	npcs: [npcInfo(400,300, 'alex', 0), npcInfo(200, 200, 'alex', 1), npcInfo(300, 200, 'alex', 2)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
-	sNpcs: [npcInfo(300, 100, 'alex', 9)],
+	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [itemInfo("Cigarro", -5, 10, 10, 'cigarro')
+	, itemInfo('Kebab', 10, -5, 10,'kebab'), itemInfo('Fría', 20, -5, 20, 'fria'), 
+		itemInfo('Porro', -5, 20, 20, 'porro'), itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN'),
+		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF'),
+		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200'),
+		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600'),
+		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1')])],
 	hNpcs:  [npcInfo(600, 100, 'verifiedtoni', 11)],
 	character: [{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
@@ -177,8 +189,16 @@ let port = {
 	key: 'port'
 }
 
+function itemInfo(name, hp, mp, price, img) {
+	return {name: name, hp: hp, mp: mp, price: price, img: img};
+}
+
 function npcInfo(x, y, img, id){
 	return {x: x, y: y, img: img, id: id};
+}
+
+function sNpcInfo(x, y, img, id, items){
+	return {x: x, y: y, img: img, id: id, items: items};
 }
 
 function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj){

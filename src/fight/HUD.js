@@ -460,6 +460,7 @@ export class shopHUD{
 		});
 
 		this.buyButton.on('pointerup', () => {
+			self.moneyText.setText("Dinero: " + allyParty.inventory.money);
 			self.displayItems();
 		});
 

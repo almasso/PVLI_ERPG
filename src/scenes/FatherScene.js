@@ -5,6 +5,7 @@ import NPC from '../obj/npc.js';
 import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import { Quest, QuestNPC, QuestLog } from '../Quest.js';
 import shopNPC from '../obj/shopNPC.js';
+import Object from '../obj/Object.js';
 import healerNPC from '../obj/healerNPC.js';
 import {allyParty} from '../fight/Party.js'
 // Escena de exploración (temporal de momento)
@@ -69,7 +70,11 @@ export default class FatherScene extends Phaser.Scene {
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.sNpcs){
-			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, allyParty.inventory);
+			let items = [];
+			for(let o of i.items){
+				items.push(new Object(o.name, o.hp, o.mp, o.price, o.img))
+			}
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, allyParty.inventory, items);
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.hNpcs){
