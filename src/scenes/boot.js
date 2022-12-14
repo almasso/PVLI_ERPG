@@ -97,14 +97,17 @@ export default class Boot extends Phaser.Scene {
 		
         // FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
-        this.load.image('square', 'assets/textures/Backgrounds/plaza.png');
+        this.load.image('square', 'assets/textures/Backgrounds/plaza2.png');
         this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png'); // BORRAR
         this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
+		this.load.image('park','assets/textures/Backgrounds/park.png')
+		this.load.image('clif','assets/textures/Backgrounds/clif.png')
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
+		this.load.image('insignia', 'assets/textures/Props/insignia.png');
 
         // ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
@@ -161,6 +164,9 @@ export default class Boot extends Phaser.Scene {
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
+
+		//MÚSICA
+		this.load.audio('dreamon', ['assets/sounds/dreamon.ogg', 'assets/sounds/dreamon.mp3',]);
 
         // Destruye la barra de cargando página
 		this.load.on('complete', function () {

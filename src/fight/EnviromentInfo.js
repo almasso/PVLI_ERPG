@@ -97,7 +97,7 @@ let square = {
 	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
-	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2)],
+	npcs: [npcInfo(400,300, 'elmotivao', 0), npcInfo(200, 200, 'vovovo', 1), npcInfo(300, 200, 'jatsune', 2),npcInfo(800,500, 'kratos', 13)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [npcInfo(300, 100, 'alex', 9)],
 	hNpcs:  [npcInfo(600, 100, 'patri', 11)],
@@ -106,7 +106,7 @@ let square = {
 	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
 	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
 	travel: [travelInfo(1195, 775, 'pixel', 100, 100, scenes.park),
-			 travelInfo(50, 775, 'pixel', 100, 100, scenes.park),
+			 travelInfo(50, 775, 'pixel', 100, 100, scenes.cementery),
 			 travelInfo(500, 150, 'pixel', 100, 100, scenes.park)]
 }
 
@@ -114,7 +114,7 @@ let square = {
 let park = {
 	launched: false,
 	key: 'park',
-	bg: 'square',
+	bg: 'park',
 	npcs: [npcInfo(400,300, 'alex', 0), npcInfo(200, 200, 'alex', 1), npcInfo(300, 200, 'alex', 2)],
 	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
 	sNpcs: [npcInfo(300, 100, 'alex', 9)],
@@ -142,7 +142,18 @@ let park = {
 
 let cementery = {
 	launched: false,
-	key : 'cementery'
+	key : 'cementery',
+	bg: 'clif',
+	npcs: [npcInfo(485,125, 'kratos', 13)],
+	qNpcs: [],
+	 sNpcs: [],
+	 hNpcs:  [],
+	 character: [],
+	enemies: [],
+	hostile: [],
+	eObj: [eObjInfo(200, 300, 'insignia', 0.5, 0.5)],
+	iObj: [],
+	travel: [travelInfo(700, 100, 'pixel', 100, 100, scenes.square)]
 }
 
 let port = {

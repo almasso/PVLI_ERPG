@@ -29,7 +29,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.create();
         
     }
- self =this;
+
     generateTrigger() {
         this.collider= this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
@@ -118,10 +118,10 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.ºurrentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
         console.log(this.currentDialog)
-            if(this.currentDialog==35)
+            if(this.currentDialog==69)
             {
                 console.log("SI")
-                this.scene.Kratos(true);
+                this.scene.Kratos();
                
             }
 
