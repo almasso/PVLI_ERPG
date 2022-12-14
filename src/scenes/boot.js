@@ -101,6 +101,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('bob','assets/textures/NPC-RAUL/bob.png'); 
 		this.load.image('tienda', 'assets/textures/Characters/tienda.png');
 		this.load.image('sirenita','assets/textures/NPC-RAUL/sirenita.png'); 
+		this.load.image('rick','assets/textures/NPC-RAUL/rick.png'); 
+		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png'); 
 		
 
 		
@@ -120,6 +122,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('tree', 'assets/textures/Props/tree.png');
 		this.load.image('valla', 'assets/textures/Props/valla.png');
 		this.load.image('ten', 'assets/textures/Props/ten.png');
+		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 
         // ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});

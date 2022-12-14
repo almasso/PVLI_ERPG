@@ -122,6 +122,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             {
                 console.log("SI")
                 this.scene.Kratos();
+                
                
             }
 
