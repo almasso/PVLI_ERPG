@@ -159,6 +159,17 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('jarfaiter_poison','assets/textures/Characters/jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('jarfaiter_shock','assets/textures/Characters/jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
 
+		//pedro sanxe
+		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
+        this.load.image('sanxeHead', 'assets/textures/HUD/explore/sanxeHead.png');
+		this.load.spritesheet('sanxe_idle', 'assets/textures/Characters/sanxe_idle.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_wow', 'assets/textures/Characters/sanxe_wow.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_daño', 'assets/textures/Characters/sanxe_daño.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_dead', 'assets/textures/Characters/sanxe_dead.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('sanxe_burn','assets/textures/Characters/sanxe_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
+
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 

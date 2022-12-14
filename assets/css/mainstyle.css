@@ -174,14 +174,12 @@ ul.desarrolladores div {
 }
 ul.desarrolladores div#david img, ul.desarrolladores div#raul img, ul.desarrolladores div#alex img {
     border-radius: 20%;
-    width:100%;
-    height:100%;
+    width: 100%;
     float:left;
 }
 ul.desarrolladores div#pablo img, ul.desarrolladores div#roi img {
     border-radius: 20%;
     width:100%;
-    height:100%;
     float:right;
 }
 ul.desarrolladores div#david blockquote, ul.desarrolladores div#raul blockquote, ul.desarrolladores div#alex blockquote {

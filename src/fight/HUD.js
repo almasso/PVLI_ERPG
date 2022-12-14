@@ -414,14 +414,16 @@ export class shopHUD{
 		this.createButtons();
 	}
 
+	//this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - this.shopBlock.displayHeight / 2 - 10 ->comprar
+	//this.buyButton.x + this.buyButton.displayWidth + 1, this.buyButton.y  -> no comprar
 	createButtons(){
-		this.buyButton = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - this.shopBlock.displayHeight / 2 - 10, 'buy'); //Botón de comprar
+		this.buyButton = this.scene.add.image(400, 475, 'buy'); //Botón de comprar
 		this.buyButton.setScale(1.5);
 		this.buyButton.depth = 4;
 		this.buyButton.setInteractive();
 		this.buyButton.visible = false;
 
-		this.naoButton = this.scene.add.image(this.buyButton.x + this.buyButton.displayWidth + 1, this.buyButton.y, 'noBuy'); //Botón de no comprar
+		this.naoButton = this.scene.add.image(500, 475, 'noBuy'); //Botón de no comprar
 		this.naoButton.setScale(1.5);
 		this.naoButton.depth = 4;
 		this.naoButton.setInteractive();
