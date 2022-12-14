@@ -13,6 +13,7 @@ export default class ParkScene extends Phaser.Scene {
 	// construimos la escena
 	constructor() {
 		super({ key: 'park' });
+		this.key = 'park';
 		this.manin; // protagonista
 		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
@@ -258,7 +259,7 @@ export default class ParkScene extends Phaser.Scene {
 		this.scene.launch('fightscene');
 		this.scene.get('fightscene').LoadInventory(this.inventory);
 		this.scene.get('fightscene').CurrentScene(this.key);
-		this.scene.sleep('square');
+		this.scene.sleep('park');
 		this.scene.get('hud').Fight();
 	}
 

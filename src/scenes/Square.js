@@ -12,6 +12,7 @@ export default class Square extends Phaser.Scene {
 	// construimos la escena
 	constructor() {
 		super({ key: 'square' });
+		this.key = 'square';
 		this.manin; // protagonista
 		this.inventory = allyParty.inventory;
 		this.hierbasColliders = [];
