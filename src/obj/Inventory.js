@@ -1,7 +1,7 @@
 export default class Inventory{
     constructor(){
         this.inv = [];
-        this.money = 1000;
+        this.money = 10000000;
     }
 
     addItem(obj){

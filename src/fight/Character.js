@@ -21,12 +21,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		this.targets = []; // objetivos
 		this.alteredStates = [false, false, false]; // estados alterados (quemado, paralizado, envenenado) 
 		
-		//#region  animaciones (PRUEBAS RAÚL)
-		// this.mon='artist'; // pruebas animación
-		// console.log(imageId);
-		// if(imageId!='manin'){						
-		// 		this.mon=imageId;	
-		// }
 		this.mon=imageId;
 
 		this.scene.anims.create({

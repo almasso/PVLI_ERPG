@@ -48,13 +48,14 @@ export class Party{
 		console.log(this.party.length-1);
 		this.party[this.party.length-1].index = this.party.length - 1;
 		this.party[this.party.length-1].initialIndex = this.party.length - 1;
+		this.party[this.party.length-1].alteredStates = [false,false,false];
 	}
 
 	// Llevamos la party al estado original (TEMPORAL)
 	RestartParty()
 	{
 		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
+					 [attackInfo("Churrazo",0,300,0,2),attackInfo("Podación",0,40,15,1),
 					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
 					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
