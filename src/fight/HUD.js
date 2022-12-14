@@ -259,6 +259,7 @@ export class QuestHUD{
 			this.text.text = "-" +aux.text;
 		}
 		else{
+			this.questName.text = "";
 			this.text.text = aux.text;
 		}
 		if(aux.yellowColor) this.text.setStyle({
@@ -590,9 +591,10 @@ class HealthBar {
 	}
 
 	// actualizamos la barra
-	Update(newValue){
+	Update(newValue, bool = true){
+		console.log("HEALTHBAR = " + bool);
 		this.updateValue(newValue); // actualizamos su valor
-		this.draw(); // dibujado
+		this.draw(bool); // dibujado
 	}
 
 	// actualización de valor (método "interno")
@@ -618,7 +620,7 @@ class HealthBar {
 	}
 
 	// dibujado
-	draw ()
+	draw (bool = true)
 	{
 		this.bar.clear(); // limpiamos la barra
 		if(this.hasText) this.texto.visible = !this.hidden;
@@ -640,15 +642,23 @@ class HealthBar {
 				else this.bar.fillStyle(0x0000ff);
 			}
 	
-			let keepDrawing = this.keepDrawing();
-			if(keepDrawing.changing && this.renderingValue > 0) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
-				if(keepDrawing.decrease) this.renderingValue -= this.renderDiff;
-				else this.renderingValue += this.renderDiff;
-			}
-
-			let barWidth = (this.renderingValue*this.width) / this.maxValue; // ancho
+			if(bool){
+				let keepDrawing = this.keepDrawing();
+				if(keepDrawing.changing && this.renderingValue > 0) {        // La barra de vida puede ser negativa por el renderingvalue, retocar esto
+					if(keepDrawing.decrease) this.renderingValue -= this.renderDiff;
+					else this.renderingValue += this.renderDiff;
+				}
 	
-			this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
+				let barWidth = (this.renderingValue*this.width) / this.maxValue; // ancho
+		
+				this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
+			}
+			else{
+				console.log("ENTREEE");
+				let barWidth = (this.value*this.width) / this.maxValue; // ancho
+		
+				this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
+			}
 		}
 	}
 
@@ -1019,6 +1029,14 @@ export class ExploreMenu {
 		this.downArrowParty.depth = 8;
 	}
 
+	Update(){
+		let self = this;
+		allyParty.party.forEach(function (char){
+			self.partyImages[char.initialIndex].stats.hp.Update(char.actualHp, false);
+			self.partyImages[char.initialIndex].stats.mp.Update(char.actualMp, false);
+		})
+	}
+
 	// Crear la información de los ataques
 	SetAttackInfo(attacks,oldIndex, srcAttack){
 		let attackInfo = [];
@@ -1184,6 +1202,8 @@ export class ExploreMenu {
 				images.stats.attacks[3].visible = false;
 			}
 		})
+
+		this.Update();
 	}
 
 	ManageParty(bool){

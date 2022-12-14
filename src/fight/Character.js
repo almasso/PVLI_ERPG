@@ -244,6 +244,46 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		})
 	}
 
+	
+	Heal(){
+		this.actualHp = this.maxHp;
+		this.actualMp = this.maxMp;
+		this.dead = false;
+		this.alteredStates = [false, false, false];
+		let self = this;
+		this.actualResistances.forEach(function (res,index){
+			res = self.resistances[index];
+		});
+	}
+
+	// Métodos para usar con los items
+	HealBurned(){
+		if(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
+			let self = this;
+			reduceBurnedRes.forEach(function (res){
+				self.actualResistances[res.index] += res.value;
+			})
+		}
+	}
+
+	HealParalized(){
+		if(this.alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){
+			let self = this;
+			reduceBurnedRes.forEach(function (res){
+				self.actualResistances[res.index] += res.value;
+			})
+		}
+	}
+
+	HealPoisoned(){
+		if(this.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
+			let self = this;
+			reduceBurnedRes.forEach(function (res){
+				self.actualResistances[res.index] += res.value;
+			})
+		}
+	}
+
 	Burned(){
 		console.log("this.actualHp");
 

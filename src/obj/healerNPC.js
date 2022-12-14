@@ -13,6 +13,7 @@ export default class healerNPC extends NPC{
             ally.dead = false;
             ally.alteredStates = [false, false, false];
         })
+        this.scene.scene.get('hud').UpdateHUD();
     }
 
     readDialogues(){

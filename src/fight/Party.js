@@ -13,6 +13,7 @@ export class Party{
 					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",4,40,15,1),
 					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)])];
 		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
@@ -46,6 +47,7 @@ export class Party{
 		else this.alliesNum = 4;
 		console.log(this.party.length-1);
 		this.party[this.party.length-1].index = this.party.length - 1;
+		this.party[this.party.length-1].initialIndex = this.party.length - 1;
 		this.party[this.party.length-1].alteredStates = [false,false,false];
 	}
 
