@@ -28,7 +28,8 @@
                 "Guardia" : 23,
                 "Tío la Vara" : 24,
                 "Rick Astley" : 25,
-                "Roi" : 26
+                "Roi" : 26,
+                "Iker Jiménez" : 27
             }
         }
     ],
@@ -196,6 +197,12 @@
             "npcName": "Roi",
             "verified": false,
             "developer": true
+        },
+        {
+            "npcID": 27,
+            "npcName": "Iker Jiménez",
+            "verified": false,
+            "developer": false
         }
     ],
     "texts" : [
@@ -698,6 +705,46 @@
             "npcID": 26,
             "unique": true,
             "text": "Payaso"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Hola amigos, y bienvenidos, a la nave del misterio."
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Hoy, en Cuarto Milenio, hablaremos del inquietante caso del programador que nunca tuvo un error de compilación"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Imagenes impactantes, nos preguntamos ¿Que está pasando aquí?"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Escalofriante"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "¿Será esto obra de algún tipo de espíritu o entidad?"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Estos graficos son, sin duda, escalofriantes"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "¿Que será lo que nos mueve? ¿Quizás Ovnis? ¿Pueden ser criaturas paranormales? ¿O será quizás un ser interdimensional más allá de los confines de esta realidad?"
+        },
+        {
+            "npcID": 27,
+            "unique": false,
+            "text": "Me parece un dato interesantísimo"
         }
     ]
 }
