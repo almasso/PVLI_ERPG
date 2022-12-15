@@ -27,6 +27,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.trigger.body.onOverlap = true;
         this.trigger.setScale(2,2);
         this.create();
+
+        this.rickroll = false;
         
     }
 
@@ -66,7 +68,22 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     multipleDialogues() {
         if(this.formerDialog !== this.currentDialog) this.formerDialog = this.currentDialog - 1;
         
-        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount)-1 )) {
+        if(this.npcID === 25 && !this.rickroll) {	
+            this.rickroll = true;	
+            const rickrollconfig = {
+                mute: false,
+                volume: 0.2,
+                rate: 1,
+                detune: 0,
+                seek: 0,
+                loop: false,
+                delay: 0,
+            };
+            this.rickroll = this.scene.sound.add('rickroll', rickrollconfig);
+            this.rickroll.play();
+        }
+
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
@@ -121,12 +138,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             if(this.currentDialog==69)
             {
                 console.log("SI")
-                this.scene.Kratos();
-                
-               
-            }
-
-       
+                this.scene.Kratos();           
+            }    
         return;
     }
 

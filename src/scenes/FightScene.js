@@ -193,7 +193,8 @@ export class FightScene extends Phaser.Scene {
 
 	// Acabamos el combate
 	EndCombat(){
-		console.log("ola");
+		this.combatMusic.stop();
+		this.victoryMusic.play();
 		this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
 		// ponemos las variables usadas para input por teclado a valores no válidos
@@ -664,6 +665,27 @@ export class FightScene extends Phaser.Scene {
 		this.state = FightState.SelectTurn;
 		this.end = false;
 		this.alreadyDone = false;
+		const musicconfig = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.combatMusic = this.sound.add('combat', musicconfig);
+		const victoryconfig = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: false,
+			delay: 0,
+		};
+		this.victoryMusic = this.sound.add('victory', victoryconfig);
+		this.combatMusic.play();
 
 		// INPUT
 		this.aux = new InputMan(this);
@@ -672,6 +694,7 @@ export class FightScene extends Phaser.Scene {
 		
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
+		this.
 		
 		// Creación de Party
 		this.alliesHud = []; // huds de aliados

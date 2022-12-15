@@ -101,20 +101,41 @@ let square = {
 	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	// attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
 	
-	npcs: [npcInfo(500,800, 'verifiedtoni', 12), npcInfo(700, 800, 'pepperboy', 1), npcInfo(275, 250, 'jatsune', 2),
-	npcInfo(1100,175, 'frozono', 0),	npcInfo(925,500, 'homero', 0),npcInfo(750,50, 'spider', 0),
-	npcInfo(50,500, 'patrik', 0),npcInfo(150,525, 'bob', 0),npcInfo(600,350, 'dinostatue', 0),npcInfo(700,525, 'rick', 0)],
-	
-	
-	qNpcs: [qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
-	sNpcs: [npcInfo(1050, 425, 'tienda', 9)],
-	hNpcs:  [npcInfo(100, 250, 'health', 11)],
+	npcs: [
+		npcInfo(500,800, 'verifiedtoni', 7), 
+		npcInfo(700, 800, 'pepperboy', 8), 
+		npcInfo(275, 250, 'jatsune', 2),
+		npcInfo(1100,175, 'frozono', 4),	
+		npcInfo(925,500, 'homero', 0), //homer no tiene diálogos
+		npcInfo(750,50, 'spider', 19),
+		npcInfo(50,500, 'patrik', 18),
+		npcInfo(150,525, 'bob', 17),
+		npcInfo(600,350, 'dinostatue', 0), //la estatua tampoco tiene diálogos
+		npcInfo(700,525, 'rick', 25),
+		npcInfo(1070,720, 'tiolavara', 24)
+	],
+	qNpcs: [
+		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+	],
+	sNpcs: [
+		npcInfo(1050, 425, 'tienda', 9)
+	],
+	hNpcs:  [
+		npcInfo(100, 250, 'health', 11)
+	],
 	hostile: [],
-	eObj: [eObjInfo(1000, 150, 'pixel', 150, 100),eObjInfo(540, 275, 'pixel', 140, 50)	,eObjInfo(600, 375, 'pixel', 250, 75),eObjInfo(600, 325, 'pixel', 150, 50)],
+	eObj: [
+		eObjInfo(1000, 150, 'pixel', 150, 100),
+		eObjInfo(540, 275, 'pixel', 140, 50),
+		eObjInfo(600, 375, 'pixel', 250, 75),
+		eObjInfo(600, 325, 'pixel', 150, 50)
+	],
 	iObj: [],
-	travel: [travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
-			 travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
-			 travelInfo(600, 50, 'pixel', 100, 100, scenes.port)]
+	travel: [
+		travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
+		travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
+		travelInfo(600, 50, 'pixel', 100, 100, scenes.port)
+	]
 }
 
 let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
@@ -127,86 +148,218 @@ let park = {
 	key: 'park',
 	bg: 'park',
 	
-	npcs: [npcInfo(1300,400, 'patri', 10),npcInfo(830,50, 'compuman', 5),npcInfo(100,300, 'unverifiedtoni', 6),
-	npcInfo(800,700, 'elmotivao', 0),	npcInfo(950,860, 'vovovo', 1),npcInfo(250,950, 'joker', 0),
-	npcInfo(1500,850, 'aloy', 0),npcInfo(1550,150, 'sirenita', 0),npcInfo(1000,600, 'ikerJimenez', 0)],
-	
-	
-	qNpcs: [qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])],
+	npcs: [
+		npcInfo(1300,400, 'patri', 10),
+		npcInfo(830,50, 'compuman', 5),
+		npcInfo(100,300, 'unverifiedtoni', 6),
+		npcInfo(800,700, 'elmotivao', 0),	
+		npcInfo(950,860, 'vovovo', 1),
+		npcInfo(250,950, 'joker', 15),
+		npcInfo(1500,850, 'aloy', 16),
+		npcInfo(1550,150, 'sirenita', 14),
+		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
+	],
+	qNpcs: [
+		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+	],
 	sNpcs: [],
 	hNpcs:  [],
-	character: [{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
-	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
-	attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-	attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]},
-	{x:500, y:500, name: "Jarfaiter", imgID: 'jarfaiter', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
-	rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60, attack: [attackInfo("Navajeros", 0, 20, 0, 1), attackInfo("Quiero que ardas", 2, 35, 30, 1), 
-	attackInfo("Ven a 4k", 0, 20, 25, 2), attackInfo("Porro",4,50,60,4)]},
-	{
-		name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
-		imgID: 'sanxe', 
-		actualHp: 75, 
-		maxHp: 75, 
-		actualMp: 115, 
-		maxMp: 115,
-		rP: 4, 
-		rR: 6, 
-		rF: 3, 
-		rE: 7, 
-		rT: 5, 
-		acurracy: 90, 
-		speed: 60, 
-		attack: [
-			attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
-			attackInfo("Chuletón al punto", 2, 35, 30, 1), 
-			attackInfo("Ataque Falcon", 0, 20, 25, 2), 
-			attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
-		]}],
-	enemies: [{name: "Artista", imgID:'artist', actualHp: 70, maxHp: 70, actualMp: 0, maxMp: 0, rP: 5, rR: 5, rF: 5, rE: 5, rT: 5, acurracy: 90, speed: 40,
-		attack: [attackInfo("Pincelada",2,20,0,1),attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),attackInfo("Xilografía en el pecho", 4, 30, 0, 1)],
-		money: 500},
-	{name: "Culturista", imgID:'people', actualHp: 80, maxHp: 80, actualMp: 0, maxMp: 0, rP: 8, rR: 6, rF: 4, rE: 3, rT: 6, acurracy: 85, speed: 60,
-	attack:[attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-	attackInfo("Poñetaso", 0, 30, 0, 1)]}],
-	hostile: [hostileInfo(875,310,'hierba', 3, 2, 2.5),hostileInfo(725,825,'hierba', 1, 1, 2.5),hostileInfo(650,900,'hierba', 1, 1, 2.5),hostileInfo(600,550,'hierba', 2, 1, 2.5),hostileInfo(1040,860,'hierba', 3, 2, 2.5),hostileInfo(875,700,'hierba', 3, 2, 2.5),hostileInfo(965,230,'hierba', 1, 1, 2.5),hostileInfo(800,150,'hierba', 2, 2, 2.5),hostileInfo(1500,335,'hierba', 2, 2, 2.5),hostileInfo(1400,500,'hierba', 3, 2, 2.5),hostileInfo(300, 50, 'hierba', 3, 2, 2),hostileInfo(335, 180, 'hierba', 2, 1, 2),
-	hostileInfo(150, 400, 'hierba', 1, 1, 2),hostileInfo(200, 500, 'hierba', 1, 1, 2),hostileInfo(350, 850, 'hierba', 2, 3, 2),
-	hostileInfo(25, 850, 'hierba', 5, 1, 2),hostileInfo(25, 725, 'hierba', 7, 2, 2)],
-	eObj: [eObjInfo(0, 265, 'tree', 6.5, 6.5),eObjInfo(126, 900, 'tree', 7, 7),eObjInfo(693, 25, 'tree', 7, 7),eObjInfo(1575, 640, 'tree', 7, 7)
-	,eObjInfo(1388, 785, 'ten', 4, 4),eObjInfo(1500, 20, 'pixel', 300, 300),eObjInfo(1200, 20, 'pixel', 400, 100)],
+	character: [
+		{
+			x:300,
+			y:300, 
+			name: "Melendi", 
+			imgID: 'melendi', 
+			actualHp: 75, 
+			maxHp: 75, 
+			actualMp: 115, 
+			maxMp: 115,
+			rP: 4, 
+			rR: 6, 
+			rF: 3, 
+			rE: 7, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 60,
+			attack: [
+				attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
+				attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+				attackInfo("Support 1 Target", 5, -20, 25, 1), 
+				attackInfo("Camina por la Vida",5,-70,60,1)
+			]
+		},
+		{
+			x:500, 
+			y:500, 
+			name: "Jarfaiter", 
+			imgID: 'jarfaiter', 
+			actualHp: 75, 
+			maxHp: 75, 
+			actualMp: 115, 
+			maxMp: 115,
+			rP: 4, 
+			rR: 6, 
+			rF: 3, 
+			rE: 7, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 60, 
+			attack: [
+				attackInfo("Navajeros", 0, 20, 0, 1), 
+				attackInfo("Quiero que ardas", 2, 35, 30, 1), 
+				attackInfo("Ven a 4k", 0, 20, 25, 2), 
+				attackInfo("Porro",4,50,60,4)
+			]
+		},
+		{ //falta por implementar a pedrosanx
+			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
+			imgID: 'sanxe', 
+			actualHp: 75, 
+			maxHp: 75, 
+			actualMp: 115, 
+			maxMp: 115,
+			rP: 4, 
+			rR: 6, 
+			rF: 3, 
+			rE: 7, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 60, 
+			attack: [
+				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
+				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
+				attackInfo("Ataque Falcon", 0, 20, 25, 2), 
+				attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
+			]
+		}
+	],
+	enemies: [
+		{
+			name: "Artista", 
+			imgID:'artist', 
+			actualHp: 70, 
+			maxHp: 70, 
+			actualMp: 0, 
+			maxMp: 0, 
+			rP: 5, 
+			rR: 5, 
+			rF: 5, 
+			rE: 5, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 40,
+			attack: [
+				attackInfo("Pincelada",2,20,0,1),
+				attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),
+				attackInfo("Xilografía en el pecho", 4, 30, 0, 1)
+			],
+			money: 500
+		},
+		{
+			name: "Culturista", 
+			imgID:'people', 
+			actualHp: 80, 
+			maxHp: 80, 
+			actualMp: 0, 
+			maxMp: 0, 
+			rP: 8, 
+			rR: 6, 
+			rF: 4, 
+			rE: 3, 
+			rT: 6, 
+			acurracy: 85, 
+			speed: 60,
+			attack:[
+				attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
+				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
+				attackInfo("Poñetaso", 0, 30, 0, 1)
+			]
+		}
+	],
+	hostile: [
+		hostileInfo(875,310,'hierba', 3, 2, 2.5),
+		hostileInfo(725,825,'hierba', 1, 1, 2.5),
+		hostileInfo(650,900,'hierba', 1, 1, 2.5),
+		hostileInfo(600,550,'hierba', 2, 1, 2.5),
+		hostileInfo(1040,860,'hierba', 3, 2, 2.5),
+		hostileInfo(875,700,'hierba', 3, 2, 2.5),
+		hostileInfo(965,230,'hierba', 1, 1, 2.5),
+		hostileInfo(800,150,'hierba', 2, 2, 2.5),
+		hostileInfo(1500,335,'hierba', 2, 2, 2.5),
+		hostileInfo(1400,500,'hierba', 3, 2, 2.5),
+		hostileInfo(300, 50, 'hierba', 3, 2, 2),
+		hostileInfo(335, 180, 'hierba', 2, 1, 2),
+		hostileInfo(150, 400, 'hierba', 1, 1, 2),
+		hostileInfo(200, 500, 'hierba', 1, 1, 2),
+		hostileInfo(350, 850, 'hierba', 2, 3, 2),
+		hostileInfo(25, 850, 'hierba', 5, 1, 2),
+		hostileInfo(25, 725, 'hierba', 7, 2, 2)
+	],
+	eObj: [
+		eObjInfo(0, 265, 'tree', 6.5, 6.5),
+		eObjInfo(126, 900, 'tree', 7, 7),
+		eObjInfo(693, 25, 'tree', 7, 7),
+		eObjInfo(1575, 640, 'tree', 7, 7),
+		eObjInfo(1388, 785, 'ten', 4, 4),
+		eObjInfo(1500, 20, 'pixel', 300, 300),
+		eObjInfo(1200, 20, 'pixel', 400, 100)
+	],
 	iObj: [],
-	travel: [travelInfo(10, 60, 'pixel', 100, 100, scenes.square)]
+	travel: [
+		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
+	]
 }
 
 let cementery = {
 	launched: false,
 	key : 'cementery',
 	bg: 'clif',
-	npcs: [npcInfo(485,125, 'kratos', 13)],
+	npcs: [
+		npcInfo(485,125, 'kratos', 13)
+	],
 	qNpcs: [],
 	 sNpcs: [],
 	 hNpcs:  [],
 	 character: [],
 	enemies: [],
 	hostile: [],
-	eObj: [eObjInfo(200, 300, 'insignia', 0.5, 0.5),eObjInfo(650, 170, 'pixel', 320, 0.5),eObjInfo(460, 0, 'pixel', 0.5, 500),eObjInfo(650, 74, 'pixel', 320, 0.5)],
+	eObj: [
+		eObjInfo(200, 300, 'insignia', 0.5, 0.5),
+		eObjInfo(650, 170, 'pixel', 320, 0.5),
+		eObjInfo(460, 0, 'pixel', 0.5, 500),
+		eObjInfo(650, 74, 'pixel', 320, 0.5)
+	],
 	iObj: [],
-	travel: [travelInfo(800, 120, 'pixel', 70, 70, scenes.square)]
+	travel: [
+		travelInfo(800, 120, 'pixel', 70, 70, scenes.square)
+	]
 }
 
 let port = {
 	launched: false,
 	key: 'port',
 	bg: 'home',
-	npcs: [npcInfo(75,380, 'alex', 11),npcInfo(200,380, 'raul', 11),npcInfo(630,380, 'david', 11),npcInfo(760,380, 'pablo', 11), npcInfo(400,380, 'roi', 11)],
+	npcs: [
+		npcInfo(75,380, 'alex', 3),
+		npcInfo(200,380, 'raul', 22),
+		npcInfo(630,380, 'david', 0), //no tiene diálogos
+		npcInfo(760,380, 'pablo', 0), //no tiene diálogos
+		npcInfo(400,380, 'roi', 26)
+	],
 	qNpcs: [],
 	 sNpcs: [],
 	 hNpcs:  [],
 	 character: [],
 	enemies: [],
 	hostile: [],
-	eObj: [eObjInfo(500, 125, 'text', 2.5, 2.5),eObjInfo(500, 420, 'pixel', 1000, 0.1)],
+	eObj: [
+		eObjInfo(500, 125, 'text', 2.5, 2.5),
+		eObjInfo(500, 420, 'pixel', 1000, 0.1)
+	],
 	iObj: [],
-	travel: [travelInfo(400, 600, 'pixel', 70, 70, scenes.square)]
+	travel: [
+		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	]
 }
 
 function npcInfo(x, y, img, id){

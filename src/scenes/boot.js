@@ -111,7 +111,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('tienda', 'assets/textures/Characters/tienda.png');
 		this.load.image('sirenita','assets/textures/NPC-RAUL/sirenita.png'); 
 		this.load.image('rick','assets/textures/NPC-RAUL/rick.png'); 
-		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png'); 
+		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png');
+		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png'); 
 		
 
 		
@@ -218,7 +219,14 @@ export default class Boot extends Phaser.Scene {
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
 		//MÚSICA
+		this.load.audio('intro', ['assets/sounds/intro.ogg', 'assets/sounds/intro.mp3',])
+		this.load.audio('startbutton',  ['assets/sounds/startbutton.ogg', 'assets/sounds/startbutton.mp3',])
 		this.load.audio('dreamon', ['assets/sounds/dreamon.ogg', 'assets/sounds/dreamon.mp3',]);
+		this.load.audio('rickroll', ['assets/sounds/rickroll.ogg', 'assets/sounds/rickroll.mp3',]);
+		this.load.audio('combat', ['assets/sounds/combat.ogg', 'assets/sounds/combat.mp3',]);
+		this.load.audio('bossfight', ['assets/sounds/bossfight.ogg', 'assets/sounds/bossfight.mp3',]);
+		this.load.audio('victory', ['assets/sounds/victory.ogg', 'assets/sounds/victory.mp3',]);
+		
 
         // Destruye la barra de cargando página
 		this.load.on('complete', function () {
