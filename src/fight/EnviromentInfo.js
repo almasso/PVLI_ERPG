@@ -176,7 +176,7 @@ let park = {
 		npcInfo(300, 400, 'tiolavara', 3)
 	],
 	qNpcs: [
-		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña", "Observa el lago", "Pelea con la estatua"])
+		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 4, ["Encuentra su caña", "Observa el lago", "Pelea con la estatua", "Coge la parte de estatua"])
 	],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
@@ -314,6 +314,8 @@ let park = {
 	iObj: [
 		eObjInfo(700, 500, 'manin', 0.7, 0.7),  // Caña de pescar
 		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
+		eObjInfo(100, 550, 'manin', 0.7, 0.7),   // Pelea
+		eObjInfo(100, 400, 'manin', 0.7, 0.7),   // Item
 	],
 	travel: [
 		travelInfo(1195, 775, 'pixel', 100, 100, scenes.square),
@@ -346,7 +348,7 @@ let park = {
 				},
 				{
 					name: "Culturista", 
-					imgID:'people', 
+					imgID:'melendi', 
 					actualHp: 80, 
 					maxHp: 80, 
 					actualMp: 0, 

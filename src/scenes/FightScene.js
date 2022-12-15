@@ -599,7 +599,8 @@ export class FightScene extends Phaser.Scene {
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.allies[this.currentAlly].name + " no se pudo mover.");
 					this.allies.forEach(function(ally){
-						ally.play(ally.imageId + '_wow');  
+						if(!ally.dead)
+							ally.play(ally.imageId + '_wow');  
 					})
 					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_shock');// Insertar animación paralizado
 				}
@@ -620,7 +621,8 @@ export class FightScene extends Phaser.Scene {
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.enemies[this.turns[this.currentTurn].index].name + " no se pudo mover.");
 					this.enemies.forEach(function(enemy){
-						enemy.play(enemy.imageId + '_wow');
+						if(!enemy.dead)
+							enemy.play(enemy.imageId + '_wow');
 					})
 					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_shock');// Insertar animación paralizado
 

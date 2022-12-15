@@ -13,6 +13,9 @@ export default class ParkScene extends FatherScene {
 		super.create();
 		let self = this;
 		this.iFunctions = [];
+
+		
+		// Recoger la caña de pescar
 		this.iFunctions.push(function(){
 			console.log("aa");
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
@@ -23,42 +26,52 @@ export default class ParkScene extends FatherScene {
 				self.interactuableObjects[0].destroy();
 			}
 		});
-
+		
+		// Observar el lago 
 		this.iFunctions.push(function(){
-			console.log("aa");
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
 			if(fishingRod !== undefined && fishingRod.quest.stage === 1 && !fishingRod.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('fishingRod'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
-				self.interactuableObjects[1].trigger.destroy();
-				self.interactuableObjects[1].destroy();
+				self.interactuableObjects[2].Hide(false);
 				self.scene.sleep('park');
 				self.scene.sleep('hud');
 				self.scene.launch('fishing');
-				let self2 = this;
-				self.scene.bossFight  = new interactuableObj(self, 100, 550, 'manin', 0.7, 0.7, function(){
-					this.scene.scene.sleep('hud');
-					self2.self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
-					this.scene.scene.get('fightscene').LoadInventory(allyParty.inventory);
-					let self3 = this;
-					self2.self.scene.bossItem = new interactuableObj(self2.self, 100, 550, 'melendi', 0.7, 0.7, function(){
-						let fishingRod = allyParty.questLog.GetQuest('fishingRod');
-						if(fishingRod !== undefined && fishingRod.quest.stage === 2 && !fishingRod.quest.actualObjectiveCompleted){
-							allyParty.questLog.advanceQuest('fishingRod'); 
-							self3.self2.self.scene.get('hud').events.emit("updateQuestHUD");
-							self3.self2.self.bossFight.trigger.destroy();
-							self3.self2.self.bossItem.destroy();
-						}
-					})
-					self2.self.scene.sleep('park');
-				}, this.manin); 
-			}
+				self.interactuableObjects[1].trigger.destroy();
+				self.interactuableObjects[1].destroy();
+			} 
 		});
 
-		this.iFunctions.push()
-
+		// Pelea con la estatua
+		this.iFunctions.push(function(){
+			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
+			if(fishingRod !== undefined && fishingRod.quest.stage === 2 && !fishingRod.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('fishingRod'); 
+				self.scene.sleep('hud');
+				self.interactuableObjects[3].Hide(false);
+				self.scene.sleep('park');
+				self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
+				self.scene.get('fightscene').LoadInventory(allyParty.inventory);
+				self.interactuableObjects[2].trigger.destroy();
+				self.interactuableObjects[2].destroy();
+			}
+		})
+		
+		// Coger item pero esto será de otra misión
+		this.iFunctions.push(function(){
+			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
+			if(fishingRod !== undefined && fishingRod.quest.stage === 3 && !fishingRod.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('fishingRod'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
+				self.interactuableObjects[3].trigger.destroy();
+				self.interactuableObjects[3].destroy();
+			}
+		})
 		
 		super.generateIObjects(this.iFunctions);
+
+		this.interactuableObjects[2].Hide(true);
+		this.interactuableObjects[3].Hide(true);
 	}
 
 	// comprobación de colisiones y apertura de menús
