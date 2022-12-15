@@ -201,7 +201,7 @@ let park = {
 		npcInfo(250,950, 'joker', 15),
 		npcInfo(1500,850, 'aloy', 16),
 		npcInfo(1550,150, 'sirenita', 14),
-		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
+		npcInfo(1000,600, 'ikerJimenez', 27) //iker no tiene diálogos
 	],
 	qNpcs: [
 		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador

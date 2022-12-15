@@ -1,0 +1,79 @@
+{
+    "attributes" : [
+        {
+            "qnpcName" : "Melendi",
+            "qnpcID" : "0",
+            "developer" : false,
+            "verified" : false
+        },
+        {
+            "qnpcName" : "Pescador",
+            "qnpcID" : "1",
+            "developer" : false,
+            "verified" : false
+        },
+        {
+            "qnpcName" : "Jarfaiter",
+            "qnpcID" : "2",
+            "developer" : false,
+            "verified" : false
+        }
+    ],
+    "dialogues" : [
+        {
+            "qnpcID" : 0,
+            "unique" : false,
+            "text" : "♫ Y es que voy, caminando por la vida, sin pausa pero sin prisa, procurando no hacer ruido, vestío' con una sonrisa ♫"
+        },
+        {
+            "qnpcID" : 0,
+            "unique" : false,
+            "text" : "Cago nes pites coloraes guaxín, perdí la mia guitarra. Preciso que recuperesla, babayu, que tengo mañana un conciertu y preciso ensayar un mizcu, ho."
+        },
+        {
+            "qnpcID" : 0,
+            "unique" : false,
+            "text" : "♫ Sin complejo' ni temore', canto rumba' de colore', y el llorar no me hace daño siempre y cuando tú no llore' ♫"
+        },
+        {
+            "qnpcID" : 1,
+            "unique" : false,
+            "text" : "Texto 1"
+        },
+        {
+            "qnpcID" : 1,
+            "unique" : false,
+            "text" : "Texto 2"
+        },
+        {
+            "qnpcID" : 1,
+            "unique" : false,
+            "text" : "Texto 3"
+        },
+        {
+            "qnpcID" : 2,
+            "unique" : false,
+            "text" : "No, niñato, aparta o te mato"
+        },
+        {
+            "qnpcID" : 2,
+            "unique" : false,
+            "text" : "Ah, si eres tú, Manín from Manín Interactive™"
+        },
+        {
+            "qnpcID" : 2,
+            "unique" : false,
+            "text" : "5 jambos mágicos me han dicho que si me das un porro te puedo ayudar a derrotar al apollardamiento."
+        },
+        {
+            "qnpcID" : 2,
+            "unique" : false,
+            "text" : "No sé ni quiénes eran los jambos ni por qué te voy a poder ayudar a derrotarlo, pero me suena bien."
+        },
+        {
+            "qnpcID" : 2,
+            "unique" : false,
+            "text" : "Eso sí, quiero mi porro eh, que si no verás el meco que te llevas."
+        }
+    ]
+}
