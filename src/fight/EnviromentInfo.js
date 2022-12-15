@@ -281,7 +281,8 @@ let park = {
 				attackInfo("Pincelada",1,20,0,1),
 				attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
 				attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
-			]
+			],
+			money: 500
 		},
 		{
 			name: "Culturista", 
@@ -301,7 +302,8 @@ let park = {
 				attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
 				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 				attackInfo("Poñetaso", 0, 30, 0, 1)
-			]
+			],
+			money: 500
 		}
 	],
 	hostile: [
