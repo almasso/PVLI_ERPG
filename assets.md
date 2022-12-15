@@ -20,3 +20,6 @@ assets bonitos y simples que puedan quedar graciosos frente al público.
 - Canción de Kratos precipitándose al vacío, *dreamon.mp3 / dreamon.ogg*, extracto de la canción ***Dream On*** de [**Aerosmith**](https://youtu.be/89dGC8de0CA)
 - Rickroll, *rickroll.mp3 / rickroll.ogg*, extracto de la canción ***Never Gonna Give You Up*** de [**Rick Astley** (esto no cuenta como rickroll)](https://youtu.be/dQw4w9WgXcQ)
 - Canción de victoria en combate, *victory.mp3 / victory.ogg*, originalmente ***Victory*** por [**celestialghost8 en OpenGameArt.org**](https://opengameart.org/content/victory)
+- Canción de la sala de los desarrolladores, *devs.mp3 / devs.ogg", originalmente ***Rebels Be*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
+- Canción de la plaza, *square.mp3 / square.ogg", originalmente ***Town*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
+- Canción del parque, *park.mp3 / park.ogg", originalmente ***Overworld*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
