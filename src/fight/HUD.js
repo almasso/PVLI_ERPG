@@ -1127,10 +1127,12 @@ export class ExploreMenu {
 		let x = 50;
 		let y = 100;
 		this.bItem = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
+		this.bChooseItem = this.scene.add.image(x,y + this.bItem.displayHeight, 'menuBG').setOrigin(0,0).setScale(5, 0.5);
 		this.bItem.visible = false;
+		this.bChooseItem.visible = false;
 		x = 100;
 		this.itemImages = [];
-		
+		this.itemTexts = [];
 		let i = 0;
 		for(let e of allyParty.inventory.inv){
 			this.itemImages[i] = {
@@ -1148,6 +1150,7 @@ export class ExploreMenu {
 			this.itemImages[i].hp.visible = false;
 			this.itemImages[i].mp.visible = false;
 			this.itemImages[i].desc.visible = false;
+			this.itemTexts[i] = this.scene.add.text(x, this.bChooseItem.y + (i + 1)*30, e.name, {font: '20px "Arial"'})
 			i++;
 		}
 	}
@@ -1155,7 +1158,7 @@ export class ExploreMenu {
 	AddItem(item){
 		let x = 100;
 		let y = 100;
-		let descripcion = "MAKSIDOBUVYIOASGIUPDOHÑIBJLvfdsvfouadsfvfsghkfvljasdvfadsgjlfclhasdcgfhsdlcghfclghsadlcfgsadclghlcsadg";
+		let descripcion = "MAKSIDv OBUVY IOASG IUP DOHÑ IBJ Lvfds vfo uads fvf sghkfvljasdvfadsgjlfclhasdcgfhsdlcghfclghsadlcfgsadclghlcsadg";
 		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(5);
 		let descX = x + image.displayWidth + 10;
 		let descY = y + image.displayHeight + 10;
@@ -1182,6 +1185,8 @@ export class ExploreMenu {
 		this.itemImages[this.itemImages.length - 1].hp.visible = false;
 		this.itemImages[this.itemImages.length - 1].mp.visible = false;
 		this.itemImages[this.itemImages.length - 1].desc.visible = false;
+		this.itemTexts.push(this.scene.add.text(x, this.bChooseItem.y + this.itemTexts.length*30, item.name, {font: '20px "Arial"'}));
+
 	}
 
 	ShowItems(bool){
@@ -1192,6 +1197,7 @@ export class ExploreMenu {
 			e.desc.visible = bool;
 		}
 		this.bItem.visible = bool;
+		this.bChooseItem.visible = bool;
 	}
 
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
