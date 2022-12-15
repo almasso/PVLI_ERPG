@@ -143,16 +143,15 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
-		npcInfo(600,350, 'dinoRoto', 0), //la estatua tampoco tiene diálogos
-		npcInfo(700,525, 'rick', 25),
+		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
-		sNpcInfo(300, 100, 'tienda', 9, [
+		sNpcInfo(1050, 400, 'tienda', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 			itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
 			itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
@@ -201,14 +200,15 @@ let park = {
 		npcInfo(250,950, 'joker', 15),
 		npcInfo(1500,850, 'aloy', 16),
 		npcInfo(1550,150, 'sirenita', 14),
-		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
+		npcInfo(1000,600, 'ikerJimenez', 27) //iker no tiene diálogos
 	],
 	qNpcs: [
 		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
-		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas')],
+		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
+		qNpcInfo(500, 500, 'jarfaiter', 5, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
