@@ -99,7 +99,7 @@
             "npcID" : 10,
             "npcName": "Patri",
             "verified" : false,
-            "developer" : true
+            "developer" : false
         },
         {
             "npcID" : 11,

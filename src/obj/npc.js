@@ -61,7 +61,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
         if(this.currentDialog === this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
-        if(!this.dialogues.texts[this.currentDialog].unique) this.multipleDialogues();
+        if(this.currentDialog !== this.dialogues.texts.length && !this.dialogues.texts[this.currentDialog].unique ||(this.currentDialog !== 0 && !this.dialogues.texts[this.currentDialog - 1].unique)) this.multipleDialogues();
         else this.uniqueDialogue();   
     }
 
@@ -83,7 +83,11 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             this.rickroll.play();
         }
 
-        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
+        console.log(this.dialogIndex + this.dialogCount);
+        console.log('wewew');
+        console.log(this.formerDialog);
+        console.log('--------');
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
@@ -91,6 +95,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             }    
             else if(this.beingAnimated) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
+
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
@@ -134,7 +139,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.canCloseWindow = false;
         this.currentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
-        console.log(this.currentDialog)
             if(this.currentDialog==69)
             {
                 console.log("SI")

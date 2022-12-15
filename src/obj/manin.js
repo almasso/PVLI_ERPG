@@ -227,7 +227,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
         }
 
 		// Si pulsamos 'SPACE' interactuamos con nuestro entorno
-		if(Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.shopping){
+		if(Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.wKey.isDown && !this.sKey.isDown && !this.dKey.isDown && !this.aKey.isDown){
 			this.interact();
 		}
 
