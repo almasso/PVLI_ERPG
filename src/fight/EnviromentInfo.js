@@ -169,9 +169,9 @@ let park = {
 		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
 	],
 	qNpcs: [
-		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar", 
+		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"]),
-		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"])
 	],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
@@ -331,6 +331,7 @@ let park = {
 		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
 		eObjInfo(100, 550, 'manin', 0.7, 0.7),   // Pelea
 		eObjInfo(100, 400, 'manin', 0.7, 0.7),   // Item
+		eObjInfo(100, 200, 'manin', 0.7, 0.7),   // Guitarra
 	],
 	travel: [
 		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)

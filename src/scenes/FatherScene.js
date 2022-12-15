@@ -39,7 +39,7 @@ export default class FatherScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
         // creamos a manín
-		this.manin = new Manin(this, 100, 50, this.scene.get('dialog'));
+		this.manin = new Manin(this, 300,400, this.scene.get('dialog'));
 		//#region creamos los bordes del mundo
 		let bLeft = new Bound(this, -1, 0,1,bg.displayHeight);
 		let bRight = new Bound(this, bg.displayWidth, 0,1,bg.displayHeight);

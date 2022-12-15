@@ -25,7 +25,7 @@ export default class Square extends FatherScene {
 				self.interactuableObjects[0].trigger.destroy();
 				self.interactuableObjects[0].destroy();
 			}
-		}, function(){}];
+		}];
 		
 		super.generateIObjects(this.iFunctions);
 	}

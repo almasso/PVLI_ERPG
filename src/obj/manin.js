@@ -111,9 +111,10 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.play('pose');
 		//#endregion
 	}
-
+	
 	// interacción 
     interact(){
+		console.log(this.x + " " + this.y);
 		this.isInteracting = true;
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
