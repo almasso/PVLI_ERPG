@@ -63,6 +63,12 @@ li.enlacesNAVJuego:hover {
 #copy {
     font-size:20px;
 }
+#rc {
+    transform: rotate(8deg) translateX(180%) translateY(-820%);
+    line-height: 100%;
+    display: inline-block;
+    color: #FFFF55;
+}
 /*SOLO PÁG PRINCIPAL*/
 #game{
     display:block;
@@ -138,7 +144,7 @@ li.enlacesNAVJuego:hover {
     opacity: 1;
 }
 #filosofofo, #filosofofo:visited {
-    color: rgb(77, 51, 190)
+    color:white;
 }
 
 /*SOLO PÁG MANIN*/
@@ -208,4 +214,10 @@ blockquote p::after {
 }
 .personalsocials:hover {
     color:red;
+}
+#agradecimientos {
+    list-style:none;
+}
+#agradecimientos a, #agradecimientos a:visited {
+    color:white;
 }
