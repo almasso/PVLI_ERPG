@@ -62,7 +62,9 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(this.currentDialog === this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
         if(this.currentDialog !== this.dialogues.texts.length && !this.dialogues.texts[this.currentDialog].unique ||(this.currentDialog !== 0 && !this.dialogues.texts[this.currentDialog - 1].unique)) this.multipleDialogues();
-        else this.uniqueDialogue();   
+        else this.uniqueDialogue();
+        
+        //if(this.currentDialog === this.dialogues.texts.length) this.closeWindow();
     }
 
     multipleDialogues() {
@@ -80,6 +82,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 delay: 0,
             };
             this.rickroll = this.scene.sound.add('rickroll', rickrollconfig);
+            this.scene.musica.pause();
             this.rickroll.play();
         }
 
@@ -104,11 +107,11 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
         else {
             this.closeWindow();
+            this.scene.musica.resume();
         }
     }
     
     uniqueDialogue() {
-        
         if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
@@ -133,6 +136,10 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(hasBought) this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Has comprado " + itemName.name + ". Gracias, vuelva pronto.", true, this.verified, this.developer);
         else this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Siniora Homer, el " + itemName.name + " que usted está intentando adquirir está fuera de su rango monetario. Por favor seleccione otro producto o váyase.", true, this.verified, this.developer);
     }
+
+    questDialog() {
+        
+    }
     
 
     closeWindow() {
@@ -144,6 +151,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.beingAnimated = false;
         this.canCloseWindow = false;
         this.currentlyTalking = false;
+        this.rickroll = false;
         this.scene.events.emit('dialogWindowClosed');
             if(this.currentDialog==69)
             {

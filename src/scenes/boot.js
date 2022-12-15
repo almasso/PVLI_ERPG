@@ -217,6 +217,7 @@ export default class Boot extends Phaser.Scene {
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
+		this.load.json('quests', 'assets/dialogues/quests_dialogs.json');
 
 		//MÚSICA
 		this.load.audio('intro', ['assets/sounds/intro.ogg', 'assets/sounds/intro.mp3',])
