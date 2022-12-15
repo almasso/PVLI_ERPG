@@ -21,6 +21,10 @@ export default class FatherScene extends Phaser.Scene {
 	generateInput(){
 		// input porque no funciona el InputMan. Vamos a tener que cambiarlo a una escena que controle input. qué feo
 		this.spaceKey = this.input.keyboard.addKey('SPACE'); // interact
+		this.sKey = this.input.keyboard.addKey('S');
+		this.aKey = this.input.keyboard.addKey('A');
+		this.wKey = this.input.keyboard.addKey('W');
+		this.dKey = this.input.keyboard.addKey('D');
 	}
 	//#endregion
 
@@ -28,7 +32,8 @@ export default class FatherScene extends Phaser.Scene {
 		this.generateInput();
 		//Imagen de fondo
 		var bg = this.add.image(0, 0, EnviromentInfo.bg).setOrigin(0, 0);
-
+		this.bordeX=bg.displayWidth;
+		this.bordeY=bg.displayWidth;
 		// bounds del mundo
         this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
 
@@ -126,7 +131,7 @@ export default class FatherScene extends Phaser.Scene {
 			this.changeCol[o].body.moves = false;
             let travelScene = EnviromentInfo.travel[o].scene;
 			this.changeCol[o].on("overlapstart", () => {
-				if(self.spaceKey.isDown)
+				
 					self.scene.get('EnvManager').changeScene(travelScene);
 			});
 			o++;
@@ -182,14 +187,21 @@ GenerateHostileGround(x, y, fils, cols, scale, img){
 				colliders.emit("overlapend");
 			}
 		});
-
+	
         for(let i of this.changeCol){
 			let maninBounds = self.manin.zone.getBounds();
 			let changeZoneBounds = i.getBounds();
 			
 			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
-				i.emit("overlapstart");
+				console.log("E")
+				if((self.aKey.isDown && i.x>0&&i.x<100) ||(self.dKey.isDown && i.x>this.bordeX-100)||(self.wKey.isDown&& i.y<100 && i.x<700&&i.x>300)||(self.sKey.isDown &&  i.y>500&& i.x>300&&i.x<700))
+				{				
+					i.emit("overlapstart");
+					this.manin.body.setVelocityX(0);
+					this.manin.body.setVelocityY(0);					
+				}
 			}
+			
         }
 		
 		for(let i of this.npcs) {

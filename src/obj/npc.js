@@ -16,21 +16,22 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.developer = this.dialogues.attributes[this.npcID].developer;
         
         this.scene.add.existing(this);
-        this.setScale(0.15,0.15);
+        this.setScale(1.3,1.3);
         scene.physics.add.existing(this, true);
         this.countDialogues();
         this.manin = manin;
-
+        this.collider;
         this.trigger = this.scene.add.zone(x, y, this.body.width + 7, this.body.height + 7);
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7);
+        this.trigger.setScale(2,2);
         this.create();
+        
     }
 
     generateTrigger() {
-        this.scene.physics.add.collider(this.manin, this);
+        this.collider= this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
 
@@ -63,6 +64,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     }
 
     multipleDialogues() {
+        
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
@@ -76,6 +78,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.uiScene.events.emit('isNotBeingAnimated');
                 if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
             }
+           
         }
         else {
             this.closeWindow();
@@ -83,6 +86,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     }
     
     uniqueDialogue() {
+        
         if((!this.canCloseWindow && (this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1)))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
@@ -94,6 +98,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.canCloseWindow = true;
                 this.uiScene.events.emit('isNotBeingAnimated');
             }
+            
         }
         else {
             this.currentDialog++;
@@ -112,6 +117,16 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.canCloseWindow = false;
         this.ºurrentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
+        console.log(this.currentDialog)
+            if(this.currentDialog==69)
+            {
+                console.log("SI")
+                this.scene.Kratos();
+                
+               
+            }
+
+       
         return;
     }
 

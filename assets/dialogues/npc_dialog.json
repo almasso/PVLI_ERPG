@@ -174,8 +174,7 @@
         "unique" : true,
         "text" : "¿Quieres comprar?"
     },
-    {
-        "npcID": 10,
+    {   "npcID": 10,
         "unique": true,
         "text": "A mí me han engañao', pensaba que esto era Moképon."
     },
@@ -345,15 +344,21 @@
         "text" : ":)"
     },
     {
-        "npcID" : 13,
-        "unique" : true,
-        "text" : "Yo solía ser un aventurero como tú. Pero un día me hirieron en la rodilla con una flecha..."
+        "npcID":13,
+        "unique":true,
+        "text":"¡Vamos chico!"
     },
     {
-        "npcID" : 13,
-        "unique" : true,
-        "text" : "Estaría mucho mas caliente y feliz con la panza bien llena de birra."
+        "npcID":13,
+        "unique":true,
+        "text":"¡Zeus! ¡Tu hijo ha regresado, y trae consigo la destrucción del Olimpo!"
     },
+    {
+        "npcID":13,
+        "unique":true,
+        "text":"Los dioses del Olimpo me han abandonado,...ya no queda esperanza."
+    }
+   
     {
         "npcID" : 14,
         "unique" : true,
@@ -428,7 +433,19 @@
         "npcID" : 22,
         "unique" : true,
         "text" : "Yo soy EL MANIN"
+    },
+    {
+        "npcID" : 23,
+        "unique" : true,
+        "text" : "Yo solía ser un aventurero como tú. Pero un día me hirieron en la rodilla con una flecha..."
+    },
+    {
+        "npcID" : 23,
+        "unique" : true,
+        "text" : "Estaría mucho mas caliente y feliz con la panza bien llena de birra."
     }
+   
+   
 ],
 "attributes" : [
     {
@@ -487,10 +504,11 @@
     },
     {
         "npcID" : 9,
-        "npcName" : "Tienda",
+        "npcName" : "Apu",
         "verified" : false,
         "developer" : false
     },
+    
     {
         "npcID" : 10,
         "npcName": "Patri",
@@ -510,10 +528,10 @@
         "developer" : false
     },
     {
-        "npcID" : 13,
-        "npcName" : "Guardia",
-        "verified" : false,
-        "developer" : false
+        "npcID":13,
+        "npcName": "Kratos",
+        "verified":false,
+        "developer": false
     },
     {
         "npcID" : 14,
@@ -568,5 +586,12 @@
         "npcName" : "Raúl",
         "verified" : false,
         "developer" : true
-    }
+    },
+    {
+        "npcID" : 23,
+        "npcName" : "Guardia",
+        "verified" : false,
+        "developer" : false
+    },
+   
 ]}
