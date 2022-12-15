@@ -8,6 +8,27 @@ export default class InitialScene extends Phaser.Scene {
 	create() {
 		// fondo
         this.bg = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'initialBg');
+		const introconfig = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.musica = this.sound.add('intro', introconfig);
+		this.musica.play();
+		const buttonconfig = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: false,
+			delay: 0,
+		};
+		this.buttonSound = this.sound.add('startbutton', buttonconfig);
         this.bg.scale = 4.71;
 
 		// botón de inicio
@@ -19,6 +40,8 @@ export default class InitialScene extends Phaser.Scene {
         this.startButton.setInteractive();
         this.startButton.on('pointerup',()=>{
 
+			this.musica.stop();
+			this.buttonSound.play()
 			// DAVID PRUEBAS C:
 			this.scene.launch('EnvManager');
 			/*

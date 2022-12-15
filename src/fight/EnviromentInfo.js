@@ -111,7 +111,7 @@ let square = {
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
 		npcInfo(600,350, 'dinostatue', 0), //la estatua tampoco tiene diálogos
-		npcInfo(700,525, 'rick', 0), //rick tampoco tiene
+		npcInfo(700,525, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [

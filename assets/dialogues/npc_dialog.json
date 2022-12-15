@@ -26,7 +26,8 @@
                 "Pablo Motos" : 21,
                 "Raúl" : 22,
                 "Guardia" : 23,
-                "Tío la Vara" : 24
+                "Tío la Vara" : 24,
+                "Rick Astley" : 25
             }
         }
     ],
@@ -180,6 +181,12 @@
         {
             "npcID" : 24,
             "npcName" : "El Tío la Vara",
+            "verified" : false,
+            "developer" : false
+        },
+        {
+            "npcID" : 25,
+            "npcName" : "Rick Astley",
             "verified" : false,
             "developer" : false
         }
@@ -644,6 +651,26 @@
             "npcID" : 24,
             "unique" : true,
             "text" : "Poder de la varaaaaaaaaaaaa"
+        },
+        {
+            "npcID" : 25,
+            "unique" : false,
+            "text" : "♫ We're no strangers to love ♫"
+        },
+        {
+            "npcID" : 25,
+            "unique" : false,
+            "text" : "♫ You know the rules, and so do I ♫"
+        },
+        {
+            "npcID" : 25,
+            "unique" : false,
+            "text" : "♫ A full commitment's what I'm thinking of ♫"
+        },
+        {
+            "npcID" : 25,
+            "unique" : false,
+            "text" : "♫ You wouldn't get this from any other guy ♫"
         }
     ]
 }

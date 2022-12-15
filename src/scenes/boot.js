@@ -218,7 +218,10 @@ export default class Boot extends Phaser.Scene {
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
 
 		//MÚSICA
+		this.load.audio('intro', ['assets/sounds/intro.ogg', 'assets/sounds/intro.mp3',])
+		this.load.audio('startbutton',  ['assets/sounds/startbutton.ogg', 'assets/sounds/startbutton.mp3',])
 		this.load.audio('dreamon', ['assets/sounds/dreamon.ogg', 'assets/sounds/dreamon.mp3',]);
+		this.load.audio('rickroll', ['assets/sounds/rickroll.ogg', 'assets/sounds/rickroll.mp3',])
 
         // Destruye la barra de cargando página
 		this.load.on('complete', function () {
