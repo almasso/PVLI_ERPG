@@ -11,6 +11,8 @@ export default class ParkScene extends FatherScene {
 		super.create();
 		this.eObjs[5].setVisible(false);
 		this.eObjs[6].setVisible(false);
+		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
+
 	}
 
 	// comprobación de colisiones y apertura de menús
