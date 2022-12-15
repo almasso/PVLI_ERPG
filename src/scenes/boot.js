@@ -226,6 +226,9 @@ export default class Boot extends Phaser.Scene {
 		this.load.audio('combat', ['assets/sounds/combat.ogg', 'assets/sounds/combat.mp3',]);
 		this.load.audio('bossfight', ['assets/sounds/bossfight.ogg', 'assets/sounds/bossfight.mp3',]);
 		this.load.audio('victory', ['assets/sounds/victory.ogg', 'assets/sounds/victory.mp3',]);
+		this.load.audio('devs', ['assets/sounds/devs.ogg', 'assets/sounds/devs.mp3',]);
+		this.load.audio('park', ['assets/sounds/park.ogg', 'assets/sounds/park.mp3',]);
+		this.load.audio('square', ['assets/sounds/square.ogg', 'assets/sounds/square.mp3',]);
 		
 
         // Destruye la barra de cargando página
