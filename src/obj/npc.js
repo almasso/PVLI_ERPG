@@ -121,12 +121,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             if(this.currentDialog==69)
             {
                 console.log("SI")
-                this.scene.Kratos();
-                
-               
-            }
-
-       
+                this.scene.Kratos();           
+            }    
         return;
     }
 

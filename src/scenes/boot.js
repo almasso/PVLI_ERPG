@@ -110,7 +110,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('tienda', 'assets/textures/Characters/tienda.png');
 		this.load.image('sirenita','assets/textures/NPC-RAUL/sirenita.png'); 
 		this.load.image('rick','assets/textures/NPC-RAUL/rick.png'); 
-		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png'); 
+		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png');
+		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png'); 
 		
 
 		
