@@ -11,9 +11,7 @@ export default class Square extends FatherScene {
 	create() {
 		super.create();
 		
-		this.eObjs[0].setVisible(false)
-		this.eObjs[1].setVisible(false)
-		this.eObjs[2].setVisible(false)
+		for(let i=0;i<this.eObjs.length;i++)this.eObjs[i].setVisible(false)
 		this.npcs[8].collider.destroy()
 		this.npcs[8].setScale(5,5)
 		this.npcs[8].trigger.setScale(4,4)
