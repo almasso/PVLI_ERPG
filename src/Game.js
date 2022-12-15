@@ -9,6 +9,7 @@ import PortScene from './scenes/Port.js'
 import boot from './scenes/boot.js'
 import Square from './scenes/Square.js'
 import {EnviromentManager} from './fight/EnviromentInfo.js'
+import FirstScene from './scenes/FirstCinematic.js'
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -35,12 +36,12 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [boot, EnviromentManager, InitialScene, Square, FinalScene, ParkScene,CementeryScene,PortScene, HUDScene, FightScene,DialogScene],
+    scene: [boot, EnviromentManager,FirstScene, InitialScene, Square, FinalScene, ParkScene,CementeryScene,PortScene, HUDScene, FightScene,DialogScene],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true
+            debug: false
         },
         checkCollision: {
             up: true,

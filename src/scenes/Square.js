@@ -10,6 +10,8 @@ export default class Square extends FatherScene {
 	// inicializamos la escena
 	create() {
 		super.create();
+		this.manin.x=600;
+		this.manin.y=150;
 		const config = {
 			mute: false,
 			volume: 0.5,
