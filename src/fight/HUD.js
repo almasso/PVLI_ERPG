@@ -1156,21 +1156,20 @@ export class ExploreMenu {
 	}
 
 	AddItem(item){
+		console.log(item);
+		console.log(item.description);
 		let x = 100;
-		let y = 100;
-		let descripcion = "MAKSIDv OBUVY IOASG IUP DOHÑ IBJ Lvfds vfo uads fvf sghkfvljasdvfadsgjlfclhasdcgfhsdlcghfclghsadlcfgsadclghlcsadg";
-		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(5);
-		let descX = x + image.displayWidth + 10;
-		let descY = y + image.displayHeight + 10;
+		let y = 110;
+		let descripcion = item.description;
+		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(4);
+		let descX = x + image.displayWidth + 30;
+		let descY = y + image.y - 70;
 		let desc = this.scene.make.text({
             x : descX,
             y : descY,
-            descripcion,
+            text : descripcion,
             style: {
-				padding : {
-					right : 20
-				},
-              wordWrap: { width : 200}
+				wordWrap : {width : 200}
             }
         });
 		desc.setText(descripcion);
