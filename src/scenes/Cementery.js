@@ -18,6 +18,17 @@ export default class CementeryScene extends FatherScene {
 			delay: 0,
 		  };
 		this.dreamon = this.sound.add('dreamon', config);
+		const windconfig = {
+			mute: false,
+			volume: 2,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		  };
+		this.musica = this.sound.add('wind', windconfig);
+		this.musica.play();
 		super.create();
 		this.npcs[0].setFlip(true,false);
 		this.eObjs[0].setVisible(false);
@@ -75,6 +86,7 @@ export default class CementeryScene extends FatherScene {
 
 	Kratos()
 	{
+		this.musica.stop();
 		this.dreamon.play();
 		console.log("HAAAAAAAAAAAAA");
 		this.kratos=true;
