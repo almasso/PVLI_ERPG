@@ -219,6 +219,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('i200', 'assets/textures/Props/cigarro.png');
 		this.load.image('i600', 'assets/textures/Props/cigarro.png');
 		this.load.image('i1', 'assets/textures/Props/cigarro.png');
+		this.load.image('piezaDino', 'assets/textures/Props/piezaDino.png');
 
 
         //JSON

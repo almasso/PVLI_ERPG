@@ -358,9 +358,12 @@ let cementery = {
 		eObjInfo(200, 300, 'insignia', 0.5, 0.5),
 		eObjInfo(650, 170, 'pixel', 320, 0.5),
 		eObjInfo(460, 0, 'pixel', 0.5, 500),
-		eObjInfo(650, 74, 'pixel', 320, 0.5)
+		eObjInfo(650, 74, 'pixel', 320, 0.5),
+		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 	],
-	iObj: [],
+	iObj: [
+		
+	],
 	travel: [
 		travelInfo(800, 120, 'pixel', 70, 70, scenes.square)
 	]
