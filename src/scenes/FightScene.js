@@ -730,7 +730,6 @@ export class FightScene extends Phaser.Scene {
 		
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
-		this.
 		
 		// Creación de Party
 		this.alliesHud = []; // huds de aliados
@@ -875,8 +874,13 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.AlteratedStatesToxic){
 			if(this.end){
-				if(this.win) this.BuildEndTurnLog("Has ganado " + this.winMoney + " euros."); 
+				if(this.win){
+					this.BuildEndTurnLog("Has ganado " + this.winMoney + " euros."); 
+					this.combatMusic.stop();
+					this.victoryMusic.play();
+				} 
 				else this.BuildEndTurnLog("Has perdido."); 
+				
 				this.state = FightState.EndCombat;
 			}
 			else this.state = FightState.SelectTurn;

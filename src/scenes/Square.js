@@ -10,6 +10,17 @@ export default class Square extends FatherScene {
 	// inicializamos la escena
 	create() {
 		super.create();
+		const config = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.musica = this.sound.add('square', config);
+		this.musica.play();
 		
 		for(let i=0;i<this.eObjs.length;i++)this.eObjs[i].setVisible(false)
 		this.npcs[8].collider.destroy()
