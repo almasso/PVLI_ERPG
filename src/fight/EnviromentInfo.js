@@ -245,7 +245,7 @@ let park = {
 				attackInfo("Camina por la Vida",5,-70,60,1)
 			]
 		},
-		/*{
+		{
 			x: 500,
 			y:500, 
 			name: "Jarfaiter", 
@@ -267,7 +267,7 @@ let park = {
 				attackInfo("Ven a 4k", 0, 20, 25, 2), 
 				attackInfo("Porro",4,50,60,4)
 			]
-		},*/
+		},
 		{
 			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
 			imgID: 'sanxe', 
