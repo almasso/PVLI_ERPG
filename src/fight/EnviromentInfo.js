@@ -197,7 +197,7 @@ let port = {
 	launched: false,
 	key: 'port',
 	bg: 'home',
-	npcs: [npcInfo(75,380, 'alex', 13),npcInfo(200,380, 'raul', 13),npcInfo(630,380, 'david', 13),npcInfo(760,380, 'pablo', 13)],
+	npcs: [npcInfo(75,380, 'alex', 11),npcInfo(200,380, 'raul', 11),npcInfo(630,380, 'david', 11),npcInfo(760,380, 'pablo', 11), npcInfo(400,380, 'roi', 11)],
 	qNpcs: [],
 	 sNpcs: [],
 	 hNpcs:  [],

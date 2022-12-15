@@ -443,6 +443,26 @@
         "npcID" : 23,
         "unique" : true,
         "text" : "Estaría mucho mas caliente y feliz con la panza bien llena de birra."
+    },
+    {
+        "npcID": 23,
+        "unique": true,
+        "text": "Hey"
+    },
+    {
+        "npcID": 23,
+        "unique": false,
+        "text": "¿Has jugado al Persona 5 Royal? Es muy buen juego. Voy por el quinto boss y llevo 50 horas."
+    },
+    {
+        "npcID": 23,
+        "unique": false,
+        "text": "Me queda la mitad."
+    },
+    {
+        "npcID": 23,
+        "unique": true,
+        "text": "Payaso"
     }
    
    
@@ -592,6 +612,12 @@
         "npcName" : "Guardia",
         "verified" : false,
         "developer" : false
+    },
+    {
+        "npcID": 24,
+        "npcName": "Roi",
+        "verified": false,
+        "developer": true
     }
    
 ]}

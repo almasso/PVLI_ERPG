@@ -87,6 +87,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('alex', 'assets/textures/Characters/Alex.png');
 		this.load.image('raul', 'assets/textures/Characters/Raul.png');
 		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
+		this.load.image('roi', 'assets/textures/Characters/roi.png');
 		this.load.image('david', 'assets/textures/Characters/david.png');
 		this.load.image('compuman', 'assets/textures/Characters/Compuman.png');
 		this.load.image('frozono', 'assets/textures/Characters/Frozono.png');
