@@ -23,6 +23,7 @@ export class QuestNPC extends NPC {
         allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
         if(this.quest.finished){
             allyParty.questLog.CompleteQuest(this.quest.id);
+            this.quest.function();
         }
         this.scene.scene.get('hud').UpdateHUD();
     }
@@ -94,7 +95,7 @@ export class QuestLog {
 }
 
 export class Quest {
-    constructor(stages, id, name, objectives){
+    constructor(stages, id, name, objectives, execute){
         this.stages = stages;
         this.stage = 0;
         this.id = id;
@@ -103,6 +104,7 @@ export class Quest {
         this.actualObjectiveCompleted = false;
         this.finished = false;
         this.acquired = false;
+        this.function = execute;
     }
 
     advanceQuest(){

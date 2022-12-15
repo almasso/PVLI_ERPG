@@ -58,7 +58,7 @@ export default class FatherScene extends Phaser.Scene {
 		// la cámara sigue a manín
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
-		let npc_dialogues = this.cache.json.get('npc_dialogues');
+		this.npc_dialogues = this.cache.json.get('npc_dialogues');
 
         // #region generamos a los NPCs
 		this.npcs = [];
@@ -66,12 +66,7 @@ export default class FatherScene extends Phaser.Scene {
 		this.interactuableObjects = [];
 
 		for(let i of EnviromentInfo.npcs){
-			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
-			this.npcs.push(newNpc);
-		}
-		for(let i of EnviromentInfo.qNpcs){
-			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, npc_dialogues, 
-				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj));
+			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, this.npc_dialogues, this.manin);
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.sNpcs){
@@ -79,11 +74,11 @@ export default class FatherScene extends Phaser.Scene {
 			for(let o of i.items){
 				items.push(new Object(o.name, o.hp, o.mp, o.price, o.img, o.description))
 			}
-			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, allyParty.inventory, items);
+			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, this.npc_dialogues, this.manin, allyParty.inventory, items);
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.hNpcs){
-			let newNpc = new healerNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin);
+			let newNpc = new healerNPC(this, i.x, i.y, i.img, i.id, this.npc_dialogues, this.manin);
 			this.npcs.push(newNpc);
 		}
         for(let i of EnviromentInfo.character){
@@ -118,6 +113,17 @@ export default class FatherScene extends Phaser.Scene {
 			i++;
 		}
     }
+
+	generateQuests(functions){
+		let j = 0;
+		for(let i of EnviromentInfo.qNpcs){
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj, functions[j]));
+			newNpc.setScale(2.5);
+			this.npcs.push(newNpc);
+			j++;
+		}
+	}
 
     changeScene(){
         this.sceneChangerCoords = [];
