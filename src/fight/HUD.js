@@ -1155,19 +1155,16 @@ export class ExploreMenu {
 	AddItem(item){
 		let x = 100;
 		let y = 100;
-		let descripcion = "MAKSIDOBUVYIOASGIUPDOHÑIBJLvfdsvfouadsfvfsghkfvljasdvfadsgjlfclhasdcgfhsdlcghfclghsadlcfgsadclghlcsadg";
+		let descripcion = "Este cigarro te dará estilo en los pulmones, úsalo con precaución";
 		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(5);
 		let descX = x + image.displayWidth + 10;
-		let descY = y + image.displayHeight + 10;
+		let descY = y + image.y;
 		let desc = this.scene.make.text({
             x : descX,
             y : descY,
-            descripcion,
+            text : descripcion,
             style: {
-				padding : {
-					right : 20
-				},
-              wordWrap: { width : 200}
+				wordWrap : {width : 200}
             }
         });
 		desc.setText(descripcion);
