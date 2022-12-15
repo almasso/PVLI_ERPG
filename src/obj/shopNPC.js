@@ -1,6 +1,4 @@
 import NPC from '../obj/npc.js';
-import Object from './Object.js';
-import { shopHUD } from '../fight/HUD.js';
 
 export default class shopNPC extends NPC{
     constructor(scene, x, y, imageID, npcID, dialogues, manin, inv, items){

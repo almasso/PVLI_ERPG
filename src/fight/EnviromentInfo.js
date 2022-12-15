@@ -143,7 +143,6 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
-		npcInfo(600,350, 'dinoRoto', 0), //la estatua tampoco tiene diálogos
 		npcInfo(700,525, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],

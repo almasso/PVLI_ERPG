@@ -69,11 +69,11 @@ export default class FatherScene extends Phaser.Scene {
 			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, this.npc_dialogues, this.manin);
 			this.npcs.push(newNpc);
 		}
-		for(let i of EnviromentInfo.qNpcs){
+		/*for(let i of EnviromentInfo.qNpcs){
 			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
 				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj, i.qNpcName, i.qImg, i.qDesc));
 			this.npcs.push(newNpc);
-		}
+		}*/
 		for(let i of EnviromentInfo.sNpcs){
 			let items = [];
 			for(let o of i.items){
@@ -125,7 +125,7 @@ export default class FatherScene extends Phaser.Scene {
 		let j = 0;
 		for(let i of EnviromentInfo.qNpcs){
 			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
-				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj, functions[j]));
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj,i.qNpcName, i.qImg, i.qDesc, functions[j]));
 			newNpc.setScale(2.5);
 			this.npcs.push(newNpc);
 			j++;
