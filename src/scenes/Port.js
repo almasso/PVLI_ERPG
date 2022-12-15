@@ -8,6 +8,19 @@ export default class PortScene extends FatherScene {
 
 	// inicializamos la escena
 	create() {
+		const config = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.musica = this.sound.add('devs', config);
+		this.musica.play();
+
+
 		super.create();
 		for(let i=0;i<this.npcs.length;i++)this.npcs[i].setScale(5,5)
 		this.manin.x=400
