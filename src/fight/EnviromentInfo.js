@@ -331,11 +331,11 @@ let park = {
 		eObjInfo(1200, 20, 'pixel', 400, 100)
 	],
 	iObj: [
-		eObjInfo(700, 500, 'manin', 0.7, 0.7),  // Caña de pescar
-		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
-		eObjInfo(100, 550, 'manin', 0.7, 0.7),   // Pelea
-		eObjInfo(100, 400, 'manin', 0.7, 0.7),   // Item
-		eObjInfo(100, 200, 'manin', 0.7, 0.7),   // Guitarra
+		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
+		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
+		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Pelea
+		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Item
+		eObjInfo(40, 620, 'manin', 0.7, 0.7),   // Guitarra
 	],
 	travel: [
 		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
