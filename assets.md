@@ -23,3 +23,4 @@ assets bonitos y simples que puedan quedar graciosos frente al público.
 - Canción de la sala de los desarrolladores, *devs.mp3 / devs.ogg*, originalmente ***Rebels Be*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
 - Canción de la plaza, *square.mp3 / square.ogg*, originalmente ***Town*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
 - Canción del parque, *park.mp3 / park.ogg*, originalmente ***Overworld*** por [**AVGSVSTA en OpenGameArt.org**](https://opengameart.org/content/generic-8-bit-jrpg-soundtrack)
+- Viento en la escena de Kratos, *wind.mp3 / wind.ogg", originalmente ***Soft Wind*** por [**florianreichelt en Freesound**](https://freesound.org/people/florianreichelt/sounds/459977/)
