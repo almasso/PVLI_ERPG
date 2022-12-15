@@ -29,7 +29,6 @@ export default class HUDScene extends Phaser.Scene {
 		this.showMenu = false;
 		this.menu.Show(false);
 		this.events.on("updateQuestHUD", () => {
-			console.log("O23");
 			this.questHud.Update();
 		});
 		this.state = State.Walk;
@@ -60,6 +59,10 @@ export default class HUDScene extends Phaser.Scene {
 		let newShop = new shopHUD(this, npc.items, npc);
 		this.shops.push(newShop);
 		return newShop;
+	}
+
+	addItem(item){
+		this.menu.AddItem(item);	
 	}
 
 	Fight(){

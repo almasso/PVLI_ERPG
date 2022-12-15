@@ -38,7 +38,7 @@ class EnviromentManager extends Phaser.Scene{
 		console.log(sceneInfo[this.currentScene].key);
 		this.scene.sleep(sceneInfo[this.currentScene].key);
 		this.scene.sleep(hudKey);
-		this.scene.launch(fightKey);
+		this.scene.launch(fightKey, {loadFromEnviroment: false, specialEncounterIndex: 0});
 		this.scene.get(fightKey).LoadInventory(allyParty.inventory);
 	}
 
@@ -110,15 +110,24 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
-		npcInfo(600,350, 'dinostatue', 0), //la estatua tampoco tiene diálogos
 		npcInfo(700,525, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest","Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"])
 	],
 	sNpcs: [
-		npcInfo(1050, 425, 'tienda', 9)
+		sNpcInfo(300, 100, 'tienda', 9, [
+			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
+			itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
+			itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
+			itemInfo('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."), 
+			itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN', "Es como ibuprofeno pero sin el como. Y además líquido. Naranjita. Y sabe bien."),
+			itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF', "Es como ibuprofeno pero sin el como. Y además líquido. Rosita. Y sabe bien."),
+			itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+			itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+			itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz.")
+		])
 	],
 	hNpcs:  [
 		npcInfo(100, 250, 'health', 11)
@@ -160,15 +169,27 @@ let park = {
 		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
 	],
 	qNpcs: [
+		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar", 
+		"Observa el lago", "Pelea con la estatua"]),
 		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
 	],
-	sNpcs: [],
+	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
+		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
+		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
+		itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
+		itemInfo('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."), 
+		itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN', "Es como ibuprofeno pero sin el como. Y además líquido. Naranjita. Y sabe bien."),
+		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF', "Es como ibuprofeno pero sin el como. Y además líquido. Rosita. Y sabe bien."),
+		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz.")
+	])],
 	hNpcs:  [],
 	character: [
 		{
-			x:300,
+			x: 300,
 			y:300, 
-			name: "Melendi", 
+			name: "Melendi",
 			imgID: 'melendi', 
 			actualHp: 75, 
 			maxHp: 75, 
@@ -189,7 +210,7 @@ let park = {
 			]
 		},
 		{
-			x:500, 
+			x: 500,
 			y:500, 
 			name: "Jarfaiter", 
 			imgID: 'jarfaiter', 
@@ -211,7 +232,7 @@ let park = {
 				attackInfo("Porro",4,50,60,4)
 			]
 		},
-		{ //falta por implementar a pedrosanx
+		{
 			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
 			imgID: 'sanxe', 
 			actualHp: 75, 
@@ -249,9 +270,9 @@ let park = {
 			acurracy: 90, 
 			speed: 40,
 			attack: [
-				attackInfo("Pincelada",2,20,0,1),
-				attackInfo("Lanza un bote de pintura", 4, 15, 0, 1),
-				attackInfo("Xilografía en el pecho", 4, 30, 0, 1)
+				attackInfo("Pincelada",1,20,0,1),
+				attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+				attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
 			],
 			money: 500
 		},
@@ -273,7 +294,8 @@ let park = {
 				attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
 				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 				attackInfo("Poñetaso", 0, 30, 0, 1)
-			]
+			],
+			money: 500
 		}
 	],
 	hostile: [
@@ -304,9 +326,81 @@ let park = {
 		eObjInfo(1500, 20, 'pixel', 300, 300),
 		eObjInfo(1200, 20, 'pixel', 400, 100)
 	],
-	iObj: [],
+	iObj: [
+		eObjInfo(700, 500, 'manin', 0.7, 0.7),  // Caña de pescar
+		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
+		eObjInfo(100, 550, 'manin', 0.7, 0.7),   // Pelea
+		eObjInfo(100, 400, 'manin', 0.7, 0.7),   // Item
+	],
 	travel: [
 		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
+	],
+	specialEncounter: [
+		{
+			numEnemies: 3, 
+			enemies: [
+				{
+					name: "Artista", 
+					imgID:'artist', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				},
+				{
+					name: "Culturista", 
+					imgID:'melendi', 
+					actualHp: 80, 
+					maxHp: 80, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 8, 
+					rR: 6, 
+					rF: 4, 
+					rE: 3, 
+					rT: 6, 
+					acurracy: 85, 
+					speed: 60,
+					attack:[
+						attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
+						attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
+						attackInfo("Poñetaso", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Artista", 
+					imgID:'artist', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				}
+			]
+		}
 	]
 }
 
@@ -362,8 +456,16 @@ let port = {
 	]
 }
 
+function itemInfo(name, hp, mp, price, img, description) {
+	return {name: name, hp: hp, mp: mp, price: price, img: img, description: description};
+}
+
 function npcInfo(x, y, img, id){
 	return {x: x, y: y, img: img, id: id};
+}
+
+function sNpcInfo(x, y, img, id, items){
+	return {x: x, y: y, img: img, id: id, items: items};
 }
 
 function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj){

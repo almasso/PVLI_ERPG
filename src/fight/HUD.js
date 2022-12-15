@@ -220,7 +220,7 @@ export class QuestHUD{
 	constructor(scene){
 		this.scene = scene;
 		this.questLog = allyParty.questLog;
-		this.scale = 2.5;
+		this.scale = 3;
 		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
 		this.questBlock.setScale(this.scale, this.scale / 2);
 		this.questBlock.depth = 4;
@@ -232,10 +232,15 @@ export class QuestHUD{
 		this.questName.setFontSize(20);
 		this.questName.depth = 5;
 
-		this.text = scene.add.text(40, 60, "",{
-			font: 'Arial"',
-			color: '#ffffff',
-			align: 'left',});
+		this.text = scene.make.text({
+			x: 40, y: 60,
+			text: "",
+			style: {
+				wordWrap: {width: 350},
+				font: '20px Arial',
+				color: '#ffffff',
+				align: 'left'
+			}});
 
 		this.text.setFontSize(20);
 		this.text.depth = 4;
@@ -256,11 +261,11 @@ export class QuestHUD{
 		console.log(aux.name);
 		if(aux.name !== undefined){
 			this.questName.text = "Misión: " + aux.name;
-			this.text.text = "-" +aux.text;
+			this.text.setText("-" +aux.text);
 		}
 		else{
 			this.questName.text = "";
-			this.text.text = aux.text;
+			this.text.setText(aux.text);
 		}
 		if(aux.yellowColor) this.text.setStyle({
 			font: 'Arial"',
@@ -461,6 +466,7 @@ export class shopHUD{
 		});
 
 		this.buyButton.on('pointerup', () => {
+			self.moneyText.setText("Dinero: " + allyParty.inventory.money);
 			self.displayItems();
 		});
 
@@ -805,6 +811,7 @@ export class ExploreMenu {
 		this.alliesShownIndex = 0;
 		this.AddPartyMenu(); // añadir el submenú de la party
 		this.AddPartyManagementMenu()
+		this.AddItemsMenu()
 		this.AddButtons(); // añadir botones para los submenús
 		this.backButton; // salir del menú actual
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
@@ -813,6 +820,7 @@ export class ExploreMenu {
 		this.walingHUD = walkingHUD;
 		this.viewParty = false;
 		this.manageParty = false;
+		this.viewItems = false;
 	}
 
 	AddPartyManagementMenu(){
@@ -871,7 +879,9 @@ export class ExploreMenu {
 		let self = this;
 		this.viewPartyButton.on("pointerup", function(){
 			self.viewParty = !self.viewParty;
+			self.viewItems = false;
 			self.manageParty = false;
+			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
 			self.ShowParty(self.viewParty);
 		});
@@ -907,8 +917,10 @@ export class ExploreMenu {
 		this.managePartyButton.on("pointerup", function(){
 			self.manageParty = !self.manageParty;
 			self.viewParty = false;
-			self.ShowParty(self.viewParty);
+			self.viewItems = false;
+			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
 		});
 		this.managePartyButton.on("pointerover", function(){
 			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;
@@ -916,6 +928,27 @@ export class ExploreMenu {
 			self.pointer.visible = true;
 		});
 		this.managePartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+
+		// INVENTORY 
+		this.itemButton = this.scene.add.image(buttonX, buttonY + 120, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
+		this.itemButton.depth = 6;
+		this.itemButton.visible = false;
+		this.itemButton.on("pointerup", function(){
+			self.viewItems = !self.viewItems;
+			self.viewParty = false;
+			self.manageParty = false;
+			self.ShowItems(self.viewItems);
+			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
+		});
+		this.itemButton.on("pointerover", function() {
+			self.pointer.x = buttonX - self.itemButton.displayWidth / 6;
+			self.pointer.y = buttonY + 120 + self.itemButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		this.itemButton.on("pointerout", function(){
 			self.pointer.visible = false;
 		});
 		//#endregion
@@ -926,13 +959,6 @@ export class ExploreMenu {
 		//#region MANAGE PARTY MENU BUTTONS
 		this.managerImages.forEach(function(image, index){
 			image.bgIMG.setInteractive();
-
-			image.bgIMG.on("pointerover", function(){
-			})
-
-			image.bgIMG.on("pointerout", function(){
-			})
-			
 			image.bgIMG.on("pointerup", function(){
 				self.walingHUD.swapAllies(index);
 				self.SwapAllies(image);
@@ -1051,7 +1077,7 @@ export class ExploreMenu {
 	}
 
 	// Crear la información de los ataques
-	SetAttackInfo(attacks,oldIndex, srcAttack){
+	SetAttackInfo(attacks, oldIndex, srcAttack){
 		let attackInfo = [];
 		let self = this;
 		attacks.forEach(function(attack, index) {
@@ -1107,14 +1133,93 @@ export class ExploreMenu {
 		if(!bool){
 			this.viewPartyButton.disableInteractive();
 			this.managePartyButton.disableInteractive();
+			this.itemButton.disableInteractive();
 		} 
 		else{
 			this.viewPartyButton.setInteractive();
+			this.itemButton.setInteractive();
 			this.managePartyButton.setInteractive();
 		}
 		this.viewPartyButton.visible = bool;
+		this.itemButton.visible = bool;
 		this.managePartyButton.visible = bool;
 		this.pointer.visible = false;
+	}
+
+	AddItemsMenu(){
+		let x = 50;
+		let y = 100;
+		this.bItem = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
+		this.bChooseItem = this.scene.add.image(x,y + this.bItem.displayHeight, 'menuBG').setOrigin(0,0).setScale(5, 0.5);
+		this.bItem.visible = false;
+		this.bChooseItem.visible = false;
+		x = 100;
+		this.itemImages = [];
+		this.itemTexts = [];
+		let i = 0;
+		for(let e of allyParty.inventory.inv){
+			this.itemImages[i] = {
+				img: this.scene.add.image(x, y, i.imgID),
+				hp: this.scene.add.text(x, y + 140, i.hp, {font:'20px "Arial"'}),
+				mp: this.scene.add.text(x, y + 180, i.mp, {font:'20px "Arial"'}),
+				desc: this.scene.add.text(x, y + 220, "testo", {font: '20px "Arial"'})
+			}
+			this.itemImages[i].img.depth = 3;
+			this.itemImages[i].hp.depth = 3;
+			this.itemImages[i].mp.depth = 3;
+			this.itemImages[i].desc.depth = 3;
+
+			this.itemImages[i].img.visible = false;
+			this.itemImages[i].hp.visible = false;
+			this.itemImages[i].mp.visible = false;
+			this.itemImages[i].desc.visible = false;
+			this.itemTexts[i] = this.scene.add.text(x, this.bChooseItem.y + (i + 1)*30, e.name, {font: '20px "Arial"'})
+			i++;
+		}
+	}
+
+	AddItem(item){
+		console.log(item);
+		console.log(item.description);
+		let x = 100;
+		let y = 110;
+		let descripcion = item.description;
+		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(4);
+		let descX = x + image.displayWidth + 30;
+		let descY = y + image.y - 70;
+		let desc = this.scene.make.text({
+            x : descX,
+            y : descY,
+            text : descripcion,
+            style: {
+				wordWrap : {width : 200}
+            }
+        });
+		desc.setText(descripcion);
+
+		this.itemImages.push({
+			img: image,
+			hp: this.scene.add.text(x,y + 140, item.hp, {font:'20px "Arial"'}).setOrigin(0,0),
+			mp: this.scene.add.text(x,y + 180, item.mp, {font:'20px "Arial"'}).setOrigin(0,0),
+			desc: desc
+		});
+		this.itemImages[this.itemImages.length - 1].img.visible = false;
+		this.itemImages[this.itemImages.length - 1].hp.visible = false;
+		this.itemImages[this.itemImages.length - 1].mp.visible = false;
+		this.itemImages[this.itemImages.length - 1].desc.visible = false;
+		this.itemTexts.push(this.scene.add.text(x, this.bChooseItem.y + this.itemTexts.length*30, item.name, {font: '20px "Arial"'}));
+
+	}
+
+	ShowItems(bool){
+		for(let e of this.itemImages){
+			e.img.visible = bool;
+			e.hp.visible = bool;
+			e.mp.visible = bool;
+			e.desc.visible = bool;
+		}
+		this.bItem.visible = bool;
+		this.bChooseItem.visible = bool;
 	}
 
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party

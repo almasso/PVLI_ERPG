@@ -1,7 +1,7 @@
 export default class Inventory{
     constructor(){
         this.inv = [];
-        this.money = 10000;
+        this.money = 10;
     }
 
     canBuy(money){
@@ -12,7 +12,9 @@ export default class Inventory{
         if(this.canBuy(item.price)){
             this.money -= item.price;
             this.addItem(item);
+            return true;
         }
+        else return false;
     }
 
     addItem(obj){

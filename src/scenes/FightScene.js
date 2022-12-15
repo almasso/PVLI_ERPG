@@ -5,6 +5,7 @@ import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
 import {Log, AllyHUD, EnemyHUD, InventoryHUD} from '../fight/HUD.js'
 import Inventory from '../obj/Inventory.js'
+import { EnviromentInfo } from '../fight/EnviromentInfo.js'
 
 
 const FightState = {
@@ -30,6 +31,11 @@ export class FightScene extends Phaser.Scene {
 		this.selectedAttack; // ataque seleccionado actualmente con el puntero
 		this.selectedItem;
 		this.timeBetweenAttacks = 2000;
+	}
+
+	init(parameters){
+		this.loadFromEnviroment = parameters.loadFromEnviroment;
+		this.specialEncounterIndex = parameters.index;
 	}
 
 	// Creación de botones de ataque y Objetos (este último no hace nada todavía)
@@ -188,6 +194,7 @@ export class FightScene extends Phaser.Scene {
 		while(i < array.length && array[i].dead){
 			i++;
 		}
+		if(i === array.length && array === this.enemies) this.win = true;
 		return i === array.length;
 	}
 
@@ -195,7 +202,8 @@ export class FightScene extends Phaser.Scene {
 	EndCombat(){
 		this.combatMusic.stop();
 		this.victoryMusic.play();
-		this.ReturnParty(); // reescribimos los valores de la Party
+		if(this.win)
+			this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
 		// ponemos las variables usadas para input por teclado a valores no válidos
 		this.attack=-1; 
@@ -217,7 +225,6 @@ export class FightScene extends Phaser.Scene {
 
 	// cargamos a los aliados
 	LoadParty(){
-		console.log("LOAD PARTY");
 		this.allies = []; // incializamos el array de aliados
 		let self = this; 
 		allyParty.party.forEach(function (ally, index){ // recorremos todo el array de objetos con info de la party
@@ -232,8 +239,6 @@ export class FightScene extends Phaser.Scene {
 				})
 
 				self.allies[index].SetAlteredStates(ally.alteredStates);
-				console.log(self.allies[index].actualResistances);
-				console.log(self.allies[index].resistances);
 
 				// añadimos un nuevo HUD
 				self.alliesHud.push(new AllyHUD(self,self.allies[index]));
@@ -273,7 +278,7 @@ export class FightScene extends Phaser.Scene {
 		ally.on("pointerup",() => {
 			// hacemos el ataque de support sobre el aliado ojetivo
 			this.allies[this.currentAlly].targets.push(ally);
-			if(this.state === FightState.Item || this.state === FightState.ChooseAlly && this.selectedAttack.targets === this.allies[this.currentAlly].targets.length) {this.RequestChangeState(false)}
+			if(this.isUsingItem || (this.state === FightState.ChooseAlly && this.selectedAttack.targets === this.allies[this.currentAlly].targets.length)) {this.RequestChangeState(false)}
 		})
 	}
 
@@ -281,7 +286,6 @@ export class FightScene extends Phaser.Scene {
 	BuildLog(chName,attackInfo, effective,enemy, index){
 		let text;
 		// dependiendo del valor que recibamos ponemos un texto u otro
-		console.log(effective);
 		if(attackInfo.type === 5) // Si el ataque es de tipo support
 		{
 			text = chName+" curó con "+attackInfo.name+" a "+enemy.name+". ";
@@ -329,7 +333,6 @@ export class FightScene extends Phaser.Scene {
 				let ally = self.allies[character.index];
 				if(!ally.dead){
 					if(ally.alteredStates[typeOfAttack.Fire - elementalAttackDifference]){
-						console.log(ally);
 						areAlteredStates = true;
 						let text = ally.name + " sufrio daño por estar quemado.";
 						ally.Burned();
@@ -373,7 +376,6 @@ export class FightScene extends Phaser.Scene {
 				let ally = self.allies[character.index];
 				if(!ally.dead){
 					if(ally.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]){
-						console.log(ally);
 						areAlteredStates = true;
 						let text = ally.name + " sufrio daño por estar envenenado.";
 						ally.Poisoned();
@@ -411,11 +413,9 @@ export class FightScene extends Phaser.Scene {
 	{
 		let self = this;
 		allyParty.inventory.money += this.winMoney;
-		console.log("DINERO PARTY: " + allyParty.money);
 		allyParty.party.forEach(function (ally, index)
 		{
 			if(index < allyParty.alliesNum){
-				console.log(index);
 				ally.actualHp = self.allies[index].actualHp;
 				ally.actualMp = self.allies[index].actualMp;
 				ally.dead = self.allies[index].dead;
@@ -423,6 +423,39 @@ export class FightScene extends Phaser.Scene {
 			} else return;
 		})
 	}
+
+	GenerateSpecialEncounter(){
+		this.enemies = []; // inicializamos el array de enemigos
+		let height = 360;
+		let info = EnviromentInfo.specialEncounter[this.specialEncounterIndex]; 
+		let enemiesNumber = info.numEnemies; // número de enemigos
+
+		for(let i = 0; i < enemiesNumber; i++){
+			if(i === 0) {
+				// primer enemigo colocado con una posición específica
+				this.enemies[0] = new Character(this,info.enemies[i].name,this.sys.game.canvas.width/2-(75*enemiesNumber/2) +50, height, info.enemies[i].imgID, info.enemies[i].actualHp, info.enemies[i].maxHp, info.enemies[i].actualMp, info.enemies[i].maxMp);
+			}
+			else{
+				// resto de enemigos colocados en función de los enemigos anteriores
+				this.enemies[i] = new Character(this,info.enemies[i].name,this.enemies[i-1].x +100, height, info.enemies[i].imgID, info.enemies[i].actualHp, info.enemies[i].maxHp, info.enemies[i].actualMp, info.enemies[i].maxMp);
+			}
+			// setteamos sus stats
+			this.enemies[i].SetStats(info.enemies[i].rP, info.enemies[i].rR, info.enemies[i].rF, info.enemies[i].rE,
+				info.enemies[i].rT, info.enemies[i].acurracy, info.enemies[i].speed);
+
+			// creamos el nuevo HUD para enemigo
+			this.enemiesHud.push(new EnemyHUD(this,this.enemies[i]));
+			
+			// creamos sus ataques
+			for(let o = 0; o < info.enemies[i].attack.length; o++)
+			{
+				this.enemies[i].SetAttacks(info.enemies[i].attack[o]);
+			}
+			this.enemies[i].scale = 4;
+			this.AddEnemySelector(this.enemies[i]); // escuchamos eventos para seleccionar al enemigo
+		}
+	}
+
 
 	// generamos a los enemigos en función de la información que nos llega desde enemiesInfo
 	GenerateRandomEncounter(){
@@ -479,7 +512,6 @@ export class FightScene extends Phaser.Scene {
 			
 			if(!this.allies[w].dead)
 			{
-				//console.log('SI');
 				 this.allies[w].play(this.allies[w].imageId+'_wow');
 		
 			}
@@ -558,7 +590,8 @@ export class FightScene extends Phaser.Scene {
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.allies[this.currentAlly].name + " no se pudo mover.");
 					this.allies.forEach(function(ally){
-						ally.play(ally.imageId + '_wow');  
+						if(!ally.dead)
+							ally.play(ally.imageId + '_wow');  
 					})
 					this.allies[this.currentAlly].play(this.allies[this.currentAlly].imageId + '_shock');// Insertar animación paralizado
 				}
@@ -579,13 +612,15 @@ export class FightScene extends Phaser.Scene {
 					this.state = FightState.TimeUntilNextTurn;
 					this.BuildEndTurnLog(this.enemies[this.turns[this.currentTurn].index].name + " no se pudo mover.");
 					this.enemies.forEach(function(enemy){
-						enemy.play(enemy.imageId + '_wow');
+						if(!enemy.dead)
+							enemy.play(enemy.imageId + '_wow');
 					})
 					this.enemies[this.turns[this.currentTurn].index].play(this.enemies[this.turns[this.currentTurn].index].imageId + '_shock');// Insertar animación paralizado
 
 				}
 			}
 		}
+		else {this.state = FightState.TimeUntilNextTurn; this.count = this.timeBetweenAttacks;}
 	}
 
 
@@ -663,6 +698,7 @@ export class FightScene extends Phaser.Scene {
 	create(){
 		// ESTADO INICIAL
 		this.state = FightState.SelectTurn;
+		this.win = false;
 		this.end = false;
 		this.alreadyDone = false;
 		const musicconfig = {
@@ -705,8 +741,13 @@ export class FightScene extends Phaser.Scene {
 		
 		this.winMoney = 0;
 		// escoger entre random o batalla dada según el EnviromentInfo
-		this.GenerateRandomEncounter(); // generamos a los enemigos
-		
+		if(this.loadFromEnviroment){
+			this.GenerateSpecialEncounter();
+		}
+		else{
+			this.GenerateRandomEncounter(); // generamos a los enemigos
+		}
+
 		// Creación de gestión de Turnos
 		this.turns = []; // creamos un array para ordenar a aliados y enemigos por velocidad 
 		this.currentTurn = -1; // turno actual
@@ -724,7 +765,7 @@ export class FightScene extends Phaser.Scene {
 
 		this.CreateButtons(); // creamos los botones
 		this.ToggleButtons(false); // se deshabilitan los botones
-
+		this.isUsingItem = false;
 	}
 
 	UseItem(){
@@ -740,11 +781,10 @@ export class FightScene extends Phaser.Scene {
 
 		this.allies[this.currentAlly].targets = [];
 		
-		console.log(this.selectedItem);
-
 		this.inventory.removeItem(this.selectedItem);
 		this.allaySelected = -1;
 		this.selectedItem = -1;
+		this.RequestChangeState(false);
 	}
 
 	//···RAUL PRUEBAS···
@@ -777,8 +817,9 @@ export class FightScene extends Phaser.Scene {
 		else if(this.state === FightState.ChooseAttack){
 			this.ToggleButtons(false);
 			if(item){
-				this.state = FightState.Item;
+				this.state = FightState.ChooseAlly;
 				this.EnableTargetting(this.allies);
+				this.isUsingItem = true;
 			}
 			else{
 				if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
@@ -797,7 +838,10 @@ export class FightScene extends Phaser.Scene {
 			this.DisableTargetting(this.enemies);
 		}
 		else if(this.state === FightState.ChooseAlly){
-			this.state = FightState.ExecuteAttack;
+			if(!this.isUsingItem)
+				this.state = FightState.ExecuteAttack;
+			else 
+				this.state = FightState.Item;
 			this.DisableTargetting(this.allies);
 		}
 		else if(this.state === FightState.ExecuteAttack){
@@ -818,9 +862,7 @@ export class FightScene extends Phaser.Scene {
 			let areAlteredStates = this.CheckToxicState();
 			this.state = FightState.AlteratedStatesToxic;
 			if(!areAlteredStates) {
-				console.log("AAAA");
 				this.count = this.timeBetweenAttacks;
-				console.log(this.count > this.timeBetweenAttacks);
 				this.allies.forEach(function (ally){
 					if(!ally.dead)
 						ally.play(ally.imageId + '_idle');
@@ -833,18 +875,17 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.AlteratedStatesToxic){
 			if(this.end){
-				this.BuildEndTurnLog("Has ganado " + this.winMoney + " (insertar nombre de moneda xD)"); 
+				if(this.win) this.BuildEndTurnLog("Has ganado " + this.winMoney + " euros."); 
+				else this.BuildEndTurnLog("Has perdido."); 
 				this.state = FightState.EndCombat;
 			}
 			else this.state = FightState.SelectTurn;
 		}
 		else if(this.state === FightState.Item){
-			this.UseItem();
-			this.inventoryHUD.UpdateItem(this.inventory);
 			this.ToggleButtons(false);
 			this.state = FightState.TimeUntilNextTurn;
 			this.DisableTargetting(this.allies);
-			console.log(this.state);
+			this.isUsingItem = false;
 		}
 		else if(this.state === FightState.EndCombat){
 			this.state = FightState.Finish;
@@ -852,8 +893,6 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	update(t,dt){
-		console.log(this.state);
-		console.log(this.count);
 
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
@@ -887,15 +926,10 @@ export class FightScene extends Phaser.Scene {
 						if(this.alliesHud[this.currentAlly].attackText[this.attack].srcAttack.isSupport())
 						{ 
 							this.allaySelected=0;
-							console.log(this.allaySelected);
-							console.log(this.allies.length);
 					
 						}
 						else{
 							this.enemyselected=0;
-							console.log(this.enemyselected);
-							console.log(this.enemies.length);						
-
 						}
 						this.RequestChangeState(false);
 						this.alliesHud[this.currentAlly].DisplayAttacks();
@@ -1002,13 +1036,12 @@ export class FightScene extends Phaser.Scene {
 				this.pointer.angle = 90;
 			}
 			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
-				console.log("entre");
 				this.state = FightState.ChooseAttack;
 				this.allies[this.currentAlly].targets = [];
 			}
 		}
 		
-		else if(this.state === FightState.ChooseAlly || this.state === FightState.Item){
+		else if(this.state === FightState.ChooseAlly){
 			if(Phaser.Input.Keyboard.JustDown(this.aux.eKey))
 			{					
 				this.allies[this.currentAlly].targets.push(this.allies[this.allaySelected]);
@@ -1031,13 +1064,11 @@ export class FightScene extends Phaser.Scene {
 			}
 			if(this.allaySelected !=-1 && this.allaySelected != undefined)
 			{
-				console.log(this.allaySelected);
 				this.pointer.x = this.allies[this.allaySelected].x-75;
 				this.pointer.y = this.allies[this.allaySelected].y;
 				this.pointer.angle = 0;
 			}
 			if(Phaser.Input.Keyboard.JustDown(this.aux.escKey)){
-				console.log("entre");
 				this.state = FightState.ChooseAttack;
 			}
 		}
@@ -1054,8 +1085,6 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.TimeUntilNextTurn || this.state === FightState.AlteratedStatesFire 
 			|| this.state === FightState.AlteratedStatesToxic ||this.state == FightState.EndCombat){
-				console.log(this.count > this.timeBetweenAttacks);
-
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{
@@ -1064,7 +1093,8 @@ export class FightScene extends Phaser.Scene {
 			}
 		}
 		else if(this.state === FightState.Item){
-		
+			this.UseItem();	
+			this.inventoryHUD.UpdateItem(this.inventory);
 		}
 		else{	
 			this.EndCombat();

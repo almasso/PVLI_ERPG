@@ -43,6 +43,10 @@ export class interactuableObj extends enviromentObj{
 		}
 	}
 
+	Hide(bool){
+		this.interacted = bool;
+		this.setVisible(!bool);
+	}
 	Interacted(){ this.interacted = true; }
 
 	

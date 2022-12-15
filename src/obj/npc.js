@@ -129,6 +129,12 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
     }
 
+    shopDialog(itemName, hasBought) {
+        if(hasBought) this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Has comprado " + itemName.name + ". Gracias, vuelva pronto.", true, this.verified, this.developer);
+        else this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Siniora Homer, el " + itemName.name + " que usted está intentando adquirir está fuera de su rango monetario. Por favor seleccione otro producto o váyase.", true, this.verified, this.developer);
+    }
+    
+
     closeWindow() {
         this.uiScene.toggleWindow(this.verified, this.developer);
         if(this.currentDialog >= this.dialogIndex + this.dialogCount) {
