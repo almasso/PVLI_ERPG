@@ -10,6 +10,7 @@ import boot from './scenes/boot.js'
 import Square from './scenes/Square.js'
 import {EnviromentManager} from './fight/EnviromentInfo.js'
 import FishingScene from './scenes/FishingScene.js'
+import FirstScene from './scenes/FirstCinematic.js'
 
 let config = {
     type: Phaser.CANVAS,
@@ -33,7 +34,7 @@ let config = {
 		zoom: 1
     },
     scene: [
-        boot, EnviromentManager, InitialScene, Square, FinalScene,
+        boot, EnviromentManager,FirstScene, InitialScene, Square, FinalScene,
         ParkScene,CementeryScene,PortScene, HUDScene, 
         FightScene, FishingScene, DialogScene],
     physics: {

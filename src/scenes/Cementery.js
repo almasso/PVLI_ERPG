@@ -79,6 +79,7 @@ export default class CementeryScene extends FatherScene {
 				this.npcs[0].destroy();
 				this.dreamon.stop();
 				this.eObjs[0].setVisible(true);
+				this.eObjs[4].setVisible(true);
 				this.manin.setActive(true);
 			}
 		}

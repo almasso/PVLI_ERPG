@@ -6,7 +6,8 @@ const scenes = {
 	square: 0,
 	park: 1,
 	cementery: 2,
-	port: 3
+	port: 3,
+	cinematic1:4
 };
 
 let hudKey = 'hud';
@@ -17,8 +18,8 @@ class EnviromentManager extends Phaser.Scene{
 	constructor(){
 		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
 		super({key: 'EnvManager'});
-		this.coreScene = scenes.square;
-		this.currentScene = scenes.square;
+		this.coreScene = scenes.cinematic1;
+		this.currentScene = scenes.cinematic1;
 		this.info = sceneInfo[this.coreScene];
 	}
 
@@ -95,9 +96,39 @@ class EnviromentManager extends Phaser.Scene{
 		this.scene.sleep(sleepKey);
 	}
 }
+let cinematic1 = {
+	launched: true,
+	key: 'cinematic1',
+	bg: 'plazaNoche',
+	character: [],//[{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
+	// rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
+	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+	// attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
+	
+	npcs: [
+		npcInfo(600,400, 'dinostatue', 0),
+		npcInfo(600,400, 'dinoRoto', 0),
+		npcInfo(300,400, 'delincuente', 0),
+		npcInfo(900,400, 'delincuente', 0),
+		npcInfo(600,600, 'delincuente', 0)
+	],
+	qNpcs: [],
+	sNpcs: [
+		npcInfo(1050, 425, 'emptyShop', 9)
+	],
+	hNpcs:  [
+		npcInfo(100, 250, 'emptyBar', 11)
+	],
+	hostile: [],
+	eObj: [eObjInfo(600, 680, 'z1', 0.5, 0.5),eObjInfo(600, 450, 'intro', 1, 1)],
+	iObj: [],
+	travel: [
+		travelInfo(600, 50, 'pixel', 100, 100, scenes.square)
+	]
+}
 
 let square = {
-	launched: true,
+	launched: false,
 	key: 'square',
 	bg: 'square',
 	character: [],//[{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
@@ -114,6 +145,7 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
+		npcInfo(600,350, 'dinoRoto', 0), //la estatua tampoco tiene diálogos
 		npcInfo(700,525, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
@@ -428,9 +460,12 @@ let cementery = {
 		eObjInfo(200, 300, 'insignia', 0.5, 0.5),
 		eObjInfo(650, 170, 'pixel', 320, 0.5),
 		eObjInfo(460, 0, 'pixel', 0.5, 500),
-		eObjInfo(650, 74, 'pixel', 320, 0.5)
+		eObjInfo(650, 74, 'pixel', 320, 0.5),
+		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 	],
-	iObj: [],
+	iObj: [
+		
+	],
 	travel: [
 		travelInfo(800, 120, 'pixel', 70, 70, scenes.square)
 	]
@@ -491,8 +526,8 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port];
+let sceneInfo = [square, park, cementery, port,cinematic1];
 
 // variables exportadas
-let EnviromentInfo = square;
+let EnviromentInfo = cinematic1;
 let EnemiesInfo = park.enemies;
