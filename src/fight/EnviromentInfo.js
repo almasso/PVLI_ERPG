@@ -178,8 +178,7 @@ let park = {
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
-		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas')
-	],
+		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
@@ -216,7 +215,7 @@ let park = {
 				attackInfo("Camina por la Vida",5,-70,60,1)
 			]
 		},
-		{
+		/*{
 			x: 500,
 			y:500, 
 			name: "Jarfaiter", 
@@ -238,7 +237,7 @@ let park = {
 				attackInfo("Ven a 4k", 0, 20, 25, 2), 
 				attackInfo("Porro",4,50,60,4)
 			]
-		},
+		},*/
 		{
 			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
 			imgID: 'sanxe', 
