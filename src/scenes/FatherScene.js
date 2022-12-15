@@ -88,6 +88,8 @@ export default class FatherScene extends Phaser.Scene {
 		}
         for(let i of EnviromentInfo.character){
             let newAlly = new AllyTEST(this, i.x, i.y, this.manin, i);
+			newAlly.setVisible(false);
+			newAlly.trigger.setActive(false);
             this.npcs.push(newAlly);
         }
 		for(let e of this.npcs) e.scale = 2.5;
