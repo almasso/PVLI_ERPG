@@ -10,10 +10,6 @@ import boot from './scenes/boot.js'
 import Square from './scenes/Square.js'
 import {EnviromentManager} from './fight/EnviromentInfo.js'
 
-/**
- * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
- * la clase Game de Phaser, encargada de crear e iniciar el juego.
- */
 let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById("game"),
@@ -35,7 +31,7 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [boot, EnviromentManager, InitialScene, Square, FinalScene, DialogScene, ParkScene,CementeryScene,PortScene, HUDScene, FightScene],
+    scene: [boot, EnviromentManager, InitialScene, Square, FinalScene, ParkScene,CementeryScene,PortScene, DialogScene, HUDScene, FightScene],
     physics: {
         default: 'arcade',
         arcade: {

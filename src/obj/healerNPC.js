@@ -4,6 +4,7 @@ import { allyParty } from "../fight/Party.js";
 export default class healerNPC extends NPC{
     constructor(scene, x, y, imageID, npcID, dialogues, manin){
         super(scene, x, y, imageID, npcID, dialogues, manin);
+        this.scene = scene;
     }
 
     heal(){

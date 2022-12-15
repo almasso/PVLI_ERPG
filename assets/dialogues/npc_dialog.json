@@ -343,6 +343,21 @@
         "npcID" : 12,
         "unique" : true,
         "text" : ":)"
+    },
+    {
+        "npcID" : 22,
+        "unique" : true,
+        "text" : "¿Suʰ habíʰ fijao cómo recorto en silueeeeeeeeeeeeeeta?"
+    },
+    {
+        "npcID" : 22,
+        "unique" : true,
+        "text" : "Suʰ viá crujir viiiiiiiiiiiiiiiivos"
+    },
+    {
+        "npcID" : 22,
+        "unique" : true,
+        "text" : "Poder de la varaaaaaaaaaaaa"
     }
 ],
 "attributes" : [
@@ -420,7 +435,13 @@
     },
     {
         "npcID" : 12,
-        "npcName" : "Don Comedia", 
+        "npcName" : "Doña Comedia", 
+        "verified" : false,
+        "developer" : false
+    },
+    {
+        "npcID" : 22,
+        "npcName" : "Tío la Vara",
         "verified" : false,
         "developer" : false
     }

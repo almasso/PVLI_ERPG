@@ -403,8 +403,15 @@ export class shopHUD{
 	constructor(scene, items, npc){
 		this.scene = scene;
 		this.shopBlock = this.scene.add.image(this.scene.sys.game.canvas.width / 2, this.scene.sys.game.canvas.height / 2, 'log');
+		this.moneyBlock = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - 100, 'log').setScale(0.5);
+		this.moneyText = this.scene.add.text(this.moneyBlock.x - this.moneyBlock.displayWidth / 2.5, this.moneyBlock.y - this.moneyBlock.displayHeight /5, 
+		"Dinero: " + allyParty.inventory.money, {font: '20px "Arial"'});
 		this.shopBlock.setScale(1.5);
 		this.shopBlock.depth = 4;
+		this.moneyBlock.depth = 4;
+		this.moneyText.depth = 4;
+		this.moneyBlock.visible = false;
+		this.moneyText.visible = false;
 		this.shopBlock.visible = false;
 
 		this.npc = npc
@@ -415,16 +422,14 @@ export class shopHUD{
 		this.createButtons();
 	}
 
-	//this.shopBlock.x - this.shopBlock.displayWidth / 2, this.shopBlock.y - this.shopBlock.displayHeight / 2 - 10 ->comprar
-	//this.buyButton.x + this.buyButton.displayWidth + 1, this.buyButton.y  -> no comprar
 	createButtons(){
-		this.buyButton = this.scene.add.image(400, 475, 'buy'); //Botón de comprar
+		this.buyButton = this.scene.add.image(this.shopBlock.x - this.shopBlock.displayWidth/2 + this.moneyBlock.displayWidth*1.3, this.shopBlock.y - this.shopBlock.displayHeight/2 - this.moneyBlock.displayHeight / 2 + 3, 'buy'); //Botón de comprar
 		this.buyButton.setScale(1.5);
 		this.buyButton.depth = 4;
 		this.buyButton.setInteractive();
 		this.buyButton.visible = false;
 
-		this.naoButton = this.scene.add.image(500, 475, 'noBuy'); //Botón de no comprar
+		this.naoButton = this.scene.add.image(this.buyButton.x + this.buyButton.displayWidth - 5, this.buyButton.y, 'noBuy'); //Botón de no comprar
 		this.naoButton.setScale(1.5);
 		this.naoButton.depth = 4;
 		this.naoButton.setInteractive();
@@ -443,12 +448,22 @@ export class shopHUD{
 		this.downButton.setInteractive();
 		this.downButton.visible = false;
 
-		this.buyButton.on('pointerup', () => {
-			self.displayItems();
-			self.buyButton.visible = false;
-		});
+		this.buyItem = this.scene.add.image(this.shopBlock.x + this.shopBlock.displayWidth / 4, this.shopBlock.y + this.shopBlock.displayHeight / 2, 'buyItem').setScale(2).setOrigin(0,0);
+		this.buyItem.depth = 4;
+		this.buyItem.setInteractive();
+		this.buyItem.visible = false;
 
 		let self = this;
+
+		this.buyItem.on('pointerup', () => {
+			self.npc.buy(self.items[self.currentItem]);
+			self.moneyText.setText("Dinero: " + allyParty.inventory.money);
+		});
+
+		this.buyButton.on('pointerup', () => {
+			self.moneyText.setText("Dinero: " + allyParty.inventory.money);
+			self.displayItems();
+		});
 
 		this.naoButton.on('pointerup', () => {
 			if(self.shopBlock.visible)
@@ -474,40 +489,48 @@ export class shopHUD{
 			self.itemsText[index] = {
 				name: self.scene.add.text(self.shopBlock.x - 6 * self.shopBlock.displayWidth / 14, self.shopBlock.y - 7 * self.shopBlock.displayHeight / 16 + 5, item.name,
 				{
-					font: '12px "Press Start 2P"',
+					font: '20px "Arial"',
 					color: '#ffffff',
 					align: 'left',}),
 				price: self.scene.add.text(self.shopBlock.x + 2.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y - 7 * self.shopBlock.displayHeight / 16 + 5, item.price + ' euro(s)',
 				{
-					font: '12px "Press Start 2P"',
+					font: '20px "Arial"',
 					color: '#ffffff',
 					align: 'left',}),
 				hp: self.scene.add.text(self.shopBlock.x - 6 * self.shopBlock.displayWidth / 14, self.shopBlock.y - 3 * self.shopBlock.displayHeight / 16 + 5, item.hp + ' hp',
 				{
-					font: '12px "Press Start 2P"',
+					font: '20px "Arial"',
 					color: '#ffffff',
 					align: 'left',}),
 				mp: self.scene.add.text(self.shopBlock.x + 2.5 * self.shopBlock.displayWidth / 10, self.shopBlock.y - 3 * self.shopBlock.displayHeight / 16 + 5, item.mp + ' mp',
 				{
-					font: '12px "Press Start 2P"',
+					font: '20px "Arial"',
 					color: '#ffffff',
-					align: 'left',})}
+					align: 'left',}),
+				image: self.scene.add.image(self.shopBlock.x, self.shopBlock.y, item.imgID).setScale(4)
+			}
 
 			self.itemsText[index].name.depth = 4;
 			self.itemsText[index].price.depth = 4;
 			self.itemsText[index].hp.depth = 4;
 			self.itemsText[index].mp.depth = 4;
+			self.itemsText[index].image.depth = 4;
 
 			self.itemsText[index].name.visible = false;
 			self.itemsText[index].price.visible = false;
 			self.itemsText[index].hp.visible = false;
 			self.itemsText[index].mp.visible = false;
+			self.itemsText[index].image.visible = false;
 
 			self.itemsText[index].name.setInteractive();
+
 		});
 	}
 
 	displayItems(){
+		this.buyItem.visible = !this.buyItem.visible; 
+		this.moneyText.visible = !this.moneyText.visible;
+		this.moneyBlock.visible = !this.moneyBlock.visible;
 		this.upButton.visible = !this.upButton.visible;
 		this.downButton.visible = !this.downButton.visible;
 		this.shopBlock.visible = !this.shopBlock.visible;
@@ -516,8 +539,7 @@ export class shopHUD{
 		this.itemsText[this.currentItem].price.visible = !this.itemsText[this.currentItem].price.visible;
 		this.itemsText[this.currentItem].hp.visible = !this.itemsText[this.currentItem].hp.visible;
 		this.itemsText[this.currentItem].mp.visible = !this.itemsText[this.currentItem].mp.visible;
-		if(this.itemsText[this.currentItem].visible)
-			this.itemButton();
+		this.itemsText[this.currentItem].image.visible = !this.itemsText[this.currentItem].image.visible;
 	}
 
 	Down(){
@@ -534,14 +556,6 @@ export class shopHUD{
 			this.currentItem--;
 			this.displayItems();
 		}
-	}
-
-	itemButton(){
-		let self = this;
-		this.itemsText[this.currentItem].name.on('pointerup', () => {
-			self.scene.currentItem = self.items[self.currentItem];
-			self.npc.buy();
-		})
 	}
 }
 
@@ -792,6 +806,7 @@ export class ExploreMenu {
 		this.alliesShownIndex = 0;
 		this.AddPartyMenu(); // añadir el submenú de la party
 		this.AddPartyManagementMenu()
+		this.AddItemsMenu()
 		this.AddButtons(); // añadir botones para los submenús
 		this.backButton; // salir del menú actual
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
@@ -800,6 +815,7 @@ export class ExploreMenu {
 		this.walingHUD = walkingHUD;
 		this.viewParty = false;
 		this.manageParty = false;
+		this.viewItems = false;
 	}
 
 	AddPartyManagementMenu(){
@@ -858,7 +874,9 @@ export class ExploreMenu {
 		let self = this;
 		this.viewPartyButton.on("pointerup", function(){
 			self.viewParty = !self.viewParty;
+			self.viewItems = false;
 			self.manageParty = false;
+			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
 			self.ShowParty(self.viewParty);
 		});
@@ -894,8 +912,10 @@ export class ExploreMenu {
 		this.managePartyButton.on("pointerup", function(){
 			self.manageParty = !self.manageParty;
 			self.viewParty = false;
-			self.ShowParty(self.viewParty);
+			self.viewItems = false;
+			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
 		});
 		this.managePartyButton.on("pointerover", function(){
 			self.pointer.x = buttonX - self.managePartyButton.displayWidth / 6;
@@ -903,6 +923,27 @@ export class ExploreMenu {
 			self.pointer.visible = true;
 		});
 		this.managePartyButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+
+		// INVENTORY 
+		this.itemButton = this.scene.add.image(buttonX, buttonY + 120, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
+		this.itemButton.depth = 6;
+		this.itemButton.visible = false;
+		this.itemButton.on("pointerup", function(){
+			self.viewItems = !self.viewItems;
+			self.viewParty = false;
+			self.manageParty = false;
+			self.ShowItems(self.viewItems);
+			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
+		});
+		this.itemButton.on("pointerover", function() {
+			self.pointer.x = buttonX - self.itemButton.displayWidth / 6;
+			self.pointer.y = buttonY + 120 + self.itemButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		this.itemButton.on("pointerout", function(){
 			self.pointer.visible = false;
 		});
 		//#endregion
@@ -913,13 +954,6 @@ export class ExploreMenu {
 		//#region MANAGE PARTY MENU BUTTONS
 		this.managerImages.forEach(function(image, index){
 			image.bgIMG.setInteractive();
-
-			image.bgIMG.on("pointerover", function(){
-			})
-
-			image.bgIMG.on("pointerout", function(){
-			})
-			
 			image.bgIMG.on("pointerup", function(){
 				self.walingHUD.swapAllies(index);
 				self.SwapAllies(image);
@@ -1038,7 +1072,7 @@ export class ExploreMenu {
 	}
 
 	// Crear la información de los ataques
-	SetAttackInfo(attacks,oldIndex, srcAttack){
+	SetAttackInfo(attacks, oldIndex, srcAttack){
 		let attackInfo = [];
 		let self = this;
 		attacks.forEach(function(attack, index) {
@@ -1094,14 +1128,93 @@ export class ExploreMenu {
 		if(!bool){
 			this.viewPartyButton.disableInteractive();
 			this.managePartyButton.disableInteractive();
+			this.itemButton.disableInteractive();
 		} 
 		else{
 			this.viewPartyButton.setInteractive();
+			this.itemButton.setInteractive();
 			this.managePartyButton.setInteractive();
 		}
 		this.viewPartyButton.visible = bool;
+		this.itemButton.visible = bool;
 		this.managePartyButton.visible = bool;
 		this.pointer.visible = false;
+	}
+
+	AddItemsMenu(){
+		let x = 50;
+		let y = 100;
+		this.bItem = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
+		this.bChooseItem = this.scene.add.image(x,y + this.bItem.displayHeight, 'menuBG').setOrigin(0,0).setScale(5, 0.5);
+		this.bItem.visible = false;
+		this.bChooseItem.visible = false;
+		x = 100;
+		this.itemImages = [];
+		this.itemTexts = [];
+		let i = 0;
+		for(let e of allyParty.inventory.inv){
+			this.itemImages[i] = {
+				img: this.scene.add.image(x, y, i.imgID),
+				hp: this.scene.add.text(x, y + 140, i.hp, {font:'20px "Arial"'}),
+				mp: this.scene.add.text(x, y + 180, i.mp, {font:'20px "Arial"'}),
+				desc: this.scene.add.text(x, y + 220, "testo", {font: '20px "Arial"'})
+			}
+			this.itemImages[i].img.depth = 3;
+			this.itemImages[i].hp.depth = 3;
+			this.itemImages[i].mp.depth = 3;
+			this.itemImages[i].desc.depth = 3;
+
+			this.itemImages[i].img.visible = false;
+			this.itemImages[i].hp.visible = false;
+			this.itemImages[i].mp.visible = false;
+			this.itemImages[i].desc.visible = false;
+			this.itemTexts[i] = this.scene.add.text(x, this.bChooseItem.y + (i + 1)*30, e.name, {font: '20px "Arial"'})
+			i++;
+		}
+	}
+
+	AddItem(item){
+		console.log(item);
+		console.log(item.description);
+		let x = 100;
+		let y = 110;
+		let descripcion = item.description;
+		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(4);
+		let descX = x + image.displayWidth + 30;
+		let descY = y + image.y - 70;
+		let desc = this.scene.make.text({
+            x : descX,
+            y : descY,
+            text : descripcion,
+            style: {
+				wordWrap : {width : 200}
+            }
+        });
+		desc.setText(descripcion);
+
+		this.itemImages.push({
+			img: image,
+			hp: this.scene.add.text(x,y + 140, item.hp, {font:'20px "Arial"'}).setOrigin(0,0),
+			mp: this.scene.add.text(x,y + 180, item.mp, {font:'20px "Arial"'}).setOrigin(0,0),
+			desc: desc
+		});
+		this.itemImages[this.itemImages.length - 1].img.visible = false;
+		this.itemImages[this.itemImages.length - 1].hp.visible = false;
+		this.itemImages[this.itemImages.length - 1].mp.visible = false;
+		this.itemImages[this.itemImages.length - 1].desc.visible = false;
+		this.itemTexts.push(this.scene.add.text(x, this.bChooseItem.y + this.itemTexts.length*30, item.name, {font: '20px "Arial"'}));
+
+	}
+
+	ShowItems(bool){
+		for(let e of this.itemImages){
+			e.img.visible = bool;
+			e.hp.visible = bool;
+			e.mp.visible = bool;
+			e.desc.visible = bool;
+		}
+		this.bItem.visible = bool;
+		this.bChooseItem.visible = bool;
 	}
 
 	ShowParty(bool){ // activamos/desactivamos el submenú de estado de la party
