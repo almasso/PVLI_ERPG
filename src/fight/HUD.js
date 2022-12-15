@@ -220,7 +220,7 @@ export class QuestHUD{
 	constructor(scene){
 		this.scene = scene;
 		this.questLog = allyParty.questLog;
-		this.scale = 2.5;
+		this.scale = 3;
 		this.questBlock = scene.add.image(20, 20, 'miniHUD').setOrigin(0,0);
 		this.questBlock.setScale(this.scale, this.scale / 2);
 		this.questBlock.depth = 4;
@@ -232,10 +232,15 @@ export class QuestHUD{
 		this.questName.setFontSize(20);
 		this.questName.depth = 5;
 
-		this.text = scene.add.text(40, 60, "",{
-			font: 'Arial"',
-			color: '#ffffff',
-			align: 'left',});
+		this.text = scene.make.text({
+			x: 40, y: 60,
+			text: "",
+			style: {
+				wordWrap: {width: 350},
+				font: '20px Arial',
+				color: '#ffffff',
+				align: 'left'
+			}});
 
 		this.text.setFontSize(20);
 		this.text.depth = 4;
@@ -256,11 +261,11 @@ export class QuestHUD{
 		console.log(aux.name);
 		if(aux.name !== undefined){
 			this.questName.text = "Misión: " + aux.name;
-			this.text.text = "-" +aux.text;
+			this.text.setText("-" +aux.text);
 		}
 		else{
 			this.questName.text = "";
-			this.text.text = aux.text;
+			this.text.setText(aux.text);
 		}
 		if(aux.yellowColor) this.text.setStyle({
 			font: 'Arial"',

@@ -629,6 +629,7 @@ export class FightScene extends Phaser.Scene {
 				}
 			}
 		}
+		else {this.state = FightState.TimeUntilNextTurn; this.count = this.timeBetweenAttacks;}
 	}
 
 
@@ -850,7 +851,6 @@ export class FightScene extends Phaser.Scene {
 			let areAlteredStates = this.CheckToxicState();
 			this.state = FightState.AlteratedStatesToxic;
 			if(!areAlteredStates) {
-				console.log("AAAA");
 				this.count = this.timeBetweenAttacks;
 				console.log(this.count > this.timeBetweenAttacks);
 				this.allies.forEach(function (ally){
@@ -882,6 +882,10 @@ export class FightScene extends Phaser.Scene {
 	}
 
 	update(t,dt){
+		console.log("Estado: " + this.state);
+		console.log("ULTIMO TURNO: " + this.currentTurn === this.turns.length -1);
+
+
 	/*	if(Phaser.Input.Keyboard.JustDown(this.aux.spaceKey)){
 			this.scene.wake('movement');
 			this.scene.sleep('fightscene');

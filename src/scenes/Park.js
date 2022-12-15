@@ -57,11 +57,11 @@ export default class ParkScene extends FatherScene {
 			}
 		})
 		
-		// Coger item pero esto será de otra misión
+		// Coger item
 		this.iFunctions.push(function(){
-			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
-			if(fishingRod !== undefined && fishingRod.quest.stage === 3 && !fishingRod.quest.actualObjectiveCompleted){
-				allyParty.questLog.advanceQuest('fishingRod'); 
+			let statueQuest = allyParty.questLog.GetQuest('statueQuest');
+			if(statueQuest !== undefined && statueQuest.quest.stage === 0 && !statueQuest.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('statueQuest'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
 				self.interactuableObjects[3].trigger.destroy();
 				self.interactuableObjects[3].destroy();

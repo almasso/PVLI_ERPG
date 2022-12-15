@@ -125,7 +125,8 @@ let square = {
 		npcInfo(300, 200, 'jatsune', 2)
 	],
 	qNpcs: [
-		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest", "Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest", "Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"]),
+		qNpcInfo(500, 500, 'alex', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"])
 		],
 	sNpcs: [
 		sNpcInfo(300, 100, 'alex', 9, [
@@ -176,7 +177,7 @@ let park = {
 		npcInfo(300, 400, 'tiolavara', 3)
 	],
 	qNpcs: [
-		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 4, ["Encuentra su caña", "Observa el lago", "Pelea con la estatua", "Coge la parte de estatua"])
+		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña", "Observa el lago", "Pelea con la estatua"])
 	],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
