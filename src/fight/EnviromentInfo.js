@@ -143,15 +143,15 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
-		npcInfo(700,525, 'rick', 25),
+		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
-		sNpcInfo(300, 100, 'tienda', 9, [
+		sNpcInfo(1050, 400, 'tienda', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 			itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
 			itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
