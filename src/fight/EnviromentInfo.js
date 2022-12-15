@@ -108,12 +108,11 @@ let square = {
 	hNpcs:  [npcInfo(100, 250, 'tienda', 10)],
 	hostile: [hostileInfo(900,200,'hierba', 1, 1, 2.5), 
 			  hostileInfo(700, 500, 'hierba', 1, 1, 2)],
-	eObj: [eObjInfo(600, 100, 'valla', 0.5, 0.5),eObjInfo(540, 275, 'pixel', 140, 50)
-	,eObjInfo(600, 375, 'pixel', 250, 75),eObjInfo(600, 325, 'pixel', 150, 50)],
+	eObj: [eObjInfo(540, 275, 'pixel', 140, 50)	,eObjInfo(600, 375, 'pixel', 250, 75),eObjInfo(600, 325, 'pixel', 150, 50)],
 	iObj: [],
 	travel: [travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
 			 travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
-			 travelInfo(500, 150, 'pixel', 100, 100, scenes.park)]
+			 travelInfo(600, 50, 'pixel', 100, 100, scenes.port)]
 }
 
 // información de los personajes que se encuentran en el parque
@@ -169,7 +168,18 @@ let cementery = {
 
 let port = {
 	launched: false,
-	key: 'port'
+	key: 'port',
+	bg: 'home',
+	npcs: [npcInfo(75,380, 'alex', 13),npcInfo(200,380, 'raul', 13),npcInfo(630,380, 'david', 13),npcInfo(760,380, 'pablo', 13)],
+	qNpcs: [],
+	 sNpcs: [],
+	 hNpcs:  [],
+	 character: [],
+	enemies: [],
+	hostile: [],
+	eObj: [eObjInfo(500, 125, 'text', 2.5, 2.5),eObjInfo(500, 420, 'pixel', 1000, 0.1)],
+	iObj: [],
+	travel: [travelInfo(400, 600, 'pixel', 70, 70, scenes.square)]
 }
 
 function npcInfo(x, y, img, id){

@@ -10,7 +10,7 @@ export default class CementeryScene extends FatherScene {
 	create() {
 		const config = {
 			mute: false,
-			volume: 1,
+			volume: 0.5,
 			rate: 1,
 			detune: 0,
 			seek: 0,
@@ -29,7 +29,8 @@ export default class CementeryScene extends FatherScene {
 		{
 			this.eObjs[i].setVisible(false);
 		}
-		
+		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
+
 		
 	}
 

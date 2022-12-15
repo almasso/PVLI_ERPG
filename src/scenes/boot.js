@@ -83,6 +83,9 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
 		this.load.image('alex', 'assets/textures/Characters/Alex.png');
+		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
+		this.load.image('david', 'assets/textures/Characters/david.png');
 		this.load.image('compuman', 'assets/textures/Characters/Compuman.png');
 		this.load.image('frozono', 'assets/textures/Characters/Frozono.png');
 		this.load.image('unverifiedtoni', 'assets/textures/Characters/toni1.png');
@@ -114,6 +117,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 		this.load.image('park','assets/textures/Backgrounds/park.png')
 		this.load.image('clif','assets/textures/Backgrounds/clif.png')
+		this.load.image('home','assets/textures/Backgrounds/home.png')
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
@@ -122,6 +126,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('tree', 'assets/textures/Props/tree.png');
 		this.load.image('valla', 'assets/textures/Props/valla.png');
 		this.load.image('ten', 'assets/textures/Props/ten.png');
+		this.load.image('text', 'assets/textures/Props/text.png');
 		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 
         // ANIMACIONES

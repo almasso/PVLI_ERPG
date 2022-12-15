@@ -193,8 +193,8 @@ GenerateHostileGround(x, y, fils, cols, scale, img){
 			let changeZoneBounds = i.getBounds();
 			
 			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
-				
-				if((self.aKey.isDown && i.x>0&&i.x<100) ||(self.dKey.isDown && i.x>this.bordeX-100)||(self.wKey.isDown&& i.y<70)||(self.sKey.isDown &&  i.y>this.bordeY-100))
+				console.log("E")
+				if((self.aKey.isDown && i.x>0&&i.x<100) ||(self.dKey.isDown && i.x>this.bordeX-100)||(self.wKey.isDown&& i.y<100 && i.x<700&&i.x>300)||(self.sKey.isDown &&  i.y>500&& i.x>300&&i.x<700))
 				{				
 					i.emit("overlapstart");
 					this.manin.body.setVelocityX(0);
