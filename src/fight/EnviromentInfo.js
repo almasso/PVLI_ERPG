@@ -173,10 +173,10 @@ let park = {
 		npcInfo(400,300, 'alex', 0), 
 		npcInfo(200, 200, 'alex', 1), 
 		npcInfo(300, 200, 'alex', 2),
-		npcInfo(300, 400, 'tiolavara', 22)
+		npcInfo(300, 400, 'tiolavara', 3)
 	],
 	qNpcs: [
-		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
+		qNpcInfo(700, 100, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña", "Observa el lago", "Pelea con la estatua"])
 	],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
@@ -311,7 +311,10 @@ let park = {
 		hostileInfo(700, 500, 'hierba', 1, 1, 2)
 	],
 	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
-	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
+	iObj: [
+		eObjInfo(700, 500, 'manin', 0.7, 0.7),  // Caña de pescar
+		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
+	],
 	travel: [
 		travelInfo(1195, 775, 'pixel', 100, 100, scenes.square),
 		travelInfo(50, 775, 'pixel', 100, 100, scenes.square),
