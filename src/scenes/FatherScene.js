@@ -71,7 +71,7 @@ export default class FatherScene extends Phaser.Scene {
 		}
 		for(let i of EnviromentInfo.qNpcs){
 			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, npc_dialogues, 
-				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj));
+				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj, i.qNpcName, i.qImg, i.qDesc));
 			this.npcs.push(newNpc);
 		}
 		for(let i of EnviromentInfo.sNpcs){

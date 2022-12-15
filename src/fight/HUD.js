@@ -812,6 +812,7 @@ export class ExploreMenu {
 		this.AddPartyMenu(); // añadir el submenú de la party
 		this.AddPartyManagementMenu()
 		this.AddItemsMenu()
+		this.AddQuestMenu();
 		this.AddButtons(); // añadir botones para los submenús
 		this.backButton; // salir del menú actual
 		this.currentMenu; // variable que ayude al backButton a gestionar la salida de los menús
@@ -880,9 +881,11 @@ export class ExploreMenu {
 		this.viewPartyButton.on("pointerup", function(){
 			self.viewParty = !self.viewParty;
 			self.viewItems = false;
+			self.viewQuests = false;
 			self.manageParty = false;
 			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
+			self.ShowQuests(self.viewQuests);
 			self.ShowParty(self.viewParty);
 		});
 
@@ -918,8 +921,10 @@ export class ExploreMenu {
 			self.manageParty = !self.manageParty;
 			self.viewParty = false;
 			self.viewItems = false;
+			self.viewQuests = false;
 			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
+			self.ShowQuests(self.viewQuests);
 			self.ShowParty(self.viewParty);
 		});
 		this.managePartyButton.on("pointerover", function(){
@@ -938,9 +943,11 @@ export class ExploreMenu {
 		this.itemButton.on("pointerup", function(){
 			self.viewItems = !self.viewItems;
 			self.viewParty = false;
+			self.viewQuests = false;
 			self.manageParty = false;
 			self.ShowItems(self.viewItems);
 			self.ManageParty(self.manageParty);
+			self.ShowQuests(self.viewQuests);
 			self.ShowParty(self.viewParty);
 		});
 		this.itemButton.on("pointerover", function() {
@@ -951,6 +958,30 @@ export class ExploreMenu {
 		this.itemButton.on("pointerout", function(){
 			self.pointer.visible = false;
 		});
+
+		// QUESTS
+		this.questButton = this.scene.add.image(buttonX, buttonY + 180, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
+		this.questButton.depth = 6;
+		this.questButton.visible = false;
+		this.questButton.on("pointerup", function(){
+			self.viewItems = false;
+			self.viewParty = false;
+			self.manageParty = false;
+			self.viewQuests = !self.viewQuests;
+			self.ShowItems(self.viewItems);
+			self.ManageParty(self.manageParty);
+			self.ShowParty(self.viewParty);
+			self.ShowQuests(self.viewQuests);
+		});
+		this.questButton.on("pointerover", function() {
+			self.pointer.x = buttonX - self.questButton.displayWidth / 6;
+			self.pointer.y = buttonY + 180 + self.questButton.displayHeight / 3;
+			self.pointer.visible = true;
+		});
+		this.questButton.on("pointerout", function(){
+			self.pointer.visible = false;
+		});
+
 		//#endregion
 
 		//#region PARTY MENU BUTTONS
@@ -982,6 +1013,40 @@ export class ExploreMenu {
 		} };
 	}
 	
+	ShowQuests(bool){
+		this.viewQuets = bool;
+		if(this.questImages.length !== 0){
+			this.questImages[this.questToShow].img.visible = bool;
+			this.questImages[this.questToShow].npcName.visible = bool;
+			this.questImages[this.questToShow].desc.visible = bool;
+			let i = 0;
+			for(let e of this.questTexts){
+				if (bool && i >= this.questTextToShow && i < this.questTextToShow + 4){
+					e.visible = true;
+					e.y = this.bChooseQuest.y + 20 + (i - this.questTextToShow)*30;
+					e.setInteractive();
+				}
+				else{
+					e.visible = false;
+					e.disableInteractive();
+				}
+				i++;
+			}
+		}
+		if(bool){
+			this.upArrowQuest.setInteractive();
+			this.downArrowQuest.setInteractive();
+		}
+		else{
+			this.upArrowQuest.disableInteractive();
+			this.downArrowQuest.disableInteractive();
+		}
+		this.upArrowQuest.visible = bool;
+		this.downArrowQuest.visible = bool;
+		this.bQuest.visible = bool;
+		this.bChooseQuest.visible = bool;
+	}
+
 	// usado solo para crear el menú de la party	
 	AddPartyMenu(){
 		let x = 0;
@@ -1133,17 +1198,20 @@ export class ExploreMenu {
 		if(!bool){
 			this.viewPartyButton.disableInteractive();
 			this.managePartyButton.disableInteractive();
+			this.questButton.disableInteractive();
 			this.itemButton.disableInteractive();
 		} 
 		else{
 			this.viewPartyButton.setInteractive();
 			this.itemButton.setInteractive();
 			this.managePartyButton.setInteractive();
+			this.questButton.setInteractive();
 		}
 		this.viewPartyButton.visible = bool;
 		this.itemButton.visible = bool;
 		this.managePartyButton.visible = bool;
 		this.pointer.visible = false;
+		this.questButton.visible = bool;
 	}
 
 	AddItemsMenu(){
@@ -1177,6 +1245,94 @@ export class ExploreMenu {
 				self.ShowItems(true);
 			}
 		});
+
+		for(let e of allyParty.inventory.inv){
+			this.AddItem(e);
+		}
+	}
+
+	AddQuestMenu(){
+		let self = this;
+		this.questToShow = 0;
+		let x = 50;
+		let y = 100;
+		this.bQuest = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
+		this.bChooseQuest = this.scene.add.image(x,y + this.bItem.displayHeight, 'menuBG').setOrigin(0,0).setScale(5, 0.5);
+		this.bQuest.visible = false;
+		this.bChooseQuest.visible = false;
+		this.questImages = [];
+		this.questTexts = [];
+		this.upArrowQuest = this.scene.add.image(this.bChooseQuest.x + 4*this.bChooseQuest.displayWidth/5,
+												this.bChooseQuest.y + 0.8*this.bChooseQuest.displayHeight/3, 'logButton').setScale(3);
+		this.downArrowQuest = this.scene.add.image(this.bChooseQuest.x + 4*this.bChooseQuest.displayWidth/5,
+												  this.bChooseQuest.y + 2.2*this.bChooseQuest.displayHeight/3, 'logButton').setScale(3);
+		this.downArrowQuest.angle = 180;
+		this.upArrowQuest.visible = false;
+		this.downArrowQuest.visible = false;
+		this.questTextToShow = 0;
+		this.upArrowItem.on("pointerup", function(){
+			if(self.questTextToShow > 0){
+				self.questTextToShow--;
+				self.ShowQuests(true);
+			}
+		});
+		this.downArrowItem.on("pointerup", function(){
+			if(self.questTextToShow + 4 <= self.questTexts.length - 1){
+				self.questTextToShow++;
+				self.ShowQuests(true);
+			}
+		});
+
+		for(let e of allyParty.questLog.quests){
+			this.AddQuest(e);
+		}
+	}
+
+	AddQuest(quest){
+		let self = this;
+		let x = 100;
+		let y = 110;
+		let descripcion = quest.description;
+		let image = this.scene.add.image(x,y,quest.img).setOrigin(0,0).setScale(4);
+		let descX = x + image.displayWidth + 30;
+		let descY = y + image.y - 70;
+		let desc = this.scene.make.text({
+            x : descX,
+            y : descY,
+            text : descripcion,
+            style: {
+				wordWrap : {width : 200},
+				font: '20px "Arial"'
+            },
+        });
+		desc.setText(descripcion);
+
+		this.questImages.push({
+			img: image,
+			npcName: this.scene.add.text(x, y + 180, quest.npcName, {font: '20px "Arial"'}).setOrigin(0,0),
+			desc: desc
+		});
+		let lastQuest = this.questImages.length - 1;
+		this.questImages[lastQuest].img.visible = false;
+		this.questImages[lastQuest].npcName.visible = false;
+		this.questImages[lastQuest].desc.visible = false;
+		this.questTexts.push(this.scene.add.text(x, this.bChooseQuest.y + 20 + this.questTexts.length*30, quest.name, {font: '20px "Arial"'}));
+		let lastText = this.questTexts.length - 1;
+		this.questTexts[lastText].index = lastText;
+		this.questTexts[lastText].setInteractive();
+		this.questTexts[lastText].on("pointerup", function() {
+			self.ChangeQuestToShow(self.questTexts[lastText].index);
+			console.log("button pressed");
+		});
+		this.questTexts[lastText].on("pointerover", function(){
+			self.pointer.visible = true;
+			self.pointer.x = self.questTexts[lastText].x - 20;
+			self.pointer.y = self.questTexts[lastText].y;
+		})
+		this.questTexts[lastText].on("pointerout",function(){
+			self.pointer.visible = false;
+		})
+		this.questTexts[lastText].visible = false;
 	}
 
 	UpdateItem(item){
@@ -1247,6 +1403,13 @@ export class ExploreMenu {
 		this.ShowItems(false);
 		this.itemToShow = index;
 		this.ShowItems(true);
+	}
+
+	ChangeQuestToShow(index){
+		console.log("WEWE");
+		this.ShowQuests(false);
+		this.questToShow = index;
+		this.ShowQuests(true);
 	}
 
 	ShowItems(bool){

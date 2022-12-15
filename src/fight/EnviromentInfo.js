@@ -118,7 +118,8 @@ let square = {
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"])
+		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
 		sNpcInfo(300, 100, 'tienda', 9, [
@@ -174,8 +175,10 @@ let park = {
 	],
 	qNpcs: [
 		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
-		"Observa el lago", "Pelea con la estatua"]),
-		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"])
+		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
+		'manin','uno que pesca'),
+		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
+		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas')
 	],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
@@ -473,8 +476,8 @@ function sNpcInfo(x, y, img, id, items){
 	return {x: x, y: y, img: img, id: id, items: items};
 }
 
-function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj){
-	return {x: x, y: y, img: img, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj};
+function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj, qDesc, qImg, qNpcName){
+	return {x: x, y: y, img: img, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj, qDesc: qDesc, qImg: qImg, qNpcName: qNpcName};
 }
 
 function hostileInfo(x, y, img, fils, cols, scale){

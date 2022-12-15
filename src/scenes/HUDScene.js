@@ -55,6 +55,10 @@ export default class HUDScene extends Phaser.Scene {
 		console.log(this.questHud);
 	}
 
+	addQuest(quest){
+		this.menu.AddQuest(quest);
+	}
+
 	addShop(npc){
 		let newShop = new shopHUD(this, npc.items, npc);
 		this.shops.push(newShop);
