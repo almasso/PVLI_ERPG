@@ -102,10 +102,10 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
-            }
-           
+            }    
         }
         else {
+            this.rickroll.stop();
             this.closeWindow();
             this.scene.musica.resume();
         }
@@ -137,8 +137,26 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         else this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Siniora Homer, el " + itemName.name + " que usted está intentando adquirir está fuera de su rango monetario. Por favor seleccione otro producto o váyase.", true, this.verified, this.developer);
     }
 
-    questDialog() {
-        
+    questDialog(dialogues) {
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
+            if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
+                this.beingAnimated = true;
+                this.currentDialog++;
+            }    
+            else if(this.beingAnimated) {
+                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
+
+                this.formerDialog++;
+                this.beingAnimated = false;
+                this.uiScene.events.emit('isNotBeingAnimated');
+            }
+           
+        }
+        else {
+            this.closeWindow();
+            this.scene.musica.resume();
+        }
     }
     
 

@@ -3,9 +3,11 @@ import { allyParty } from './fight/Party.js';
 import { AllyTEST } from './obj/manin.js';
 
 export class QuestNPC extends NPC {
-    constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
-        super(scene, x, y, imageID, npcID, dialogues, manin);
+    constructor(scene, x, y, imageID, qNPCID, npcID, npc_dialogues, quest_dialogues, manin, quest) {
+        super(scene, x, y, imageID, npcID, npc_dialogues, manin);
         this.quest = quest;
+        this.qNPCID = qNPCID;
+        this.questDialogues = quest_dialogues;
     }
 
     activateQuest(){
