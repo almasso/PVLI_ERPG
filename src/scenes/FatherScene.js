@@ -72,7 +72,7 @@ export default class FatherScene extends Phaser.Scene {
 		for(let i of EnviromentInfo.sNpcs){
 			let items = [];
 			for(let o of i.items){
-				items.push(new Object(o.name, o.hp, o.mp, o.price, o.img))
+				items.push(new Object(o.name, o.hp, o.mp, o.price, o.img, o.description))
 			}
 			let newNpc = new shopNPC(this, i.x, i.y, i.img, i.id, npc_dialogues, this.manin, allyParty.inventory, items);
 			this.npcs.push(newNpc);

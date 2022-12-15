@@ -1153,12 +1153,14 @@ export class ExploreMenu {
 	}
 
 	AddItem(item){
+		console.log(item);
+		console.log(item.description);
 		let x = 100;
-		let y = 100;
-		let descripcion = "Este cigarro te dará estilo en los pulmones, úsalo con precaución";
-		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(5);
-		let descX = x + image.displayWidth + 10;
-		let descY = y + image.y;
+		let y = 110;
+		let descripcion = item.description;
+		let image = this.scene.add.image(x,y,item.imgID).setOrigin(0,0).setScale(4);
+		let descX = x + image.displayWidth + 30;
+		let descY = y + image.y - 70;
 		let desc = this.scene.make.text({
             x : descX,
             y : descY,
