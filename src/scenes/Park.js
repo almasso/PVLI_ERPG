@@ -110,6 +110,12 @@ export default class ParkScene extends FatherScene {
 			// Hacer algo al terminar la misión guitarra
 		})
 
+		this.qFunctions.push(function(){
+			this.npcs[15].destroy();
+			this.npcs[11].trigger.setActive(true);
+			this.npcs[11].setVisible(true);
+		})
+
 		super.generateQuests(this.qFunctions);
 	}
 
