@@ -215,6 +215,9 @@ blockquote p::after {
 .personalsocials:hover {
     color:red;
 }
+#agradecimientos {
+    list-style:none;
+}
 #agradecimientos a, #agradecimientos a:visited {
     color:white;
 }
