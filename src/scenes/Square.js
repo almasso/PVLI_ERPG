@@ -9,6 +9,17 @@ export default class Square extends FatherScene {
 	
 	// inicializamos la escena
 	create() {
+		const config = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.musica = this.sound.add('square', config);
+		this.musica.play();
 		super.create();
 		
 		for(let i=0;i<this.eObjs.length;i++)this.eObjs[i].setVisible(false)
@@ -16,7 +27,6 @@ export default class Square extends FatherScene {
 		this.npcs[8].setScale(5,5)
 		this.npcs[8].trigger.setScale(4,4)
 		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
-
 		this.qFunctions = [];
 
 		let self = this;
