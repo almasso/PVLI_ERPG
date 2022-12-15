@@ -63,6 +63,12 @@ li.enlacesNAVJuego:hover {
 #copy {
     font-size:20px;
 }
+#rc {
+    transform: rotate(8deg) translateX(180%) translateY(-820%);
+    line-height: 100%;
+    display: inline-block;
+    color: #FFFF55;
+}
 /*SOLO PÁG PRINCIPAL*/
 #game{
     display:block;
