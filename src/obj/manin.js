@@ -4,6 +4,8 @@ import { QuestNPC } from "../Quest.js";
 import { enviromentObj, interactuableObj } from "./enviromentObj.js";
 import shopNPC from "./shopNPC.js";
 
+const PROBABILIDAD_COMBATE = 1;
+
 export class AllyTEST extends Phaser.GameObjects.Sprite {
 	constructor(scene, x, y, manin, info) {
 		super(scene, x, y, info.imgID);
@@ -40,6 +42,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.scene.physics.world.enable(this.zone);
         this.stepsWalked = 0;
         this.touchingGrass = false;
+		this.random = 100;
 
 		this.touchingFria=false;
 		this.moves = [false, false, false, false] // DERECHA, IZQUIERDA, ARRIBA, ABAJO
@@ -108,9 +111,10 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		this.play('pose');
 		//#endregion
 	}
-
+	
 	// interacción 
     interact(){
+		console.log(this.x + " " + this.y);
 		this.isInteracting = true;
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
@@ -224,12 +228,14 @@ export class Manin extends Phaser.GameObjects.Sprite {
         }
 
 		// Si pulsamos 'SPACE' interactuamos con nuestro entorno
-		if(Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.shopping){
+		if(Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.wKey.isDown && !this.sKey.isDown && !this.dKey.isDown && !this.aKey.isDown){
 			this.interact();
 		}
 
 		// si hemos caminado 100 pasos, entramos en combate (TEMPORAL)
-        if(this.stepsWalked > 100){
+
+        if((this.stepsWalked > 100 && (this.random < PROBABILIDAD_COMBATE)) || (this.stepsWalked > 3000)){
+			this.random = 100;
             this.stepsWalked = 0;
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
@@ -240,6 +246,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	increaseSteps(){
 		if(this.touchingGrass) 
 		{
+			this.random = Math.floor(Math.random() * 500);
 			this.stepsWalked++;
 			}
 	}

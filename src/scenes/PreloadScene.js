@@ -58,20 +58,28 @@ export default class Preload extends Phaser.Scene {
         this.load.image('culturista','assets/textures/Characters/Culturista.png');
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
+		this.load.image('tienda','assets/textures/Characters/tienda.png');
 		this.laod.image('patri', 'assets/textures/Characters/patri.png');
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
+		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.image('andrea', 'assets/textures/Characters/Andrea.png');
 		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png');
 		
         //FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
-        this.load.image('square', 'assets/textures/Backgrounds/plaza.png');
+        this.load.image('square', 'assets/textures/Backgrounds/plaza2.png');
         this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png'); // BORRAR
-        this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
+        this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')		
+        this.load.image('park','assets/textures/Backgrounds/park.png')
+		this.load.image('clif','assets/textures/Backgrounds/clif.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 
         //PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
+		this.load.image('insignia', 'assets/textures/Props/insignia.png');
+		this.load.image('valla', 'assets/textures/Props/valla.png');
+
 
         //ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
@@ -128,6 +136,9 @@ export default class Preload extends Phaser.Scene {
 
         //JSON
         this.load.json('npc_dialogues', 'assets/dialogues/npc_dialog.json');
+
+		//MÚSICA
+		this.load.audio('dreamon', ['assets/sounds/dreamon.ogg', 'assets/sounds/dreamon.mp3',]);
     }
 
 	create() {

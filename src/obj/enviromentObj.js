@@ -5,7 +5,7 @@ export class enviromentObj extends Phaser.GameObjects.Sprite {
 		this.setScale(sX,sY);
 		this.scene.add.existing(this); 
 		scene.physics.add.existing(this, true);
-		this.scene.physics.add.collider(this, manin);
+		this.collider=this.scene.physics.add.collider(this, manin);
 	}
 
 	// le quitamos velocidad al objeto
@@ -43,6 +43,10 @@ export class interactuableObj extends enviromentObj{
 		}
 	}
 
+	Hide(bool){
+		this.interacted = bool;
+		this.setVisible(!bool);
+	}
 	Interacted(){ this.interacted = true; }
 
 	

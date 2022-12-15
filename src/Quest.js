@@ -16,10 +16,14 @@ export class QuestNPC extends NPC {
             this.quest.acquired = true;   
         }
     }
-
+    
     advanceQuest(){
         this.quest.advanceQuest(this.quest.id);
+        //this.manin.questLog.CompleteQuest(this.quest.id);
         allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
+        if(this.quest.finished){
+            allyParty.questLog.CompleteQuest(this.quest.id);
+        }
         this.scene.scene.get('hud').UpdateHUD();
     }
 }
@@ -28,27 +32,46 @@ export class QuestNPC extends NPC {
 export class QuestLog {
     constructor(){
         this.quests = [];
+        this.completedQuests = [];
         this.noQuests = "No hay mision actual";
         this.numQuests = 0;
+        this.numCompletedQuests = 0;
         this.actualQuest = -1;
     }
 
     addQuest(quest){
+        console.log(this.actualQuest + "   " + this.numQuests);
         this.quests.push(quest);
         this.numQuests++;
-        console.log(this.quests);
+        this.actualQuest = this.numQuests - 1; 
         // añadir todos los textos y eso
     }
 
     advanceQuest(id){
-        for(let i = 0; i < this.quests.length; i++){
-            if(this.quests[i].id == id){
-                this.quests[i].actualObjectiveCompleted = true;
-                this.actualQuest = i;
-                break;
+        console.log(this.actualQuest + "   " + this.numQuests);
+        let quest = this.GetQuest(id);
+        quest.quest.actualObjectiveCompleted = true;
+        this.actualQuest = quest.index;
+        console.log(this.actualQuest + "   " + this.numQuests);
+    }
+    
+    CompleteQuest(id){
+        console.log(this.actualQuest + "   " + this.numQuests);
+        this.numCompletedQuests++;
+        this.numQuests--;
+        let quest = this.GetQuest(id);
+        this.quests.splice(quest.index, 1);
+        console.log(this.quests);
+        this.completedQuests[this.numCompletedQuests - 1] = quest.quest;
+        if(this.actualQuest === quest.index){
+            this.actualQuest = 0;
+            if(this.quests[this.actualQuest] === undefined) {
+                this.actualQuest = -1;
             }
         }
+        console.log(this.actualQuest + "   " + this.numQuests);
     }
+
 
     ShowQuest(){
         if(this.actualQuest !== -1){

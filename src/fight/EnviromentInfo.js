@@ -37,6 +37,7 @@ class EnviromentManager extends Phaser.Scene{
 	fight(){
 		console.log(sceneInfo[this.currentScene].key);
 		this.scene.sleep(sceneInfo[this.currentScene].key);
+		this.scene.get(sceneInfo[this.currentScene].key).musica.stop();
 		this.scene.sleep(hudKey);
 		this.scene.launch(fightKey, {loadFromEnviroment: false, specialEncounterIndex: 0});
 		this.scene.get(fightKey).LoadInventory(allyParty.inventory);
@@ -51,6 +52,7 @@ class EnviromentManager extends Phaser.Scene{
 		}
 		else{
 			this.scene.wake(sceneInfo[this.currentScene].key);
+			this.scene.get(sceneInfo[this.currentScene].key).musica.play();
 			this.scene.wake(hudKey);
 			this.hudScene.Walk();
 			this.hudScene.UpdateHUD();
@@ -72,12 +74,14 @@ class EnviromentManager extends Phaser.Scene{
 		this.info = sceneInfo[index];
 		if(sceneInfo[index].launched) {
 			this.scene.wake(sceneInfo[index].key);
+			this.scene.get(sceneInfo[index].key).musica.play();
 		}
 		else {
 			this.scene.launch(sceneInfo[index].key);
 			sceneInfo[index].launched = true;
 		}
 		this.scene.sleep(sleepKey);
+		this.scene.get(sleepKey).musica.stop();
 		EnviromentInfo = this.info;
 		this.currentScene = index;
 	}
@@ -96,89 +100,28 @@ let square = {
 	launched: true,
 	key: 'square',
 	bg: 'square',
-	character: [{
-		x: 300,
-		y:300, 
-		name: "Melendi", 
-		imgID: 'melendi', 
-		actualHp: 75, 
-		maxHp: 75, 
-		actualMp: 115, 
-		maxMp: 115,
-		rP: 4, 
-		rR: 6, 
-		F: 3, 
-		rE: 7, 
-		rT: 5, 
-		acurracy: 90, 
-		speed: 60,
-		attack: [
-			attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
-			attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-			attackInfo("Support 1 Target", 5, -20, 25, 1), 
-			attackInfo("Camina por la Vida",5,-70,60,1)
-		]
-	}],
+	character: [],//[{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
+	// rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
+	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+	// attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
+	
 	npcs: [
-		npcInfo(400,300, 'elmotivao', 0), 
-		npcInfo(200, 200, 'vovovo', 1), 
-		npcInfo(300, 200, 'jatsune', 2)
+		npcInfo(500,800, 'verifiedtoni', 7), 
+		npcInfo(700, 800, 'pepperboy', 8), 
+		npcInfo(275, 250, 'jatsune', 2),
+		npcInfo(1100,175, 'frozono', 4),	
+		npcInfo(925,500, 'homero', 0), //homer no tiene diálogos
+		npcInfo(750,50, 'spider', 19),
+		npcInfo(50,500, 'patrik', 18),
+		npcInfo(150,525, 'bob', 17),
+		npcInfo(700,525, 'rick', 25),
+		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest", "Mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
-		],
+		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"])
+	],
 	sNpcs: [
-		sNpcInfo(300, 100, 'alex', 9, [
-				itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
-				itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
-				itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
-				itemInfo('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."), 
-				itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN', "Es como ibuprofeno pero sin el como. Y además líquido. Naranjita. Y sabe bien."),
-				itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF', "Es como ibuprofeno pero sin el como. Y además líquido. Rosita. Y sabe bien."),
-				itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
-				itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
-				itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz.")
-			])
-		],
-	hNpcs:  [
-		npcInfo(600, 100, 'patri', 11)
-	],
-	hostile: [
-		hostileInfo(900,200,'hierba', 4, 4, 2.5), 
-		hostileInfo(700, 500, 'hierba', 1, 1, 2)
-	],
-	eObj: [
-		eObjInfo(200, 400, 'kratos', 2, 2)
-	],
-	iObj: [
-		eObjInfo(700, 100, 'manin', 0.7, 0.7)
-	],
-	travel: [
-		travelInfo(1195, 775, 'pixel', 100, 100, scenes.park),
-		travelInfo(50, 775, 'pixel', 100, 100, scenes.park),
-		travelInfo(500, 150, 'pixel', 100, 100, scenes.park)
-	]
-}
-
-let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
-					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
-					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
-
-// información de los personajes que se encuentran en el parque
-let park = {
-	launched: false,
-	key: 'park',
-	bg: 'square',
-	npcs: [
-		npcInfo(400,300, 'alex', 0), 
-		npcInfo(200, 200, 'alex', 1), 
-		npcInfo(300, 200, 'alex', 2),
-		npcInfo(300, 400, 'tiolavara', 22)
-	],
-	qNpcs: [
-		qNpcInfo(400, 500, 'melendi', 5, "guitarQuest2","NO ERA mi Guitarra", 2, ["Recupera la Guitarra", "Pelea contra Melendi"])
-	],
-	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
+		sNpcInfo(300, 100, 'tienda', 9, [
 			itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 			itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
 			itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
@@ -191,8 +134,61 @@ let park = {
 		])
 	],
 	hNpcs:  [
-		npcInfo(600, 100, 'verifiedtoni', 11)
+		npcInfo(100, 250, 'health', 11)
 	],
+	hostile: [],
+	eObj: [
+		eObjInfo(1000, 150, 'pixel', 150, 100),
+		eObjInfo(540, 275, 'pixel', 140, 50),
+		eObjInfo(600, 375, 'pixel', 250, 75),
+		eObjInfo(600, 325, 'pixel', 150, 50)
+	],
+	iObj: [],
+	travel: [
+		travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
+		travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
+		travelInfo(600, 50, 'pixel', 100, 100, scenes.port)
+	]
+}
+
+let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
+					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
+					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
+
+// información de los personajes que se encuentran en el parque
+let park = {
+	launched: false,
+	key: 'park',
+	bg: 'park',
+	
+	npcs: [
+		npcInfo(1300,400, 'patri', 10),
+		npcInfo(830,50, 'compuman', 5),
+		npcInfo(100,300, 'unverifiedtoni', 6),
+		npcInfo(800,700, 'elmotivao', 0),	
+		npcInfo(950,860, 'vovovo', 1),
+		npcInfo(250,950, 'joker', 15),
+		npcInfo(1500,850, 'aloy', 16),
+		npcInfo(1550,150, 'sirenita', 14),
+		npcInfo(1000,600, 'ikerJimenez', 0) //iker no tiene diálogos
+	],
+	qNpcs: [
+		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		"Observa el lago", "Pelea con la estatua"]),
+		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"])
+	],
+	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
+		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
+		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
+		itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
+		itemInfo('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."), 
+		itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN', "Es como ibuprofeno pero sin el como. Y además líquido. Naranjita. Y sabe bien."),
+		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF', "Es como ibuprofeno pero sin el como. Y además líquido. Rosita. Y sabe bien."),
+		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
+		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz.")
+	])],
+	hNpcs:  [],
 	character: [
 		{
 			x: 300,
@@ -218,7 +214,7 @@ let park = {
 			]
 		},
 		{
-			x:500,
+			x: 500,
 			y:500, 
 			name: "Jarfaiter", 
 			imgID: 'jarfaiter', 
@@ -281,39 +277,68 @@ let park = {
 				attackInfo("Pincelada",1,20,0,1),
 				attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
 				attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
-			]
+			],
+			money: 500
 		},
 		{
 			name: "Culturista", 
 			imgID:'people', 
 			actualHp: 80, 
 			maxHp: 80, 
-			actualMp: 0,
+			actualMp: 0, 
 			maxMp: 0, 
 			rP: 8, 
 			rR: 6, 
 			rF: 4, 
 			rE: 3, 
-			rT: 6,
+			rT: 6, 
 			acurracy: 85, 
 			speed: 60,
 			attack:[
 				attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
 				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 				attackInfo("Poñetaso", 0, 30, 0, 1)
-			]
+			],
+			money: 500
 		}
 	],
 	hostile: [
-		hostileInfo(900,200,'hierba', 4, 4, 2.5), 
-		hostileInfo(700, 500, 'hierba', 1, 1, 2)
+		hostileInfo(875,310,'hierba', 3, 2, 2.5),
+		hostileInfo(725,825,'hierba', 1, 1, 2.5),
+		hostileInfo(650,900,'hierba', 1, 1, 2.5),
+		hostileInfo(600,550,'hierba', 2, 1, 2.5),
+		hostileInfo(1040,860,'hierba', 3, 2, 2.5),
+		hostileInfo(875,700,'hierba', 3, 2, 2.5),
+		hostileInfo(965,230,'hierba', 1, 1, 2.5),
+		hostileInfo(800,150,'hierba', 2, 2, 2.5),
+		hostileInfo(1500,335,'hierba', 2, 2, 2.5),
+		hostileInfo(1400,500,'hierba', 3, 2, 2.5),
+		hostileInfo(300, 50, 'hierba', 3, 2, 2),
+		hostileInfo(335, 180, 'hierba', 2, 1, 2),
+		hostileInfo(150, 400, 'hierba', 1, 1, 2),
+		hostileInfo(200, 500, 'hierba', 1, 1, 2),
+		hostileInfo(350, 850, 'hierba', 2, 3, 2),
+		hostileInfo(25, 850, 'hierba', 5, 1, 2),
+		hostileInfo(25, 725, 'hierba', 7, 2, 2)
 	],
-	eObj: [eObjInfo(200, 400, 'kratos', 2, 2)],
-	iObj: [eObjInfo(700, 100, 'manin', 0.7, 0.7)],
+	eObj: [
+		eObjInfo(0, 265, 'tree', 6.5, 6.5),
+		eObjInfo(126, 900, 'tree', 7, 7),
+		eObjInfo(693, 25, 'tree', 7, 7),
+		eObjInfo(1575, 640, 'tree', 7, 7),
+		eObjInfo(1388, 785, 'ten', 4, 4),
+		eObjInfo(1500, 20, 'pixel', 300, 300),
+		eObjInfo(1200, 20, 'pixel', 400, 100)
+	],
+	iObj: [
+		eObjInfo(700, 500, 'manin', 0.7, 0.7),  // Caña de pescar
+		eObjInfo(750, 400, 'manin', 0.7, 0.7),   // Observar el lago
+		eObjInfo(100, 550, 'manin', 0.7, 0.7),   // Pelea
+		eObjInfo(100, 400, 'manin', 0.7, 0.7),   // Item
+		eObjInfo(100, 200, 'manin', 0.7, 0.7),   // Guitarra
+	],
 	travel: [
-		travelInfo(1195, 775, 'pixel', 100, 100, scenes.square),
-		travelInfo(50, 775, 'pixel', 100, 100, scenes.square),
-		travelInfo(500, 15, 'pixel', 100, 100, scenes.square)
+		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
 	],
 	specialEncounter: [
 		{
@@ -341,7 +366,7 @@ let park = {
 				},
 				{
 					name: "Culturista", 
-					imgID:'people', 
+					imgID:'melendi', 
 					actualHp: 80, 
 					maxHp: 80, 
 					actualMp: 0, 
@@ -386,12 +411,54 @@ let park = {
 
 let cementery = {
 	launched: false,
-	key : 'cementery'
+	key : 'cementery',
+	bg: 'clif',
+	npcs: [
+		npcInfo(485,125, 'kratos', 13)
+	],
+	qNpcs: [],
+	 sNpcs: [],
+	 hNpcs:  [],
+	 character: [],
+	enemies: [],
+	hostile: [],
+	eObj: [
+		eObjInfo(200, 300, 'insignia', 0.5, 0.5),
+		eObjInfo(650, 170, 'pixel', 320, 0.5),
+		eObjInfo(460, 0, 'pixel', 0.5, 500),
+		eObjInfo(650, 74, 'pixel', 320, 0.5)
+	],
+	iObj: [],
+	travel: [
+		travelInfo(800, 120, 'pixel', 70, 70, scenes.square)
+	]
 }
 
 let port = {
 	launched: false,
-	key: 'port'
+	key: 'port',
+	bg: 'home',
+	npcs: [
+		npcInfo(75,380, 'alex', 3),
+		npcInfo(200,380, 'raul', 22),
+		npcInfo(630,380, 'david', 0), //no tiene diálogos
+		npcInfo(760,380, 'pablo', 0), //no tiene diálogos
+		npcInfo(400,380, 'roi', 26)
+	],
+	qNpcs: [],
+	 sNpcs: [],
+	 hNpcs:  [],
+	 character: [],
+	enemies: [],
+	hostile: [],
+	eObj: [
+		eObjInfo(500, 125, 'text', 2.5, 2.5),
+		eObjInfo(500, 420, 'pixel', 1000, 0.1)
+	],
+	iObj: [],
+	travel: [
+		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	]
 }
 
 function itemInfo(name, hp, mp, price, img, description) {

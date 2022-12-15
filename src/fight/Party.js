@@ -8,11 +8,18 @@ import Inventory from '../obj/Inventory.js';
 export class Party{
 	constructor()
 	{
-		// ahora mismo se construye con manín y melendi de base (TEMPORAL)
-		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",2,30,0,1),attackInfo("Podación",4,40,15,1),
-					  attackInfo("Pistola Agua",3,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)])];
+		// ahora mismo se construye con manín
+		this.party = [
+			characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
+					 [
+						attackInfo("Churrazo",2,30,0,1),
+						attackInfo("Podación",4,40,15,1),
+					  	attackInfo("Pistola Agua",3,45,25,2),
+						attackInfo("Asserting Dominance",1,60,60,1)
+					])
+				];
 		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
 		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
@@ -46,19 +53,30 @@ export class Party{
 		else this.alliesNum = 4;
 		console.log(this.party.length-1);
 		this.party[this.party.length-1].index = this.party.length - 1;
+		this.party[this.party.length-1].initialIndex = this.party.length - 1;
 		this.party[this.party.length-1].alteredStates = [false,false,false];
 	}
 
 	// Llevamos la party al estado original (TEMPORAL)
 	RestartParty()
 	{
-		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,300,0,2),attackInfo("Podación",0,40,15,1),
-					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
+		this.party = [
+			characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
+					 [
+						attackInfo("Churrazo",0,300,0,2),
+						attackInfo("Podación",0,40,15,1),
+					  	attackInfo("Pistola Agua",1,45,25,2),
+						attackInfo("Asserting Dominance",1,60,60,1)
+					]),
+			characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
 						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-						attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
+						[
+							attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
+							attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
+							attackInfo("Support 1 Target", 5, -20, 25, 1), 
+							attackInfo("Camina por la Vida",5,-70,60,1)
+						])
+					];
 		this.level = 1;
 	}
 };
