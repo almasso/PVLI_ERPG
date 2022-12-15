@@ -37,6 +37,7 @@ class EnviromentManager extends Phaser.Scene{
 	fight(){
 		console.log(sceneInfo[this.currentScene].key);
 		this.scene.sleep(sceneInfo[this.currentScene].key);
+		this.scene.get(sceneInfo[this.currentScene].key).musica.stop();
 		this.scene.sleep(hudKey);
 		this.scene.launch(fightKey);
 		this.scene.get(fightKey).LoadInventory(allyParty.inventory);
@@ -51,6 +52,7 @@ class EnviromentManager extends Phaser.Scene{
 		}
 		else{
 			this.scene.wake(sceneInfo[this.currentScene].key);
+			this.scene.get(sceneInfo[this.currentScene].key).musica.play();
 			this.scene.wake(hudKey);
 			this.hudScene.Walk();
 			this.hudScene.UpdateHUD();
@@ -72,12 +74,14 @@ class EnviromentManager extends Phaser.Scene{
 		this.info = sceneInfo[index];
 		if(sceneInfo[index].launched) {
 			this.scene.wake(sceneInfo[index].key);
+			this.scene.get(sceneInfo[index].key).musica.play();
 		}
 		else {
 			this.scene.launch(sceneInfo[index].key);
 			sceneInfo[index].launched = true;
 		}
 		this.scene.sleep(sleepKey);
+		this.scene.get(sleepKey).musica.stop();
 		EnviromentInfo = this.info;
 		this.currentScene = index;
 	}
