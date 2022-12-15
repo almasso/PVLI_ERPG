@@ -37,6 +37,7 @@ export default class ParkScene extends FatherScene {
 			if(fishingRod !== undefined && fishingRod.quest.stage === 0 && !fishingRod.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('fishingRod'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
+				self.interactuableObjects[1].Hide(false);
 				self.interactuableObjects[0].trigger.destroy();
 				self.interactuableObjects[0].destroy();
 			}
@@ -94,8 +95,22 @@ export default class ParkScene extends FatherScene {
 		});
 		super.generateIObjects(this.iFunctions);
 
+		this.interactuableObjects[1].Hide(true);
 		this.interactuableObjects[2].Hide(true);
 		this.interactuableObjects[3].Hide(true);
+
+		this.qFunctions = [];
+
+		this.qFunctions.push(function(){
+			// Hacer algo al terminar la misión caña de pescar
+		})
+
+		
+		this.qFunctions.push(function(){
+			// Hacer algo al terminar la misión guitarra
+		})
+
+		super.generateQuests(this.qFunctions);
 	}
 
 	// comprobación de colisiones y apertura de menús
