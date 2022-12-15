@@ -1,6 +1,6 @@
 # Texturas
 - Pixel Art simple 32x32 en su mayoría
-- Todos los assets son de creación propia en la aplicación web **pixilart.com**
+- Todos los assets son de creación propia en la aplicación web [**PixilArt**](https://www.pixilart.com/) y usando la herramienta [**Aseprite**](https://www.aseprite.org/)
 - Licencia de uso _libre_ siempre y cuando se cite la autoría: ***Manín Interactive***
 
 
@@ -19,3 +19,4 @@ assets bonitos y simples que puedan quedar graciosos frente al público.
 - Efecto de sonido de pulsación de los botones, *startbutton.mp3 / startbutton.ogg*, originalmente ***UI Confirmation, Synthesized*** por [**InspectorJ en Freesound**](https://freesound.org/people/InspectorJ/sounds/403014/)
 - Canción de Kratos precipitándose al vacío, *dreamon.mp3 / dreamon.ogg*, extracto de la canción ***Dream On*** de [**Aerosmith**](https://youtu.be/89dGC8de0CA)
 - Rickroll, *rickroll.mp3 / rickroll.ogg*, extracto de la canción ***Never Gonna Give You Up*** de [**Rick Astley** (esto no cuenta como rickroll)](https://youtu.be/dQw4w9WgXcQ)
+- Canción de victoria en combate, *victory.mp3 / victory.ogg*, originalmente ***Victory*** por [**celestialghost8 en OpenGameArt.org**](https://opengameart.org/content/victory)
