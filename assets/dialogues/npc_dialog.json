@@ -357,7 +357,7 @@
         "npcID":13,
         "unique":true,
         "text":"Los dioses del Olimpo me han abandonado,...ya no queda esperanza."
-    }
+    },
    
     {
         "npcID" : 14,
@@ -592,6 +592,6 @@
         "npcName" : "Guardia",
         "verified" : false,
         "developer" : false
-    },
+    }
    
 ]}
