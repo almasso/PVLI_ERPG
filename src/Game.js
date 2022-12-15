@@ -34,7 +34,7 @@ let config = {
 		zoom: 1
     },
     scene: [
-        boot, EnviromentManager,FirstScene, InitialScene, Square, FinalScene,
+        boot, EnviromentManager, InitialScene,FirstScene, Square, FinalScene,
         ParkScene,CementeryScene,PortScene, HUDScene, 
         FightScene, FishingScene, DialogScene],
     physics: {

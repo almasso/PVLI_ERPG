@@ -114,13 +114,11 @@ let cinematic1 = {
 	],
 	qNpcs: [],
 	sNpcs: [
-		npcInfo(1050, 425, 'emptyShop', 9)
 	],
 	hNpcs:  [
-		npcInfo(100, 250, 'emptyBar', 11)
 	],
 	hostile: [],
-	eObj: [eObjInfo(600, 680, 'z1', 0.5, 0.5),eObjInfo(600, 450, 'intro', 1, 1)],
+	eObj: [eObjInfo(600, 680, 'z1', 0.5, 0.5),eObjInfo(600, 450, 'intro', 1, 1),eObjInfo(100, 250, 'emptyBar', 1,1),eObjInfo(1050, 425, 'emptyShop', 1,1)],
 	iObj: [],
 	travel: [
 		travelInfo(600, 50, 'pixel', 100, 100, scenes.square)

@@ -9,14 +9,24 @@ export default class FirstScene extends FatherScene {
 
 	// inicializamos la escena
 	create() {
-		
+		const config = {
+			mute: false,
+			volume: 0.5,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+		this.musica = this.sound.add('cinematic1', config);
+		this.musica.play();
 		super.create();
         
         this.npcs[0].setScale(5,5);
         this.manin.x=600;
         this.manin.y=450;
-        this.manin.setActive(false);
-        this.manin.setVisible(false);
+        this.manin.destroy()
+        
         this.npcs[1].setScale(5,5);
         this.npcs[1].setVisible(false);
 		this.count=0;
@@ -50,6 +60,7 @@ export default class FirstScene extends FatherScene {
         }
         else if(this.count>28000){
             console.log("ha")
+            this.scene.wake('hud')
             this.changeCol[0].emit("overlapstart");
             this.scene.stop('cinematic1')
         }
