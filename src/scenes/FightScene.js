@@ -193,8 +193,6 @@ export class FightScene extends Phaser.Scene {
 
 	// Acabamos el combate
 	EndCombat(){
-		this.combatMusic.stop();
-		this.victoryMusic.play();
 		this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
 		// ponemos las variables usadas para input por teclado a valores no válidos
@@ -694,7 +692,6 @@ export class FightScene extends Phaser.Scene {
 		
 		// FONDO
 		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
-		this.
 		
 		// Creación de Party
 		this.alliesHud = []; // huds de aliados
@@ -833,6 +830,8 @@ export class FightScene extends Phaser.Scene {
 		}
 		else if(this.state === FightState.AlteratedStatesToxic){
 			if(this.end){
+				this.combatMusic.stop();
+				this.victoryMusic.play();
 				this.BuildEndTurnLog("Has ganado " + this.winMoney + " (insertar nombre de moneda xD)"); 
 				this.state = FightState.EndCombat;
 			}
