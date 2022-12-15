@@ -64,6 +64,10 @@ export default class HUDScene extends Phaser.Scene {
 		this.menu.AddItem(item);	
 	}
 
+	updateItem(item){
+		this.menu.UpdateItem(item);
+	}
+
 	Fight(){
 		this.state = State.Fight;
 		this.Hide(true);

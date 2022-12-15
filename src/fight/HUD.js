@@ -1124,40 +1124,51 @@ export class ExploreMenu {
 	}
 
 	AddItemsMenu(){
+		let self = this;
+		this.itemToShow = 0;
 		let x = 50;
 		let y = 100;
 		this.bItem = this.scene.add.image(x,y, 'menuBG').setOrigin(0,0).setScale(5, 1);
 		this.bChooseItem = this.scene.add.image(x,y + this.bItem.displayHeight, 'menuBG').setOrigin(0,0).setScale(5, 0.5);
 		this.bItem.visible = false;
 		this.bChooseItem.visible = false;
-		x = 100;
 		this.itemImages = [];
 		this.itemTexts = [];
-		let i = 0;
-		for(let e of allyParty.inventory.inv){
-			this.itemImages[i] = {
-				img: this.scene.add.image(x, y, i.imgID),
-				hp: this.scene.add.text(x, y + 140, i.hp, {font:'20px "Arial"'}),
-				mp: this.scene.add.text(x, y + 180, i.mp, {font:'20px "Arial"'}),
-				desc: this.scene.add.text(x, y + 220, "testo", {font: '20px "Arial"'})
+		this.upArrowItem = this.scene.add.image(this.bChooseItem.x + 4*this.bChooseItem.displayWidth/5,
+												this.bChooseItem.y + 0.8*this.bChooseItem.displayHeight/3, 'logButton').setScale(3);
+		this.downArrowItem = this.scene.add.image(this.bChooseItem.x + 4*this.bChooseItem.displayWidth/5,
+												  this.bChooseItem.y + 2.2*this.bChooseItem.displayHeight/3, 'logButton').setScale(3);
+		this.downArrowItem.angle = 180;
+		this.upArrowItem.visible = false;
+		this.downArrowItem.visible = false;
+		this.itemTextToShow = 0;
+		this.upArrowItem.on("pointerup", function(){
+			if(self.itemTextToShow > 0){
+				self.itemTextToShow--;
+				self.ShowItems(true);
 			}
-			this.itemImages[i].img.depth = 3;
-			this.itemImages[i].hp.depth = 3;
-			this.itemImages[i].mp.depth = 3;
-			this.itemImages[i].desc.depth = 3;
+		});
+		this.downArrowItem.on("pointerup", function(){
+			if(self.itemTextToShow + 4 <= self.itemTexts.length - 1){
+				self.itemTextToShow++;
+				self.ShowItems(true);
+			}
+		});
+	}
 
-			this.itemImages[i].img.visible = false;
-			this.itemImages[i].hp.visible = false;
-			this.itemImages[i].mp.visible = false;
-			this.itemImages[i].desc.visible = false;
-			this.itemTexts[i] = this.scene.add.text(x, this.bChooseItem.y + (i + 1)*30, e.name, {font: '20px "Arial"'})
+	UpdateItem(item){
+		let i = 0;
+		console.log(item);
+		while (i < this.itemImages.length && (this.itemImages[i].desc.text !== item.description)) 
+		{
+			console.log(this.itemImages[i]);
 			i++;
 		}
+		this.itemImages[i].qty.setText("Cantidad: "+ ++this.itemImages[i].actualQty);
 	}
 
 	AddItem(item){
-		console.log(item);
-		console.log(item.description);
+		let self = this;
 		let x = 100;
 		let y = 110;
 		let descripcion = item.description;
@@ -1169,32 +1180,84 @@ export class ExploreMenu {
             y : descY,
             text : descripcion,
             style: {
-				wordWrap : {width : 200}
-            }
+				wordWrap : {width : 200},
+				font: '20px "Arial"'
+            },
         });
 		desc.setText(descripcion);
 
 		this.itemImages.push({
 			img: image,
-			hp: this.scene.add.text(x,y + 140, item.hp, {font:'20px "Arial"'}).setOrigin(0,0),
-			mp: this.scene.add.text(x,y + 180, item.mp, {font:'20px "Arial"'}).setOrigin(0,0),
-			desc: desc
+			hp: this.scene.add.text(x,y + 180, "HP: " + item.hp, {font:'20px "Arial"'}).setOrigin(0,0),
+			mp: this.scene.add.text(x,y + 220, "MP: " + item.mp, {font:'20px "Arial"'}).setOrigin(0,0),
+			qty: this.scene.add.text(x,y + 140, "Cantidad: 1", {font:'20px "Arial"'}).setOrigin(0,0),
+			desc: desc,
+			actualQty: 1
 		});
-		this.itemImages[this.itemImages.length - 1].img.visible = false;
-		this.itemImages[this.itemImages.length - 1].hp.visible = false;
-		this.itemImages[this.itemImages.length - 1].mp.visible = false;
-		this.itemImages[this.itemImages.length - 1].desc.visible = false;
-		this.itemTexts.push(this.scene.add.text(x, this.bChooseItem.y + this.itemTexts.length*30, item.name, {font: '20px "Arial"'}));
+		let lastImage = this.itemImages.length - 1;
+		this.itemImages[lastImage].img.visible = false;
+		this.itemImages[lastImage].hp.visible = false;
+		this.itemImages[lastImage].mp.visible = false;
+		this.itemImages[lastImage].desc.visible = false;
+		this.itemImages[lastImage].qty.visible = false;
+		this.itemTexts.push(this.scene.add.text(x, this.bChooseItem.y + 20 + this.itemTexts.length*30, item.name, {font: '20px "Arial"'}));
+		let lastText = this.itemTexts.length - 1;
+		this.itemTexts[lastText].index = lastText;
+		this.itemTexts[lastText].setInteractive();
+		this.itemTexts[lastText].on("pointerup", function() {
+			self.ChangeItemToShow(self.itemTexts[lastText].index);
+			console.log("button pressed");
+		});
+		this.itemTexts[lastText].on("pointerover", function(){
+			self.pointer.visible = true;
+			self.pointer.x = self.itemTexts[lastText].x - 20;
+			self.pointer.y = self.itemTexts[lastText].y;
+		})
+		this.itemTexts[lastText].on("pointerout",function(){
+			self.pointer.visible = false;
+		})
+		this.itemTexts[lastText].visible = false;
+	}
 
+	ChangeItemToShow(index){
+		console.log("WEWE");
+		this.ShowItems(false);
+		this.itemToShow = index;
+		this.ShowItems(true);
 	}
 
 	ShowItems(bool){
-		for(let e of this.itemImages){
-			e.img.visible = bool;
-			e.hp.visible = bool;
-			e.mp.visible = bool;
-			e.desc.visible = bool;
+		this.viewItems = bool;
+		if(this.itemImages.length !== 0){
+			this.itemImages[this.itemToShow].img.visible = bool;
+			this.itemImages[this.itemToShow].hp.visible = bool;
+			this.itemImages[this.itemToShow].mp.visible = bool;
+			this.itemImages[this.itemToShow].desc.visible = bool;
+			this.itemImages[this.itemToShow].qty.visible = bool;
+			let i = 0;
+			for(let e of this.itemTexts){
+				if (bool && i >= this.itemTextToShow && i < this.itemTextToShow + 4){
+					e.visible = true;
+					e.y = this.bChooseItem.y + 20 + (i - this.itemTextToShow)*30;
+					e.setInteractive();
+				}
+				else{
+					e.visible = false;
+					e.disableInteractive();
+				}
+				i++;
+			}
 		}
+		if(bool){
+			this.upArrowItem.setInteractive();
+			this.downArrowItem.setInteractive();
+		}
+		else{
+			this.upArrowItem.disableInteractive();
+			this.downArrowItem.disableInteractive();
+		}
+		this.upArrowItem.visible = bool;
+		this.downArrowItem.visible = bool;
 		this.bItem.visible = bool;
 		this.bChooseItem.visible = bool;
 	}
@@ -1316,8 +1379,8 @@ export class ExploreMenu {
 
 	Hide(bool){
 		this.ShowParty(!bool);
+		this.ShowItems(!bool);
 		this.ManageParty(!bool);
 		this.Show(!bool);
 	}
-
 }

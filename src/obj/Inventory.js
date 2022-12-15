@@ -1,7 +1,7 @@
 export default class Inventory{
     constructor(){
         this.inv = [];
-        this.money = 10;
+        this.money = 1000;
     }
 
     canBuy(money){
@@ -25,7 +25,6 @@ export default class Inventory{
         else{
             obj.quantity++;
             this.inv.push(obj);
-            console.log(this.inv.length);  
         } 
     }
 
@@ -48,8 +47,14 @@ export default class Inventory{
 
     isItem(name, i){
         if(this.inv.length === 0) return 0;
-        while(i < this.inv.length && this.inv[i].name !== name) i++
+        while(i < this.inv.length && this.inv[i].name !== name) i++;
         return i;
+    }
+
+    boolIsItem(name){
+        let i = 0;
+        while(i < this.inv.length && this.inv[i].name !== name) i++;
+        return i !== this.inv.length;
     }
 }
 
