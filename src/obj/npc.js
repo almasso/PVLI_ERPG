@@ -57,15 +57,16 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow(this.verified, this.developer);
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified, this.developer);
 
-        if(this.currentDialog==this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
+        if(this.currentDialog === this.dialogIndex && !this.dialogues.texts[this.currentDialog].unique) this.beingAnimated=false;
 
         if(!this.dialogues.texts[this.currentDialog].unique) this.multipleDialogues();
         else this.uniqueDialogue();   
     }
 
     multipleDialogues() {
+        if(this.formerDialog !== this.currentDialog) this.formerDialog = this.currentDialog - 1;
         
-        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog == (this.dialogIndex + this.dialogCount)-1 )) {
+        if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount)-1 )) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
@@ -76,7 +77,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
-                if(this.formerDialog != this.currentDialog) this.formerDialog = this.currentDialog - 1;
             }
            
         }
@@ -115,7 +115,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
         this.beingAnimated = false;
         this.canCloseWindow = false;
-        this.ºurrentlyTalking = false;
+        this.currentlyTalking = false;
         this.scene.events.emit('dialogWindowClosed');
         console.log(this.currentDialog)
             if(this.currentDialog==69)

@@ -340,7 +340,7 @@
     },
     {
         "npcID" : 12,
-        "unique" : true,
+        "unique" : false,
         "text" : ":)"
     },
     {
@@ -533,7 +533,7 @@
         "npcID" : 10,
         "npcName": "Patri",
         "verified" : false,
-        "developer" : true
+        "developer" : false
     },
     {
         "npcID" : 11,

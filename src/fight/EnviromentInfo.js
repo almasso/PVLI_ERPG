@@ -101,7 +101,7 @@ let square = {
 	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
 	// attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
 	
-	npcs: [npcInfo(500,800, 'verifiedtoni', 0), npcInfo(700, 800, 'pepperboy', 1), npcInfo(275, 250, 'jatsune', 2),
+	npcs: [npcInfo(500,800, 'verifiedtoni', 12), npcInfo(700, 800, 'pepperboy', 1), npcInfo(275, 250, 'jatsune', 2),
 	npcInfo(1100,175, 'frozono', 0),	npcInfo(925,500, 'homero', 0),npcInfo(750,50, 'spider', 0),
 	npcInfo(50,500, 'patrik', 0),npcInfo(150,525, 'bob', 0),npcInfo(600,350, 'dinostatue', 0),npcInfo(700,525, 'rick', 0)],
 	
