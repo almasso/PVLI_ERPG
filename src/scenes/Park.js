@@ -29,7 +29,8 @@ export default class ParkScene extends FatherScene {
 		let self = this;
 		this.iFunctions = [];
 
-		
+		this.manin.x=100;
+		this.manin.y=100;
 		// Recoger la caña de pescar
 		this.iFunctions.push(function(){
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');

@@ -149,7 +149,7 @@ let cinematic2 = {
 	hNpcs:  [
 	],
 	hostile: [],
-	eObj: [],
+	eObj: [eObjInfo(300, 500, 'textAngel', 1, 1)],
 	iObj: [],
 	travel: [
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.park)
@@ -173,7 +173,7 @@ let cinematic3 = {
 	hNpcs:  [
 	],
 	hostile: [],
-	eObj: [],
+	eObj: [eObjInfo(425, 500, 'textDino', 1, 0.9)],
 	iObj: [],
 	travel: [
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.square)
