@@ -30,7 +30,8 @@
                 "Rick Astley" : 25,
                 "Roi" : 26,
                 "Iker Jiménez" : 27,
-                "NPC VACÍO" : 28
+                "NPC VACÍO" : 28,
+                "Pablo":29
             }
         }
     ],
@@ -210,6 +211,12 @@
             "npcName" : "NPC",
             "verified" : false,
             "developer" : false
+        },
+        {
+            "npcID" : 29,
+            "npcName" : "Pablo",
+            "verified" : false,
+            "developer" : true
         }
     ],
     "texts" : [
@@ -752,6 +759,26 @@
             "npcID": 27,
             "unique": false,
             "text": "Me parece un dato interesantísimo"
+        },
+        {
+            "npcID": 28,
+            "unique": false,
+            "text": "NO"
+        },
+        {
+            "npcID": 29,
+            "unique": false,
+            "text": "Sujetame el abrigo que me meo"
+        },
+        {
+            "npcID": 29,
+            "unique": false,
+            "text": "¿Has oido el chiste del pan que habla?"
+        },
+        {
+            "npcID": 29,
+            "unique": false,
+            "text": "♪ Estoy cansado ♪"
         }
     ]
 }

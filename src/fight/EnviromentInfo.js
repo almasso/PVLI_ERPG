@@ -387,7 +387,7 @@ let park = {
 	iObj: [
 		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
-		eObjInfo(1400, 275, 'angel', 0.7, 0.7),   // Pelea
+		eObjInfo(1400, 225, 'angel', 0.7, 0.7),   // Pelea
 		eObjInfo(1205, 120, 'piezaDino', 0.7, 0.7),   // Item
 		eObjInfo(40, 620, 'guitarra', 0.7, 0.7),   // Guitarra
 		
@@ -460,8 +460,8 @@ let port = {
 	npcs: [
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),
-		npcInfo(630,380, 'david', 0), //no tiene diálogos
-		npcInfo(760,380, 'pablo', 0), //no tiene diálogos
+		npcInfo(620,380, 'david', 0), //no tiene diálogos
+		npcInfo(760,380, 'pablo', 29), //no tiene diálogos
 		npcInfo(400,380, 'roi', 26)
 	],
 	qNpcs: [],
