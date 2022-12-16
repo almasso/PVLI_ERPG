@@ -493,6 +493,113 @@ let port = {
 	iObj: [],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	],
+	specialEncounter: [
+		{
+			numEnemies: 3, 
+			enemies: [
+				{
+					name: "David", 
+					imgID:'david', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				},
+				{
+					name: "Raúl", 
+					imgID:'raul', 
+					actualHp: 80, 
+					maxHp: 80, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 8, 
+					rR: 6, 
+					rF: 4, 
+					rE: 3, 
+					rT: 6, 
+					acurracy: 85, 
+					speed: 60,
+					attack:[
+						attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
+						attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
+						attackInfo("Poñetaso", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Roi", 
+					imgID:'roi', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				},
+				{
+					name: "Álex", 
+					imgID:'alex', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Datos estúpidos de Wikipedia",4,20,0,1),
+						attackInfo("Testerazo", 0, 25, 0, 1),
+						attackInfo("La Vara de Avellano", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Pablo VI", 
+					imgID:'pablo', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				}
+			]
+		}
 	]
 }
 

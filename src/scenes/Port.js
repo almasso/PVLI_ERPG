@@ -28,6 +28,24 @@ export default class PortScene extends FatherScene {
 		this.manin.setScale(5,5)
 		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
 
+		this.iFunctions = [];
+
+		// Pelea con la estatua
+		this.iFunctions.push(function(){
+			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
+			if(fishingRod !== undefined && fishingRod.quest.stage === 2 && !fishingRod.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('fishingRod'); 
+				self.scene.sleep('hud');
+				self.interactuableObjects[3].Hide(false);
+				self.scene.sleep('park');
+				self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
+				self.scene.get('fightscene').LoadInventory(allyParty.inventory);
+				self.interactuableObjects[2].trigger.destroy();
+				self.interactuableObjects[2].destroy();
+			}
+		});
+		
+		super.generateIObjects(this.iFunctions);
 	}
 
 	// comprobación de colisiones y apertura de menús
