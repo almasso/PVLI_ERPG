@@ -688,8 +688,13 @@
         },
         {
             "npcID": 26,
-            "unique": true,
+            "unique": false,
             "text": "Hey"
+        },
+        {
+            "npcID": 26,
+            "unique": false,
+            "text": "Payaso"
         },
         {
             "npcID": 26,
@@ -700,11 +705,6 @@
             "npcID": 26,
             "unique": false,
             "text": "Me queda la mitad."
-        },
-        {
-            "npcID": 26,
-            "unique": true,
-            "text": "Payaso"
         },
         {
             "npcID": 27,
