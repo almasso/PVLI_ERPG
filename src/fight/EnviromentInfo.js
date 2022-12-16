@@ -398,7 +398,7 @@ let park = {
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
 		eObjInfo(1400, 275, 'angel', 0.7, 0.7),   // Pelea
 		eObjInfo(1205, 120, 'piezaDino', 0.7, 0.7),   // Item
-		eObjInfo(40, 620, 'manin', 0.7, 0.7),   // Guitarra
+		eObjInfo(40, 620, 'guitarra', 0.7, 0.7),   // Guitarra
 		
 	],
 	travel: [
