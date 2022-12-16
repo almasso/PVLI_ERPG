@@ -31,7 +31,7 @@ export class interactuableObj extends enviromentObj{
 	}
 
 	generateTrigger() {
-        this.scene.physics.add.collider(this.manin, this);
+         this.scene.physics.add.collider(this.manin, this);
 		this.scene.physics.add.overlap(this.manin, this.trigger);
     }
 
