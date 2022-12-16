@@ -10,7 +10,7 @@ export class Party{
 	{
 		// ahora mismo se construye con manín
 		this.party = [
-			characterInfo("Manín","manin",1,1,100,100,5,5,5,5,5,90,50,
+			characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
 					 [
 						attackInfo("Churrazo",2,30,0,1),
 						attackInfo("Podación",4,40,15,1),
