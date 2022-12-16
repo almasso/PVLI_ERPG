@@ -178,7 +178,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.beingAnimated = true;
                 this.currentDialog++;
             }    
-            else if(this.beingAnimated) {
+            else if(this.beingAnimated || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
                 this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.formerDialog].text, false, false, false);
                 this.formerDialog++;
                 this.beingAnimated = false;
