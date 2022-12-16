@@ -11,6 +11,7 @@ import Square from './scenes/Square.js'
 import {EnviromentManager} from './fight/EnviromentInfo.js'
 import FishingScene from './scenes/FishingScene.js'
 import FirstScene from './scenes/FirstCinematic.js'
+import DinoWakeScene from './scenes/WakeDino.js'
 
 let config = {
     type: Phaser.CANVAS,
@@ -36,7 +37,7 @@ let config = {
     scene: [
         boot, EnviromentManager, InitialScene,FirstScene, Square, FinalScene,
         ParkScene,CementeryScene,PortScene, HUDScene, 
-        FightScene, FishingScene, DialogScene],
+        FightScene, FishingScene,DinoWakeScene, DialogScene],
     physics: {
         default: 'arcade',
         arcade: {

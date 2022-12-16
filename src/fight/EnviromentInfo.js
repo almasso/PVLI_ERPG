@@ -8,7 +8,8 @@ const scenes = {
 	cementery: 2,
 	port: 3,
 	cinematic1:4,
-	cinematic2:5
+	cinematic2:5,
+	cinematic3:6
 };
 
 let hudKey = 'hud';
@@ -151,6 +152,28 @@ let cinematic2 = {
 	iObj: [],
 	travel: [
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.park)
+	]
+}
+
+let cinematic3 = {
+	launched: false,
+	key: 'cinematic3',
+	bg: 'bg_dino',
+	character: [],
+	npcs: [
+		npcInfo(600,-400, 'dino_wake', 0),
+		
+	],
+	qNpcs: [],
+	sNpcs: [
+	],
+	hNpcs:  [
+	],
+	hostile: [],
+	eObj: [],
+	iObj: [],
+	travel: [
+		travelInfo(600, 1600, 'pixel', 100, 100, scenes.square)
 	]
 }
 
@@ -647,7 +670,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2];
+let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2,cinematic3];
 
 
 // variables exportadas
