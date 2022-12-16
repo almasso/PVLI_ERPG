@@ -171,7 +171,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('home','assets/textures/Backgrounds/home.png')
 		this.load.image('plazaNoche','assets/textures/Backgrounds/plazaNoche.png')
 		this.load.image('angelPark','assets/textures/Backgrounds/angel.png')
-		his.load.image('bg_dino','assets/textures/Backgrounds/wakeDino.png')
+		this.load.image('bg_dino','assets/textures/Backgrounds/wakeDino.png')
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');

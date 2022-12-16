@@ -155,13 +155,15 @@ let cinematic2 = {
 	]
 }
 
+
 let cinematic3 = {
 	launched: false,
 	key: 'cinematic3',
 	bg: 'bg_dino',
+	fightbg: 'fightParkBg',
 	character: [],
 	npcs: [
-		npcInfo(600,-400, 'dino_wake', 0),
+		npcInfo(400,250, 'dino_wake', 0),
 		
 	],
 	qNpcs: [],
@@ -176,6 +178,10 @@ let cinematic3 = {
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.square)
 	]
 }
+
+
+
+
 
 let square = {
 	launched: false,
@@ -199,7 +205,6 @@ let square = {
 		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24),
 		npcInfo(250, 650, 'andrea', 12),
-		npcInfo(400, 650, 'dino_wake', 12)
 	],
 	qNpcs: [
 		qNpcInfo(600, 350, 'dinoRoto', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
@@ -233,7 +238,8 @@ let square = {
 	travel: [
 		travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
 		travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
-		travelInfo(600, 50, 'pixel', 100, 100, scenes.port)
+		travelInfo(600, 50, 'pixel', 100, 100, scenes.port),
+		travelInfo(-100, -100, 'pixel', 100, 100, scenes.cinematic3)
 	],
 	specialEncounter: [
 		{
@@ -287,7 +293,7 @@ let park = {
 		npcInfo(50,400, 'PabloMotos', 21)
 	],
 	qNpcs: [
-		qNpcInfo(1305, 142, 'fisher', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		qNpcInfo(1305, 142, 'fisher	', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest","Mi Guitarra", 1, ["Recupera la Guitarra"],
@@ -670,7 +676,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2,cinematic3];
+let sceneInfo = [square, park, cementery, port, cinematic1, cinematic2, cinematic3];
 
 
 // variables exportadas
