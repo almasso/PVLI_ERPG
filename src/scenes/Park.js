@@ -47,7 +47,7 @@ export default class ParkScene extends FatherScene {
 		this.iFunctions.push(function(){
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
 			if(fishingRod !== undefined && fishingRod.quest.stage === 1 && !fishingRod.quest.actualObjectiveCompleted){
-				allyParty.questLog.advanceQuest('fishingRod'); 
+				allyParty.questLog.advanceQuest('fishingRod', true); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
 				self.interactuableObjects[2].Hide(false);
 				self.scene.sleep('park');
