@@ -76,10 +76,10 @@ export default class ParkScene extends FatherScene {
 		// Coger item
 		this.iFunctions.push(function(){
 			let statueQuest = allyParty.questLog.GetQuest('statueQuest');
-			if(statueQuest !== undefined && statueQuest.quest.stage === 0 && !statueQuest.quest.actualObjectiveCompleted){
+			if(statueQuest !== undefined && !statueQuest.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('statueQuest'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
-				self.interactuableObjects[3].trigger.destroy();
+				self.interactuableObjects[3].trigger.destroy();	
 				self.interactuableObjects[3].destroy();
 			}
 		})
@@ -111,9 +111,10 @@ export default class ParkScene extends FatherScene {
 		})
 
 		this.qFunctions.push(function(){
-			this.npcs[11].trigger.setActive(true);
-			this.npcs[11].setVisible(true);
-			this.npcs[15].destroy();
+			self.npcs[11].trigger.setActive(true);
+			self.npcs[11].setVisible(true);
+			self.npcs[15].trigger.destroy();
+			self.npcs[15].destroy();
 		});
 
 		super.generateQuests(this.qFunctions);

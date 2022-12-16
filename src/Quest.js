@@ -37,9 +37,11 @@ export class QuestNPC extends NPC {
         allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
         if(this.quest.finished){
             allyParty.questLog.CompleteQuest(this.quest.id);
-            this.quest.function();
         }
         this.scene.scene.get('hud').UpdateHUD();
+        if(this.quest.finished){
+            this.quest.function();
+        }
     }
 }
 

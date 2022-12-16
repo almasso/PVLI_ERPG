@@ -98,7 +98,6 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
         this.load.image('culturista','assets/textures/Characters/Culturista.png');
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
-		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.load.image('patri', 'assets/textures/Characters/patri.png');
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
 		this.load.image('health', 'assets/textures/Characters/chiringo.png');
@@ -207,6 +206,17 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('sanxe_burn','assets/textures/Characters/sanxe_burn.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
+
+		// angel caido
+		this.load.image('angel','assets/textures/Characters/AngelCaido.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_idle','assets/textures/Characters/AngelCaido_idle.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_wow','assets/textures/Characters/AngelCaido_wow.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_dmg','assets/textures/Characters/AngelCaido_dmg.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_dead','assets/textures/Characters/AngelCaido_dead.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_burn','assets/textures/Characters/AngelCaido_burn.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_poison','assets/textures/Characters/AngelCaido_poison.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_shock','assets/textures/Characters/AngelCaido_shock.png',{frameWidth:59, frameHeight:50});
+
 
 		// objetos
 		this.load.image('cigarro', 'assets/textures/Props/cigarro.png');

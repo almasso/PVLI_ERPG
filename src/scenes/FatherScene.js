@@ -109,7 +109,6 @@ export default class FatherScene extends Phaser.Scene {
         
         // generamos las "puertas" que nos cambiarán entre escenas
         this.changeScene();
-
     }
 
     generateIObjects(functions){
