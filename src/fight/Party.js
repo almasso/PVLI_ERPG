@@ -20,7 +20,6 @@ export class Party{
 				];
 		this.party[0].index = 0;
 		this.party[0].initialIndex = 0;
-		this.level = 1; // comienza en nivel 1
 		this.alliesNum = this.party.length;
 		if(this.alliesNum > 4) this.alliesNum = 4;
 		this.questLog = new QuestLog();
@@ -68,16 +67,13 @@ export class Party{
 					  	attackInfo("Pistola Agua",1,45,25,2),
 						attackInfo("Asserting Dominance",1,60,60,1)
 					]),
-			characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[
-							attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
-							attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-							attackInfo("Support 1 Target", 5, -20, 25, 1), 
-							attackInfo("Camina por la Vida",5,-70,60,1)
-						])
 					];
-		this.level = 1;
+		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
+		this.alliesNum = this.party.length;
+		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 };
 

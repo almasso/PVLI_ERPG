@@ -19,21 +19,27 @@ class EnviromentManager extends Phaser.Scene{
 	constructor(){
 		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
 		super({key: 'EnvManager'});
-		this.coreScene = scenes.cinematic1;
-		this.currentScene = scenes.cinematic1;
-		this.info = sceneInfo[this.coreScene];
 	}
 
 	create(){
+		for (let e of sceneInfo){
+			e.launched = false;
+		}
+		this.coreScene = scenes.cinematic1;
+		this.currentScene = scenes.cinematic1;
+		this.info = sceneInfo[this.coreScene];
 		this.initializeGame();
 	}
 
 	initializeGame(){
 		this.startTransition();
 		this.endTransition();
+		EnviromentInfo = sceneInfo[this.coreScene];
 		this.scene.launch(sceneInfo[this.coreScene].key);
+		console.log(sceneInfo[this.coreScene]);
 		this.scene.launch(hudKey);
 		this.hudScene = this.scene.get(hudKey);	
+		this.hudScene.Reset();
 	}
 
 	fight(){
@@ -162,15 +168,16 @@ let square = {
 		npcInfo(700, 800, 'pepperboy', 8), 
 		npcInfo(275, 250, 'jatsune', 2),
 		npcInfo(1100,175, 'frozono', 4),	
-		npcInfo(925,500, 'homero', 0), //homer no tiene diálogos
+		npcInfo(925,500, 'homero', 28), //homer no tiene diálogos
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
 		npcInfo(700,550, 'rick', 25),
-		npcInfo(1070,720, 'tiolavara', 24)
+		npcInfo(1070,720, 'tiolavara', 24),
+		npcInfo(250, 650, 'andrea', 12)
 	],
 	qNpcs: [
-		qNpcInfo(600, 350, 'dinoRoto', 5, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
+		qNpcInfo(600, 350, 'dinoRoto', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
 		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
@@ -224,15 +231,15 @@ let park = {
 		npcInfo(250,950, 'joker', 15),
 		npcInfo(1500,850, 'aloy', 16),
 		npcInfo(1550,150, 'sirenita', 14),
-		npcInfo(1000,600, 'ikerJimenez', 27) //iker no tiene diálogos
+		npcInfo(1000,600, 'ikerJimenez', 27)
 	],
 	qNpcs: [
-		qNpcInfo(1305, 142, 'alex', 5, "fishingRod","Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		qNpcInfo(1305, 142, 'alex', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
-		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
+		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
 		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
-		qNpcInfo(500, 500, 'jarfaiter', 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
+		qNpcInfo(500, 500, 'jarfaiter', 28, 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
@@ -476,9 +483,116 @@ let port = {
 		eObjInfo(500, 125, 'text', 2.5, 2.5),
 		eObjInfo(500, 420, 'pixel', 1000, 0.1)
 	],
-	iObj: [],
+	iObj: [eObjInfo(400,300,'pixel',800,400)],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	],
+	specialEncounter: [
+		{
+			numEnemies: 5, 
+			enemies: [
+				{
+					name: "David", 
+					imgID:'david', 
+					actualHp: 95, 
+					maxHp: 95, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 3, 
+					rR: 8, 
+					rF: 5, 
+					rE: 6, 
+					rT: 2, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("susurrarle *uwu* al oído",3,25,0,1),
+						attackInfo("problemas gastrointestinales", 4, 15, 0, 2),
+						attackInfo("vivir en Alcalá de Henares", 1, 30, 0, 1)
+					]
+				},
+				{
+					name: "Raúl", 
+					imgID:'raul', 
+					actualHp: 80, 
+					maxHp: 80, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 8, 
+					rR: 6, 
+					rF: 4, 
+					rE: 3, 
+					rT: 6, 
+					acurracy: 85, 
+					speed: 60,
+					attack:[
+						attackInfo("amenazar su patito de goma", 0, 40, 0, 1), 
+						attackInfo("comerse una bandeja entera sin temblar",1,20,0,2),
+						attackInfo("enseñar código de input", 4, 30, 0, 1)
+					]
+				},
+				{
+					name: "Roi", 
+					imgID:'roi', 
+					actualHp: 110, 
+					maxHp: 110, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("llamarle 'payaso'",1,30,0,1),
+						attackInfo("una foto de su pizza", 2, 15, 0, 3),
+						attackInfo("sticker de gatito", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Alex", 
+					imgID:'alex', 
+					actualHp: 100, 
+					maxHp: 100, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 7, 
+					rR: 7, 
+					rF: 3, 
+					rE: 6, 
+					rT: 9, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("datos estúpidos de Wikipedia",4,20,0,1),
+						attackInfo("testerazo", 0, 25, 0, 1),
+						attackInfo("la vara de avellano", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Pablo VI", 
+					imgID:'pablo', 
+					actualHp: 120, 
+					maxHp: 120, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 9, 
+					rR: 5, 
+					rF: 5, 
+					rE: 1, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("hincársela por el culo",0,20,0,1),
+						attackInfo("chiste del monje", 1, 15, 0, 1),
+						attackInfo("ausencia de césped", 3, 30, 0, 1)
+					]
+				}
+			]
+		}
 	]
 }
 
@@ -494,8 +608,8 @@ function sNpcInfo(x, y, img, id, items){
 	return {x: x, y: y, img: img, id: id, items: items};
 }
 
-function qNpcInfo(x, y, img, id, qId, qName, qStages, qObj, qDesc, qImg, qNpcName){
-	return {x: x, y: y, img: img, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj, qDesc: qDesc, qImg: qImg, qNpcName: qNpcName};
+function qNpcInfo(x, y, img, id, qNPCID, qId, qName, qStages, qObj, qDesc, qImg, qNpcName){
+	return {x: x, y: y, img: img, qNPCID : qNPCID, id: id, qId: qId ,qName: qName, qStages: qStages, qObj: qObj, qDesc: qDesc, qImg: qImg, qNpcName: qNpcName};
 }
 
 function hostileInfo(x, y, img, fils, cols, scale){
@@ -511,6 +625,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 }
 
 let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2];
+
 
 // variables exportadas
 let EnviromentInfo = cinematic1;

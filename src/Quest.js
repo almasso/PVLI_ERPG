@@ -3,19 +3,32 @@ import { allyParty } from './fight/Party.js';
 import { AllyTEST } from './obj/manin.js';
 
 export class QuestNPC extends NPC {
-    constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
-        super(scene, x, y, imageID, npcID, dialogues, manin);
+    constructor(scene, x, y, imageID, qNPCID, npcID, npc_dialogues, quest_dialogues, manin, quest) {
+        super(scene, x, y, imageID, npcID, npc_dialogues, manin);
         this.quest = quest;
+        this.qNPCID = qNPCID;
+        this.questDialogues = quest_dialogues;
+        this.countQuestDialogues(this.qNPCID, this.questDialogues);
+        this.endDialog = false;
     }
 
     activateQuest(){
-        if(!this.quest.acquired){
+        this.readDialogues();
+        this.scene.events.on('dialogWindowClosed', () => {
+            this.endDialog = true;
+        });
+
+        if(!this.quest.acquired && this.endDialog){
             allyParty.questLog.addQuest(this.quest);
             allyParty.questLog.actualQuest = allyParty.questLog.numQuests - 1; 
             this.scene.scene.get('hud').addQuest(this.quest);
             this.scene.scene.get('hud').UpdateHUD();
             this.quest.acquired = true;   
         }
+    }
+
+    readDialogues() {
+        this.questDialog(this.qNPCID, this.questDialogues);
     }
     
     advanceQuest(){

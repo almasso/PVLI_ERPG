@@ -59,6 +59,7 @@ export default class FatherScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		this.npc_dialogues = this.cache.json.get('npc_dialogues');
+		this.quest_dialogues = this.cache.json.get('quests');
 
         // #region generamos a los NPCs
 		this.npcs = [];
@@ -69,11 +70,6 @@ export default class FatherScene extends Phaser.Scene {
 			let newNpc = new NPC(this, i.x, i.y, i.img, i.id, this.npc_dialogues, this.manin);
 			this.npcs.push(newNpc);
 		}
-		/*for(let i of EnviromentInfo.qNpcs){
-			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
-				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj, i.qNpcName, i.qImg, i.qDesc));
-			this.npcs.push(newNpc);
-		}*/
 		for(let i of EnviromentInfo.sNpcs){
 			let items = [];
 			for(let o of i.items){
@@ -123,7 +119,7 @@ export default class FatherScene extends Phaser.Scene {
 	generateQuests(functions){
 		let j = 0;
 		for(let i of EnviromentInfo.qNpcs){
-			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.qNPCID, i.id, this.npc_dialogues, this.quest_dialogues, 
 				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj,i.qNpcName, i.qImg, i.qDesc, functions[j]));
 			newNpc.setScale(2.5);
 			this.npcs.push(newNpc);
@@ -210,7 +206,6 @@ GenerateHostileGround(x, y, fils, cols, scale, img){
 			let changeZoneBounds = i.getBounds();
 			
 			if(Phaser.Geom.Intersects.RectangleToRectangle(maninBounds, changeZoneBounds)){
-				console.log("E")
 				if((self.aKey.isDown && i.x>0&&i.x<100) ||(self.dKey.isDown && i.x>this.bordeX-100)||(self.wKey.isDown&& i.y<100 && i.x<700&&i.x>300)||(self.sKey.isDown &&  i.y>500&& i.x>300&&i.x<700))
 				{				
 					i.emit("overlapstart");
@@ -223,23 +218,15 @@ GenerateHostileGround(x, y, fils, cols, scale, img){
 		
 		for(let i of this.npcs) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap");
 				this.manin.collider = i;
 			}
 		}
 
 		for(let i of this.interactuableObjects) {
 			if(this.physics.world.overlap(this.manin, i.trigger) && this.manin.collider == null) {
-				console.log("overlap");
 				this.manin.collider = i;
 			}
 		}
-        /*
-		if(this.physics.world.overlap(this.manin, this.ally.trigger) && this.manin.collider == null) {
-			console.log("overlap con aliado");
-			this.manin.collider = this.ally;
-		}
-        */
 		if(this.manin.collider != null && !this.physics.world.overlap(this.manin, this.manin.collider.trigger)){
 			this.manin.collider = null;
 		}

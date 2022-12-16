@@ -150,13 +150,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		console.log(this.actualResistances);
 	}
 
-	// subimos de nivel (NO IMPLEMENTADO)
-	LevelUp(){
-		this.lvl++;
-		this.maxHp += this.maxHp * 2 / 5;
-		this.maxMp += this.maxMp * 1 / 5;	
-	}
-
 	// puede atacar el personaje?
 	CanAttack(attack){
 		return this.actualMp >= attack.requiredMps;

@@ -119,6 +119,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
 				this.collider.activateQuest();
+				this.collider.currentlyTalking = true;
 				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
@@ -145,9 +146,12 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.collider.readDialogues();
 		}
 		else if(this.collider instanceof NPC) {
-			this.scene.scene.sleep('hud');
-			this.collider.currentlyTalking = true;
-			this.collider.readDialogues();
+			if(this.collider.npcID === 28) this.isInteracting = false;
+			else {
+				this.scene.scene.sleep('hud');
+				this.collider.currentlyTalking = true;
+				this.collider.readDialogues();
+			}
 		}
 		else if(this.collider instanceof AllyTEST) 
 		{ 
@@ -199,6 +203,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
 			this.zone.x = this.body.x + this.displayWidth/2;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}
 
@@ -209,6 +214,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
 			this.zone.x = this.body.x + this.displayWidth/2;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
 			this.increaseSteps()
 			
 		}
@@ -222,6 +228,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.sKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
+			this.zone.x = this.body.x + this.displayWidth/2;
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}
@@ -230,6 +237,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.wKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
+			this.zone.x = this.body.x + this.displayWidth/2;
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}

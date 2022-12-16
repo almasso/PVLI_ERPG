@@ -80,15 +80,57 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
 		
 
+		// nosotros c:
+		this.load.image('alex', 'assets/textures/Characters/Alex.png');
+        this.load.spritesheet('alex_dmg','assets/textures/Characters/alex_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_shock','assets/textures/Characters/alex_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_poison','assets/textures/Characters/alex_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_dead','assets/textures/Characters/alex_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_burn','assets/textures/Characters/alex_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_idle','assets/textures/Characters/alex_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_wow','assets/textures/Characters/alex_wow.png',{frameWidth:19, frameHeight:26});
+
+		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.spritesheet('raul_dmg','assets/textures/Characters/raul_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_shock','assets/textures/Characters/raul_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_poison','assets/textures/Characters/raul_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_dead','assets/textures/Characters/raul_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_burn','assets/textures/Characters/raul_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_idle','assets/textures/Characters/raul_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_wow','assets/textures/Characters/raul_wow.png',{frameWidth:19, frameHeight:26});
+
+		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
+		this.load.spritesheet('pablo_dmg','assets/textures/Characters/pablo_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_shock','assets/textures/Characters/pablo_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_poison','assets/textures/Characters/pablo_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_dead','assets/textures/Characters/pablo_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_burn','assets/textures/Characters/pablo_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_idle','assets/textures/Characters/pablo_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('pablo_wow','assets/textures/Characters/pablo_wow.png',{frameWidth:19, frameHeight:26});
+		
+		this.load.image('roi', 'assets/textures/Characters/roi.png');
+		this.load.spritesheet('roi_dmg','assets/textures/Characters/roi_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_shock','assets/textures/Characters/roi_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_poison','assets/textures/Characters/roi_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_dead','assets/textures/Characters/roi_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_burn','assets/textures/Characters/roi_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_idle','assets/textures/Characters/roi_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('roi_wow','assets/textures/Characters/roi_wow.png',{frameWidth:19, frameHeight:26});
+		
+		this.load.image('david', 'assets/textures/Characters/david.png');
+		this.load.spritesheet('david_dmg','assets/textures/Characters/david_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_shock','assets/textures/Characters/david_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_poison','assets/textures/Characters/david_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_dead','assets/textures/Characters/david_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_burn','assets/textures/Characters/david_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_idle','assets/textures/Characters/david_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('david_wow','assets/textures/Characters/david_wow.png',{frameWidth:19, frameHeight:26});
         // NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
 		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
-		this.load.image('alex', 'assets/textures/Characters/Alex.png');
-		this.load.image('raul', 'assets/textures/Characters/Raul.png');
-		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
-		this.load.image('roi', 'assets/textures/Characters/roi.png');
-		this.load.image('david', 'assets/textures/Characters/david.png');
+
+
 		this.load.image('compuman', 'assets/textures/Characters/Compuman.png');
 		this.load.image('frozono', 'assets/textures/Characters/Frozono.png');
 		this.load.image('unverifiedtoni', 'assets/textures/Characters/toni1.png');
