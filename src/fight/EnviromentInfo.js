@@ -293,7 +293,7 @@ let park = {
 		npcInfo(50,400, 'PabloMotos', 21)
 	],
 	qNpcs: [
-		qNpcInfo(1305, 142, 'fisher	', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		qNpcInfo(1305, 142, 'fisher', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest","Mi Guitarra", 1, ["Recupera la Guitarra"],
