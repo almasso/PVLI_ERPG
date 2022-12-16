@@ -108,15 +108,13 @@ export default class ParkScene extends FatherScene {
 
 		
 		this.qFunctions.push(function(){ //Melendi
-			self.npcs[10].trigger.setActive(true);
-			self.npcs[10].setVisible(true);
+			self.npcs[10].trigger.setScale(1);
 			self.npcs[14].trigger.destroy();
 			self.npcs[14].destroy();
 		})
 
 		this.qFunctions.push(function(){ //Jarfaiter
-			self.npcs[11].trigger.setActive(true);
-			self.npcs[11].setVisible(true);
+			self.npcs[11].trigger.setScale(1);
 			self.npcs[15].trigger.destroy();
 			self.npcs[15].destroy();
 		});

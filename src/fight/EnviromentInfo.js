@@ -231,7 +231,8 @@ let park = {
 		npcInfo(250,950, 'joker', 15),
 		npcInfo(1500,850, 'aloy', 16),
 		npcInfo(1550,150, 'sirenita', 14),
-		npcInfo(1000,600, 'ikerJimenez', 27)
+		npcInfo(1000,600, 'ikerJimenez', 27),
+		npcInfo(50,400, 'PabloMotos', 21)
 	],
 	qNpcs: [
 		qNpcInfo(1305, 142, 'alex', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
@@ -240,17 +241,7 @@ let park = {
 		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest","Mi Guitarra", 1, ["Recupera la Guitarra"],
 		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
 		qNpcInfo(500, 500, 'jarfaiter', 28, 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
-	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
-		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
-		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
-		itemInfo('Fría', 20, -5, 20, 'fria', "La bebida favorita de aquellos que luchan contra el apollardamiento. Esperemos que no sea Cruzcampo."), 
-		itemInfo('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."), 
-		itemInfo('Dalsy Naranja', 10, 0, 15, 'dalsyN', "Es como ibuprofeno pero sin el como. Y además líquido. Naranjita. Y sabe bien."),
-		itemInfo('Dalsy Fresa', 0, 10, 15, 'dalsyF', "Es como ibuprofeno pero sin el como. Y además líquido. Rosita. Y sabe bien."),
-		itemInfo('Ibuprofeno 200mg', 15, 0, 15, 'i200', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
-		itemInfo('Ibuprofeno 600mg', 30, 0, 30, 'i600', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz."),
-		itemInfo('Ibuprofeno 1g', 45, 0, 45, 'i1', "Es como Dalsy pero sin el como. Esta vez te toca tragarte una piedra. Está asqueroso, pero es muy eficaz.")
-	])],
+	sNpcs: [],
 	hNpcs:  [],
 	character: [
 		{
