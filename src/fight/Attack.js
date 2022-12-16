@@ -42,16 +42,16 @@ export class Ultimate extends Attack{
 			this.activated = true;
 	}
 
-	IsUsed(){
+	IsUsed(){ //Indica si un ataque ha sido usado
 		return this.used;
 	}
 
-	Used()
+	Used() //Marca el ataque como usado
 	{
 		this.used = true;
 	}
 
-	Reset()
+	Reset() //Resetea el estado del ataque
 	{
 		this.currentTurns = 0;
 		this.used = false;
