@@ -121,12 +121,17 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.collider.currentlyTalking = true;
 				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
+			else if(this.collider.quest.id === "batallaDevs" && this.collider.quest.stages !== this.collider.quest.stage && !this.collider.quest.actualObjectiveCompleted){
+				this.collider.advanceQuest();
+				this.scene.scene.get('hud').Reset();
+				this.scene.scene.get('hud').events.emit("updateQuestHUD");
+			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
 					this.collider.advanceQuest();
 					this.scene.scene.get('hud').events.emit("updateQuestHUD");
 
 			}
-			else if(this.collider.quest.id === "porroQuest" && this.collider.quest.stages !== this.collider.quest.stage  && !this.collider.quest.actualObjectiveCompleted){
+			else if(this.collider.quest.id === "porroQuest" && this.collider.quest.stages !== this.collider.quest.stage && !this.collider.quest.actualObjectiveCompleted){
 				let i = allyParty.inventory.isItem('Porro', 0);
 				if(i !== allyParty.inventory.inv.length){
 					allyParty.inventory.removeItem(new Object('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."));

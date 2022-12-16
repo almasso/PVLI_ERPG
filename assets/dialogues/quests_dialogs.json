@@ -15,6 +15,10 @@
         {
             "qnpcName" : "Cartel en Dinoseto",
             "qnpcID" : 3
+        },
+        {
+            "qnpcName" : "Roi",
+            "qnpcID" : 4
         }
     ],
     "dialogues" : [
@@ -81,6 +85,14 @@
         {
             "qnpcID" : 3,
             "text" : "Concello de Vigo: as pezas do Dinoseto foron roubadas. Recompensa: 50000€"
+        },
+        {
+            "qnpcID" : 4,
+            "text" : "Hola Manín, nos gustaría testearte algún día de estos."
+        },
+        {
+            "qnpcID" : 4,
+            "text" : "Vuelve cuando puedas para ponernos con ello."
         }
     ]
 }
