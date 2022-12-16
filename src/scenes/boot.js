@@ -50,7 +50,7 @@ export default class Boot extends Phaser.Scene {
         
         // Cargamos todas las imágenes de nuestro juego:
 
-        //HUD
+        // HUD
         this.load.image('logButton','assets/textures/HUD/logButton.png');
         this.load.image('resP', 'assets/textures/HUD/explore/resP.png');
 		this.load.image('resR', 'assets/textures/HUD/explore/resR.png');
@@ -78,6 +78,8 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('buy', 'assets/textures/HUD/buyButton.png');
 		this.load.image('noBuy', 'assets/textures/HUD/noButton.png');
 		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
+		this.load.image('showItem', 'assets/textures/HUD/explore/itemsButton.png');
+		this.load.image('showQuests', 'assets/textures/HUD/explore/menuQuestsButton.png');
 		
 
 		// nosotros c:
@@ -125,7 +127,8 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('david_burn','assets/textures/Characters/david_burn.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('david_idle','assets/textures/Characters/david_idle.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('david_wow','assets/textures/Characters/david_wow.png',{frameWidth:19, frameHeight:26});
-        // NPCS
+        
+		// NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
 		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
@@ -186,6 +189,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('caña', 'assets/textures/Props/caña.png');
 		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 		this.load.image('dinoRoto','assets/textures/Characters/dinoRoto.png');
+		this.load.image('guitarra','assets/textures/Props/guitarra.png');
 
         // ANIMACIONES
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
