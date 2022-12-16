@@ -59,6 +59,7 @@ export default class FatherScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.manin);
 		// cargamos diálogos de los NPCs
 		this.npc_dialogues = this.cache.json.get('npc_dialogues');
+		this.quest_dialogues = this.cache.json.get('quests');
 
         // #region generamos a los NPCs
 		this.npcs = [];
@@ -123,7 +124,7 @@ export default class FatherScene extends Phaser.Scene {
 	generateQuests(functions){
 		let j = 0;
 		for(let i of EnviromentInfo.qNpcs){
-			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.id, this.npc_dialogues, 
+			let newNpc = new QuestNPC(this, i.x,i.y, i.img, i.qNPCID, i.id, this.npc_dialogues, this.quest_dialogues, 
 				this.manin, new Quest(i.qStages, i.qId, i.qName, i.qObj,i.qNpcName, i.qImg, i.qDesc, functions[j]));
 			newNpc.setScale(2.5);
 			this.npcs.push(newNpc);
