@@ -31,6 +31,7 @@ export class FightScene extends Phaser.Scene {
 		this.selectedAttack; // ataque seleccionado actualmente con el puntero
 		this.selectedItem;
 		this.timeBetweenAttacks = 2000;
+		this.endTime = 5000;
 	}
 
 	init(parameters){
@@ -200,8 +201,7 @@ export class FightScene extends Phaser.Scene {
 
 	// Acabamos el combate
 	EndCombat(){
-		this.combatMusic.stop();
-		this.victoryMusic.play();
+		this.victoryMusic.stop();
 		if(this.win)
 			this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
@@ -1088,7 +1088,7 @@ export class FightScene extends Phaser.Scene {
 			}
 		}
 		else if(this.state === FightState.TimeUntilNextTurn || this.state === FightState.AlteratedStatesFire 
-			|| this.state === FightState.AlteratedStatesToxic ||this.state == FightState.EndCombat){
+			|| this.state === FightState.AlteratedStatesToxic){
 			this.count += dt;
 			if(this.count > this.timeBetweenAttacks)
 			{
@@ -1096,7 +1096,15 @@ export class FightScene extends Phaser.Scene {
 				this.RequestChangeState(false);
 			}
 		}
-		else if(this.state === FightState.Item){
+		else if(this.state == FightState.EndCombat){
+			this.count += dt;
+			if(this.count > this.endTime)
+			{
+				this.count = 0;
+				this.RequestChangeState(false);
+			}
+		}
+			else if(this.state === FightState.Item){
 			this.UseItem();	
 			this.inventoryHUD.UpdateItem(this.inventory);
 		}
