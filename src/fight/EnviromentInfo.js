@@ -208,7 +208,7 @@ let park = {
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 5, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
 		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
-		qNpcInfo(500, 500, 'jarfaiter', 5, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
+		qNpcInfo(500, 500, 'jarfaiter', 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
