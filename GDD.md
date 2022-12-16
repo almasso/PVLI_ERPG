@@ -66,7 +66,7 @@ Gran parte de la aventura se basa en la exploración de un entorno. Esta consist
 
 En las zonas consideradas "_hostiles_", Manín tendrá posibilidades de empezar un combate junto a sus aliados (si el jugador ha decidido incorporar alguno a su equipo) en el estado en el que estos se encuentren. 
 
-Durante este modo también se podrán usar objetos sobre los aliados, como, por ejemplo, las curaciones o reabastecimientos de maná.
+Durante este modo también se podrán usar objetos sobre los aliados, como, por ejemplo, las curaciones o reabastecimientos de maná (NO IMPLEMENTADO -> SE USA EL SERGAS PARA ESTO).
 
 #### Combate
 
