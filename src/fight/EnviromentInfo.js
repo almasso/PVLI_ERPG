@@ -180,9 +180,9 @@ let cinematic3 = {
 	]
 }
 
-
-
-
+let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
+					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
+					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
 
 let square = {
 	launched: false,
@@ -205,12 +205,14 @@ let square = {
 		npcInfo(150,525, 'bob', 17),
 		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24),
-		npcInfo(250, 650, 'andrea', 12),
+		npcInfo(250, 750, 'andrea', 12)
 	],
 	qNpcs: [
 		qNpcInfo(600, 350, 'dinoRoto', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
 		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
-		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
+		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'dinoRoto', 'Concello de Vigo'),
+		qNpcInfo(450, 550, 'sanxe', 28, 5, "sanxeMision", "Impuestos", 1, ["Paga 500 euros a Pdr Sánchez"],
+		 "Pedro Sánchez ha accedido a ayudarte si le pagas 500 euros de impuestos", 'sanxe', nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)])
 	],
 	sNpcs: [
 		sNpcInfo(1050, 400, 'tienda', 9, [
@@ -228,6 +230,30 @@ let square = {
 	hNpcs:  [
 		npcInfo(100, 250, 'health', 11)
 	],
+	character : [
+		{
+			x: 450,
+			y : 550,
+			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
+			imgID: 'sanxe', 
+			actualHp: 75, 
+			maxHp: 75, 
+			actualMp: 115, 
+			maxMp: 115,
+			rP: 4, 
+			rR: 6, 
+			rF: 3, 
+			rE: 7, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 60, 
+			attack: [
+				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
+				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
+				attackInfo("Ataque Falcon", 0, 20, 25, 2), 
+				attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
+		]
+	}],
 	hostile: [],
 	eObj: [
 		eObjInfo(1000, 150, 'pixel', 150, 100),
@@ -272,9 +298,6 @@ let square = {
 	]
 }
 
-let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
-					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
-					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
 
 // información de los personajes que se encuentran en el parque
 let park = {
@@ -348,27 +371,6 @@ let park = {
 				attackInfo("Quiero que ardas", 2, 35, 30, 1), 
 				attackInfo("Ven a 4k", 0, 20, 25, 2), 
 				attackInfo("Porro",4,50,60,4)
-			]
-		},
-		{
-			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
-			imgID: 'sanxe', 
-			actualHp: 75, 
-			maxHp: 75, 
-			actualMp: 115, 
-			maxMp: 115,
-			rP: 4, 
-			rR: 6, 
-			rF: 3, 
-			rE: 7, 
-			rT: 5, 
-			acurracy: 90, 
-			speed: 60, 
-			attack: [
-				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
-				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
-				attackInfo("Ataque Falcon", 0, 20, 25, 2), 
-				attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
 			]
 		}
 	],

@@ -126,6 +126,14 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.scene.scene.get('hud').Reset();
 				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
+			else if(this.collider.quest.id === "sanxeMision" && this.collider.quest.stages !== this.collider.quest.stage && !this.collider.quest.actualObjectiveCompleted){
+				if(allyParty.inventory.money >= 500){
+					allyParty.inventory.money -= 500;
+					this.collider.advanceQuest();
+					this.scene.scene.get('hud').Reset();
+					this.scene.scene.get('hud').events.emit("updateQuestHUD");
+				}
+			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
 					this.collider.advanceQuest();
 					this.scene.scene.get('hud').events.emit("updateQuestHUD");

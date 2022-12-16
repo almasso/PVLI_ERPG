@@ -19,6 +19,10 @@
         {
             "qnpcName" : "Roi",
             "qnpcID" : 4
+        },
+        {
+            "qnpcName" : "Pedro Sánchez",
+            "qnpcID" : 5
         }
     ],
     "dialogues" : [
@@ -29,6 +33,10 @@
         {
             "qnpcID" : 0,
             "text" : "Cago nes pites coloraes guaxín, perdí la mia guitarra. Preciso que recuperesla, babayu, que tengo mañana un conciertu y preciso ensayar un mizcu, ho."
+        },
+        {
+            "qnpcID" : 0,
+            "text" : "Ayudame y voi dir contigo"
         },
         {
             "qnpcID" : 0,
@@ -93,6 +101,18 @@
         {
             "qnpcID" : 4,
             "text" : "Vuelve cuando puedas para ponernos con ello."
+        },
+        {
+            "qnpcID" : 5,
+            "text" : "Menudo lío tengo con lo de la estatua."
+        },
+        {
+            "qnpcID" : 5,
+            "text" : "Tal y como está el país y ahora a pagar otra estatua."
+        },
+        {
+            "qnpcID" : 5,
+            "text" : "Bueno Manín, si me pagas 500 euros por gastos podría ir contigo a ayudarte."
         }
     ]
 }
