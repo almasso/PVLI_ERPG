@@ -1,9 +1,9 @@
-# PVLI_ERPG
-### Desarrollo del juego ÑRPG - España: Rondando por Galicia
+# ***ÑRPG - España : Rondando por Galicia***
+### Desarrollo del juego
 Este proyecto es un trabajo universitario para la asignatura Programación de Videojuegos en Lenguajes Interpretados.
 Contamos con dos redes sociales para mostrar el desarrollo del juego:
-    - [**Instagram**](https://www.instagram.com/manin.interactive/)
-    - [**Twitter**](https://twitter.com/manin_int)
+- [**Instagram**](https://www.instagram.com/manin.interactive/)
+- [**Twitter**](https://twitter.com/manin_int)
 
 Hemos decidido hacer un RPG por turnos, basandonos mucho en los clásicos JRPGs:
 
