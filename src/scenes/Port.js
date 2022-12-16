@@ -41,16 +41,28 @@ export default class PortScene extends FatherScene {
 			self.scene.sleep('port');
 			self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0});
 			self.scene.get('fightscene').LoadInventory(allyParty.inventory);
-			self.interactuableObjects[0].setVisible(true);
-			self.interactuableObjects[0].collider.setActive(true);
-			self.interactuableObjects[1].trigger.destroy();
-			self.interactuableObjects[1].destroy();
+			self.interactuableObjects[1].setVisible(true);
+			self.interactuableObjects[1].setScale(5);
+			self.interactuableObjects[1].trigger.setScale(50);
+			self.interactuableObjects[0].trigger.destroy();
+			self.interactuableObjects[0].destroy();
 		});
+		// Coger item
+		this.iFunctions.push(function(){
+			let statueQuest = allyParty.questLog.GetQuest('statueQuest');
+			if(statueQuest !== undefined && !statueQuest.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('statueQuest'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
+				self.interactuableObjects[1].trigger.destroy();	
+				self.interactuableObjects[1].destroy();
+			}
+		})
 		
 		super.generateIObjects(this.iFunctions);
 
-		this.interactuableObjects[0].collider.setActive(false);
-		this.interactuableObjects[0].setVisible(false);
+		this.interactuableObjects[1].setScale(0);
+		this.interactuableObjects[1].setVisible(false);
+		
 	}
 
 	// comprobación de colisiones y apertura de menús

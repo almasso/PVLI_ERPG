@@ -474,7 +474,7 @@ let port = {
 		eObjInfo(500, 125, 'text', 2.5, 2.5),
 		eObjInfo(500, 420, 'pixel', 1000, 0.1)
 	],
-	iObj: [eObjInfo(400,300,'piezaDino', 1, 1), eObjInfo(400,300,'pixel',800,400)],
+	iObj: [ eObjInfo(400,300,'pixel',800,400),eObjInfo(250,400,'piezaDino', 0.1, 0.1)],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
 	],
