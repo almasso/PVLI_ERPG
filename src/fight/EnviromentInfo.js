@@ -237,7 +237,7 @@ let park = {
 		qNpcInfo(1305, 142, 'alex', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
-		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
+		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest","Mi Guitarra", 1, ["Recupera la Guitarra"],
 		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
 		qNpcInfo(500, 500, 'jarfaiter', 28, 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
@@ -254,8 +254,8 @@ let park = {
 	hNpcs:  [],
 	character: [
 		{
-			x: 300,
-			y:300, 
+			x: 550,
+			y:90, 
 			name: "Melendi",
 			imgID: 'melendi', 
 			actualHp: 75, 

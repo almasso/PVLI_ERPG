@@ -90,8 +90,8 @@ export default class ParkScene extends FatherScene {
 			if(guitarQuest !== undefined && !guitarQuest.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('guitarQuest'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
-				self.interactuableObjects[0].trigger.destroy();
-				self.interactuableObjects[0].destroy();
+				self.interactuableObjects[4].trigger.destroy();
+				self.interactuableObjects[4].destroy();
 			}
 		});
 		super.generateIObjects(this.iFunctions);
@@ -102,16 +102,19 @@ export default class ParkScene extends FatherScene {
 
 		this.qFunctions = [];
 
-		this.qFunctions.push(function(){
+		this.qFunctions.push(function(){ //Caña de pescar
 			// Hacer algo al terminar la misión caña de pescar
 		})
 
 		
-		this.qFunctions.push(function(){
-			// Hacer algo al terminar la misión guitarra
+		this.qFunctions.push(function(){ //Melendi
+			self.npcs[10].trigger.setActive(true);
+			self.npcs[10].setVisible(true);
+			self.npcs[14].trigger.destroy();
+			self.npcs[14].destroy();
 		})
 
-		this.qFunctions.push(function(){
+		this.qFunctions.push(function(){ //Jarfaiter
 			self.npcs[11].trigger.setActive(true);
 			self.npcs[11].setVisible(true);
 			self.npcs[15].trigger.destroy();
