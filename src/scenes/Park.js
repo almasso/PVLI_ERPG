@@ -111,9 +111,10 @@ export default class ParkScene extends FatherScene {
 		})
 
 		this.qFunctions.push(function(){
-			this.npcs[11].trigger.setActive(true);
-			this.npcs[11].setVisible(true);
-			this.npcs[15].destroy();
+			self.npcs[11].trigger.setActive(true);
+			self.npcs[11].setVisible(true);
+			self.npcs[15].trigger.destroy();
+			self.npcs[15].destroy();
 		});
 
 		super.generateQuests(this.qFunctions);
