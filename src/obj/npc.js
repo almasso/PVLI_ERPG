@@ -14,6 +14,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.currentlyTalking = false;
         this.verified = this.dialogues.attributes[this.npcID].verified;
         this.developer = this.dialogues.attributes[this.npcID].developer;
+        this.rick = false;
         
         this.scene.add.existing(this);
         this.setScale(1.3,1.3);
@@ -69,7 +70,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     multipleDialogues() {
         if(this.formerDialog !== this.currentDialog) this.formerDialog = this.currentDialog - 1;
         
-        if(this.npcID === 25 && !this.rickroll) {	
+        if(this.npcID === 25 && !this.rickroll) {
+            this.rick = true;	
             this.rickroll = true;	
             const rickrollconfig = {
                 mute: false,
@@ -100,7 +102,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             }    
         }
         else {
-            this.rickroll.stop();
+            if(this.rick) this.rickroll.stop();
             this.closeWindow();
             this.scene.musica.resume();
         }
@@ -200,7 +202,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.beingAnimated = false;
         this.canCloseWindow = false;
         this.currentlyTalking = false;
-        this.rickroll = false;
+        if(this.rick) this.rickroll = false;
         this.scene.events.emit('dialogWindowClosed');
             if(this.currentDialog==69)
             {
