@@ -52,8 +52,8 @@ export default class ParkScene extends FatherScene {
 				self.interactuableObjects[2].Hide(false);
 				self.scene.sleep('park');
 				self.scene.sleep('hud');
-				self.scene.launch('fishing');
-				self.interactuableObjects[1].trigger.destroy();
+				self.changeCol[1].emit("overlapstart");
+				self.interactuableObjects[1].trigger.destroy(); 
 				self.interactuableObjects[1].destroy();
 			} 
 		});
@@ -66,6 +66,7 @@ export default class ParkScene extends FatherScene {
 				self.scene.sleep('hud');
 				self.interactuableObjects[3].Hide(false);
 				self.scene.sleep('park');
+				
 				self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
 				self.scene.get('fightscene').LoadInventory(allyParty.inventory);
 				self.interactuableObjects[2].trigger.destroy();
@@ -118,6 +119,7 @@ export default class ParkScene extends FatherScene {
 		});
 
 		super.generateQuests(this.qFunctions);
+		this.interactuableObjects[2].setFlip(true,false)
 	}
 
 	// comprobación de colisiones y apertura de menús

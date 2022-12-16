@@ -112,6 +112,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('rick','assets/textures/NPC-RAUL/rick.png'); 
 		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png');
 		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png'); 
+		this.load.image('fisher', 'assets/textures/Characters/fisherman.png');
 		this.load.image('delincuente', 'assets/textures/Characters/delincuentes.png');
 
 		
@@ -125,6 +126,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('clif','assets/textures/Backgrounds/clif.png')
 		this.load.image('home','assets/textures/Backgrounds/home.png')
 		this.load.image('plazaNoche','assets/textures/Backgrounds/plazaNoche.png')
+		this.load.image('angelPark','assets/textures/Backgrounds/angel.png')
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
@@ -138,6 +140,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('emptyBar', 'assets/textures/Props/Bar.png');
 		this.load.image('z1', 'assets/textures/Props/Z1.png');
 		this.load.image('intro', 'assets/textures/Props/intro.png');
+		this.load.image('caña', 'assets/textures/Props/caña.png');
 		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 		this.load.image('dinoRoto','assets/textures/Characters/dinoRoto.png');
 
