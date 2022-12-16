@@ -53,7 +53,7 @@ export default class ParkScene extends FatherScene {
 				self.scene.sleep('park');
 				self.scene.sleep('hud');
 				self.changeCol[1].emit("overlapstart");
-				self.interactuableObjects[1].trigger.destroy();
+				self.interactuableObjects[1].trigger.destroy(); 
 				self.interactuableObjects[1].destroy();
 			} 
 		});
@@ -118,6 +118,7 @@ export default class ParkScene extends FatherScene {
 		})
 
 		super.generateQuests(this.qFunctions);
+		this.interactuableObjects[2].setFlip(true,false)
 	}
 
 	// comprobación de colisiones y apertura de menús
