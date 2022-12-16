@@ -938,7 +938,7 @@ export class ExploreMenu {
 		});
 
 		// INVENTORY 
-		this.itemButton = this.scene.add.image(buttonX, buttonY + 120, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
+		this.itemButton = this.scene.add.image(buttonX, buttonY + 120, 'showItem').setOrigin(0,0).setInteractive().setScale(this.scale);
 		this.itemButton.depth = 6;
 		this.itemButton.visible = false;
 		this.itemButton.on("pointerup", function(){
@@ -961,7 +961,7 @@ export class ExploreMenu {
 		});
 
 		// QUESTS
-		this.questButton = this.scene.add.image(buttonX, buttonY + 180, 'menuOrderButton').setOrigin(0,0).setInteractive().setScale(this.scale);
+		this.questButton = this.scene.add.image(buttonX, buttonY + 180, 'showQuests').setOrigin(0,0).setInteractive().setScale(this.scale);
 		this.questButton.depth = 6;
 		this.questButton.visible = false;
 		this.questButton.on("pointerup", function(){
