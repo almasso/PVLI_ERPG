@@ -86,17 +86,15 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             this.rickroll.play();
         }
 
-        console.log(this.dialogIndex + this.dialogCount);
-        console.log('wewew');
-        console.log(this.formerDialog);
-        console.log('--------');
+        
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
                 this.beingAnimated = true;
                 this.currentDialog++;
             }    
-            else if(this.beingAnimated) {
+            else if(this.beingAnimated || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
+                console.log('AAAAAAA');
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
 
                 this.formerDialog++;
