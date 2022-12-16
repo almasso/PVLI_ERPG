@@ -29,6 +29,7 @@ export default class FinalScene extends Phaser.Scene {
             this.scene.stop('EnvManager');
             this.scene.stop('cinematic1');
             this.scene.stop('fightscene');
+            this.scene.stop('hud');
 			this.scene.launch('initial');
             this.scene.stop('final');
 		})

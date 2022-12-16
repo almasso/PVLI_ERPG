@@ -18,9 +18,6 @@ class EnviromentManager extends Phaser.Scene{
 	constructor(){
 		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
 		super({key: 'EnvManager'});
-		this.coreScene = scenes.cinematic1;
-		this.currentScene = scenes.cinematic1;
-		this.info = sceneInfo[this.coreScene];
 	}
 
 	create(){
@@ -41,6 +38,7 @@ class EnviromentManager extends Phaser.Scene{
 		console.log(sceneInfo[this.coreScene]);
 		this.scene.launch(hudKey);
 		this.hudScene = this.scene.get(hudKey);	
+		this.hudScene.Reset();
 	}
 
 	fight(){

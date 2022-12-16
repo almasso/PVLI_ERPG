@@ -68,6 +68,12 @@ export class Party{
 						attackInfo("Asserting Dominance",1,60,60,1)
 					]),
 					];
+		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
+		this.alliesNum = this.party.length;
+		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 };
 
