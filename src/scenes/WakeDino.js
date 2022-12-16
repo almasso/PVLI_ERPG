@@ -55,7 +55,7 @@ export default class DinoWakeScene extends FatherScene {
     {
 		if(!this.started){
 			this.count += dt;	
-			if(this.count > 1000)
+			if(this.count > 4000)
 			{
 				this.started =true;
 				this.npcs[0].play('wake');

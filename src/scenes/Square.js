@@ -35,11 +35,17 @@ export default class Square extends FatherScene {
 			self.scene.sleep('square');
 			self.changeCol[3].emit('overlapstart');
 		})
+
+		this.qFunctions.push(function(){
+			self.npcs[13].trigger.setScale(1);
+			self.npcs[15].trigger.destroy();
+			self.npcs[15].destroy();
+		})
 		
 		super.generateQuests(this.qFunctions);
 		//this.npcs[this.npcs.lengt-1].collider.destroy()
-		this.npcs[this.npcs.length-1].setScale(5,5)
-		this.npcs[this.npcs.length-1].trigger.setScale(4,4)
+		this.npcs[this.npcs.length-2].setScale(5,5)
+		this.npcs[this.npcs.length-2].trigger.setScale(4,4)
 	}
 	
 	// comprobación de colisiones y apertura de menús

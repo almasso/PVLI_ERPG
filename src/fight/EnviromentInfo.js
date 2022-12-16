@@ -149,7 +149,7 @@ let cinematic2 = {
 	hNpcs:  [
 	],
 	hostile: [],
-	eObj: [],
+	eObj: [eObjInfo(300, 500, 'textAngel', 1, 1)],
 	iObj: [],
 	travel: [
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.park)
@@ -173,16 +173,16 @@ let cinematic3 = {
 	hNpcs:  [
 	],
 	hostile: [],
-	eObj: [],
+	eObj: [eObjInfo(425, 500, 'textDino', 1, 0.9)],
 	iObj: [],
 	travel: [
 		travelInfo(600, 1600, 'pixel', 100, 100, scenes.square)
 	]
 }
 
-
-
-
+let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
+					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
+					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
 
 let square = {
 	launched: false,
@@ -205,12 +205,14 @@ let square = {
 		npcInfo(150,525, 'bob', 17),
 		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24),
-		npcInfo(250, 650, 'andrea', 12),
+		npcInfo(250, 750, 'andrea', 12)
 	],
 	qNpcs: [
 		qNpcInfo(600, 350, 'dinoRoto', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
 		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
-		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
+		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'dinoRoto', 'Concello de Vigo'),
+		qNpcInfo(450, 550, 'sanxe', 28, 5, "sanxeMision", "Impuestos", 1, ["Paga 500 euros a Pdr Sánchez"],
+		 "Pedro Sánchez ha accedido a ayudarte si le pagas 500 euros de impuestos", 'sanxe', nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)])
 	],
 	sNpcs: [
 		sNpcInfo(1050, 400, 'tienda', 9, [
@@ -228,6 +230,30 @@ let square = {
 	hNpcs:  [
 		npcInfo(100, 250, 'health', 11)
 	],
+	character : [
+		{
+			x: 450,
+			y : 550,
+			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
+			imgID: 'sanxe', 
+			actualHp: 85, 
+			maxHp: 85, 
+			actualMp: 115, 
+			maxMp: 115,
+			rP: 6, 
+			rR: 3, 
+			rF: 6, 
+			rE: 5, 
+			rT: 4, 
+			acurracy: 90, 
+			speed: 60, 
+			attack: [
+				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
+				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
+				attackInfo("Ataque Falcon", 1, 20, 25, 2), 
+				attackInfo("Instaurar la República",0,50,60,Math.random() * 4)
+		]
+	}],
 	hostile: [],
 	eObj: [
 		eObjInfo(1000, 150, 'pixel', 150, 100),
@@ -249,21 +275,21 @@ let square = {
 				{
 					name: "Dinoseto", 
 					imgID:'dinoseto', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 300, 
+					maxHp: 300, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
+					rP: 4, 
 					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rF: 3, 
+					rE: 7, 
+					rT: 7, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("Mordisco",1,25,0,1),
+						attackInfo("Rugido", 3, 15, 0, 1),
+						attackInfo("Lanzatoxinas", 4, 10, 0, 1)
 					]
 				}
 			],
@@ -272,9 +298,6 @@ let square = {
 	]
 }
 
-let nombresSanxe = ["Pedro Sánchez", "Otto Frauden", "Elim Postor", "Chan Chu-yo", "Pierre d'Elvotto", "Hurto Sinescrupoulos", "Gandhi Sima Farsa", "Massimo Atracco", 
-					"Tekito Tuboto", "Mestafa Al-Votar", "Pedro das Trampas", "Ami Mewele Atrampa", "Jo Dan-sen", "Falconetti", "Mr. Handsome", "Silvio Panada", "T. Van Astaffar",
-					"Abraham Urnas", "Ivan A. Timar", "T. des Falco do Nascimento", "Pancho R. Obando", "Many Puleo"];
 
 // información de los personajes que se encuentran en el parque
 let park = {
@@ -321,9 +344,9 @@ let park = {
 			acurracy: 90, 
 			speed: 60,
 			attack: [
-				attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
-				attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-				attackInfo("Support 1 Target", 5, -20, 25, 1), 
+				attackInfo("Lágrimas desordenadas", 1, 25, 0, 1), 
+				attackInfo("Arrugas en el alma", 1, 20, 30, 1), 
+				attackInfo("Magic Alonso", 5, -20, 25, 1), 
 				attackInfo("Camina por la Vida",5,-70,60,1)
 			]
 		},
@@ -349,27 +372,6 @@ let park = {
 				attackInfo("Ven a 4k", 0, 20, 25, 2), 
 				attackInfo("Porro",4,50,60,4)
 			]
-		},
-		{
-			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
-			imgID: 'sanxe', 
-			actualHp: 75, 
-			maxHp: 75, 
-			actualMp: 115, 
-			maxMp: 115,
-			rP: 4, 
-			rR: 6, 
-			rF: 3, 
-			rE: 7, 
-			rT: 5, 
-			acurracy: 90, 
-			speed: 60, 
-			attack: [
-				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
-				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
-				attackInfo("Ataque Falcon", 0, 20, 25, 2), 
-				attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
-			]
 		}
 	],
 	enemies: [
@@ -381,10 +383,10 @@ let park = {
 			actualMp: 0, 
 			maxMp: 0, 
 			rP: 5, 
-			rR: 5, 
+			rR: 4, 
 			rF: 5, 
 			rE: 5, 
-			rT: 5, 
+			rT: 6, 
 			acurracy: 90, 
 			speed: 40,
 			attack: [
@@ -392,7 +394,7 @@ let park = {
 				attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
 				attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
 			],
-			money: 500
+			money: 100
 		},
 		{
 			name: "Culturista", 
@@ -413,7 +415,7 @@ let park = {
 				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 				attackInfo("Poñetaso", 0, 30, 0, 1)
 			],
-			money: 500
+			money: 100
 		}
 	],
 	hostile: [
@@ -463,21 +465,21 @@ let park = {
 				{
 					name: "Angel Caido", 
 					imgID:'angel', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 150, 
+					maxHp: 150, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
+					rP: 6, 
 					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rF: 4, 
+					rE: 6, 
+					rT: 4, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("Pedrada",1,20,0,1),
+						attackInfo("Tentación", 4, 15, 0, 1),
+						attackInfo("Lanzallamas", 2, 10, 0, 1)
 					]
 				}
 			],
@@ -522,12 +524,12 @@ let port = {
 	npcs: [
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),
-		npcInfo(620,380, 'david', 0), //no tiene diálogos
+		npcInfo(620,380, 'roi', 26), 
 		npcInfo(760,380, 'pablo', 29), 
-		npcInfo(400,380, 'roi', 26)
+		npcInfo(400,380, 'david', 30)
 	],
-	qNpcs: [qNpcInfo(400, 380, 'roi', 28, 4, "batallaDevs", "Testeo rutinario", 1, ["Vuelve a hacerte el testeo"],
-	 "Los devs te han pedido que vuelvas a hacerte pruebas de testeo, ya que seguramente tengas fallos", 'roi', 'Roi')],
+	qNpcs: [qNpcInfo(400, 380, 'david', 28, 4, "batallaDevs", "Testeo rutinario", 1, ["Vuelve a hacerte el testeo"],
+	 "Los devs te han pedido que vuelvas a hacerte pruebas de testeo, ya que seguramente tengas fallos", 'david', 'David')],
 	 sNpcs: [],
 	 hNpcs:  [],
 	 character: [],

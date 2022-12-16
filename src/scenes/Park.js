@@ -29,7 +29,8 @@ export default class ParkScene extends FatherScene {
 		let self = this;
 		this.iFunctions = [];
 
-		
+		this.manin.x=100;
+		this.manin.y=100;
 		// Recoger la caña de pescar
 		this.iFunctions.push(function(){
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
@@ -108,14 +109,14 @@ export default class ParkScene extends FatherScene {
 		
 		this.qFunctions.push(function(){ //Melendi
 			self.npcs[10].trigger.setScale(1);
-			self.npcs[14].trigger.destroy();
-			self.npcs[14].destroy();
+			self.npcs[13].trigger.destroy();
+			self.npcs[13].destroy();
 		})
 
 		this.qFunctions.push(function(){ //Jarfaiter
 			self.npcs[11].trigger.setScale(1);
-			self.npcs[15].trigger.destroy();
-			self.npcs[15].destroy();
+			self.npcs[14].trigger.destroy();
+			self.npcs[14].destroy();
 		});
 
 		super.generateQuests(this.qFunctions);
