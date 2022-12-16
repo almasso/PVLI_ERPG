@@ -47,8 +47,8 @@ export default class PortScene extends FatherScene {
 			if(statueQuest !== undefined && !statueQuest.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('statueQuest'); 
 				self.scene.get('hud').events.emit("updateQuestHUD");
-				self.interactuableObjects[1].trigger.destroy();	
-				self.interactuableObjects[1].destroy();
+				self.interactuableObjects[0].trigger.destroy();	
+				self.interactuableObjects[0].destroy();
 			}
 		})
 		

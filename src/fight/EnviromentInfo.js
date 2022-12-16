@@ -264,7 +264,7 @@ let park = {
 		npcInfo(50,400, 'PabloMotos', 21)
 	],
 	qNpcs: [
-		qNpcInfo(1305, 142, 'alex', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		qNpcInfo(1305, 142, 'fisher', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
 		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest","Mi Guitarra", 1, ["Recupera la Guitarra"],
@@ -414,8 +414,8 @@ let park = {
 		eObjInfo(1200, 20, 'pixel', 400, 100)
 	],
 	iObj: [
-		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
-		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
+		eObjInfo(840, 950, 'caña', 0.7, 0.7),  // Caña de pescar
+		eObjInfo(1205, 120, 'flecha', 0.7, 0.7),   // Observar el lago
 		eObjInfo(1400, 225, 'angel', 0.7, 0.7),   // Pelea
 		eObjInfo(1205, 120, 'piezaDino', 0.7, 0.7),   // Item
 		eObjInfo(40, 620, 'guitarra', 0.7, 0.7),   // Guitarra
@@ -486,7 +486,7 @@ let port = {
 	launched: false,
 	key: 'port',
 	bg: 'home',
-	fightbg: 'casaLucha',
+	fightbg: 'fightHomeBg',
 	npcs: [
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),

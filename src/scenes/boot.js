@@ -164,6 +164,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
         this.load.image('square', 'assets/textures/Backgrounds/plaza2.png');
         this.load.image('fightParkBg','assets/textures/Backgrounds/parqueLucha.png')
+        this.load.image('fightHomeBg','assets/textures/Backgrounds/casaLucha.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 		this.load.image('park','assets/textures/Backgrounds/park.png')
 		this.load.image('clif','assets/textures/Backgrounds/clif.png')
@@ -173,6 +174,7 @@ export default class Boot extends Phaser.Scene {
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
+        this.load.image('flecha', 'assets/textures/Props/flecha.png');
 		this.load.image('hierba', 'assets/textures/Props/hierba.png');
 		this.load.image('insignia', 'assets/textures/Props/insignia.png');
 		this.load.image('tree', 'assets/textures/Props/tree.png');
