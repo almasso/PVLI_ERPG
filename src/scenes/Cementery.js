@@ -73,7 +73,6 @@ export default class CementeryScene extends FatherScene {
 
 		if(this.kratos)
 		{
-			console.log("E")
 			this.count += dt;
 			if(this.count > 1)
 			{
@@ -111,7 +110,6 @@ export default class CementeryScene extends FatherScene {
 	{
 		this.musica.stop();
 		this.dreamon.play();
-		console.log("HAAAAAAAAAAAAA");
 		this.kratos=true;
 		
 		this.npcs[0].trigger.destroy();

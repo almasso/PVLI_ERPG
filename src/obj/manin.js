@@ -114,7 +114,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 	
 	// interacción 
     interact(){
-		console.log(this.x + " " + this.y);
 		this.isInteracting = true;
 		if(this.collider instanceof QuestNPC){
 			if(!this.collider.quest.acquired){
@@ -123,7 +122,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 				this.scene.scene.get('hud').events.emit("updateQuestHUD");
 			}
 			else if(this.collider.quest.stages !== this.collider.quest.stage && this.collider.quest.actualObjectiveCompleted){
-					console.log("OBJETIVO COMPLETADO")
 					this.collider.advanceQuest();
 					this.scene.scene.get('hud').events.emit("updateQuestHUD");
 
@@ -131,7 +129,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			else if(this.collider.quest.id === "porroQuest" && this.collider.quest.stages !== this.collider.quest.stage  && !this.collider.quest.actualObjectiveCompleted){
 				let i = allyParty.inventory.isItem('Porro', 0);
 				if(i !== allyParty.inventory.inv.length){
-					console.log('Sí');
 					allyParty.inventory.removeItem(new Object('Porro', -5, 20, 20, 'porro', "Un porro. Ya está, no vamos a decir mucha cosa más que la Audiencia Nacional está muy pendiente de este juego."));
 					this.collider.advanceQuest();
 					this.scene.scene.get('hud').Reset();
@@ -162,7 +159,6 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			this.isInteracting = false;
 		}
 		else if(this.collider instanceof interactuableObj){
-			console.log("AAA GUITARRA")
 			this.collider.Interact();
 			this.isInteracting = false;
 		}

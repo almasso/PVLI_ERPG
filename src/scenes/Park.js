@@ -32,7 +32,6 @@ export default class ParkScene extends FatherScene {
 		
 		// Recoger la caña de pescar
 		this.iFunctions.push(function(){
-			console.log("aa");
 			let fishingRod = allyParty.questLog.GetQuest('fishingRod');
 			if(fishingRod !== undefined && fishingRod.quest.stage === 0 && !fishingRod.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('fishingRod'); 

@@ -115,7 +115,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			
 		});
 
-		console.log(this.mon);
 		this.play(this.mon+'_idle');
 
      	//#endregion
@@ -147,7 +146,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		if(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]) this.ReduceResistances(reduceBurnedRes);
 		if(this.alteredStates[typeOfAttack.Toxic - elementalAttackDifference]) this.ReduceResistances(reduceToxicRes);
 		if(this.alteredStates[typeOfAttack.Electrical - elementalAttackDifference]) this.ReduceResistances(reduceParalizedRes);
-		console.log(this.actualResistances);
 	}
 
 	// puede atacar el personaje?
@@ -158,7 +156,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	// ataca 
 	Attack(attack){
 		let effective = [];
-		console.log(this.alteredStates[typeOfAttack.Fire - elementalAttackDifference]);
 		let self = this;
 		this.targets.forEach(function (enemy) {
 			effective.push(enemy.Damage(attack, self.alteredStates[typeOfAttack.Fire - elementalAttackDifference], false));
@@ -226,7 +223,6 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	Die()
 	{
 		this.play(this.mon+'_dead');
-		console.log(" ANIMACION MUERTE");
 		this.dead = true; // se muere
 	}
 
@@ -278,11 +274,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	}
 
 	Burned(){
-		console.log("this.actualHp");
-
-		console.log(this.actualHp);
 		this.Damage(burned, false, true);
-		console.log(this.actualHp);
 	}
 
 	Paralized(){ // Por ahora no implementado
@@ -290,11 +282,7 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	}
 
 	Poisoned(){
-		console.log("this.actualHp");
-
 		this.Damage(poisoned, false, true);
-		console.log(this.actualHp);
-
 	}
 }
 
