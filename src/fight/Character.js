@@ -185,10 +185,10 @@ export default class Character extends Phaser.GameObjects.Sprite {
 		if(attackProbability <= this.acurracy || attackType === typeOfAttack.Support || isAlteredState) // Los ataques de tipo Support no pueden fallar
 		{
 			
-			let stateProbability = 0//Math.floor(Math.random()*100 + 1);
+			let stateProbability = Math.floor(Math.random()*100 + 1);
 
 			// Las dos primeras resistencias no tienen estado alterado 
-			if(attackType > typeOfAttack.Physical  && attackType != typeOfAttack.Support && (stateProbability < this.actualResistances[attackType] * 10)){
+			if(attackType > typeOfAttack.Ranged  && attackType != typeOfAttack.Support && (stateProbability > this.actualResistances[attackType] * 10)){
 				let i = 0;
 				if(this.alteredStates[attackType - elementalAttackDifference] === false){ // Si no tenía el estado alterado correspondiente
 					this.alteredStates[attackType - elementalAttackDifference] = true; // Se aplica el estado alterado 
