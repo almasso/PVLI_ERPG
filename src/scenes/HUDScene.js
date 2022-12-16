@@ -53,7 +53,6 @@ export default class HUDScene extends Phaser.Scene {
 		this.walkingHUD.Update();
 		this.questHud.Update();
 		this.menu.Update();
-		console.log(this.questHud);
 	}
 
 	addQuest(quest){

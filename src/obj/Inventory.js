@@ -18,7 +18,6 @@ export default class Inventory{
     }
 
     addItem(obj){
-        console.log(this.inv.length);
         let i = this.isItem(obj.name, 0);
         
         if(i !== this.inv.length) this.inv[i].quantity++; 
@@ -33,7 +32,6 @@ export default class Inventory{
         
         if(i !== this.inv.length){
             this.inv[i].quantity--;
-            console.log(this.inv[i].name);
             if(this.inv[i].quantity === 0){
                 while(i < this.inv.length - 1) {
                     this.inv[i] = this.inv[i + 1];

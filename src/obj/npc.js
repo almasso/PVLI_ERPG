@@ -95,7 +95,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
                 this.currentDialog++;
             }    
             else if(this.beingAnimated || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
-                console.log('AAAAAAA');
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
 
                 this.formerDialog++;
@@ -171,7 +170,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         
         if(this.currentDialog === this.dialogIndex) this.beingAnimated = false;
 
-        console.log(this.currentDialog, this.dialogIndex, this.beingAnimated, qnpcid, qdialogues);
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.currentDialog].text, true, false, false);
@@ -203,7 +201,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.scene.events.emit('dialogWindowClosed');
             if(this.currentDialog==69)
             {
-                console.log("SI")
                 this.scene.Kratos();           
             }    
         return;

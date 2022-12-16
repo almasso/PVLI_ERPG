@@ -57,7 +57,6 @@ export class QuestLog {
     }
 
     addQuest(quest){
-        console.log(this.actualQuest + "   " + this.numQuests);
         this.quests.push(quest);
         this.numQuests++;
         this.actualQuest = this.numQuests - 1; 
@@ -82,12 +81,10 @@ export class QuestLog {
     }
     
     CompleteQuest(id){
-        console.log(this.actualQuest + "   " + this.numQuests);
         this.numCompletedQuests++;
         this.numQuests--;
         let quest = this.GetQuest(id);
         this.quests.splice(quest.index, 1);
-        console.log(this.quests);
         this.completedQuests[this.numCompletedQuests - 1] = quest.quest;
         if(this.actualQuest === quest.index){
             this.actualQuest = 0;
@@ -95,7 +92,6 @@ export class QuestLog {
                 this.actualQuest = -1;
             }
         }
-        console.log(this.actualQuest + "   " + this.numQuests);
     }
 
 

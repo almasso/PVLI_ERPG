@@ -10,7 +10,6 @@ export default class FirstScene extends FatherScene {
 
 	// inicializamos la escena
 	create() {
-        console.log(EnviromentInfo);
         this.count = 0;
 		const config = {
 			mute: false,
