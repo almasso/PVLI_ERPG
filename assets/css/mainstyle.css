@@ -146,6 +146,9 @@ li.enlacesNAVJuego:hover {
 #filosofofo, #filosofofo:visited {
     color:white;
 }
+#dinoseto, #dinoseto:visited {
+    color:var(--blue);
+}
 
 /*SOLO PÁG MANIN*/
 ul.desarrolladores{
