@@ -1,3 +1,4 @@
+import { EnviromentInfo } from '../fight/EnviromentInfo.js';
 import FatherScene from './FatherScene.js';
 import HUDScene from './HUDScene.js';
 // Escena de exploración (temporal de momento)
@@ -9,6 +10,8 @@ export default class FirstScene extends FatherScene {
 
 	// inicializamos la escena
 	create() {
+        console.log(EnviromentInfo);
+        this.count = 0;
 		const config = {
 			mute: false,
 			volume: 0.5,
@@ -36,7 +39,7 @@ export default class FirstScene extends FatherScene {
     update(t,dt)
     {
         this.count += dt;
-        if(this.count <20000 && this.spaceKey.isDown) this.count=20000;
+        if(this.count < 20000 && this.spaceKey.isDown) this.count=20000;
         if(this.count > 20500&&this.spaceKey.isDown)this.count=28000
         if(this.count < 23000&&this.count > 20000)
         {
@@ -62,7 +65,6 @@ export default class FirstScene extends FatherScene {
 
         }
         else if(this.count>28000){
-            console.log("ha")
             this.scene.wake('hud')
             this.changeCol[0].emit("overlapstart");
             this.scene.stop('cinematic1')

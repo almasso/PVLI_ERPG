@@ -24,13 +24,21 @@ class EnviromentManager extends Phaser.Scene{
 	}
 
 	create(){
+		for (let e of sceneInfo){
+			e.launched = false;
+		}
+		this.coreScene = scenes.cinematic1;
+		this.currentScene = scenes.cinematic1;
+		this.info = sceneInfo[this.coreScene];
 		this.initializeGame();
 	}
 
 	initializeGame(){
 		this.startTransition();
 		this.endTransition();
+		EnviromentInfo = sceneInfo[this.coreScene];
 		this.scene.launch(sceneInfo[this.coreScene].key);
+		console.log(sceneInfo[this.coreScene]);
 		this.scene.launch(hudKey);
 		this.hudScene = this.scene.get(hudKey);	
 	}
@@ -496,26 +504,26 @@ let port = {
 	],
 	specialEncounter: [
 		{
-			numEnemies: 3, 
+			numEnemies: 5, 
 			enemies: [
 				{
 					name: "David", 
 					imgID:'david', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 95, 
+					maxHp: 95, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
-					rR: 5, 
+					rP: 3, 
+					rR: 8, 
 					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rE: 6, 
+					rT: 2, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("susurrarle *uwu* al oído",3,25,0,1),
+						attackInfo("problemas gastrointestinales", 4, 15, 0, 2),
+						attackInfo("vivir en Alcalá de Henares", 1, 30, 0, 1)
 					]
 				},
 				{
@@ -533,16 +541,16 @@ let port = {
 					acurracy: 85, 
 					speed: 60,
 					attack:[
-						attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
-						attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-						attackInfo("Poñetaso", 0, 30, 0, 1)
+						attackInfo("amenazar su patito de goma", 0, 40, 0, 1), 
+						attackInfo("comerse una bandeja entera sin temblar",1,20,0,2),
+						attackInfo("enseñar código de input", 4, 30, 0, 1)
 					]
 				},
 				{
 					name: "Roi", 
 					imgID:'roi', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 110, 
+					maxHp: 110, 
 					actualMp: 0, 
 					maxMp: 0, 
 					rP: 5, 
@@ -553,49 +561,49 @@ let port = {
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("llamarle 'payaso'",1,30,0,1),
+						attackInfo("una foto de su pizza", 2, 15, 0, 3),
+						attackInfo("sticker de gatito", 0, 30, 0, 1)
 					]
 				},
 				{
-					name: "Álex", 
+					name: "Alex", 
 					imgID:'alex', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 100, 
+					maxHp: 100, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
-					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rP: 7, 
+					rR: 7, 
+					rF: 3, 
+					rE: 6, 
+					rT: 9, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Datos estúpidos de Wikipedia",4,20,0,1),
-						attackInfo("Testerazo", 0, 25, 0, 1),
-						attackInfo("La Vara de Avellano", 0, 30, 0, 1)
+						attackInfo("datos estúpidos de Wikipedia",4,20,0,1),
+						attackInfo("testerazo", 0, 25, 0, 1),
+						attackInfo("la vara de avellano", 0, 30, 0, 1)
 					]
 				},
 				{
 					name: "Pablo VI", 
 					imgID:'pablo', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 120, 
+					maxHp: 120, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
+					rP: 9, 
 					rR: 5, 
 					rF: 5, 
-					rE: 5, 
+					rE: 1, 
 					rT: 5, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("hincársela por el culo",0,20,0,1),
+						attackInfo("chiste del monje", 1, 15, 0, 1),
+						attackInfo("ausencia de césped", 3, 30, 0, 1)
 					]
 				}
 			]
@@ -631,7 +639,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port,cinematic1];
+let sceneInfo = [square, park, cementery, port, cinematic1];
 
 // variables exportadas
 let EnviromentInfo = cinematic1;
