@@ -12,8 +12,8 @@ export class Party{
 		this.party = [
 			characterInfo("Manín","manin",100,100,100,100,5,7,4,3,5,100,50,
 					 [
-						attackInfo("Churrazo",0,300,0,2),
-						attackInfo("Podación",0,40,15,1),
+						attackInfo("Churrazo",0,15,0,2),
+						attackInfo("Podación",0,30,15,1),
 					  	attackInfo("Pistola Agua",1,45,25,2),
 						attackInfo("Asserting Dominance",3,60,60,1)
 					])
@@ -62,10 +62,10 @@ export class Party{
 		this.party = [
 			characterInfo("Manín","manin",100,100,100,100,5,7,4,3,5,100,50,
 					 [
-						attackInfo("Churrazo",0,300,0,2),
-						attackInfo("Podación",0,40,15,1),
+						attackInfo("Churrazo",0,15,0,2),
+						attackInfo("Podación",0,30,15,1),
 					  	attackInfo("Pistola Agua",1,45,25,2),
-						attackInfo("Asserting Dominance",1,60,60,1)
+						attackInfo("Asserting Dominance",3,60,60,1)
 					]),
 					];
 		this.party[0].index = 0;
