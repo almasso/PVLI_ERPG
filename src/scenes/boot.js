@@ -192,6 +192,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('manin_move','assets/textures/Characters/manin_move.png',{frameWidth:25, frameHeight:32});
 		this.load.spritesheet('manin_pop','assets/textures/Characters/manin_pop.png',{frameWidth:25, frameHeight:32});
 		this.load.spritesheet('manin_pose','assets/textures/Characters/manin_pose.png',{frameWidth:25, frameHeight:32});
+		this.load.spritesheet('dino_wake','assets/textures/Characters/dino_wake.png',{frameWidth:58, frameHeight:50});
 
         // generic
         this.load.spritesheet('people_dmg','assets/textures/Characters/people_dmg.png',{frameWidth:19, frameHeight:26});

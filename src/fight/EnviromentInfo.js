@@ -175,7 +175,8 @@ let square = {
 		npcInfo(150,525, 'bob', 17),
 		npcInfo(700,550, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24),
-		npcInfo(250, 650, 'andrea', 12)
+		npcInfo(250, 650, 'andrea', 12),
+		npcInfo(400, 650, 'dino_wake', 12)
 	],
 	qNpcs: [
 		qNpcInfo(600, 350, 'dinoRoto', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",

@@ -41,6 +41,19 @@ export default class Square extends FatherScene {
 		//this.npcs[this.npcs.lengt-1].collider.destroy()
 		this.npcs[this.npcs.length-1].setScale(5,5)
 		this.npcs[this.npcs.length-1].trigger.setScale(4,4)
+		
+		this.anims.create({
+			
+			key: 'wake', //identificador de la animación
+			frames: this.anims.generateFrameNumbers('dino_wake',  // cambiar animaciones cuando esten hechas
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:11 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: -1
+		});
+		this.npcs[11].play('wake')
 	}
 	
 	// comprobación de colisiones y apertura de menús

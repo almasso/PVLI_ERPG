@@ -102,10 +102,24 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			frameRate: 5, // imágenes/frames por segundo
 			repeat: 1
 		});
+
+		this.scene.anims.create({
+			
+			key:'dino_wake', //identificador de la animación
+			frames: scene.anims.generateFrameNumbers('dino_wake', // cambiar animaciones cuando esten hechas
+			{
+				start:0, // primera imagen del Spritesheet que se ejecuta en la animación
+				end:11 // última imagen del Spritesheet que se ejecuta en la animación
+			}), 
+			frameRate: 5, // imágenes/frames por segundo
+			repeat: -1
+		});
+
 		
 
 		this.on('animationcomplete', end =>{ //evento que se ejecuta cuando una animación ha terminado
 			//console.log(this.anims.currentAnim.key)
+			if(this.anims.currentAnim.key ==='dino_wake'){}
 			if(this.anims.currentAnim.key === this.mon+'_daño' || this.anims.currentAnim.key === this.mon+'_wow' || 
 			this.anims.currentAnim.key === this.mon+'_burn' || this.anims.currentAnim.key === this.mon+'_shock'
 			 || this.anims.currentAnim.key === this.mon+'_poison'){ //comprobamos si la animación que ha terminado es 'attack'
