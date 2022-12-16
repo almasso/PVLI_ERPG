@@ -114,6 +114,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png');
 		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png'); 
 		this.load.image('fisher', 'assets/textures/Characters/fisherman.png');
+		this.load.image('delincuente', 'assets/textures/Characters/delincuentes.png');
 
 		
         // FONDOS
@@ -140,6 +141,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('emptyBar', 'assets/textures/Props/Bar.png');
 		this.load.image('z1', 'assets/textures/Props/Z1.png');
 		this.load.image('intro', 'assets/textures/Props/intro.png');
+		this.load.image('caña', 'assets/textures/Props/caña.png');
 		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 		this.load.image('dinoRoto','assets/textures/Characters/dinoRoto.png');
 

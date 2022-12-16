@@ -7,7 +7,8 @@ const scenes = {
 	park: 1,
 	cementery: 2,
 	port: 3,
-	cinematic1:4
+	cinematic1:4,
+	cinematic2:5
 };
 
 let hudKey = 'hud';
@@ -125,6 +126,28 @@ let cinematic1 = {
 	]
 }
 
+let cinematic2 = {
+	launched: false,
+	key: 'cinematic2',
+	bg: 'angelPark',
+	character: [],
+	npcs: [
+		npcInfo(600,-100, 'angel', 0),
+		
+	],
+	qNpcs: [],
+	sNpcs: [
+	],
+	hNpcs:  [
+	],
+	hostile: [],
+	eObj: [],
+	iObj: [],
+	travel: [
+		travelInfo(600, 1600, 'pixel', 100, 100, scenes.park)
+	]
+}
+
 let square = {
 	launched: false,
 	key: 'square',
@@ -143,12 +166,12 @@ let square = {
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
-		npcInfo(600,350, 'dinoRoto', 0), //la estatua tampoco tiene diálogos
+		// npcInfo(600,350, 'dinoRoto', 0), //la estatua tampoco tiene diálogos
 		npcInfo(700,525, 'rick', 25),
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(500, 500, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		qNpcInfo(600, 350, 'dinoRoto', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
@@ -365,12 +388,14 @@ let park = {
 	iObj: [
 		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
-		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Pelea
+		eObjInfo(1400, 275, 'angel', 0.7, 0.7),   // Pelea
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Item
 		eObjInfo(40, 620, 'manin', 0.7, 0.7),   // Guitarra
+		
 	],
 	travel: [
-		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
+		travelInfo(10, 60, 'pixel', 100, 100, scenes.square),
+		travelInfo(800, 15000, 'pixel', 100, 100, scenes.cinematic2)
 	],
 	specialEncounter: [
 		{
@@ -524,7 +549,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port,cinematic1];
+let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2];
 
 // variables exportadas
 let EnviromentInfo = cinematic1;

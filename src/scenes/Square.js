@@ -25,9 +25,7 @@ export default class Square extends FatherScene {
 		this.manin.x=600;
 		this.manin.y=150;
 		for(let i=0;i<this.eObjs.length;i++)this.eObjs[i].setVisible(false)
-		this.npcs[8].collider.destroy()
-		this.npcs[8].setScale(5,5)
-		this.npcs[8].trigger.setScale(4,4)
+		
 		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
 		this.qFunctions = [];
 
@@ -37,6 +35,8 @@ export default class Square extends FatherScene {
 		})
 		
 		super.generateQuests(this.qFunctions);
+		this.npcs[this.npcs.length-1].setScale(5)
+		this.npcs[this.npcs.length-1].trigger.setScale(4,4)
 	}
 	
 	// comprobación de colisiones y apertura de menús

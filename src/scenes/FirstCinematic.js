@@ -36,7 +36,7 @@ export default class FirstScene extends FatherScene {
     update(t,dt)
     {
         this.count += dt;
-        if(this.count <20000 && this.spaceKey.isDown) this.count=20000;
+        if(this.count <20000 && this.spaceKey.isDown) this.count=28000;
         if(this.count < 23000&&this.count > 20000)
         {
             this.eObjs[1].setVisible(false);
