@@ -31,7 +31,10 @@ export default class Square extends FatherScene {
 
 		let self = this;
 		this.qFunctions.push(function(){
-			self.scene.stop('square');
+			self.scene.sleep('hud');
+			self.scene.sleep('square');
+			self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
+			self.scene.get('fightscene').LoadInventory(allyParty.inventory);
 		})
 		
 		super.generateQuests(this.qFunctions);

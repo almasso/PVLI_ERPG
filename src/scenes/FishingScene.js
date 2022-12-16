@@ -35,17 +35,19 @@ export default class FishingScene extends FatherScene {
 	}
     update(t,dt)
     {
-        this.count += dt;
-		if(this.count<5000)
+		if(this.npcs[0].y < 250)
 		{
 			this.npcs[0].y+=1;
 			this.npcs[0].x-=0.5;
 		}
-		if(this.count>6000)
+		else
 		{
-			this.scene.wake('hud')
-            this.changeCol[0].emit("overlapstart");
-            this.scene.stop('cinematic2')
+			this.count += dt;
+			if(this.count > 1500){
+				this.scene.wake('hud')
+				this.changeCol[0].emit("overlapstart");
+				this.scene.stop('cinematic2')
+			}
 		}
 
         

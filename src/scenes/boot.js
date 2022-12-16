@@ -142,7 +142,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('kratos','assets/textures/NPC-RAUL/Kratos.png'); 
 		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
         this.load.image('culturista','assets/textures/Characters/Culturista.png');
-		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
 		this.load.image('patri', 'assets/textures/Characters/patri.png');
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
 		this.load.image('health', 'assets/textures/Characters/chiringo.png');
@@ -164,7 +163,7 @@ export default class Boot extends Phaser.Scene {
         // FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
         this.load.image('square', 'assets/textures/Backgrounds/plaza2.png');
-        this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
+        this.load.image('fightParkBg','assets/textures/Backgrounds/parqueLucha.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 		this.load.image('park','assets/textures/Backgrounds/park.png')
 		this.load.image('clif','assets/textures/Backgrounds/clif.png')
@@ -264,6 +263,18 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('angel_burn','assets/textures/Characters/AngelCaido_burn.png',{frameWidth:59, frameHeight:50});
 		this.load.spritesheet('angel_poison','assets/textures/Characters/AngelCaido_poison.png',{frameWidth:59, frameHeight:50});
 		this.load.spritesheet('angel_shock','assets/textures/Characters/AngelCaido_shock.png',{frameWidth:59, frameHeight:50});
+
+		// dinoseto
+		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
+		this.load.spritesheet('dinoseto_idle','assets/textures/Characters/Dinoseto_idle.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_wow','assets/textures/Characters/Dinoseto_wow.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_dmg','assets/textures/Characters/Dinoseto_dmg.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_dead','assets/textures/Characters/Dinoseto_dead.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_burn','assets/textures/Characters/Dinoseto_burn.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_poison','assets/textures/Characters/Dinoseto_poison.png',{frameWidth:58, frameHeight:40});
+		this.load.spritesheet('dinoseto_shock','assets/textures/Characters/Dinoseto_shock.png',{frameWidth:58, frameHeight:40});
+
+
 
 
 		// objetos
