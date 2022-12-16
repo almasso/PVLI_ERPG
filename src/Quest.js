@@ -8,16 +8,27 @@ export class QuestNPC extends NPC {
         this.quest = quest;
         this.qNPCID = qNPCID;
         this.questDialogues = quest_dialogues;
+        this.countQuestDialogues(this.qNPCID, this.questDialogues);
+        this.endDialog = false;
     }
 
     activateQuest(){
-        if(!this.quest.acquired){
+        this.readDialogues();
+        this.scene.events.on('dialogWindowClosed', () => {
+            this.endDialog = true;
+        });
+
+        if(!this.quest.acquired && this.endDialog){
             allyParty.questLog.addQuest(this.quest);
             allyParty.questLog.actualQuest = allyParty.questLog.numQuests - 1; 
             this.scene.scene.get('hud').addQuest(this.quest);
             this.scene.scene.get('hud').UpdateHUD();
             this.quest.acquired = true;   
         }
+    }
+
+    readDialogues() {
+        this.questDialog(this.qNPCID, this.questDialogues);
     }
     
     advanceQuest(){

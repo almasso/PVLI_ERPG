@@ -64,7 +64,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         if(this.currentDialog !== this.dialogues.texts.length && !this.dialogues.texts[this.currentDialog].unique ||(this.currentDialog !== 0 && !this.dialogues.texts[this.currentDialog - 1].unique)) this.multipleDialogues();
         else this.uniqueDialogue();
         
-        //if(this.currentDialog === this.dialogues.texts.length) this.closeWindow();
     }
 
     multipleDialogues() {
@@ -86,10 +85,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             this.rickroll.play();
         }
 
-        console.log(this.dialogIndex + this.dialogCount);
-        console.log('wewew');
-        console.log(this.formerDialog);
-        console.log('--------');
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
@@ -137,25 +132,61 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         else this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName , "Siniora Homer, el " + itemName.name + " que usted está intentando adquirir está fuera de su rango monetario. Por favor seleccione otro producto o váyase.", true, this.verified, this.developer);
     }
 
-    questDialog(dialogues) {
+
+    countQuestDialogues(qnpcid, qdialogues) {
+        this.dialogIndex = 0;
+        this.currentDialog = 0;
+        this.formerDialog = 0;
+        this.dialogCount = 0;
+
+        
+        var i = 0;
+        var encontrado = false;
+        while(i < qdialogues.dialogues.length && !encontrado) {
+            if(qnpcid === qdialogues.dialogues[i].qnpcID) {
+                this.dialogCount++;
+            }
+            else if(qnpcid > qdialogues.dialogues[i].qnpcID) {
+                this.dialogIndex++;
+            }
+            else {
+                encontrado = true;
+            }
+            i++;
+        }
+        this.currentDialog = this.formerDialog = this.nextDialog = this.dialogIndex;
+        this.nextDialog++;
+    }
+
+
+    questDialog(qnpcid, qdialogues) {
+        if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow(this.verified, this.developer);
+        else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified, this.developer);
+
+        if(this.formerDialog !== this.currentDialog) this.formerDialog = this.currentDialog - 1;
+
+        if(this.currentDialog === this.nextDialog) {
+            this.beingAnimated=false;
+            this.nextDialog++;
+        }
+        if(this.currentDialog === this.dialogIndex) this.beingAnimated = false;
+
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
-                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName, this.dialogues.texts[this.currentDialog].text, true, this.verified, this.developer);
+                this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.currentDialog].text, true, false, false);
                 this.beingAnimated = true;
                 this.currentDialog++;
             }    
             else if(this.beingAnimated) {
-                this.uiScene.setText(this.dialogues.attributes[this.npcID].npcName ,this.dialogues.texts[this.formerDialog].text, false, this.verified, this.developer);
+                this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.formerDialog].text, false, false, false);
 
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
-            }
-           
+            }    
         }
         else {
             this.closeWindow();
-            this.scene.musica.resume();
         }
     }
     
