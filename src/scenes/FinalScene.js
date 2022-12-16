@@ -22,6 +22,14 @@ export default class FinalScene extends Phaser.Scene {
 
         this.restartButton.on('pointerup',()=>{
 			allyParty.RestartParty();
+            this.scene.stop('park');
+            this.scene.stop('cementery');
+            this.scene.stop('port');
+            this.scene.stop('square');
+            this.scene.stop('EnvManager');
+            this.scene.stop('cinematic1');
+            this.scene.stop('fightscene');
+            this.scene.stop('hud');
 			this.scene.launch('initial');
             this.scene.stop('final');
 		})

@@ -19,21 +19,27 @@ class EnviromentManager extends Phaser.Scene{
 	constructor(){
 		// gestor de escenas. tenemos que hacer que se cambie en el momento de cambiar entre escenas.
 		super({key: 'EnvManager'});
-		this.coreScene = scenes.cinematic1;
-		this.currentScene = scenes.cinematic1;
-		this.info = sceneInfo[this.coreScene];
 	}
 
 	create(){
+		for (let e of sceneInfo){
+			e.launched = false;
+		}
+		this.coreScene = scenes.cinematic1;
+		this.currentScene = scenes.cinematic1;
+		this.info = sceneInfo[this.coreScene];
 		this.initializeGame();
 	}
 
 	initializeGame(){
 		this.startTransition();
 		this.endTransition();
+		EnviromentInfo = sceneInfo[this.coreScene];
 		this.scene.launch(sceneInfo[this.coreScene].key);
+		console.log(sceneInfo[this.coreScene]);
 		this.scene.launch(hudKey);
 		this.hudScene = this.scene.get(hudKey);	
+		this.hudScene.Reset();
 	}
 
 	fight(){
@@ -477,9 +483,116 @@ let port = {
 		eObjInfo(500, 125, 'text', 2.5, 2.5),
 		eObjInfo(500, 420, 'pixel', 1000, 0.1)
 	],
-	iObj: [],
+	iObj: [eObjInfo(400,300,'pixel',800,400)],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	],
+	specialEncounter: [
+		{
+			numEnemies: 5, 
+			enemies: [
+				{
+					name: "David", 
+					imgID:'david', 
+					actualHp: 95, 
+					maxHp: 95, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 3, 
+					rR: 8, 
+					rF: 5, 
+					rE: 6, 
+					rT: 2, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("susurrarle *uwu* al oído",3,25,0,1),
+						attackInfo("problemas gastrointestinales", 4, 15, 0, 2),
+						attackInfo("vivir en Alcalá de Henares", 1, 30, 0, 1)
+					]
+				},
+				{
+					name: "Raúl", 
+					imgID:'raul', 
+					actualHp: 80, 
+					maxHp: 80, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 8, 
+					rR: 6, 
+					rF: 4, 
+					rE: 3, 
+					rT: 6, 
+					acurracy: 85, 
+					speed: 60,
+					attack:[
+						attackInfo("amenazar su patito de goma", 0, 40, 0, 1), 
+						attackInfo("comerse una bandeja entera sin temblar",1,20,0,2),
+						attackInfo("enseñar código de input", 4, 30, 0, 1)
+					]
+				},
+				{
+					name: "Roi", 
+					imgID:'roi', 
+					actualHp: 110, 
+					maxHp: 110, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("llamarle 'payaso'",1,30,0,1),
+						attackInfo("una foto de su pizza", 2, 15, 0, 3),
+						attackInfo("sticker de gatito", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Alex", 
+					imgID:'alex', 
+					actualHp: 100, 
+					maxHp: 100, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 7, 
+					rR: 7, 
+					rF: 3, 
+					rE: 6, 
+					rT: 9, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("datos estúpidos de Wikipedia",4,20,0,1),
+						attackInfo("testerazo", 0, 25, 0, 1),
+						attackInfo("la vara de avellano", 0, 30, 0, 1)
+					]
+				},
+				{
+					name: "Pablo VI", 
+					imgID:'pablo', 
+					actualHp: 120, 
+					maxHp: 120, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 9, 
+					rR: 5, 
+					rF: 5, 
+					rE: 1, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("hincársela por el culo",0,20,0,1),
+						attackInfo("chiste del monje", 1, 15, 0, 1),
+						attackInfo("ausencia de césped", 3, 30, 0, 1)
+					]
+				}
+			]
+		}
 	]
 }
 
@@ -512,6 +625,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 }
 
 let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2];
+
 
 // variables exportadas
 let EnviromentInfo = cinematic1;

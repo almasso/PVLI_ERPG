@@ -203,6 +203,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			//this.x -= this.speed*dt / 1000;
 			this.body.setVelocityX(-100*dt*this.speed/1000);
 			this.zone.x = this.body.x + this.displayWidth/2;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}
 
@@ -213,6 +214,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 			//this.x += this.speed*dt / 1000;
 			this.body.setVelocityX(100*dt*this.speed/1000);
 			this.zone.x = this.body.x + this.displayWidth/2;
+			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
 			this.increaseSteps()
 			
 		}
@@ -226,6 +228,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.sKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(100*dt*this.speed/1000);
+			this.zone.x = this.body.x + this.displayWidth/2;
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}
@@ -234,6 +237,7 @@ export class Manin extends Phaser.GameObjects.Sprite {
 		if(this.wKey.isDown && !this.isInteracting){
 			//this.play('move');
             this.body.setVelocityY(-100*dt*this.speed/1000);
+			this.zone.x = this.body.x + this.displayWidth/2;
 			this.zone.y = this.body.y + 2.5*this.displayHeight / 3;
             this.increaseSteps()
 		}
