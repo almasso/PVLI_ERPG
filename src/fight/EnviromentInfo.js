@@ -522,12 +522,12 @@ let port = {
 	npcs: [
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),
-		npcInfo(620,380, 'david', 0), //no tiene diálogos
+		npcInfo(620,380, 'roi', 26), 
 		npcInfo(760,380, 'pablo', 29), 
-		npcInfo(400,380, 'roi', 26)
+		npcInfo(400,380, 'david', 30)
 	],
-	qNpcs: [qNpcInfo(400, 380, 'roi', 28, 4, "batallaDevs", "Testeo rutinario", 1, ["Vuelve a hacerte el testeo"],
-	 "Los devs te han pedido que vuelvas a hacerte pruebas de testeo, ya que seguramente tengas fallos", 'roi', 'Roi')],
+	qNpcs: [qNpcInfo(400, 380, 'david', 28, 4, "batallaDevs", "Testeo rutinario", 1, ["Vuelve a hacerte el testeo"],
+	 "Los devs te han pedido que vuelvas a hacerte pruebas de testeo, ya que seguramente tengas fallos", 'david', 'David')],
 	 sNpcs: [],
 	 hNpcs:  [],
 	 character: [],

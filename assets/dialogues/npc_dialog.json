@@ -31,7 +31,8 @@
                 "Roi" : 26,
                 "Iker Jiménez" : 27,
                 "NPC VACÍO" : 28,
-                "Pablo":29
+                "Pablo":29,
+                "David":30
             }
         }
     ],
@@ -215,6 +216,12 @@
         {
             "npcID" : 29,
             "npcName" : "Pablo",
+            "verified" : false,
+            "developer" : true
+        },
+        {
+            "npcID" : 30,
+            "npcName" : "David",
             "verified" : false,
             "developer" : true
         }
@@ -779,6 +786,21 @@
             "npcID": 29,
             "unique": false,
             "text": "♪ Estoy cansado ♪"
+        },
+        {
+            "npcID": 30,
+            "unique": false,
+            "text": "uwu"
+        },
+        {
+            "npcID": 30,
+            "unique": false,
+            "text": "Te gusta Dark Souls 3 y no te gusta Bloodborne..."
+        },
+        {
+            "npcID": 30,
+            "unique": false,
+            "text": "Checkea"
         }
     ]
 }
