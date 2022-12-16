@@ -76,7 +76,7 @@ Manín pasará a la fase de combate cuando esté explorando algún suelo hostil 
 
 ##### Puntos de Vida
 
-Son la estadística que mantendrá a un personaje en pie. Cuando este reciba un ataque, perderá X Puntos de Vida(PVs) dependiendo de la fuerza y tipo del ataque. Si un personaje llega a 0 PVs, muere: no podrá ser utilizado de ninguna manera hasta que sea curado de las siguientes formas: en un **Bar**, con un objeto que permita a un aliado volver a la vida o con algún '_ataque_' aliado que permita revivir a un objetivo.
+Son la estadística que mantendrá a un personaje en pie. Cuando este reciba un ataque, perderá X Puntos de Vida(PVs) dependiendo de la fuerza y tipo del ataque. Si un personaje llega a 0 PVs, muere: no podrá ser utilizado de ninguna manera hasta que sea curado de las siguientes formas: en un **SERGAS**, con un objeto que permita a un aliado volver a la vida (NO IMPLEMENTADO) o con algún '_ataque_' aliado que permita revivir a un objetivo (NO IMPLEMENTADO).
 
 En caso de que toda la _party_ muera, se cargará un anterior punto de guardado, manteniendo el estado del inventario y de los aliados iguales a los del momento del guardado.
 
