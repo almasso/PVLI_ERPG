@@ -3,45 +3,45 @@
 
 ## ÍNDICE
 
-1. Ficha Técnica
-2. Descripción
-3. Jugabilidad
-    1. Movimiento
-    2. Cámara
-    3. Exploración
-    4. Combate
-        1. Puntos de vida
-        2. Flujo de combate
-        3. Ataques
-        4. Aliados
-        5. Puntos de experiencia y qué significa subir de nivel
-4. Diseño de Nivel
-    1. Tipos de Zonas
-        1. Plaza
-        2. Parque
-        3. Puerto
-        4. Catedral
-        5. Cementerio
-        6. Catacumbas
-5. HUD
-    1. Exploración
-    2. Combate
-6. Contenido
-    1. Historia
-    2. Objetos
-        1. Consumibles
-7. Menús y Flujo de Juego
-9. Referencias
+1. [Ficha Técnica](#ficha-técnica)
+2. [Descripción](#descripción)
+3. [Jugabilidad](#jugabilidad)
+    1. [Movimiento](#movimiento)
+    2. [Cámara](#cámara)
+    3. [Exploración](#exploración)
+    4. [Combate](#combate)
+        1. [Puntos de vida](#puntos-de-vida)
+        2. [Flujo de combate](#flujo-de-combate)
+        3. [Ataques](#ataques)
+        4. [Aliados](#aliados)
+        5. [Puntos de experiencia y qué significa subir de nivel](#puntos-de-experiencia-y-qué-significa-subir-de-nivel)
+4. [Diseño de Nivel](#diseño-de-nivel)
+    1. [Tipos de Zonas](#tipos-de-zonas)
+        1. [Plaza](#plaza)
+        2. [Parque](#parque)
+        3. [Puerto](#puerto)
+        4. [Catedral](#catedral)
+        5. [Cementerio](#cementerio)
+        6. [Catacumbas](#catacumbas)
+5. [HUD](#hud)
+    1. [Exploración](hud-exploración)
+    2. [Combate](hud-combate)
+6. [Contenido](#contenido)
+    1. [Historia](#historia)
+    2. [Objetos](#objetos)
+        1. [Consumibles](#consumibles)
+7. [Menús y Flujo de Juego](#menús-y-flujo-de-juego)
+9. [Referencias](#referencias)
 
 
 ### Ficha Técnica
 
-**Título:** España: Rondando por Galicia
-**Género:** J-RPG
-**Target:** Adolescente o Joven Adulto con gusto por la estrategia en el combate, pequeños gags y por una historia simple.
-**Rating:** +16 años
-**Plataforma:** Web
-**Modo de Juego:** Un jugador, historia cuasilineal // cambiar esto xd
++ **Título:** España: Rondando por Galicia
++ **Género:** J-RPG
++ **Target:** Adolescente o Joven Adulto con gusto por la estrategia en el combate, pequeños gags y por una historia simple.
++ **Rating:** +16 años
++ **Plataforma:** Web
++ **Modo de Juego:** Un jugador, historia cuasilineal
 
 ### Descripción
 
@@ -57,8 +57,8 @@ A la hora de viajar por el mundo nuestro personaje va a moverse en 4 direcciones
 
 #### Cámara
 
-**Exploración:** Nos muestra una vista _top-down_ de la escena, con el protagonista en el centro. La cámara estará fijada en él todo el rato.
-**Combate:** La escena se muestra con una vista horizontal estática de la escena (ver HUD).
++ **Exploración:** Nos muestra una vista _top-down_ de la escena, con el protagonista en el centro. La cámara estará fijada en él todo el rato.
++ **Combate:** La escena se muestra con una vista horizontal estática de la escena (ver HUD).
 
 #### Exploración
 
@@ -72,11 +72,11 @@ Durante este modo también se podrán usar objetos sobre los aliados, como, por 
 
 Manín pasará a la fase de combate cuando esté explorando algún suelo hostil (definir cuáles son hostiles y cuáles no) de forma aleatoria. Cada paso que dé en una de estas zonas aumentará la probabilidad de combate hasta que este se produzca.
 
-Ver HUD de combate (meter aquí referencia)
+[Ver HUD de combate](#hud-combate)
 
-##### Puntos de Vida (PV):
+##### Puntos de Vida
 
-Son la estadística que mantendrá a un personaje en pie. Cuando este reciba un ataque, perderá X PVs dependiendo de la fuerza y tipo del ataque. Si un personaje llega a 0 PVs, muere: no podrá ser utilizado de ninguna manera hasta que sea curado de las siguientes formas: en un **Bar**, con un objeto que permita a un aliado volver a la vida o con algún '_ataque_' aliado que permita revivir a un objetivo.
+Son la estadística que mantendrá a un personaje en pie. Cuando este reciba un ataque, perderá X Puntos de Vida(PVs) dependiendo de la fuerza y tipo del ataque. Si un personaje llega a 0 PVs, muere: no podrá ser utilizado de ninguna manera hasta que sea curado de las siguientes formas: en un **Bar**, con un objeto que permita a un aliado volver a la vida o con algún '_ataque_' aliado que permita revivir a un objetivo.
 
 En caso de que toda la _party_ muera, se cargará un anterior punto de guardado, manteniendo el estado del inventario y de los aliados iguales a los del momento del guardado.
 
@@ -143,7 +143,7 @@ Es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza,
 ![image](https://user-images.githubusercontent.com/91317502/198385135-37e8c28b-f58f-4d6c-80aa-90b1d3d8b802.png)
 
 **Tipos de enemigos:** Artistas y Culturistas.
-**Misión:** Nuestra misión en este parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. (ALGÚN NPC O ALGO???). Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece y comparte unas _frías_ con nosotros (ver Contenido - Objetos). Poco después se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua del cuchillero de Albacete, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
+**Misión:** Nuestra misión en este parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece y comparte unas _frías_ con nosotros (ver Contenido - Objetos). Poco después se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua del cuchillero de Albacete, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
 
 ##### Puerto
 
@@ -187,11 +187,11 @@ Es la zona final. Nada más entrar en ella por la Catedral habrá un pasillo que
 
 ### HUD
 
-#### Exploración
+#### HUD-Exploración
 
 En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
 
-#### Combate
+#### HUD-Combate
 
 Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
 Arriba en el centro se muestra el estado de la _party_: X recuadros (siendo X el número de combatientes aliados) donde se ve el sprite de nuestro aliado y (si tuviera alguno) los iconos de estados alterados que sufra al lado de la cabeza. En la parte inferior se muestra su **barra de vida** y de **maná** con números dentro de las mismas indicando el valor actual y el máximo. Si alguno de los aliados llega a 0 PV su sprite se enrojece y una 'x' lo tapa parcialmente. 
