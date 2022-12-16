@@ -1,5 +1,5 @@
 
-# ERPG: GAME DESING DOCUMENT
+# ÑRPG: GAME DESIGN DOCUMENT
 
 ## ÍNDICE
 
@@ -93,7 +93,7 @@ Al empezar un combate se calcula un orden de turnos en función de la velocidad 
 4. Puntos de Maná
 5. Objetivo(s)
 
-Los ataques tienen 3 estadísticas. Daño, Efectos de Estado y Puntos de Maná. Los ataques también se diferencian en 3 tipos: Normal, Especial y Ulti.
+Los ataques tienen 3 estadísticas. Daño, Efectos de Estado y Puntos de Maná. Los ataques también se diferencian en 3 tipos: Normal, Especial y Ulti (ULTI NO IMPLEMENTADA).
 **Tipos de Ataque:** Cada personaje tiene 1 ataque Normal: no gasta Puntos de Maná; 2 Especiales: gastan Puntos de Maná; y 1 Ulti: Tarda X turnos en poder usarse, solo puede usarse una vez y gasta al menos la mitad de los PM de cada personaje. Los del primer tipo son los ataques más débiles, pues no consumen nada al personaje que los usa, los del segundo tipo son más fuertes y pueden tener daño elemental y efectos de estado, mientras que la Ulti es el más fuerte de todos y también puede provocar estados alterados con mayor probabilidad.
 
 **Daño:** El daño es la cantidad de Puntos de Vida que un ataque quitaría a un objetivo si tuviera 0 Resistencia al Tipo de Daño que el ataque haga. Los Tipos de Daño son los siguientes: Meleé, Rango, Fuego, Eléctrico, Tóxico y Apoyo. Los ataques de tipo 'Apoyo' no hacen daño, sino al contrario: pueden curar al objetivo, subir su precisión, ataque, resistencias, etc.
@@ -101,11 +101,11 @@ Los ataques tienen 3 estadísticas. Daño, Efectos de Estado y Puntos de Maná. 
 **Estados Alterados:** Son efectos que puede sufrir un personaje de forma pasiva por haber consumido un objeto o haber recibido un ataque. Duran X turnos en función de cada estado. Se conservan entre combates: se mantienen los turnos que se han pasado sufriendo el estado concreto. También se pueden acumular varios estados a la vez. un ataque que pueda causar un Estado Alterado tiene una probabilidad de que este entre en efecto.
 
 Listado:
-1. **Borracho:** La precisión del personaje baja y su velocidad de turno es menor (implementación de movimiento de HUD?).
+1. **Borracho:** La precisión del personaje baja y su velocidad de turno es menor (implementación de movimiento de HUD?). (NO IMPLEMENTADO)
 2. **Quemado:** Los PVs bajan gradualmente y las resistencias a daño Físico, Rango y a Fuego, siendo esta última la más afectada.
 3. **Paralizado:** El personaje pierde su turno mientras esté paralizado. También baja la resistencia a daño Eléctrico.
 4. **Envenenado:** Bajan los PVs gradualmente. Baja resistencia al Tóxico.
-5. **Confuso:** Hay un 60% de probabildades de que el personaje confuso sea objetivo de sus propios ataques. Los objetos están desordenados y aparecen con interrogaciones.
+5. **Confuso:** Hay un 60% de probabildades de que el personaje confuso sea objetivo de sus propios ataques. Los objetos están desordenados y aparecen con interrogaciones. (NO IMPLEMENTADO)
 
 **Puntos de maná:** Los ataques Especiales y de Ulti consumen X PM dependiendo de cada ataque. Si no se tiene suficiente PM para realizarlos, no se pueden hacer.
 **Objetivo(s):** Un ataque puede hacer objetivo a una o varios personajes dependiendo del ataque.
@@ -117,35 +117,43 @@ Tipos de PJs:
     Melendi: DPS-Support (ranged)
     Jarfaiter: DPS (Physic)
     Pedro Sánchez & cmpy: Tank (Ranged)
-    Abel Caballero: Tank (Physic)
-    Niño Fumón: Full-Support
+    Abel Caballero: Tank (Physic) (NO IMPLEMENTADO)
+    Niño Fumón: Full-Support (NO IMPLEMENTADO)
 
-##### Puntos de Experiencia y qué significa subir de nivel
+##### Puntos de Experiencia y qué significa subir de nivel (NO IMPLEMENTADO)
 
 El sistema de niveles es el típico que podemos encontrar el cualquier RPG: al acabar un combate toda la party consigue X puntos de experiencia dependiendo del tipo de enemigo que haya derrotado; cuando se consiga acumular suficiente experiencia, el nivel de la party sube automáticamente haciendo que se aumenten las estadísticas de: Daño, HP, MP y Velocidad. La cantidad que se mejora en cada uno de estos depende completamente del personaje. A pesar de seguir este esquema clásico, en ERPG el nivel se comparte entre toda la party, de tal fomrma que no existe nivel de personaje, o si queremos considerar que existe, este sería el mismo para todos. De esta forma, al unirse un personaje a la party, este entra con el nivel de la party.
+
+##### _Loot_
+
+Al acabar un combate es posible recibir dinero por cada enemigo al que nos hayamos enfrentado. Esta es una de las recompensas del juego, ya que nos permitirá adquirir objetos consumibles en la tienda disponible en la plaza. Estos objetos pueden servirnos para mejorar nuestro estado en una batalla y dar una vuelta al combate a nuestro favor.
 
 ### Diseño de Nivel
 
 #### Tipos de Zonas
 
-Vas a poder ir a todas las zonas desde el principio (excepto a las Catacumbas), pero las zonas tienen distintas dificultades. Al final de los caminos entre zonas estará Guillermo, un NPC que te avisa de que esa zona a lo mejor no es adecuada a tu dificultad, aunque puedes pasar sin problema.
+Todas las zonas son accesibles desde el inicio.
 
 ##### Plaza
 
-Es la zona principal del mapa. Conecta con todos los caminos hacia las demás zonas y es donde comenzará la trama. En el centro de la plaza se encuentra el Dinoseto, la estatua principal del juego. En la parte superior derecha una **Zona Residencial** donde se encuentra la casa de Manin, las oficinas de Manín Interactive y alguna otra casa en la que se puede entrar y charlar con algunos NPCs. En el lado contrario encontramos una **Zona Comercial**, donde hay un **bar** en el que el jugador podrá recuperar vida y revivir a sus integrantes de _party_, una **farmacia** donde puedes comprar medicamentos (ver 8.4.1) y un **bazar** que vende el resto de objetos consumibles que también tiene una puerta secreta que da a una armería, que está bloqueada hasta que se una un personaje a tu party con habilidades de disparo, pues ellos conocerían la ubicación de esta armería.
+Es la zona principal del mapa. Conecta con todos los caminos hacia las demás zonas y es donde comenzará la trama. En el centro de la plaza se encuentra el Dinoseto, la estatua principal del juego. 
+
+El juego comienza con una descripción de tu objetivo y lo que ha pasado: una banda de ladrones ha robado piezas del Dinoseto y Manín piensa detenerlos. Manín ve a los 3 maleantes irse cada uno por un lado diferente: Al Norte: las oficinas de Manín Interactive. Al Oeste: El Acantilado. Al Este: El Parque.
+
+Podemos encontrar diferentes NPCs distrubuidos con los que podemos interactuar. Se encuentran también una de las sedes del SERGAS: Servizo Galego de Superebriedade, que cura todas las afecciones que pueda tener la party del jugador. Al lado contrario encontramos a Apu, de la famosa serie de los Simpson, vendiéndonos todos los objetos disponibles actualmente en el juego.
 
 ##### Parque
 
-Es la zona más accesible. Accedemos al Parque desde la parte norte de la Plaza, que conduce a un camino de tierra donde, al final, nos esperará Guillermo para avisarnos del nivel de dificultad de la zona. Se ve un camino de tierra que lleva a un parque vallado (como el parque del Buen Retiro de Madrid). Al entrar se ve un camino que lleva a una pequeña plaza en el que se encuentra el primer personaje aliado: ***Jarfaiter***, que se unirá a ti si le das un porro. A la izquierda de la plaza se encuentra un pequeño bosque junto a un bar. Al norte de la plaza hay un parque infantil y al este un gran lago, donde se encontrará ***Melendi***, que se podrá unir a tu aprty si encuentras su guitarra, que estará escondida por el parque.
+Podremos acceder a esta zona desde el este de la plaza. Se encontrarán una serie de NPCs en el parque y 2 personajes aliados que podremos añadir a nuestra Party: ***Jarfaiter*** (comenzarás una quest en la que debes comprar un porro y dárselo para que se una a ti) y ***Melendi*** (pedirá a Manín que encuentre su guitarra para unirse a él). En la parte superior derecha hay un pequeño lago, donde encontraremos la Main Quest hablando con un pescador. Nos pedirá encontrar su caña a cambio de copartir parte de su caza. Al recuperarla y devolvérsela al pescador, este pescará una estatua malvada con la que tendremos que pelear para recuperar una de las 3 piezas del Dinoseto.
 
-**Estatua:** Cuchillero de Albacete
+**Estatua:** Ángel Caído
 
 ![image](https://user-images.githubusercontent.com/91317502/198385135-37e8c28b-f58f-4d6c-80aa-90b1d3d8b802.png)
 
 **Tipos de enemigos:** Artistas y Culturistas.
 **Misión:** Nuestra misión en este parque es ayudar a un pescador del gran lago a recuperar su caña, pues los culturistas se la han robado porque consideran que el parque es "suyo". El pobre hombre da direcciones hacia el bosque, donde cree que se han llevado su preciado objeto. Al conseguir recuperar la caña volvemos al gran lago para entregársela al pescador. Él lo agradece y comparte unas _frías_ con nosotros (ver Contenido - Objetos). Poco después se pone a pescar, pero se ve que ha picado algo muy grande y pide ayuda a Manín. Él le ayuda de buen grado y consiguen sacar del agua la estatua del cuchillero de Albacete, que alberga en su interior una pieza del Dinoseto. Comienza la batalla tras un pequeño diálogo.
 
-##### Puerto
+##### Puerto (NO IMPLEMENTADO)
 
 El puerto es la segunda zona del juego. Es una zona más larga que ancha. En toda la parte izquierda hay almacenes y fábricas donde los pescadores llevan sus capturas, y en la zona derecha se encuentra un puerto con barcos atracados, los cuales algunos estarán abiertos. En la zona central del nivel hay un suelo asfaltado con basura, y en el centro ***Abel Caballero***, que te pedirá que recojas la basura que han dejado los fiesteros a cambio de que se pueda unir a tu party. En todo el puerto te puedes encontrar a narcotraficantes que se enfrentarán a ti.
 
@@ -156,7 +164,7 @@ El puerto es la segunda zona del juego. Es una zona más larga que ancha. En tod
 **Tipos de enemigos:** Narcos, británicos.
 **Misión:** Te encontarás nada más entrar a una anciana que te dirá que ha visto a unos hombres meter una caja pesada de, casualmente, el tamaño de una pequeña estatua en el barco del fondo. Cuando llegas a ese barco se verá que es un barco británico, propiedad del **British Museum**, en el que habrá un guardia que no te dejará entrar. Para poder pasar habrá _dos opciones_: Enfrentarte al guardia y entrar a la fuerza o buscar a un trabajador del barco por el puerto y robarle la llave. Si te enfrentas al guardia saltarán las alarmas del barco y saltarán combates aleatorios mientras estás dentro de él buscando la estatua. Si por el contrario le has robado la tarjeta al trabajador, tendrás que pasar sin que te detecten por el barco para recuperar la estatua. De cualquiera de las formas que entres la estatua estará al final del todo, y cuando llegues los ingleses revivirán a la Bicha de Balazote para que se enfrente a ti.
 
-##### Catedral
+##### Catedral (NO IMPLEMENTADO)
 
 La catedral es la tercera zona del juego. Es un edificio más largo que ancho que consta de dos plantas. En la primera planta es parecida a una catedral común: dos retablos religiosos a cada lado, filas de bancos y una tarima donde hay un cura dando misa. Detrás de la tarima hay dos habitaciones que están cerradas inicialmente. En la entrada hay un banco de alimentos que sirve para curar a la _party_. La zona de arriba solo tiene los palcos, donde puedes moverte por los lados debido a que el centro está hueco. En esta zona se encontrará ***Pedro Sánchez***, a quien puedes reclutar para la party.
 
@@ -167,7 +175,7 @@ La catedral es la tercera zona del juego. Es un edificio más largo que ancho qu
 **Tipos de enemigos:** Abuelas ultrarreligiosas, curas.
 **Misión:** Al entrar te encontrarás a una mujer que te pedirá ayuda para buscar a su hijo que no había vuelto de catequesis. El niño estará en la sala que está detrás de la tarima donde el cura está dando misa, pero no podrás entrar debido a la homilía. Para poder entrar tendrás que sabotear la misa de distintos modos: romper algún retablo, tirar la lámpara colgante, etc. Cuando se acabe la misa podrás entrar en la primera sala, donde estará el cura que estaba dando misa y te enfrentarás a él. Cuando le derrotes podrás entrar a la siguiente sala donde estará el niño que buscas y la estatua del Ángel Bíblico, la cual el cura revivirá para que te enfrentes a ella. En esta misma sala estará también la entrada a las catacumbas (ver 4.1.6), pero no se podrá acceder todavía.
 
-##### Cementerio
+##### Cementerio (NO IMPLEMENTADO)
 
 El cementerio será la cuarta y penúltima zona del juego. Es una zona más ancha que alta. En cuanto entras hay un camino de tierra que lleva al norte, donde hay una especie de plaza con la estatua del Ángel Caído; y a los lados lleva a una fila de tumbas. Encima de la fila de tumbas se encuentra un panteón a cada lado, los cuales estarán vallados y en sus entradas hay un jardín antes de poder entrar a la propia estructura. En el fondo norte del cementerio hay un restaurante donde puedes curar a tu party. En los caminos te encontrarás a la Santa Compaña
 
@@ -175,7 +183,15 @@ El cementerio será la cuarta y penúltima zona del juego. Es una zona más anch
 **Tipos de enemigos:** Satánicos y Santa Compaña.
 **Misión:** En cuanto llegas a la plaza central del cementerio habrá un grupo de satánicos que querrán hacer un sacrificio contigo para revivir al Ángel Caído. En cuanto los derrotas te dirán que hay tres grupos más haciendo sacrificios: uno en cada panteón y otro en algún sitio de las tumbas. Uno de los que intentan sacrificar será el ***Niño fumón***, que cuando lo rescatas te ofrecerá su ayuda para la party. En cuanto frustras sus sacrificios te dirán que ya es demasiado tarde, y la estatua habrá revivido, por lo que te tendrás que enfrentar al Ángel Caído.
 
-##### Catacumbas
+##### Acantilado
+
+Una de las 3 zonas donde se recibirá una parte del Dinoseto. Para conseguir, hablaremos con _Kratos_, de la saga God of War y veremos cómo se lanza al vacío con la canción 'Dream On' de fondo, haciendo alusión a un meme reciente. Cuando _Kratos_ acabe de caer al vacío, aparecerá la pieza.
+
+##### Manin Interactive
+
+Aquí podremos encontrar a los 5 desarrolladores del juego dispuestos a matar a Manín por haber atormentado sus vidas durante los últimos meses. Si Manín vence a los furiosos desarrolladores, aparecerá una pieza del Dinoseto para poder continuar la aventura.
+
+##### Catacumbas (NO IMPLEMENTADO)
 
 Es la zona final. Nada más entrar en ella por la Catedral habrá un pasillo que desemboque en un laberinto, donde te encontrarás con todos los enemigos principales que estaban en cada zona. Al final de este laberinto habrá una sala donde estará el Dinoseto, al cual te tendrás que enfrentar, y cuando le ganes se acabará el juego
 
@@ -191,13 +207,19 @@ Es la zona final. Nada más entrar en ella por la Catedral habrá un pasillo que
 
 En la esquina inferior izquierda se muestran las caras de los combatientes de la party con su barra de Vida y Maná
 
+Al presionar la Q podemos acceder 4 menús distintos:
+- PARTY: Podremos ver todas las estadísticas de cada personaje perteneciente a la Party en más detalle.
+- ORDER: Podremos cambiar el orden de la party al hacer click en 2 imágenes diferentes.
+- ITEM: El inventario mostrado.
+- QUESTs: Se muestran las quests que tenga el jugador en ese momento.
+
 #### HUD-Combate
 
 Los enemigos aparacen en la parte central de la pantalla con una barra de vida cada uno, alternando su posición entre encima y debajo del enemigo para que no se superponga con los enemigos adyacentes. En la zona contraria a la barra de vida se mostrarán los iconos de estados alterados (si sufre alguno). Se muestra una vista completa del sprite del enemigo. 
 Arriba en el centro se muestra el estado de la _party_: X recuadros (siendo X el número de combatientes aliados) donde se ve el sprite de nuestro aliado y (si tuviera alguno) los iconos de estados alterados que sufra al lado de la cabeza. En la parte inferior se muestra su **barra de vida** y de **maná** con números dentro de las mismas indicando el valor actual y el máximo. Si alguno de los aliados llega a 0 PV su sprite se enrojece y una 'x' lo tapa parcialmente. 
 Cuando toque escoger la acción de un aliado, su sprite se anima y gana un borde blanquecino. A la hora de escoger un ataque de uno de los aliados, se despliega una ventana desde la parte de abajo de su recuadro. Este desplegable muestra los ataques y sus estadísticas: Tipo de daño, Usos restantes, Usos totales y Daño. 
 Cuando un aliado ataque, se hará una pequeña animación sobre el personaje objetivo. 
-En la esquina inferior izquierda se muestran 3 botones: 'Ataque', para que el desplegable mencionado anteriormente aparezca en pantalla y se pueda escoger un ataque; 'Objeto', para acceder al menú de objetos usables en combate a través de un menú desplegado desde la esquina inferior derecha (también accesible desde un icono de una mochila en la misma esquina); y 'Huir', que despliega un mensaje que dice: "Manín nunca huye.".
+En la esquina inferior izquierda se muestran 2 botones: 'Ataque', para que el desplegable mencionado anteriormente aparezca en pantalla y se pueda escoger un ataque, y 'Objeto', para acceder al menú de objetos usables en combate a través de un menú desplegado desde la esquina inferior derecha.
 
 ### Contenido
 
@@ -221,14 +243,14 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 - **Kebab**: +vida -maná
 - **Fría**: ++vida -maná +borracho
 - **Porro**: ++maná -vida +confuso
-- **Tarta de Santiago**: ++vida ++maná (toda la party) - Solo existe uno en la partida.
+- **Tarta de Santiago**: ++vida ++maná (toda la party) - Solo existe uno en la partida. (NO IMPLEMENTADA)
 - **Dalsy Naranja**: +vida
 - **Dalsy Fresa**: +maná
 - **Ibuprofeno**:
-    · 200mg: revive 1/4 vida
-    · 600mg: revive 1/2 vida
-    · 1g: revive toda la vida
-- **Grageas**:
+    · 200mg: +vida
+    · 600mg: ++vida
+    · 1g: +++vida
+- **Grageas**: (NO IMPLEMENTADO)
     · 49%: +vida
     · 49.5%: -vida
     · 1.5%: el objetivo muere
@@ -236,11 +258,11 @@ Después de haber sido limpiador de piscinas en verano y haberse adentrado en un
 ###### Objetos de boss 
 
 - **Trozo de Dinoseto**: Se necesitan tener todos para desbloquear las catacumbas. Solo se pueden usar una vez se tengan todos. 
-- **Objeto Único**: Cada _boss_ tendrá un objeto único que podrá revivir a toda la _party_ dentro y fuera de combate.
+- **Objeto Único** (NO IMPLEMENTADO): Cada _boss_ tendrá un objeto único que podrá revivir a toda la _party_ dentro y fuera de combate.
 
 ### Menús y Flujo de Juego
 
-Desde una pantalla de Inicio podremos cargar nuestro último estado de la partida (se guarda un estado en Puntos de Guardado encontrados por el mapa) y acceder así a una escena de _exploración_. Caminando por las _zonas hostiles_ eventualmente el jugador se enzarzará en un combate. Si el jugador gana el combate se muestran menús de victoria, subida de experiencia y reparto de objetos si los enemigos han _droppeado_ alguno. En el caso contrario, se muestra una escena de _Game Over_ que lleva a la pantalla de título o al último estado guardado (ambas opciones representadas con botones).
+Desde una pantalla de Inicio podremos comenzar el juego en la plaza (NO HAY GUARDADO). Caminando por las _zonas hostiles_ eventualmente el jugador se enzarzará en un combate. Si el jugador gana el combate se muestran menús de victoria, subida de experiencia y reparto de objetos si los enemigos han _droppeado_ alguno. En el caso contrario, se muestra una escena de _Game Over_ que lleva a la pantalla de título para volver a empezar de 0.
 
 ###### PANTALLA DE TÍTULO:
 
@@ -249,9 +271,6 @@ Desde una pantalla de Inicio podremos cargar nuestro último estado de la partid
 ###### GAME OVER:
 
 ![Gameover](https://user-images.githubusercontent.com/91317502/198381775-05067790-be16-423a-a53b-3401b4a3e67b.png)
-
-Como se ha mencionado antes, hay dos partes del juego claramente distinguidas: la exploración y el combate. Durante la primera parte nos podemos encontrar con un menú que aparecerá al pulsar ESC donde podremos entrar a ver el estado de nuestra Party, otra opción para entrar a nuestro inventario de objetos (que mostrarán sus características y una opción para usarlos sobre la party revelando un menú parecido al del estado de la misma) y finalmente una opción para volver a la pantalla d título. 
-El caso de combate ya ha sido descrito en ***HUD***. 
 
 ### Referencias
 Nos hemos basado en RPGs clásicos como el Dragon Quest, Final Fantasy o Lisa: the Painful. También gran parte del combate está basado en Pokémon, al igual que las ideas que se tienen sobre los menús.
