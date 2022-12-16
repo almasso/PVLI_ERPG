@@ -236,22 +236,22 @@ let square = {
 			y : 550,
 			name: nombresSanxe[Math.floor(Math.random() * nombresSanxe.length)], 
 			imgID: 'sanxe', 
-			actualHp: 75, 
-			maxHp: 75, 
+			actualHp: 85, 
+			maxHp: 85, 
 			actualMp: 115, 
 			maxMp: 115,
-			rP: 4, 
-			rR: 6, 
-			rF: 3, 
-			rE: 7, 
-			rT: 5, 
+			rP: 6, 
+			rR: 3, 
+			rF: 6, 
+			rE: 5, 
+			rT: 4, 
 			acurracy: 90, 
 			speed: 60, 
 			attack: [
 				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
 				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
-				attackInfo("Ataque Falcon", 0, 20, 25, 2), 
-				attackInfo("Instaurar la República",4,50,60,Math.random() * 4)
+				attackInfo("Ataque Falcon", 1, 20, 25, 2), 
+				attackInfo("Instaurar la República",0,50,60,Math.random() * 4)
 		]
 	}],
 	hostile: [],
@@ -275,21 +275,21 @@ let square = {
 				{
 					name: "Dinoseto", 
 					imgID:'dinoseto', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 300, 
+					maxHp: 300, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
+					rP: 4, 
 					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rF: 3, 
+					rE: 7, 
+					rT: 7, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("Mordisco",1,25,0,1),
+						attackInfo("Rugido", 3, 15, 0, 1),
+						attackInfo("Lanzatoxinas", 4, 10, 0, 1)
 					]
 				}
 			],
@@ -344,9 +344,9 @@ let park = {
 			acurracy: 90, 
 			speed: 60,
 			attack: [
-				attackInfo("A Rango 1 Target", 1, 25, 0, 1), 
-				attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-				attackInfo("Support 1 Target", 5, -20, 25, 1), 
+				attackInfo("Lágrimas desordenadas", 1, 25, 0, 1), 
+				attackInfo("Arrugas en el alma", 1, 20, 30, 1), 
+				attackInfo("Magic Alonso", 5, -20, 25, 1), 
 				attackInfo("Camina por la Vida",5,-70,60,1)
 			]
 		},
@@ -383,10 +383,10 @@ let park = {
 			actualMp: 0, 
 			maxMp: 0, 
 			rP: 5, 
-			rR: 5, 
+			rR: 4, 
 			rF: 5, 
 			rE: 5, 
-			rT: 5, 
+			rT: 6, 
 			acurracy: 90, 
 			speed: 40,
 			attack: [
@@ -394,7 +394,7 @@ let park = {
 				attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
 				attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
 			],
-			money: 500
+			money: 100
 		},
 		{
 			name: "Culturista", 
@@ -415,7 +415,7 @@ let park = {
 				attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
 				attackInfo("Poñetaso", 0, 30, 0, 1)
 			],
-			money: 500
+			money: 100
 		}
 	],
 	hostile: [
@@ -465,21 +465,21 @@ let park = {
 				{
 					name: "Angel Caido", 
 					imgID:'angel', 
-					actualHp: 70, 
-					maxHp: 70, 
+					actualHp: 150, 
+					maxHp: 150, 
 					actualMp: 0, 
 					maxMp: 0, 
-					rP: 5, 
+					rP: 6, 
 					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
+					rF: 4, 
+					rE: 6, 
+					rT: 4, 
 					acurracy: 90, 
 					speed: 40,
 					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+						attackInfo("Pedrada",1,20,0,1),
+						attackInfo("Tentación", 4, 15, 0, 1),
+						attackInfo("Lanzallamas", 2, 10, 0, 1)
 					]
 				}
 			],
