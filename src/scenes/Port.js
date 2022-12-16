@@ -24,28 +24,22 @@ export default class PortScene extends FatherScene {
 
 		super.create();
 
-
 		for(let i=0;i<this.npcs.length;i++)this.npcs[i].setScale(5,5)
 		this.manin.x=400
 		this.manin.y=500
 		this.manin.setScale(5,5)
 		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
-
+		
 		this.iFunctions = [];
-
-
-
-		// Pelea con la estatua
-		this.iFunctions.push(function(){
-			self.scene.sleep('hud');
-			self.scene.sleep('port');
-			self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0});
-			self.scene.get('fightscene').LoadInventory(allyParty.inventory);
-			self.interactuableObjects[1].setVisible(true);
-			self.interactuableObjects[1].setScale(5);
-			self.interactuableObjects[1].trigger.setScale(50);
-			self.interactuableObjects[0].trigger.destroy();
-			self.interactuableObjects[0].destroy();
+		
+		this.qFunctions = [];
+		
+		this.qFunctions.push(function(){
+			self.npcs[5].trigger.destroy();
+			self.npcs[5].destroy();
+			self.npcs[4].trigger.setScale(1);
+			self.npcs[4].setVisible(true);
+			self.Fight();
 		});
 		// Coger item
 		this.iFunctions.push(function(){
@@ -59,10 +53,27 @@ export default class PortScene extends FatherScene {
 		})
 		
 		super.generateIObjects(this.iFunctions);
-
-		this.interactuableObjects[1].setScale(0);
-		this.interactuableObjects[1].setVisible(false);
 		
+		super.generateQuests(this.qFunctions);
+		
+		this.interactuableObjects[0].setScale(0);
+		this.interactuableObjects[0].setVisible(false);
+		this.npcs[5].setScale(5,5);
+		
+		this.npcs[4].trigger.setScale(0);
+		this.npcs[4].setVisible(false);
+	}
+
+	// Pelea con los devs
+	Fight()
+	{
+		this.scene.sleep('hud');
+		this.scene.sleep('port');
+		this.scene.launch('fightscene', {loadFromEnviroment: true, index: 0});
+		this.scene.get('fightscene').LoadInventory(allyParty.inventory);
+		this.interactuableObjects[0].setVisible(true);
+		this.interactuableObjects[0].setScale(5);
+		this.interactuableObjects[0].trigger.setScale(50);
 	}
 
 	// comprobación de colisiones y apertura de menús

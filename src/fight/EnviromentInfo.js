@@ -424,7 +424,7 @@ let park = {
 		}
 	]
 }
-
+//información de los personajes que se encuentran en el cementerio
 let cementery = {
 	launched: false,
 	key : 'cementery',
@@ -452,7 +452,7 @@ let cementery = {
 		travelInfo(800, 120, 'pixel', 70, 70, scenes.square)
 	]
 }
-
+//información de los personajes que se encuentran en el puerto
 let port = {
 	launched: false,
 	key: 'port',
@@ -461,10 +461,11 @@ let port = {
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),
 		npcInfo(620,380, 'david', 0), //no tiene diálogos
-		npcInfo(760,380, 'pablo', 29), //no tiene diálogos
+		npcInfo(760,380, 'pablo', 29), 
 		npcInfo(400,380, 'roi', 26)
 	],
-	qNpcs: [],
+	qNpcs: [qNpcInfo(400, 380, 'roi', 28, 4, "batallaDevs", "Testeo rutinario", 1, ["Vuelve a hacerte el testeo"],
+	 "Los devs te han pedido que vuelvas a hacerte pruebas de testeo, ya que seguramente tengas fallos", 'roi', 'Roi')],
 	 sNpcs: [],
 	 hNpcs:  [],
 	 character: [],
@@ -474,7 +475,8 @@ let port = {
 		eObjInfo(500, 125, 'text', 2.5, 2.5),
 		eObjInfo(500, 420, 'pixel', 1000, 0.1)
 	],
-	iObj: [ eObjInfo(400,300,'pixel',800,400),eObjInfo(250,400,'piezaDino', 0.1, 0.1)],
+	iObj: [ 
+	eObjInfo(250,400,'piezaDino', 0.1, 0.1)],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
 	],
