@@ -35,14 +35,15 @@ export default class PortScene extends FatherScene {
 		this.qFunctions = [];
 		
 		this.qFunctions.push(function(){
-			self.npcs[5].trigger.destroy();
-			self.npcs[5].destroy();
-			self.npcs[4].trigger.setScale(1);
+			self.npcs[self.npcs.length -1].trigger.destroy();
+			self.npcs[self.npcs.length -1].destroy();
+			self.npcs[4].trigger.setScale(3);
 			self.npcs[4].setVisible(true);
 			self.Fight();
 		});
 		// Coger item
 		this.iFunctions.push(function(){
+			console.log(self.npcs)
 			let statueQuest = allyParty.questLog.GetQuest('statueQuest');
 			if(statueQuest !== undefined && !statueQuest.quest.actualObjectiveCompleted){
 				allyParty.questLog.advanceQuest('statueQuest'); 
@@ -58,7 +59,7 @@ export default class PortScene extends FatherScene {
 		
 		this.interactuableObjects[0].setScale(0);
 		this.interactuableObjects[0].setVisible(false);
-		this.npcs[5].setScale(5,5);
+		this.npcs[this.npcs.length -1].setScale(5);
 		
 		this.npcs[4].trigger.setScale(0);
 		this.npcs[4].setVisible(false);
