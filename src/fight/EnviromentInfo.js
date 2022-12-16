@@ -147,7 +147,8 @@ let square = {
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
+		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
@@ -366,7 +367,7 @@ let park = {
 		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Pelea
-		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Item
+		eObjInfo(1205, 120, 'piezaDino', 3.5, 3.5),   // Item
 		eObjInfo(40, 620, 'manin', 0.7, 0.7),   // Guitarra
 	],
 	travel: [
@@ -374,51 +375,11 @@ let park = {
 	],
 	specialEncounter: [
 		{
-			numEnemies: 3, 
+			numEnemies: 1, 
 			enemies: [
 				{
-					name: "Artista", 
-					imgID:'artist', 
-					actualHp: 70, 
-					maxHp: 70, 
-					actualMp: 0, 
-					maxMp: 0, 
-					rP: 5, 
-					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
-					acurracy: 90, 
-					speed: 40,
-					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
-					]
-				},
-				{
-					name: "Culturista", 
-					imgID:'melendi', 
-					actualHp: 80, 
-					maxHp: 80, 
-					actualMp: 0, 
-					maxMp: 0, 
-					rP: 8, 
-					rR: 6, 
-					rF: 4, 
-					rE: 3, 
-					rT: 6, 
-					acurracy: 85, 
-					speed: 60,
-					attack:[
-						attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
-						attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-						attackInfo("Poñetaso", 0, 30, 0, 1)
-					]
-				},
-				{
-					name: "Artista", 
-					imgID:'artist', 
+					name: "Angel Caido", 
+					imgID:'angel', 
 					actualHp: 70, 
 					maxHp: 70, 
 					actualMp: 0, 
@@ -459,9 +420,9 @@ let cementery = {
 		eObjInfo(650, 170, 'pixel', 320, 0.5),
 		eObjInfo(460, 0, 'pixel', 0.5, 500),
 		eObjInfo(650, 74, 'pixel', 320, 0.5),
-		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 	],
 	iObj: [
+		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 		
 	],
 	travel: [

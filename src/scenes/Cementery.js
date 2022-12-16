@@ -1,4 +1,6 @@
 import FatherScene from './FatherScene.js';
+import { allyParty } from '../fight/Party.js';
+
 // Escena de exploración (temporal de momento)
 export default class CementeryScene extends FatherScene {
 	// construimos la escena
@@ -43,6 +45,25 @@ export default class CementeryScene extends FatherScene {
 		for(let i=0;i<this.sceneChangerCoords.length;i++)this.sceneChangerCoords[i].setVisible(false)
 
 		
+		this.iFunctions = [];
+		let self = this;
+		// Coger item
+		this.iFunctions.push(function(){
+			let statueQuest = allyParty.questLog.GetQuest('statueQuest');
+			if(statueQuest !== undefined && !statueQuest.quest.actualObjectiveCompleted){
+				allyParty.questLog.advanceQuest('statueQuest'); 
+				self.scene.get('hud').events.emit("updateQuestHUD");
+				self.interactuableObjects[0].trigger.destroy();	
+				self.interactuableObjects[0].destroy();
+			}
+		})
+
+		super.generateIObjects(this.iFunctions);
+
+		this.interactuableObjects[0].setVisible(false);
+		this.interactuableObjects[0].trigger.setScale(0);
+
+
 	}
 
 	// comprobación de colisiones y apertura de menús
@@ -79,7 +100,8 @@ export default class CementeryScene extends FatherScene {
 				this.npcs[0].destroy();
 				this.dreamon.stop();
 				this.eObjs[0].setVisible(true);
-				this.eObjs[4].setVisible(true);
+				this.interactuableObjects[0].setVisible(true);
+				this.interactuableObjects[0].trigger.setScale(0.7, 0.7);
 				this.manin.setActive(true);
 			}
 		}
