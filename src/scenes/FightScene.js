@@ -729,7 +729,9 @@ export class FightScene extends Phaser.Scene {
 		this.count = 0;
 		
 		// FONDO
-		this.bg = this.add.image(0, 0, 'fightBg').setOrigin(0, 0);
+		console.log(EnviromentInfo)
+		this.bg = this.add.image(0, 0, EnviromentInfo.fightbg).setOrigin(0, 0);
+		
 		
 		// Creación de Party
 		this.alliesHud = []; // huds de aliados

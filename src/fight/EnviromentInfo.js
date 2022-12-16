@@ -158,6 +158,7 @@ let square = {
 	launched: false,
 	key: 'square',
 	bg: 'square',
+	fightbg: 'fightParkBg',
 	character: [],//[{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
 	// rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
 	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
@@ -209,6 +210,33 @@ let square = {
 		travelInfo(1195, 850, 'pixel', 100, 100, scenes.park),
 		travelInfo(10, 850, 'pixel', 100, 100, scenes.cementery),
 		travelInfo(600, 50, 'pixel', 100, 100, scenes.port)
+	],
+	specialEncounter: [
+		{
+			numEnemies: 1, 
+			enemies: [
+				{
+					name: "Dinoseto", 
+					imgID:'dinoseto', 
+					actualHp: 70, 
+					maxHp: 70, 
+					actualMp: 0, 
+					maxMp: 0, 
+					rP: 5, 
+					rR: 5, 
+					rF: 5, 
+					rE: 5, 
+					rT: 5, 
+					acurracy: 90, 
+					speed: 40,
+					attack: [
+						attackInfo("Pincelada",1,20,0,1),
+						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
+						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
+					]
+				}
+			]
+		}
 	]
 }
 
@@ -221,7 +249,7 @@ let park = {
 	launched: false,
 	key: 'park',
 	bg: 'park',
-	
+	fightbg: 'fightParkBg',
 	npcs: [
 		npcInfo(1300,400, 'patri', 10),
 		npcInfo(830,50, 'compuman', 5),
@@ -457,6 +485,7 @@ let port = {
 	launched: false,
 	key: 'port',
 	bg: 'home',
+	fightbg: 'casaLucha',
 	npcs: [
 		npcInfo(75,380, 'alex', 3),
 		npcInfo(200,380, 'raul', 22),
