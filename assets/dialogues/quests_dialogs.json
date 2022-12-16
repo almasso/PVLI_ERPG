@@ -2,15 +2,19 @@
     "attributes" : [
         {
             "qnpcName" : "Melendi",
-            "qnpcID" : "0"
+            "qnpcID" : 0
         },
         {
             "qnpcName" : "Pescador",
-            "qnpcID" : "1"
+            "qnpcID" : 1
         },
         {
             "qnpcName" : "Jarfaiter",
-            "qnpcID" : "2"
+            "qnpcID" : 2
+        },
+        {
+            "qnpcName" : "Cartel en Dinoseto",
+            "qnpcID" : 3
         }
     ],
     "dialogues" : [
@@ -73,6 +77,10 @@
         {
             "qnpcID" : 2,
             "text" : "Eso sí, quiero mi porro eh, que si no verás el meco que te llevas."
+        },
+        {
+            "qnpcID" : 3,
+            "text" : "Concello de Vigo: as pezas do Dinoseto foron roubadas. Recompensa: 50000€"
         }
     ]
 }

@@ -56,7 +56,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         this.currentDialog = this.formerDialog = this.dialogIndex;
     }
 
-    readDialogues() {   
+    readDialogues() {
         if(!this.uiScene.hasCreatedWindow) this.uiScene.createWindow(this.verified, this.developer);
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified, this.developer);
 
@@ -166,13 +166,10 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         else if(!this.uiScene.isToggled) this.uiScene.toggleWindow(this.verified, this.developer);
 
         if(this.formerDialog !== this.currentDialog) this.formerDialog = this.currentDialog - 1;
-
-        if(this.currentDialog === this.nextDialog) {
-            this.beingAnimated=false;
-            this.nextDialog++;
-        }
+        
         if(this.currentDialog === this.dialogIndex) this.beingAnimated = false;
 
+        console.log(this.currentDialog, this.dialogIndex, this.beingAnimated, qnpcid, qdialogues);
         if(this.currentDialog < this.dialogIndex + this.dialogCount || (this.formerDialog === (this.dialogIndex + this.dialogCount - 1))) {
             if(!this.beingAnimated && this.currentDialog < this.dialogIndex + this.dialogCount) {
                 this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.currentDialog].text, true, false, false);
@@ -181,7 +178,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             }    
             else if(this.beingAnimated) {
                 this.uiScene.setText(qdialogues.attributes[qnpcid].qnpcName, qdialogues.dialogues[this.formerDialog].text, false, false, false);
-
                 this.formerDialog++;
                 this.beingAnimated = false;
                 this.uiScene.events.emit('isNotBeingAnimated');
@@ -192,7 +188,6 @@ export default class NPC extends Phaser.GameObjects.Sprite {
         }
     }
     
-
     closeWindow() {
         this.uiScene.toggleWindow(this.verified, this.developer);
         if(this.currentDialog >= this.dialogIndex + this.dialogCount) {
@@ -217,7 +212,7 @@ export default class NPC extends Phaser.GameObjects.Sprite {
             if(this.currentlyTalking) this.beingAnimated = true;
 		})
 		this.uiScene.events.on("isNotBeingAnimated", () => {
-			if(this.currentlyTalking) {
+            if(this.currentlyTalking) {
                 this.beingAnimated = false;
                 this.canCloseWindow = true;
             }

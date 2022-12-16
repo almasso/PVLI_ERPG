@@ -139,7 +139,7 @@ let square = {
 		npcInfo(700, 800, 'pepperboy', 8), 
 		npcInfo(275, 250, 'jatsune', 2),
 		npcInfo(1100,175, 'frozono', 4),	
-		npcInfo(925,500, 'homero', 0), //homer no tiene diálogos
+		npcInfo(925,500, 'homero', 28), //homer no tiene diálogos
 		npcInfo(750,50, 'spider', 19),
 		npcInfo(50,500, 'patrik', 18),
 		npcInfo(150,525, 'bob', 17),
@@ -147,7 +147,7 @@ let square = {
 		npcInfo(1070,720, 'tiolavara', 24)
 	],
 	qNpcs: [
-		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
+		qNpcInfo(600, 350, 'dinostatue', 28, 3, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
 		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
@@ -204,12 +204,12 @@ let park = {
 		npcInfo(1000,600, 'ikerJimenez', 27)
 	],
 	qNpcs: [
-		qNpcInfo(1305, 142, 'alex', 5, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
+		qNpcInfo(1305, 142, 'alex', 28, 1, "fishingRod", "Caña de pescar", 3, ["Encuentra su caña de pescar",   // Pescador
 		"Observa el lago", "Pelea con la estatua"], "Un buen hombre te ha pedido que recuperes su caña de pescar en el parque local. Más te vale hacerlo, es lo que haría Manín.",
 		'manin','uno que pesca'),
-		qNpcInfo(550, 90, 'melendi', 5, 0, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
+		qNpcInfo(550, 90, 'melendi', 28, 0, "guitarQuest2","Mi Guitarra", 1, ["Recupera la Guitarra"],
 		"esto es un testeo por cierto. esta misión es un testeo sabes", 'melendi', 'el mendas'),
-		qNpcInfo(500, 500, 'jarfaiter', 5, 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
+		qNpcInfo(500, 500, 'jarfaiter', 28, 2, "porroQuest", "¿Quién fuma?", 1, ["Traele un porro"], "Jarfaiter se ha ofrecido a ayudarte si le das un porro, sino a lo mejor te mete una puñalada.", 'jarfaiter', 'el Jarfa')],
 	sNpcs: [sNpcInfo(300, 100, 'alex', 9, [
 		itemInfo("Cigarro", -5, 10, 10, 'cigarro', "Este cigarro te dará estilo en los pulmones, úsalo con precaución."), 		
 		itemInfo('Kebab', 10, -5, 10,'kebab', "Un kebab sacado del garito más sucio y rancio que podrás encontrar. Eso le da un plus de sabor y olor."), 
