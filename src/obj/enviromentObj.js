@@ -23,11 +23,10 @@ export class interactuableObj extends enviromentObj{
 
 		this.manin = manin;
 
-        this.trigger = this.scene.add.zone(x, y, this.body.width * sX * 3/ 4, this.body.height * sY * 3/ 4);
+        this.trigger = this.scene.add.zone(x, y, this.body.width * 3, this.body.height * 3);
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-        this.trigger.setScale(7);
 
 		this.interacted = false;
 	}
@@ -45,6 +44,10 @@ export class interactuableObj extends enviromentObj{
 
 	Hide(bool){
 		this.interacted = bool;
+		if(bool)
+			this.trigger.setScale(0);
+		else
+			this.trigger.setScale(1);
 		this.setVisible(!bool);
 	}
 	Interacted(){ this.interacted = true; }

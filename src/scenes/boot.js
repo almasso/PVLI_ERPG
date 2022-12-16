@@ -140,7 +140,6 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('aloy','assets/textures/NPC-RAUL/Aloy.png'); 
         this.load.image('culturista','assets/textures/Characters/Culturista.png');
 		this.load.image('dinoseto','assets/textures/Characters/Dinoseto.png');
-		this.load.image('angel','assets/textures/Characters/AngelCaido.png');
 		this.load.image('patri', 'assets/textures/Characters/patri.png');
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
 		this.load.image('health', 'assets/textures/Characters/chiringo.png');
@@ -155,6 +154,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('rick','assets/textures/NPC-RAUL/rick.png'); 
 		this.load.image('ikerJimenez','assets/textures/NPC-RAUL/ikerjimenez.png');
 		this.load.image('tiolavara', 'assets/textures/Characters/tiolavara.png'); 
+		this.load.image('fisher', 'assets/textures/Characters/fisherman.png');
 		this.load.image('delincuente', 'assets/textures/Characters/delincuentes.png');
 
 		
@@ -168,6 +168,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('clif','assets/textures/Backgrounds/clif.png')
 		this.load.image('home','assets/textures/Backgrounds/home.png')
 		this.load.image('plazaNoche','assets/textures/Backgrounds/plazaNoche.png')
+		this.load.image('angelPark','assets/textures/Backgrounds/angel.png')
 
         // PROPS
         this.load.image('pixel', 'assets/textures/Props/pixel1x1.png');
@@ -181,6 +182,7 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('emptyBar', 'assets/textures/Props/Bar.png');
 		this.load.image('z1', 'assets/textures/Props/Z1.png');
 		this.load.image('intro', 'assets/textures/Props/intro.png');
+		this.load.image('caña', 'assets/textures/Props/caña.png');
 		this.load.image('dinostatue','assets/textures/Characters/dinoestatua.png');
 		this.load.image('dinoRoto','assets/textures/Characters/dinoRoto.png');
 
@@ -249,6 +251,17 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('sanxe_burn','assets/textures/Characters/sanxe_burn.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('sanxe_poison','assets/textures/Characters/sanxe_poison.png',{frameWidth:19, frameHeight:26});
 		this.load.spritesheet('sanxe_shock','assets/textures/Characters/sanxe_shock.png',{frameWidth:19, frameHeight:26});
+
+		// angel caido
+		this.load.image('angel','assets/textures/Characters/AngelCaido.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_idle','assets/textures/Characters/AngelCaido_idle.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_wow','assets/textures/Characters/AngelCaido_wow.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_dmg','assets/textures/Characters/AngelCaido_dmg.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_dead','assets/textures/Characters/AngelCaido_dead.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_burn','assets/textures/Characters/AngelCaido_burn.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_poison','assets/textures/Characters/AngelCaido_poison.png',{frameWidth:59, frameHeight:50});
+		this.load.spritesheet('angel_shock','assets/textures/Characters/AngelCaido_shock.png',{frameWidth:59, frameHeight:50});
+
 
 		// objetos
 		this.load.image('cigarro', 'assets/textures/Props/cigarro.png');

@@ -29,7 +29,8 @@
                 "Tío la Vara" : 24,
                 "Rick Astley" : 25,
                 "Roi" : 26,
-                "Iker Jiménez" : 27
+                "Iker Jiménez" : 27,
+                "NPC VACÍO" : 28
             }
         }
     ],
@@ -203,6 +204,12 @@
             "npcName": "Iker Jiménez",
             "verified": false,
             "developer": false
+        },
+        {
+            "npcID" : 28,
+            "npcName" : "NPC",
+            "verified" : false,
+            "developer" : false
         }
     ],
     "texts" : [
@@ -688,8 +695,13 @@
         },
         {
             "npcID": 26,
-            "unique": true,
+            "unique": false,
             "text": "Hey"
+        },
+        {
+            "npcID": 26,
+            "unique": false,
+            "text": "Payaso"
         },
         {
             "npcID": 26,
@@ -700,11 +712,6 @@
             "npcID": 26,
             "unique": false,
             "text": "Me queda la mitad."
-        },
-        {
-            "npcID": 26,
-            "unique": true,
-            "text": "Payaso"
         },
         {
             "npcID": 27,

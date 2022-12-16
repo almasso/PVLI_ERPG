@@ -3,13 +3,22 @@ import { allyParty } from './fight/Party.js';
 import { AllyTEST } from './obj/manin.js';
 
 export class QuestNPC extends NPC {
-    constructor(scene, x, y, imageID, npcID, dialogues, manin, quest) {
-        super(scene, x, y, imageID, npcID, dialogues, manin);
+    constructor(scene, x, y, imageID, qNPCID, npcID, npc_dialogues, quest_dialogues, manin, quest) {
+        super(scene, x, y, imageID, npcID, npc_dialogues, manin);
         this.quest = quest;
+        this.qNPCID = qNPCID;
+        this.questDialogues = quest_dialogues;
+        this.countQuestDialogues(this.qNPCID, this.questDialogues);
+        this.endDialog = false;
     }
 
     activateQuest(){
-        if(!this.quest.acquired){
+        this.readDialogues();
+        this.scene.events.on('dialogWindowClosed', () => {
+            this.endDialog = true;
+        });
+
+        if(!this.quest.acquired && this.endDialog){
             allyParty.questLog.addQuest(this.quest);
             allyParty.questLog.actualQuest = allyParty.questLog.numQuests - 1; 
             this.scene.scene.get('hud').addQuest(this.quest);
@@ -17,9 +26,13 @@ export class QuestNPC extends NPC {
             this.quest.acquired = true;   
         }
     }
+
+    readDialogues() {
+        this.questDialog(this.qNPCID, this.questDialogues);
+    }
     
     advanceQuest(){
-        this.quest.advanceQuest(this.quest.id);
+        this.quest.advanceQuest();
         //this.manin.questLog.CompleteQuest(this.quest.id);
         allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(this.quest.id).index; 
         if(this.quest.finished){
@@ -51,12 +64,21 @@ export class QuestLog {
         // añadir todos los textos y eso
     }
 
-    advanceQuest(id){
-        console.log(this.actualQuest + "   " + this.numQuests);
+    advanceQuest(id, bool = false){  // En caso de lanzarse con booleano a true, se necesita lanzar evento de actualizar el questHud
         let quest = this.GetQuest(id);
-        quest.quest.actualObjectiveCompleted = true;
         this.actualQuest = quest.index;
-        console.log(this.actualQuest + "   " + this.numQuests);
+        if(bool){
+            quest.quest.advanceQuest();
+            //this.manin.questLog.CompleteQuest(this.quest.id);
+            allyParty.questLog.actualQuest = allyParty.questLog.GetQuest(quest.quest.id).index; 
+            if(quest.quest.finished){
+                allyParty.questLog.CompleteQuest(quest.quest.id);
+                quest.quest.function();
+            }
+        }
+        else{
+            quest.quest.actualObjectiveCompleted = true;
+        }
     }
     
     CompleteQuest(id){
