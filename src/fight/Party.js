@@ -1,47 +1,86 @@
-import Character from './Character.js'
 import {attackInfo} from "../fight/Attack.js"
 import {EnviromentInfo} from "../fight/EnviromentInfo.js"
+import { QuestLog } from '../Quest.js';
+import Inventory from '../obj/Inventory.js';
 
-//Importa y crea nuevos tipos de enemigo
+
+// Esta clase gestionará todo lo que tenga que ver con aliados
 export class Party{
 	constructor()
 	{
-		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
-					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("Hablando en plata", 1, 30, 0, 1), attackInfo("Desde mi ventana", 1, 20, 30, 2), 
-						attackInfo("Tu jardín con enanitos", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
-		this.level = 1;
+		// ahora mismo se construye con manín
+		this.party = [
+			characterInfo("Manín","manin",10000,10000,100,100,5,5,5,10,5,100,50,
+					 [
+						attackInfo("Churrazo",2,30000,0,5),
+						attackInfo("Podación",4,40,15,1),
+					  	attackInfo("Pistola Agua",3,45,25,2),
+						attackInfo("Asserting Dominance",1,60,60,1)
+					])
+				];
+		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
+		this.alliesNum = this.party.length;
+		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 
+	swapAllies(newOrder){
+		let self = this
+		this.party.forEach(function(ally, index) {
+			if(newOrder[index].index != ally.index){
+				let num = 0;
+				while(index != newOrder[num].index)
+				{
+					num++;
+				}
+				[self.party[index], self.party[num]] = 
+				[self.party[num], self.party[index]]; // esto no acaba de cambiar y no comprendo
+			}
+		});
+
+		this.party.forEach(function(ally, index) {
+			ally.index = index;
+		});
+	}
+
+	// añadimos a un personaje (NO IMPLEMENTADO)
 	Add(character){
 		this.party.push(character);
+		if(this.alliesNum < 4) this.alliesNum++;
+		else this.alliesNum = 4;
+		console.log(this.party.length-1);
+		this.party[this.party.length-1].index = this.party.length - 1;
+		this.party[this.party.length-1].initialIndex = this.party.length - 1;
+		this.party[this.party.length-1].alteredStates = [false,false,false];
 	}
 
-
+	// Llevamos la party al estado original (TEMPORAL)
 	RestartParty()
 	{
-		this.party = [characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,90,50,
-					 [attackInfo("Churrazo",0,30,0,1),attackInfo("Podación",0,40,15,1),
-					  attackInfo("Pistola Agua",1,45,25,2),attackInfo("Asserting Dominance",1,60,60,1)]),
-					  characterInfo(EnviromentInfo.character.name,EnviromentInfo.character.imgID,EnviromentInfo.character.actualHp,EnviromentInfo.character.maxHp,EnviromentInfo.character.actualMp,EnviromentInfo.character.maxMp
-						,EnviromentInfo.character.rP,EnviromentInfo.character.rR,EnviromentInfo.character.rF,EnviromentInfo.character.rE,EnviromentInfo.character.rT,EnviromentInfo.character.acurracy,EnviromentInfo.character.speed,
-						[attackInfo("Hablando en plata", 1, 30, 0, 1), attackInfo("Desde mi ventana", 1, 20, 30, 2), 
-						attackInfo("Tu jardín con enanitos", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)])];
-		this.level = 1;
+		this.party = [
+			characterInfo("Manín","manin",100,100,100,100,5,5,5,5,5,100,50,
+					 [
+						attackInfo("Churrazo",0,300,0,2),
+						attackInfo("Podación",0,40,15,1),
+					  	attackInfo("Pistola Agua",1,45,25,2),
+						attackInfo("Asserting Dominance",1,60,60,1)
+					]),
+					];
+		this.party[0].index = 0;
+		this.party[0].initialIndex = 0;
+		this.alliesNum = this.party.length;
+		if(this.alliesNum > 4) this.alliesNum = 4;
+		this.questLog = new QuestLog();
+		this.inventory = new Inventory();
 	}
 };
-// imageId, initialHP, initialMP
-// attackInfo x4
-// name: "Artista", imgID:"melendi", hp: 70, mp: 0, rP: 5, rR: 5, rF: 5, rE: 5, rT: 5, acurracy: 90, speed: 40
 
+// función que devuvelve un objeto con información de un personaje
 function characterInfo(name, imgID, actualHp, maxHp, actualMp, maxMp, rP, rR, rF, rE, rT, acurracy, speed, attack){
-	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack}
+	return {name:name,imgID:imgID, actualHp: actualHp, maxHp: maxHp, actualMp: actualMp, maxMp: maxMp, rP:rP,rR:rR,rF:rF,rE:rE,rT:rT,acurracy:acurracy,speed:speed, attack:attack, index: 0, alteredStates : [false,false,false]}
 }
 
-
-
+// exportamos una variable de tipo party que será la instancia que queremos
 export let allyParty = new Party();
-// exportar instancia de Party! YAY FIESTA :)

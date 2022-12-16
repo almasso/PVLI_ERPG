@@ -1,14 +1,18 @@
-import MovementExample from './scenes/exampleMovement.js'
 import {FightScene} from './scenes/FightScene.js'
 import InitialScene from './scenes/InitialScene.js'
 import FinalScene from './scenes/FinalScene.js'
 import DialogScene from './ui/dialogues.js'
+import HUDScene from './scenes/HUDScene.js'
+import ParkScene from './scenes/Park.js'
+import CementeryScene from './scenes/Cementery.js'
+import PortScene from './scenes/Port.js'
+import boot from './scenes/boot.js'
+import Square from './scenes/Square.js'
+import {EnviromentManager} from './fight/EnviromentInfo.js'
+import FishingScene from './scenes/FishingScene.js'
+import FirstScene from './scenes/FirstCinematic.js'
+import DinoWakeScene from './scenes/WakeDino.js'
 
-
-/**
- * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
- * la clase Game de Phaser, encargada de crear e iniciar el juego.
- */
 let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById("game"),
@@ -30,7 +34,10 @@ let config = {
         },
 		zoom: 1
     },
-    scene: [InitialScene, MovementExample, FightScene, FinalScene, DialogScene],
+    scene: [
+        boot, EnviromentManager, InitialScene,FirstScene, Square, FinalScene,
+        ParkScene,CementeryScene,PortScene, HUDScene, 
+        FightScene, FishingScene,DinoWakeScene, DialogScene],
     physics: {
         default: 'arcade',
         arcade: {
