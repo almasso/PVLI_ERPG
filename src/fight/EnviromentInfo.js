@@ -7,7 +7,8 @@ const scenes = {
 	park: 1,
 	cementery: 2,
 	port: 3,
-	cinematic1:4
+	cinematic1:4,
+	cinematic2:5
 };
 
 let hudKey = 'hud';
@@ -125,6 +126,28 @@ let cinematic1 = {
 	]
 }
 
+let cinematic2 = {
+	launched: false,
+	key: 'cinematic2',
+	bg: 'angelPark',
+	character: [],
+	npcs: [
+		npcInfo(600,-100, 'angel', 0),
+		
+	],
+	qNpcs: [],
+	sNpcs: [
+	],
+	hNpcs:  [
+	],
+	hostile: [],
+	eObj: [],
+	iObj: [],
+	travel: [
+		travelInfo(600, 1600, 'pixel', 100, 100, scenes.park)
+	]
+}
+
 let square = {
 	launched: false,
 	key: 'square',
@@ -148,7 +171,8 @@ let square = {
 		npcInfo(250, 650, 'andrea', 12)
 	],
 	qNpcs: [
-		qNpcInfo(600, 350, 'dinostatue', 5, "statueQuest", "Dinoseto", 1, ["Recupera la pieza de dinoseto en el parque"],
+		qNpcInfo(600, 350, 'dinoRoto', 5, "statueQuest", "Dinoseto", 3, ["Recupera la primera pieza del dinoseto",
+		 "Recupera la segunda pieza del dinoseto", "Recupera la tercera pieza del dinoseto"],
 		"oh no me han robado el coraçao ayúdame jardinero apuesto", 'roi', 'un tal pedro')
 	],
 	sNpcs: [
@@ -366,60 +390,22 @@ let park = {
 	iObj: [
 		eObjInfo(840, 950, 'manin', 0.7, 0.7),  // Caña de pescar
 		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Observar el lago
-		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Pelea
-		eObjInfo(1205, 120, 'manin', 0.7, 0.7),   // Item
+		eObjInfo(1400, 275, 'angel', 0.7, 0.7),   // Pelea
+		eObjInfo(1205, 120, 'piezaDino', 0.7, 0.7),   // Item
 		eObjInfo(40, 620, 'manin', 0.7, 0.7),   // Guitarra
+		
 	],
 	travel: [
-		travelInfo(10, 60, 'pixel', 100, 100, scenes.square)
+		travelInfo(10, 60, 'pixel', 100, 100, scenes.square),
+		travelInfo(800, 15000, 'pixel', 100, 100, scenes.cinematic2)
 	],
 	specialEncounter: [
 		{
-			numEnemies: 3, 
+			numEnemies: 1, 
 			enemies: [
 				{
-					name: "Artista", 
-					imgID:'artist', 
-					actualHp: 70, 
-					maxHp: 70, 
-					actualMp: 0, 
-					maxMp: 0, 
-					rP: 5, 
-					rR: 5, 
-					rF: 5, 
-					rE: 5, 
-					rT: 5, 
-					acurracy: 90, 
-					speed: 40,
-					attack: [
-						attackInfo("Pincelada",1,20,0,1),
-						attackInfo("Lanza un bote de pintura", 1, 15, 0, 1),
-						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
-					]
-				},
-				{
-					name: "Culturista", 
-					imgID:'melendi', 
-					actualHp: 80, 
-					maxHp: 80, 
-					actualMp: 0, 
-					maxMp: 0, 
-					rP: 8, 
-					rR: 6, 
-					rF: 4, 
-					rE: 3, 
-					rT: 6, 
-					acurracy: 85, 
-					speed: 60,
-					attack:[
-						attackInfo("Te flexeo el cráneo", 3, 40, 0, 1), 
-						attackInfo("Súper patada volador con un nombre increíblemente largo",0,45,0,1),
-						attackInfo("Poñetaso", 0, 30, 0, 1)
-					]
-				},
-				{
-					name: "Artista", 
-					imgID:'artist', 
+					name: "Angel Caido", 
+					imgID:'angel', 
 					actualHp: 70, 
 					maxHp: 70, 
 					actualMp: 0, 
@@ -460,9 +446,9 @@ let cementery = {
 		eObjInfo(650, 170, 'pixel', 320, 0.5),
 		eObjInfo(460, 0, 'pixel', 0.5, 500),
 		eObjInfo(650, 74, 'pixel', 320, 0.5),
-		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 	],
 	iObj: [
+		eObjInfo(500, 125, 'piezaDino', 3.5, 3.5)
 		
 	],
 	travel: [
@@ -525,7 +511,7 @@ function travelInfo(x, y, img, sX, sY, scene){
 	return {x: x, y: y, img: img, sX: sX, sY: sY, scene: scene};
 }
 
-let sceneInfo = [square, park, cementery, port,cinematic1];
+let sceneInfo = [square, park, cementery, port,cinematic1,cinematic2];
 
 // variables exportadas
 let EnviromentInfo = cinematic1;
