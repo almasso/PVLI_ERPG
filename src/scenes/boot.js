@@ -160,11 +160,9 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('fisher', 'assets/textures/Characters/fisherman.png');
 		this.load.image('delincuente', 'assets/textures/Characters/delincuentes.png');
 
-		
         // FONDOS
         this.load.image('initialBg', 'assets/textures/HUD/Inicio.png');
         this.load.image('square', 'assets/textures/Backgrounds/plaza2.png');
-        this.load.image('bg2', 'assets/textures/Backgrounds/bg2.png'); // BORRAR
         this.load.image('fightBg','assets/textures/Backgrounds/parqueLucha.png')
         this.load.image('finalBg', 'assets/textures/HUD/Gameover.png');
 		this.load.image('park','assets/textures/Backgrounds/park.png')

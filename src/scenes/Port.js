@@ -23,6 +23,8 @@ export default class PortScene extends FatherScene {
 		this.musica.play();
 
 		super.create();
+
+
 		for(let i=0;i<this.npcs.length;i++)this.npcs[i].setScale(5,5)
 		this.manin.x=400
 		this.manin.y=500
@@ -31,17 +33,24 @@ export default class PortScene extends FatherScene {
 
 		this.iFunctions = [];
 
+
+
 		// Pelea con la estatua
 		this.iFunctions.push(function(){
 			self.scene.sleep('hud');
 			self.scene.sleep('port');
 			self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0});
 			self.scene.get('fightscene').LoadInventory(allyParty.inventory);
-			self.interactuableObjects[0].trigger.destroy();
-			self.interactuableObjects[0].destroy();
+			self.interactuableObjects[0].setVisible(true);
+			self.interactuableObjects[0].collider.setActive(true);
+			self.interactuableObjects[1].trigger.destroy();
+			self.interactuableObjects[1].destroy();
 		});
 		
 		super.generateIObjects(this.iFunctions);
+
+		this.interactuableObjects[0].collider.setActive(false);
+		this.interactuableObjects[0].setVisible(false);
 	}
 
 	// comprobación de colisiones y apertura de menús

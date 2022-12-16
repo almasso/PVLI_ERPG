@@ -27,7 +27,6 @@ export class interactuableObj extends enviromentObj{
         this.generateTrigger();
         this.scene.physics.world.enable(this.trigger);
         this.trigger.body.onOverlap = true;
-
 		this.interacted = false;
 	}
 
