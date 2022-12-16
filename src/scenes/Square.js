@@ -40,8 +40,6 @@ export default class Square extends FatherScene {
 		//this.npcs[this.npcs.lengt-1].collider.destroy()
 		this.npcs[this.npcs.length-1].setScale(5,5)
 		this.npcs[this.npcs.length-1].trigger.setScale(4,4)
-		
-		
 	}
 	
 	// comprobación de colisiones y apertura de menús

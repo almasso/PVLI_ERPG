@@ -4,7 +4,6 @@ import {allyParty} from '../fight/Party.js'
 import {EnemiesInfo} from '../fight/EnviromentInfo.js'
 import {InputMan} from '../fight/InputManager.js'
 import {Log, AllyHUD, EnemyHUD, InventoryHUD} from '../fight/HUD.js'
-import Inventory from '../obj/Inventory.js'
 import { EnviromentInfo } from '../fight/EnviromentInfo.js'
 
 
@@ -214,6 +213,7 @@ export class FightScene extends Phaser.Scene {
 		this.combat=false;
 		//#endregion
 		this.state = FightState.SelectTurn;
+		console.log("END COMBAT");
 		this.scene.get('EnvManager').walk(this.CheckState(this.allies));
 		this.scene.stop('fightscene'); // en cualquier caso paramos esta escena
 	}
@@ -427,7 +427,8 @@ export class FightScene extends Phaser.Scene {
 	GenerateSpecialEncounter(){
 		this.enemies = []; // inicializamos el array de enemigos
 		let height = 360;
-		let info = EnviromentInfo.specialEncounter[this.specialEncounterIndex]; 
+		let info = EnviromentInfo.specialEncounter[this.specialEncounterIndex];
+		this.winMoney = info.money;
 		let enemiesNumber = info.numEnemies; // número de enemigos
 
 		for(let i = 0; i < enemiesNumber; i++){

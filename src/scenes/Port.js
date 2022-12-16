@@ -69,6 +69,7 @@ export default class PortScene extends FatherScene {
 	{
 		this.scene.sleep('hud');
 		this.scene.sleep('port');
+		this.musica.stop();
 		this.scene.launch('fightscene', {loadFromEnviroment: true, index: 0});
 		this.scene.get('fightscene').LoadInventory(allyParty.inventory);
 		this.interactuableObjects[0].setVisible(true);

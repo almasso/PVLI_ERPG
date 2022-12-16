@@ -1,4 +1,4 @@
-import { walkingHUD, ExploreMenu, QuestHUD, shopHUD } from "../fight/HUD.js";
+import { walkingHUD, ExploreMenu, QuestHUD, shopHUD, ChooseDev } from "../fight/HUD.js";
 import { InputMan } from "../fight/InputManager.js";
 
 const State = {
@@ -47,6 +47,10 @@ export default class HUDScene extends Phaser.Scene {
 				} 
 			}
 		}
+	}
+
+	CreateDevMenu(){
+		this.devMenu = new ChooseDev(200, 200, this);
 	}
 
 	UpdateHUD(){ // updateamos el HUD

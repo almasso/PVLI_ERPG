@@ -65,7 +65,7 @@ export default class ParkScene extends FatherScene {
 				self.scene.sleep('hud');
 				self.interactuableObjects[3].Hide(false);
 				self.scene.sleep('park');
-				
+				self.musica.stop();
 				self.scene.launch('fightscene', {loadFromEnviroment: true, index: 0})
 				self.scene.get('fightscene').LoadInventory(allyParty.inventory);
 				self.interactuableObjects[2].trigger.destroy();

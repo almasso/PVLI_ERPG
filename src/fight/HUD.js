@@ -1,5 +1,6 @@
 import { attackInfo } from "./Attack.js";
 import { allyParty } from "./Party.js";
+import { EnemiesInfo, EnviromentInfo } from "./EnviromentInfo.js";
 
 // LOG DE COMBATE
 export class Log {
@@ -154,7 +155,7 @@ export class AllyHUD{
 				if(this.attackText[this.i]===attackText) this.scene.attack=this.i;
 				this.i++;
 			}
-			} else console.log("NO HAY PUNTERO ;-;");
+			}
 		});
 		attackText.text.on('pointerup', () => { // hemos pulsado el botón
 			if(this.scene.allies[this.scene.currentAlly].CanAttack(attackText.srcAttack)){
@@ -177,7 +178,7 @@ export class AllyHUD{
 				this.scene.pointer.visible = true;//···RAUL PRUEBAS···
 				this.scene.combat=false;//···RAUL PRUEBAS···
 				
-			} else console.log("No hay maná ;-;");
+			}
 		})
 		attackText.text.on('pointerout', () =>{ // hemos qutiado el botón
 			this.scene.cursor=false;
@@ -258,7 +259,6 @@ export class QuestHUD{
 
 	Update(){
 		let aux = this.questLog.ShowQuest();
-		console.log(aux.name);
 		if(aux.name !== undefined){
 			this.questName.text = "Misión: " + aux.name;
 			this.text.setText("-" +aux.text);
@@ -288,7 +288,6 @@ export class QuestHUD{
 			if(0 < self.questLog.actualQuest){
 				self.questLog.actualQuest--;
 				self.Update();
-				console.log("ARRIBA " + self.questLog.actualQuest );
 			}
 		});
 
@@ -296,7 +295,6 @@ export class QuestHUD{
 			if(self.questLog.quests.length - 1 !== self.questLog.actualQuest && 0 <= self.questLog.actualQuest){
 				self.questLog.actualQuest++;
 				self.Update();
-				console.log("ABAJO " + self.questLog.actualQuest );
 			}
 		});
 	}
@@ -611,7 +609,6 @@ class HealthBar {
 
 	// actualizamos la barra
 	Update(newValue, bool = true){
-		console.log("HEALTHBAR = " + bool);
 		this.updateValue(newValue); // actualizamos su valor
 		this.draw(bool); // dibujado
 	}
@@ -673,7 +670,6 @@ class HealthBar {
 				this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
 			}
 			else{
-				console.log("ENTREEE");
 				let barWidth = (this.value*this.width) / this.maxValue; // ancho
 		
 				this.bar.fillRect(this.x + 2, this.y + 2, barWidth - 4, this.height - 4); // dibujado
@@ -711,7 +707,6 @@ export class walkingHUD {
 
 	swapAllies(index){
 		this.imagesToSwap.push(index);
-		console.log(index)
 		if(this.imagesToSwap.length > 1){
 			[this.characters[this.imagesToSwap[0]].image.x,this.characters[this.imagesToSwap[1]].image.x] = 
 			[this.characters[this.imagesToSwap[1]].image.x,this.characters[this.imagesToSwap[0]].image.x];
@@ -792,6 +787,46 @@ const typeOfAttack = {
 	5: "Apoyo"
 };
 
+
+export class ChooseDev{
+	constructor(x,y,scene){
+		this.scale = 1.5;
+		this.x = x;
+		this.y = y;
+		this.scene = scene;
+		this.bImage = this.scene.add.image(x,y,'devsBg').setOrigin(0,0).setScale(4);
+		this.AddButtons();
+	}
+
+	AddButtons(){
+		let self = this;
+		this.devs = [];
+		this.devs.push(this.scene.add.image(this.x+ 20,this.y+ 100, 'roi').setOrigin(0,0).setScale(2));
+		this.devs.push(this.scene.add.image(this.x+ 90,this.y+ 100, 'raul').setOrigin(0,0).setScale(2));
+		this.devs.push(this.scene.add.image(this.x +160,this.y+ 100, 'pablo').setOrigin(0,0).setScale(2));
+		this.devs.push(this.scene.add.image(this.x + 230,this.y+ 100, 'alex').setOrigin(0,0).setScale(2));
+		this.devs.push(this.scene.add.image(this.x + 300,this.y+ 100, 'david').setOrigin(0,0).setScale(2));
+
+		let i = 0;
+		for(let e of this.devs){
+			let index = i;
+			e.setInteractive();
+			e.on("pointerup", function() {
+				console.log(index, EnviromentInfo.character[index]);
+				allyParty.Add(EnviromentInfo.character[index]);
+				self.bImage.destroy();
+				self.devs[0].destroy();
+				self.devs[1].destroy();
+				self.devs[2].destroy();
+				self.devs[3].destroy();
+				self.devs[4].destroy();
+				self.scene.scene.get('hud').Reset();
+			});
+			i++;
+		}		
+	}
+}
+
 export class ExploreMenu {
 	constructor(x,y,scene, imgID, pointer, walkingHUD){
 		this.scale = 1.5;
@@ -825,7 +860,6 @@ export class ExploreMenu {
 	}
 
 	AddPartyManagementMenu(){
-		console.log("add manager menu");
 		let x = 0;
 		let y = 2;
 		let self = this;
@@ -1050,7 +1084,6 @@ export class ExploreMenu {
 
 	// usado solo para crear el menú de la party	
 	AddPartyMenu(){
-		console.log("add party menu");
 		let x = 0;
 		let y = 2;
 		this.partyImages = [];
@@ -1133,13 +1166,10 @@ export class ExploreMenu {
 		this.downArrowParty.visible = false;		
 		this.upArrowParty.depth = 8;
 		this.downArrowParty.depth = 8;
-
-		console.log(this.partyImages);
 	}
 
 	Update(){
 		let self = this;
-		console.log(this.partyImages);
 		allyParty.party.forEach(function (char){
 			self.partyImages[char.initialIndex].stats.hp.Update(char.actualHp, false);
 			self.partyImages[char.initialIndex].stats.mp.Update(char.actualMp, false);
@@ -1220,7 +1250,6 @@ export class ExploreMenu {
 	}
 
 	AddItemsMenu(){
-		console.log("add items menu");
 		let self = this;
 		this.itemToShow = 0;
 		let x = 50;
@@ -1258,7 +1287,6 @@ export class ExploreMenu {
 	}
 
 	AddQuestMenu(){
-		console.log("add quests menu");
 		let self = this;
 		this.questToShow = 0;
 		let x = 50;
@@ -1329,7 +1357,6 @@ export class ExploreMenu {
 		this.questTexts[lastText].setInteractive();
 		this.questTexts[lastText].on("pointerup", function() {
 			self.ChangeQuestToShow(self.questTexts[lastText].index);
-			console.log("button pressed");
 		});
 		this.questTexts[lastText].on("pointerover", function(){
 			self.pointer.visible = true;
@@ -1344,10 +1371,8 @@ export class ExploreMenu {
 
 	UpdateItem(item){
 		let i = 0;
-		console.log(item);
 		while (i < this.itemImages.length && (this.itemImages[i].desc.text !== item.description)) 
 		{
-			console.log(this.itemImages[i]);
 			i++;
 		}
 		this.itemImages[i].qty.setText("Cantidad: "+ ++this.itemImages[i].actualQty);
@@ -1392,7 +1417,6 @@ export class ExploreMenu {
 		this.itemTexts[lastText].setInteractive();
 		this.itemTexts[lastText].on("pointerup", function() {
 			self.ChangeItemToShow(self.itemTexts[lastText].index);
-			console.log("button pressed");
 		});
 		this.itemTexts[lastText].on("pointerover", function(){
 			self.pointer.visible = true;
@@ -1406,14 +1430,12 @@ export class ExploreMenu {
 	}
 
 	ChangeItemToShow(index){
-		console.log("WEWE");
 		this.ShowItems(false);
 		this.itemToShow = index;
 		this.ShowItems(true);
 	}
 
 	ChangeQuestToShow(index){
-		console.log("WEWE");
 		this.ShowQuests(false);
 		this.questToShow = index;
 		this.ShowQuests(true);

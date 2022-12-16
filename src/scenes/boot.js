@@ -80,10 +80,12 @@ export default class Boot extends Phaser.Scene {
 		this.load.image('buyItem', 'assets/textures/HUD/buyItem.png');
 		this.load.image('showItem', 'assets/textures/HUD/explore/itemsButton.png');
 		this.load.image('showQuests', 'assets/textures/HUD/explore/menuQuestsButton.png');
+		this.load.image('devsBg', 'assets/textures/HUD/explore/devsBg.png');
 		
 
 		// nosotros c:
 		this.load.image('alex', 'assets/textures/Characters/Alex.png');
+		this.load.image('alexHead', 'assets/textures/HUD/explore/AlexHead.png');
         this.load.spritesheet('alex_dmg','assets/textures/Characters/alex_dmg.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('alex_shock','assets/textures/Characters/alex_shock.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('alex_poison','assets/textures/Characters/alex_poison.png',{frameWidth:19, frameHeight:26});
@@ -93,6 +95,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('alex_wow','assets/textures/Characters/alex_wow.png',{frameWidth:19, frameHeight:26});
 
 		this.load.image('raul', 'assets/textures/Characters/Raul.png');
+		this.load.image('raulHead', 'assets/textures/HUD/explore/raulHead.png');
 		this.load.spritesheet('raul_dmg','assets/textures/Characters/raul_dmg.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('raul_shock','assets/textures/Characters/raul_shock.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('raul_poison','assets/textures/Characters/raul_poison.png',{frameWidth:19, frameHeight:26});
@@ -102,6 +105,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('raul_wow','assets/textures/Characters/raul_wow.png',{frameWidth:19, frameHeight:26});
 
 		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
+		this.load.image('pabloHead', 'assets/textures/HUD/explore/pabloHead.png');
 		this.load.spritesheet('pablo_dmg','assets/textures/Characters/pablo_dmg.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('pablo_shock','assets/textures/Characters/pablo_shock.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('pablo_poison','assets/textures/Characters/pablo_poison.png',{frameWidth:19, frameHeight:26});
@@ -111,6 +115,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('pablo_wow','assets/textures/Characters/pablo_wow.png',{frameWidth:19, frameHeight:26});
 		
 		this.load.image('roi', 'assets/textures/Characters/roi.png');
+		this.load.image('roiHead', 'assets/textures/HUD/explore/roiHead.png');
 		this.load.spritesheet('roi_dmg','assets/textures/Characters/roi_dmg.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('roi_shock','assets/textures/Characters/roi_shock.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('roi_poison','assets/textures/Characters/roi_poison.png',{frameWidth:19, frameHeight:26});
@@ -120,6 +125,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('roi_wow','assets/textures/Characters/roi_wow.png',{frameWidth:19, frameHeight:26});
 		
 		this.load.image('david', 'assets/textures/Characters/david.png');
+		this.load.image('davidHead', 'assets/textures/HUD/explore/davidHead.png');
 		this.load.spritesheet('david_dmg','assets/textures/Characters/david_dmg.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('david_shock','assets/textures/Characters/david_shock.png',{frameWidth:19, frameHeight:26});
         this.load.spritesheet('david_poison','assets/textures/Characters/david_poison.png',{frameWidth:19, frameHeight:26});

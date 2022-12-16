@@ -60,6 +60,11 @@ class EnviromentManager extends Phaser.Scene{
 			this.scene.launch('final');
 		}
 		else{
+			console.log(this.currentScene.key);
+			if(sceneInfo[this.currentScene].key === 'port'){
+				console.log("createDevMenu");
+				this.hudScene.CreateDevMenu();
+			}
 			this.scene.wake(sceneInfo[this.currentScene].key);
 			this.scene.get(sceneInfo[this.currentScene].key).musica.play();
 			this.scene.wake(hudKey);
@@ -108,11 +113,7 @@ let cinematic1 = {
 	launched: true,
 	key: 'cinematic1',
 	bg: 'plazaNoche',
-	character: [],//[{x: 300,y:300, name: "Melendi", imgID: 'melendi', actualHp: 75, maxHp: 75, actualMp: 115, maxMp: 115,
-	// rP: 4, rR: 6, rF: 3, rE: 7, rT: 5, acurracy: 90, speed: 60,
-	// attack: [attackInfo("A Rango 1 Target", 1, 25, 0, 1), attackInfo("A Rango 2 Target", 1, 20, 30, 1), 
-	// attackInfo("Support 1 Target", 5, -20, 25, 1), attackInfo("Camina por la Vida",5,-70,60,1)]}],
-	
+	character: [],	
 	npcs: [
 		npcInfo(600,400, 'dinostatue', 0),
 		npcInfo(600,400, 'dinoRoto', 0),
@@ -265,7 +266,8 @@ let square = {
 						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
 					]
 				}
-			]
+			],
+			money: 5000
 		}
 	]
 }
@@ -478,7 +480,8 @@ let park = {
 						attackInfo("Xilografía en el pecho", 1, 30, 0, 1)
 					]
 				}
-			]
+			],
+			money: 500
 		}
 	]
 }
@@ -538,6 +541,109 @@ let port = {
 	eObjInfo(250,400,'piezaDino', 0.1, 0.1)],
 	travel: [
 		travelInfo(400, 600, 'pixel', 70, 70, scenes.square)
+	],
+	character: [{
+		name: "Roi", 
+		imgID:'roi', 
+		actualHp: 110, 
+		maxHp: 110, 
+		actualMp: 100, 
+		maxMp: 100, 
+		rP: 5, 
+		rR: 5, 
+		rF: 5, 
+		rE: 5, 
+		rT: 5, 
+		acurracy: 90, 
+		speed: 40,
+		attack: [
+			attackInfo("'Payaso'",1,30,0,1),
+			attackInfo("Foto Pizza", 2, 15, 30, 3),
+			attackInfo("Sticker Gatito", 0, 30, 20, 1),
+			attackInfo("2 Stickers Gatito", 0, 30, 50, 2)
+		]},
+		{
+			name: "Raúl", 
+			imgID:'raul', 
+			actualHp: 80, 
+			maxHp: 80, 
+			actualMp: 110, 
+			maxMp: 110, 
+			rP: 8, 
+			rR: 6, 
+			rF: 4, 
+			rE: 3, 
+			rT: 6, 
+			acurracy: 85, 
+			speed: 60,
+			attack:[
+				attackInfo("Amenazar patito", 0, 40, 0, 1), 
+				attackInfo("Comer una bandeja",1,20,0,2),
+				attackInfo("Código de input", 4, 30, 0, 1),
+				attackInfo("Patada en el estómago", 0, 65, 50, 1)
+			]
+		},
+		{
+			name: "Pablo VI", 
+			imgID:'pablo', 
+			actualHp: 120, 
+			maxHp: 120, 
+			actualMp: 80, 
+			maxMp: 80, 
+			rP: 9, 
+			rR: 5, 
+			rF: 5, 
+			rE: 1, 
+			rT: 5, 
+			acurracy: 90, 
+			speed: 40,
+			attack: [
+				attackInfo("Hincar por el culo",0,20,0,1),
+				attackInfo("Chiste monje", 1, 15, 15, 2),
+				attackInfo("Ausencia de césped", 3, 30, 25, 1),
+				attackInfo("Calle", 0, 25, 40, 2)
+			]
+		},{
+			name: "Alex", 
+			imgID:'alex', 
+			actualHp: 100, 
+			maxHp: 100, 
+			actualMp: 130, 
+			maxMp: 130, 
+			rP: 7, 
+			rR: 7, 
+			rF: 3, 
+			rE: 6, 
+			rT: 9, 
+			acurracy: 90, 
+			speed: 40,
+			attack: [
+				attackInfo("Datos de Wikipedia",4,20,0,1),
+				attackInfo("Testerazo", 0, 25, 20, 1),
+				attackInfo("La vara de avellano", 0, 30, 25, 1),
+				attackInfo("Puñetazo muy fuerte", 0, 75, 70, 1)
+			]
+		},{
+			name: "David", 
+			imgID:'david', 
+			actualHp: 95, 
+			maxHp: 95, 
+			actualMp: 120, 
+			maxMp: 120, 
+			rP: 3, 
+			rR: 8, 
+			rF: 5, 
+			rE: 6, 
+			rT: 2, 
+			acurracy: 90, 
+			speed: 40,
+			attack: [
+				attackInfo("*uwu* al oído",3,25,0,1),
+				attackInfo("Problemas intestinales", 4, 15, 25, 2),
+				attackInfo("Alcalá de Henares", 1, 30, 15, 1),
+				attackInfo("Un jodido ladrillo", 0, 65, 50, 1)
+			]
+		}
 	],
 	specialEncounter: [
 		{
@@ -643,7 +749,8 @@ let port = {
 						attackInfo("ausencia de césped", 3, 30, 0, 1)
 					]
 				}
-			]
+			],
+			money: 1500
 		}
 	]
 }
