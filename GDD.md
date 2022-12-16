@@ -28,7 +28,7 @@
 5. [HUD](#hud)
     1. [Exploración](hud-exploración)
     2. [Combate](hud-combate)
-    3. [Diálogos](dialogos)
+    3. [Diálogos](diálogos)
 6. [Contenido](#contenido)
     1. [Historia](#historia)
     2. [Objetos](#objetos)
