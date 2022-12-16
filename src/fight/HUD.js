@@ -230,7 +230,7 @@ export class QuestHUD{
 			color: '#ffffff',
 			align: 'left',});
 		this.questName.setFontSize(20);
-		this.questName.depth = 5;
+		this.questName.depth = 4;
 
 		this.text = scene.make.text({
 			x: 40, y: 60,
@@ -810,8 +810,8 @@ export class ExploreMenu {
 		this.pointer = pointer;
 		this.alliesShownIndex = 0;
 		this.AddPartyMenu(); // añadir el submenú de la party
-		this.AddPartyManagementMenu()
-		this.AddItemsMenu()
+		this.AddPartyManagementMenu();
+		this.AddItemsMenu();
 		this.AddQuestMenu();
 		this.AddButtons(); // añadir botones para los submenús
 		this.backButton; // salir del menú actual
@@ -825,6 +825,7 @@ export class ExploreMenu {
 	}
 
 	AddPartyManagementMenu(){
+		console.log("add manager menu");
 		let x = 0;
 		let y = 2;
 		let self = this;
@@ -1049,6 +1050,7 @@ export class ExploreMenu {
 
 	// usado solo para crear el menú de la party	
 	AddPartyMenu(){
+		console.log("add party menu");
 		let x = 0;
 		let y = 2;
 		this.partyImages = [];
@@ -1131,10 +1133,13 @@ export class ExploreMenu {
 		this.downArrowParty.visible = false;		
 		this.upArrowParty.depth = 8;
 		this.downArrowParty.depth = 8;
+
+		console.log(this.partyImages);
 	}
 
 	Update(){
 		let self = this;
+		console.log(this.partyImages);
 		allyParty.party.forEach(function (char){
 			self.partyImages[char.initialIndex].stats.hp.Update(char.actualHp, false);
 			self.partyImages[char.initialIndex].stats.mp.Update(char.actualMp, false);
@@ -1215,6 +1220,7 @@ export class ExploreMenu {
 	}
 
 	AddItemsMenu(){
+		console.log("add items menu");
 		let self = this;
 		this.itemToShow = 0;
 		let x = 50;
@@ -1252,6 +1258,7 @@ export class ExploreMenu {
 	}
 
 	AddQuestMenu(){
+		console.log("add quests menu");
 		let self = this;
 		this.questToShow = 0;
 		let x = 50;

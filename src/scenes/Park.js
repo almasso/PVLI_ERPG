@@ -72,7 +72,7 @@ export default class ParkScene extends FatherScene {
 				self.interactuableObjects[2].trigger.destroy();
 				self.interactuableObjects[2].destroy();
 			}
-		})
+		});
 		
 		// Coger item
 		this.iFunctions.push(function(){
