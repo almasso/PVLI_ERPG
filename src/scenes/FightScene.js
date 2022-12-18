@@ -201,6 +201,7 @@ export class FightScene extends Phaser.Scene {
 	// Acabamos el combate
 	EndCombat(){
 		this.victoryMusic.stop();
+		this.combatMusic.stop();
 		if(this.win)
 			this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
