@@ -136,7 +136,7 @@ export default class Boot extends Phaser.Scene {
         
 		// NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
-		this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
+		//this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
 
 
