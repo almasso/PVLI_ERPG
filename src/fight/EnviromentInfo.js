@@ -251,7 +251,7 @@ let square = {
 				attackInfo("Bono Cultural Joven", 0, 20, 0, 1), 
 				attackInfo("Chuletón al punto", 2, 35, 30, 1), 
 				attackInfo("Ataque Falcon", 1, 20, 25, 2), 
-				attackInfo("Instaurar la República",0,50,60,Math.random() * 4)
+				attackInfo("Instaurar la República",0,50,60,3) 
 		]
 	}],
 	hostile: [],
@@ -345,7 +345,7 @@ let park = {
 			speed: 60,
 			attack: [
 				attackInfo("Lágrimas desordenadas", 1, 25, 0, 1), 
-				attackInfo("Arrugas en el alma", 1, 20, 30, 1), 
+				attackInfo("Arrugas en el alma", 4, 20, 30, 1), 
 				attackInfo("Magic Alonso", 5, -20, 25, 1), 
 				attackInfo("Camina por la Vida",5,-70,60,1)
 			]
@@ -370,7 +370,7 @@ let park = {
 				attackInfo("Navajeros", 0, 20, 0, 1), 
 				attackInfo("Quiero que ardas", 2, 35, 30, 1), 
 				attackInfo("Ven a 4k", 0, 20, 25, 2), 
-				attackInfo("Porro",4,50,60,4)
+				attackInfo("Porro",4,50,60,3)
 			]
 		}
 	],
@@ -592,7 +592,7 @@ let port = {
 			maxHp: 120, 
 			actualMp: 80, 
 			maxMp: 80, 
-			rP: 9, 
+			rP: 8, 
 			rR: 5, 
 			rF: 5, 
 			rE: 1, 
@@ -612,11 +612,11 @@ let port = {
 			maxHp: 100, 
 			actualMp: 130, 
 			maxMp: 130, 
-			rP: 7, 
-			rR: 7, 
+			rP: 4, 
+			rR: 6, 
 			rF: 3, 
-			rE: 6, 
-			rT: 9, 
+			rE: 5, 
+			rT: 8, 
 			acurracy: 90, 
 			speed: 40,
 			attack: [
@@ -633,7 +633,7 @@ let port = {
 			actualMp: 120, 
 			maxMp: 120, 
 			rP: 3, 
-			rR: 8, 
+			rR: 7, 
 			rF: 5, 
 			rE: 6, 
 			rT: 2, 
