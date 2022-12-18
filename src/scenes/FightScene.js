@@ -201,6 +201,7 @@ export class FightScene extends Phaser.Scene {
 	// Acabamos el combate
 	EndCombat(){
 		this.victoryMusic.stop();
+		this.combatMusic.stop();
 		if(this.win)
 			this.ReturnParty(); // reescribimos los valores de la Party
 		//#region input teclado
@@ -581,10 +582,10 @@ export class FightScene extends Phaser.Scene {
 		{
 			if(this.turns[this.currentTurn].type) // ALIADOS
 			{
-				this.ToggleButtons(true);
 				// cambiamos el aliado actual
 				this.currentAlly = this.turns[this.currentTurn].index;
 				if(!this.allies[this.currentAlly].alteredStates[typeOfAttack.Electrical - elementalAttackDifference]){ // Paralizado
+					this.ToggleButtons(true);
 					this.state = FightState.ChooseAttack;
 				}
 				else{
