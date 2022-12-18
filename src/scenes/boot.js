@@ -86,23 +86,23 @@ export default class Boot extends Phaser.Scene {
 		// nosotros c:
 		this.load.image('alex', 'assets/textures/Characters/Alex.png');
 		this.load.image('alexHead', 'assets/textures/HUD/explore/AlexHead.png');
-        // this.load.spritesheet('alex_dmg','assets/textures/Characters/alex_dmg.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_shock','assets/textures/Characters/alex_shock.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_poison','assets/textures/Characters/alex_poison.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_dead','assets/textures/Characters/alex_dead.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_burn','assets/textures/Characters/alex_burn.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_idle','assets/textures/Characters/alex_idle.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('alex_wow','assets/textures/Characters/alex_wow.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_dmg','assets/textures/Characters/Alex_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_shock','assets/textures/Characters/Alex_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_poison','assets/textures/Characters/Alex_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_dead','assets/textures/Characters/Alex_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_burn','assets/textures/Characters/Alex_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_idle','assets/textures/Characters/Alex_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('alex_wow','assets/textures/Characters/Alex_wow.png',{frameWidth:19, frameHeight:26});
 
 		this.load.image('raul', 'assets/textures/Characters/Raul.png');
 		this.load.image('raulHead', 'assets/textures/HUD/explore/raulHead.png');
-		// this.load.spritesheet('raul_dmg','assets/textures/Characters/raul_dmg.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_shock','assets/textures/Characters/raul_shock.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_poison','assets/textures/Characters/raul_poison.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_dead','assets/textures/Characters/raul_dead.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_burn','assets/textures/Characters/raul_burn.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_idle','assets/textures/Characters/raul_idle.png',{frameWidth:19, frameHeight:26});
-        // this.load.spritesheet('raul_wow','assets/textures/Characters/raul_wow.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('raul_dmg','assets/textures/Characters/Raul_dmg.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_shock','assets/textures/Characters/Raul_shock.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_poison','assets/textures/Characters/Raul_poison.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_dead','assets/textures/Characters/Raul_dead.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_burn','assets/textures/Characters/Raul_burn.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_idle','assets/textures/Characters/Raul_idle.png',{frameWidth:19, frameHeight:26});
+        this.load.spritesheet('raul_wow','assets/textures/Characters/Raul_wow.png',{frameWidth:19, frameHeight:26});
 
 		this.load.image('pablo', 'assets/textures/Characters/pablo.png');
 		this.load.image('pabloHead', 'assets/textures/HUD/explore/pabloHead.png');
@@ -136,7 +136,7 @@ export default class Boot extends Phaser.Scene {
         
 		// NPCS
 		this.load.image('elmotivao', 'assets/textures/Characters/elmotivao.png');
-		//this.load.image('vovovo', 'assets/textures/Characters/vovovo.png');
+		this.load.image('vovovo', 'assets/textures/Characters/Vovovo.png');
 		this.load.image('jatsune', 'assets/textures/Characters/jatsune.png');
 
 
@@ -245,15 +245,15 @@ export default class Boot extends Phaser.Scene {
 		this.load.spritesheet('melendi_shock','assets/textures/Characters/melendi_shock.png',{frameWidth:22, frameHeight:27});
 
         // jarfaiter
-		//this.load.image('jarfaiter','assets/textures/Characters/jarfaiter.png');
+		this.load.image('jarfaiter','assets/textures/Characters/jarfaiter.png');
 		this.load.image('jarfaiterHead','assets/textures/HUD/explore/jarfaiterHead.png');
-		// this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/jarfaiter_idle.png',{frameWidth:19, frameHeight:26})
-		// this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/jarfaiter_wow.png',{frameWidth:19, frameHeight:26})
-		// this.load.spritesheet('jarfaiter_dmg', 'assets/textures/Characters/jarfaiter_dmg.png',{frameWidth:19, frameHeight:26})
-		// this.load.spritesheet('jarfaiter_dead', 'assets/textures/Characters/jarfaiter_dead.png',{frameWidth:19, frameHeight:26})
-		// this.load.spritesheet('jarfaiter_burn','assets/textures/Characters/jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
-		// this.load.spritesheet('jarfaiter_poison','assets/textures/Characters/jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
-		// this.load.spritesheet('jarfaiter_shock','assets/textures/Characters/jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_idle', 'assets/textures/Characters/Jarfaiter_idle.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('jarfaiter_wow', 'assets/textures/Characters/Jarfaiter_wow.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('jarfaiter_dmg', 'assets/textures/Characters/Jarfaiter_dmg.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('jarfaiter_dead', 'assets/textures/Characters/Jarfaiter_dead.png',{frameWidth:19, frameHeight:26})
+		this.load.spritesheet('jarfaiter_burn','assets/textures/Characters/Jarfaiter_burn.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_poison','assets/textures/Characters/Jarfaiter_poison.png',{frameWidth:19, frameHeight:26});
+		this.load.spritesheet('jarfaiter_shock','assets/textures/Characters/Jarfaiter_shock.png',{frameWidth:19, frameHeight:26});
 
 		//pedro sanxe
 		this.load.image('sanxe', 'assets/textures/Characters/sanxe.png');
